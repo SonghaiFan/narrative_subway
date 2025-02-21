@@ -2,28 +2,11 @@
 
 import { TimeDisplay } from "@/components/narrative-time/time-display";
 import { EntityDisplay } from "@/components/narrative-entity/entity-display";
-import { TopicAnalysis } from "@/components/topic-analysis";
+import { TopicDisplay } from "@/components/narrative-topic/topic-display";
 import { ProfileSection } from "@/components/profile-section";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { ResizableGrid } from "@/components/shared/resizable-grid";
 import { useEffect, useState } from "react";
 import { TimelineData } from "@/types/article";
-
-function ResizeHandle({
-  className = "",
-  id,
-}: {
-  className?: string;
-  id: string;
-}) {
-  return (
-    <PanelResizeHandle
-      id={id}
-      className={`flex justify-center items-center ${className}`}
-    >
-      <div className="w-1.5 h-full hover:bg-gray-300 transition-colors rounded-full bg-gray-200" />
-    </PanelResizeHandle>
-  );
-}
 
 export default function Home() {
   const [data, setData] = useState<TimelineData | null>(null);
@@ -67,54 +50,34 @@ export default function Home() {
 
   const { metadata, events } = data;
 
+  const renderPanel = (content: React.ReactNode) => (
+    <div className="h-full bg-white border border-gray-200 shadow-sm">
+      <div className="h-full overflow-auto">{content}</div>
+    </div>
+  );
+
   return (
     <div className="h-screen w-screen bg-gray-50">
-      <PanelGroup direction="vertical">
-        <Panel defaultSize={30} minSize={20}>
-          <PanelGroup direction="horizontal">
-            <Panel defaultSize={30} minSize={20}>
-              <div className="h-full bg-white border border-gray-200 shadow-sm">
-                <ProfileSection
-                  title={metadata.title}
-                  description={metadata.description}
-                  author={metadata.author}
-                  publishDate={metadata.publishDate}
-                  imageUrl={metadata.imageUrl}
-                  events={events}
-                />
-              </div>
-            </Panel>
-            <ResizeHandle id="vertical-resize-1" />
-            <Panel defaultSize={70}>
-              <div className="h-full bg-white border border-gray-200 shadow-sm">
-                <div className="h-full overflow-auto">
-                  <TopicAnalysis events={events} />
-                </div>
-              </div>
-            </Panel>
-          </PanelGroup>
-        </Panel>
-        <ResizeHandle id="vertical-resize" className="mx-1" />
-        <Panel defaultSize={70} minSize={30}>
-          <PanelGroup direction="horizontal">
-            <Panel defaultSize={30} minSize={20}>
-              <div className="h-full bg-white border border-gray-200 shadow-sm">
-                <div className="h-full overflow-auto">
-                  <EntityDisplay events={events} />
-                </div>
-              </div>
-            </Panel>
-            <ResizeHandle id="vertical-resize-2" />
-            <Panel defaultSize={70}>
-              <div className="h-full bg-white border border-gray-200 shadow-sm">
-                <div className="h-full overflow-auto">
-                  <TimeDisplay events={events} selectedEventId={undefined} />
-                </div>
-              </div>
-            </Panel>
-          </PanelGroup>
-        </Panel>
-      </PanelGroup>
+      <ResizableGrid
+        className="h-full"
+        topLeft={renderPanel(
+          <ProfileSection
+            title={metadata.title}
+            description={metadata.description}
+            author={metadata.author}
+            publishDate={metadata.publishDate}
+            imageUrl={metadata.imageUrl}
+            events={events}
+          />
+        )}
+        topRight={renderPanel(
+          <TopicDisplay events={events} selectedEventId={undefined} />
+        )}
+        bottomLeft={renderPanel(<EntityDisplay events={events} />)}
+        bottomRight={renderPanel(
+          <TimeDisplay events={events} selectedEventId={undefined} />
+        )}
+      />
     </div>
   );
 }
