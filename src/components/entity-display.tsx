@@ -24,25 +24,25 @@ export function EntityDisplay({ events = [] }: EntityDisplayProps) {
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white sticky top-0 z-10">
-        <h2 className="text-lg font-bold">Entity Timeline</h2>
-        <div className="flex gap-2">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
+        <h2 className="text-sm font-medium text-gray-600">Entity Timeline</h2>
+        <div className="flex gap-1">
           <button
             onClick={() => setViewMode("visual")}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
               viewMode === "visual"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 hover:bg-gray-200"
+                ? "bg-gray-900 text-white"
+                : "text-gray-600 hover:text-gray-900"
             }`}
           >
             Visual
           </button>
           <button
             onClick={() => setViewMode("text")}
-            className={`px-4 py-2 rounded-lg transition-colors ${
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
               viewMode === "text"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 hover:bg-gray-200"
+                ? "bg-gray-900 text-white"
+                : "text-gray-600 hover:text-gray-900"
             }`}
           >
             Text
