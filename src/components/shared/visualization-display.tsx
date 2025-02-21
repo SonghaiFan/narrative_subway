@@ -1,23 +1,26 @@
 "use client";
 
-import { TimelineEvent } from "@/types/article";
-import { useState } from "react";
-import { EntityTextSummary } from "./entity-text-summary";
-import { EntityVisualOverview } from "./entity-visual-overview";
+import { ReactNode } from "react";
 
-interface EntityDisplayProps {
-  events?: TimelineEvent[];
+interface VisualizationDisplayProps {
+  title: string;
+  viewMode: "visual" | "text";
+  setViewMode: (mode: "visual" | "text") => void;
+  children: ReactNode;
+  isEmpty?: boolean;
 }
 
-type ViewMode = "visual" | "text";
-
-export function EntityDisplay({ events = [] }: EntityDisplayProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>("visual");
-
-  if (!events.length) {
+export function VisualizationDisplay({
+  title,
+  viewMode,
+  setViewMode,
+  children,
+  isEmpty = false,
+}: VisualizationDisplayProps) {
+  if (isEmpty) {
     return (
       <div className="p-6 h-full flex flex-col items-center justify-center">
-        <p className="text-gray-500">No events data available</p>
+        <p className="text-gray-500">No data available</p>
       </div>
     );
   }
@@ -25,7 +28,7 @@ export function EntityDisplay({ events = [] }: EntityDisplayProps) {
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
-        <h2 className="text-sm font-medium text-gray-600">Entity Timeline</h2>
+        <h2 className="text-sm font-medium text-gray-600">{title}</h2>
         <div className="flex gap-1">
           <button
             onClick={() => setViewMode("visual")}
@@ -49,13 +52,7 @@ export function EntityDisplay({ events = [] }: EntityDisplayProps) {
           </button>
         </div>
       </div>
-      <div className="flex-1 overflow-auto">
-        {viewMode === "visual" ? (
-          <EntityVisualOverview events={events} />
-        ) : (
-          <EntityTextSummary events={events} />
-        )}
-      </div>
+      <div className="flex-1 overflow-auto">{children}</div>
     </div>
   );
 }

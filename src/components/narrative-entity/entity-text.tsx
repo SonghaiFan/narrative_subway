@@ -16,11 +16,11 @@ interface EntityContext {
   }[];
 }
 
-interface EntityTextSummaryProps {
+interface EntityTextProps {
   events: TimelineEvent[];
 }
 
-export function EntityTextSummary({ events }: EntityTextSummaryProps) {
+export function EntityText({ events }: EntityTextProps) {
   const [expandedEntities, setExpandedEntities] = useState<Set<string>>(
     new Set()
   );

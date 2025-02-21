@@ -1,19 +1,13 @@
-import { Entity, TimelineEvent } from "@/types/article";
-import { useEffect, useRef } from "react";
-import * as d3 from "d3";
+"use client";
 
-interface EntityVisualOverviewProps {
+import { TimelineEvent } from "@/types/article";
+import { useEffect, useRef, useCallback } from "react";
+import * as d3 from "d3";
+import { ENTITY_CONFIG, ENTITY_COLORS } from "../shared/visualization-config";
+
+interface EntityVisualProps {
   events: TimelineEvent[];
 }
-
-const ENTITY_COLORS: { [key: string]: string } = {
-  agent: "#2563EB", // Strong blue for primary actors
-  patient: "#DC2626", // Red for those affected
-  protagonist: "#059669", // Green for main positive actors
-  antagonist: "#7C3AED", // Purple for main negative actors
-  secondary: "#6B7280", // Gray for supporting entities
-  expert: "#EA580C", // Orange for expert entities
-};
 
 const TIMELINE_CONFIG = {
   entity: {
@@ -32,19 +26,20 @@ const TIMELINE_CONFIG = {
     duration: 200,
   },
   margin: {
-    top: 60,
+    top: 30,
     right: 40,
     bottom: 20,
     left: 40,
   },
 };
 
-export function EntityVisualOverview({ events }: EntityVisualOverviewProps) {
+export function EntityVisual({ events }: EntityVisualProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  // Memoize the render function to avoid recreating it on every resize
+  const renderVisualization = useCallback(() => {
     if (
       !events.length ||
       !svgRef.current ||
@@ -95,16 +90,7 @@ export function EntityVisualOverview({ events }: EntityVisualOverviewProps) {
     const headerContainer = d3
       .select(headerRef.current)
       .style("width", `${width + TIMELINE_CONFIG.margin.left}px`)
-      .style("margin-left", `${TIMELINE_CONFIG.margin.left}px`)
-      .style("height", "50px")
-      .style("position", "sticky")
-      .style("top", "0")
-      .style("background-color", "white")
-      .style("z-index", "10")
-      .style("display", "flex")
-      .style("align-items", "flex-end")
-      .style("padding-bottom", "10px")
-      .style("border-bottom", "1px solid #e5e7eb");
+      .style("margin-left", `${TIMELINE_CONFIG.margin.left}px`);
 
     // Calculate scales with minimum column width
     const columnWidth = Math.max(100, width / (top5Entities.length + 1)); // Add padding for better spacing
@@ -266,7 +252,26 @@ export function EntityVisualOverview({ events }: EntityVisualOverviewProps) {
     const yScale = d3
       .scaleLinear()
       .domain([minTime, maxTime])
-      .range([0, height]);
+      .range([0, height])
+      .nice();
+
+    // Add y-axis with styling
+    const yAxis = d3.axisLeft(yScale).tickSize(5).tickPadding(5);
+
+    g.append("g")
+      .attr("class", "y-axis")
+      .call(yAxis)
+      .style("font-size", "12px")
+      .call((g) => g.select(".domain").remove())
+      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -height / 2)
+      .attr("y", -40)
+      .attr("fill", "#64748b")
+      .attr("text-anchor", "middle")
+      .text("Narrative Time");
 
     // Draw events
     const eventGroups = g
@@ -418,49 +423,65 @@ export function EntityVisualOverview({ events }: EntityVisualOverviewProps) {
       }
     });
 
-    // Add narrative time labels on y-axis with background
-    const timeLabels = g
-      .append("g")
-      .selectAll("g")
-      .data(events)
-      .enter()
-      .append("g");
-
-    // Add white background for labels
-    timeLabels
-      .append("rect")
-      .attr("x", -35)
-      .attr("y", (d) => yScale(d.temporal_anchoring.narrative_time) - 10)
-      .attr("width", 30)
-      .attr("height", 20)
-      .attr("fill", "white");
-
-    // Add time labels
-    timeLabels
-      .append("text")
-      .attr("x", -10)
-      .attr("y", (d) => yScale(d.temporal_anchoring.narrative_time))
-      .attr("text-anchor", "end")
-      .attr("dominant-baseline", "middle")
-      .attr("fill", "#666")
-      .attr("font-size", "12px")
-      .text((d) => d.temporal_anchoring.narrative_time);
-
     // Cleanup function
     return () => {
       tooltip.remove();
     };
   }, [events]);
 
+  // Initial render
+  useEffect(() => {
+    renderVisualization();
+  }, [renderVisualization]);
+
+  // Handle resize
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Create resize observer
+    const resizeObserver = new ResizeObserver((entries) => {
+      // Debounce the resize event
+      const timeoutId = setTimeout(() => {
+        renderVisualization();
+      }, 100);
+
+      return () => clearTimeout(timeoutId);
+    });
+
+    // Start observing the container
+    resizeObserver.observe(containerRef.current);
+
+    // Cleanup
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [renderVisualization]);
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      renderVisualization();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [renderVisualization]);
+
   return (
-    <div className="relative w-full" ref={containerRef}>
-      <div ref={headerRef} className="bg-white sticky top-0 z-10 mt-5" />
+    <div className="entity-visual relative w-full" ref={containerRef}>
+      <div
+        ref={headerRef}
+        className="bg-white sticky top-0 z-10 flex items-end border-b border-gray-200 h-10"
+      />
       <svg
         ref={svgRef}
         className="w-full"
         style={{
           minHeight: "800px",
-          overflow: "visible", // Allow labels to overflow if needed
+          overflow: "visible",
         }}
       />
     </div>

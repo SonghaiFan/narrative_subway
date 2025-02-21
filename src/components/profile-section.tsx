@@ -26,7 +26,7 @@ export function ProfileSection({
     .size;
 
   return (
-    <article className="p-6 h-full flex flex-col">
+    <article className="p-6 h-full flex flex-col overflow-auto">
       {/* Header with category and date */}
       <div className="flex items-center gap-3 text-sm mb-4">
         <span className="bg-neutral-100 text-neutral-800 rounded-full px-3 py-1">
