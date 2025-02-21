@@ -1,10 +1,14 @@
-export type TimelineLocation = "US" | "China" | "Russia" | "Canada";
-
 export interface Entity {
-  id: string;
+  id: string; // unique and unifined id
   name: string;
-  role_type: "agent" | "patient" | "secondary" | "expert";
-  social_role: string;
+  role_type: "agent" | "patient" | "protagonist" | "antagonist" | "secondary";
+  social_role:
+    | "government"
+    | "organization"
+    | "expert"
+    | "public"
+    | "stakeholder"
+    | "object";
 }
 
 export interface Topic {

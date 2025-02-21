@@ -228,7 +228,7 @@
           "id": "ent_6_1",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         }
       ],
       "topic": {
@@ -259,7 +259,7 @@
           "id": "ent_7_1",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         },
         {
           "id": "ent_7_2",
@@ -296,7 +296,7 @@
           "id": "ent_8_1",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         },
         {
           "id": "ent_8_2",
@@ -332,8 +332,8 @@
         {
           "id": "ent_9_1",
           "name": "Rodney Coates",
-          "role_type": "expert",
-          "social_role": "academic"
+          "role_type": "secondary",
+          "social_role": "expert"
         }
       ],
       "topic": {
@@ -370,7 +370,7 @@
           "id": "ent_10_2",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         }
       ],
       "topic": {
@@ -437,8 +437,8 @@
         {
           "id": "ent_12_1",
           "name": "Rodney Coates",
-          "role_type": "expert",
-          "social_role": "academic"
+          "role_type": "secondary",
+          "social_role": "expert"
         }
       ],
       "topic": {
@@ -452,7 +452,7 @@
     },
     {
       "index": 13,
-      "text": "According to security analyst Vanda Felbab-Brown, most of the finished fentanyl products imported into the US come from two Mexican cartels which make the drug with \"precursor chemicals\" from China.",
+      "text": "According to security expert Vanda Felbab-Brown, most of the finished fentanyl products imported into the US come from two Mexican cartels which make the drug with \"precursor chemicals\" from China.",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -468,14 +468,14 @@
         {
           "id": "ent_13_1",
           "name": "Vanda Felbab-Brown",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_13_2",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         },
         {
           "id": "ent_13_3",
@@ -487,7 +487,7 @@
           "id": "ent_13_4",
           "name": "Mexican cartels",
           "role_type": "agent",
-          "social_role": "criminal"
+          "social_role": "public"
         },
         {
           "id": "ent_13_5",
@@ -524,13 +524,13 @@
           "id": "ent_14_1",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         },
         {
           "id": "ent_14_2",
           "name": "Vanda Felbab-Brown",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_14_3",
@@ -609,8 +609,8 @@
         {
           "id": "ent_16_2",
           "name": "Vanda Felbab-Brown",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         }
       ],
       "topic": {
@@ -661,7 +661,7 @@
     },
     {
       "index": 18,
-      "text": "The deadly drug is then smuggled into the US via land, sea, air and underground routes and distributed by local criminals.",
+      "text": "The deadly drug is then smuggled into the US via land, sea, air and underground routes and distributed by local publics.",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -752,7 +752,7 @@
           "id": "ent_20_1",
           "name": "Mexican cartels",
           "role_type": "agent",
-          "social_role": "criminal"
+          "social_role": "public"
         },
         {
           "id": "ent_20_2",
@@ -789,7 +789,7 @@
           "id": "ent_21_1",
           "name": "Nitazenes",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         }
       ],
       "topic": {
@@ -819,14 +819,14 @@
         {
           "id": "ent_22_1",
           "name": "Vanda Felbab-Brown",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_22_2",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         },
         {
           "id": "ent_22_3",
@@ -852,7 +852,7 @@
     },
     {
       "index": 23,
-      "text": "\"In fact, Canada's fentanyl market is huge and very devastating.",
+      "text": "\"In fact, Canada's fentanyl market is huge and very devastating,\"",
       "narrative_level": "metadiegetic",
       "narrator_type": "quoted_source",
       "temporal_position": "present",
@@ -883,7 +883,7 @@
     },
     {
       "index": 24,
-      "text": "But it's completely separate from the US fentanyl market,\" she said.",
+      "text": "\"But it's completely separate from the US fentanyl market,\" she said.",
       "narrative_level": "metadiegetic",
       "narrator_type": "quoted_source",
       "temporal_position": "present",
@@ -943,7 +943,7 @@
           "id": "ent_25_2",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         },
         {
           "id": "ent_25_3",
@@ -1055,7 +1055,7 @@
     },
     {
       "index": 28,
-      "text": "Analysts say correction (a decline of at least 10 per cent from the previous peak) on equity markets is now looking more likely.",
+      "text": "experts say correction (a decline of at least 10 per cent from the previous peak) on equity markets is now looking more likely.",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "future",
@@ -1065,7 +1065,7 @@
         "real_time": null,
         "narrative_time": 28,
         "temporal_type": "relative",
-        "anchor": "analysts' projection"
+        "anchor": "experts' projection"
       },
       "entities": [],
       "topic": {
@@ -1102,7 +1102,7 @@
           "id": "ent_29_2",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         }
       ],
       "topic": {
@@ -1206,8 +1206,8 @@
         {
           "id": "ent_32_1",
           "name": "John Coyne",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_32_2",
@@ -1255,8 +1255,8 @@
         {
           "id": "ent_33_2",
           "name": "John Coyne",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         }
       ],
       "topic": {
@@ -1270,7 +1270,7 @@
     },
     {
       "index": 34,
-      "text": "\"If they wanted to, they could stop the flow of precursors and synthetic opioids to North America.",
+      "text": "\"If they wanted to, they could stop the flow of precursors and synthetic opioids to North America,\"",
       "narrative_level": "metadiegetic",
       "narrator_type": "quoted_source",
       "temporal_position": "present",
@@ -1286,14 +1286,14 @@
         {
           "id": "ent_34_1",
           "name": "John Coyne",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_34_2",
           "name": "North America",
           "role_type": "patient",
-          "social_role": "region"
+          "social_role": "government"
         }
       ],
       "topic": {
@@ -1366,8 +1366,8 @@
         {
           "id": "ent_36_1",
           "name": "John Coyne",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_36_2",
@@ -1403,14 +1403,14 @@
         {
           "id": "ent_37_1",
           "name": "John Coyne",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_37_2",
           "name": "Mexican cartels",
           "role_type": "agent",
-          "social_role": "criminal"
+          "social_role": "public"
         }
       ],
       "topic": {
@@ -1424,7 +1424,7 @@
     },
     {
       "index": 38,
-      "text": "Drug manufacturers could reroute their finished products via other countries, the Brooking Institute's Dr Felbab-Brown said.",
+      "text": "Drug manufacturers could reroute their finished products via other countries, the Brookings Institute's Dr Felbab-Brown said.",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "future",
@@ -1440,12 +1440,12 @@
         {
           "id": "ent_38_1",
           "name": "Vanda Felbab-Brown",
-          "role_type": "expert",
-          "social_role": "analyst"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_38_2",
-          "name": "Brooking Institute",
+          "name": "Brookings Institute",
           "role_type": "secondary",
           "social_role": "organization"
         }
@@ -1478,7 +1478,7 @@
           "id": "ent_39_1",
           "name": "Fentanyl cooks",
           "role_type": "agent",
-          "social_role": "criminal"
+          "social_role": "public"
         },
         {
           "id": "ent_39_2",
@@ -1526,8 +1526,8 @@
         {
           "id": "ent_40_1",
           "name": "Rodney Coates",
-          "role_type": "expert",
-          "social_role": "academic"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_40_2",
@@ -1569,8 +1569,8 @@
         {
           "id": "ent_41_1",
           "name": "Rodney Coates",
-          "role_type": "expert",
-          "social_role": "academic"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_41_2",
@@ -1581,7 +1581,7 @@
       ],
       "topic": {
         "main_topic": "immigration policy",
-        "sub_topic": ["economic impact"],
+        "sub_topic": ["object impact"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.2
@@ -1606,8 +1606,8 @@
         {
           "id": "ent_42_1",
           "name": "Rodney Coates",
-          "role_type": "expert",
-          "social_role": "academic"
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
           "id": "ent_42_2",
@@ -1618,7 +1618,7 @@
       ],
       "topic": {
         "main_topic": "immigration policy",
-        "sub_topic": ["economic impact"],
+        "sub_topic": ["object impact"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.2
@@ -1650,7 +1650,7 @@
           "id": "ent_43_2",
           "name": "American goods",
           "role_type": "patient",
-          "social_role": "economic"
+          "social_role": "object"
         }
       ],
       "topic": {
@@ -1841,7 +1841,7 @@
           "id": "ent_48_1",
           "name": "Fentanyl",
           "role_type": "agent",
-          "social_role": "medical/drug"
+          "social_role": "object"
         },
         {
           "id": "ent_48_2",
