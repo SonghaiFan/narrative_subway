@@ -19,3 +19,27 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+[data-panel-group-direction="horizontal"] > [data-panel-resize-handle-id] {
+  width: 2px;
+  margin: 0 4px;
+}
+
+[data-panel-group-direction="vertical"] > [data-panel-resize-handle-id] {
+  height: 2px;
+  margin: 4px 0;
+}
+
+[data-panel-resize-handle-id] {
+  background-color: #e5e7eb;
+  transition: background-color 0.2s;
+}
+
+[data-panel-resize-handle-id]:hover {
+  background-color: #d1d5db;
+}
+
+[data-panel-resize-handle-id][data-resize-handle-active] {
+  background-color: #9ca3af;
+  transition: background-color 0s;
+}

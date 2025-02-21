@@ -1,7 +1,7 @@
 "use client";
 
 import { TimelineEvent } from "@/types/article";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { TIME_CONFIG } from "../shared/visualization-config";
 
@@ -18,8 +18,7 @@ export function NarrativeTimeVisual({
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  // Memoize the render function to avoid recreating it on every resize
-  const renderVisualization = useCallback(() => {
+  useEffect(() => {
     if (
       !events.length ||
       !svgRef.current ||
@@ -372,48 +371,7 @@ export function NarrativeTimeVisual({
     return () => {
       tooltip.remove();
     };
-  }, [events, selectedEventId]);
-
-  // Initial render
-  useEffect(() => {
-    renderVisualization();
-  }, [renderVisualization]);
-
-  // Handle resize
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // Create resize observer
-    const resizeObserver = new ResizeObserver((entries) => {
-      // Debounce the resize event
-      const timeoutId = setTimeout(() => {
-        renderVisualization();
-      }, 100);
-
-      return () => clearTimeout(timeoutId);
-    });
-
-    // Start observing the container
-    resizeObserver.observe(containerRef.current);
-
-    // Cleanup
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [renderVisualization]);
-
-  // Handle window resize
-  useEffect(() => {
-    const handleResize = () => {
-      renderVisualization();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [renderVisualization]);
+  }, [events]);
 
   return (
     <div ref={containerRef} className="relative w-full">

@@ -1,7 +1,7 @@
 "use client";
 
 import { TimelineEvent } from "@/types/article";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { ENTITY_CONFIG, ENTITY_COLORS } from "../shared/visualization-config";
 
@@ -38,8 +38,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  // Memoize the render function to avoid recreating it on every resize
-  const renderVisualization = useCallback(() => {
+  useEffect(() => {
     if (
       !events.length ||
       !svgRef.current ||
@@ -429,59 +428,18 @@ export function EntityVisual({ events }: EntityVisualProps) {
     };
   }, [events]);
 
-  // Initial render
-  useEffect(() => {
-    renderVisualization();
-  }, [renderVisualization]);
-
-  // Handle resize
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    // Create resize observer
-    const resizeObserver = new ResizeObserver((entries) => {
-      // Debounce the resize event
-      const timeoutId = setTimeout(() => {
-        renderVisualization();
-      }, 100);
-
-      return () => clearTimeout(timeoutId);
-    });
-
-    // Start observing the container
-    resizeObserver.observe(containerRef.current);
-
-    // Cleanup
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [renderVisualization]);
-
-  // Handle window resize
-  useEffect(() => {
-    const handleResize = () => {
-      renderVisualization();
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [renderVisualization]);
-
   return (
     <div className="entity-visual relative w-full" ref={containerRef}>
       <div
         ref={headerRef}
-        className="bg-white sticky top-0 z-10 flex items-end border-b border-gray-200 h-10"
+        className="bg-white sticky top-0 z-10 flex items-end  border-b border-gray-200 h-10"
       />
       <svg
         ref={svgRef}
         className="w-full"
         style={{
           minHeight: "800px",
-          overflow: "visible",
+          overflow: "visible", // Allow labels to overflow if needed
         }}
       />
     </div>
