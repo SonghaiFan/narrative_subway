@@ -102,14 +102,14 @@ export function ResizableGrid({
             <Panel defaultSize={30} minSize={20}>
               {topLeft}
             </Panel>
-            <PanelResizeHandle className="h-1 bg-gray-200 hover:bg-gray-300 transition-colors" />
+            {/* <PanelResizeHandle className="h-1 bg-gray-200 hover:bg-gray-300 transition-colors" /> */}
             <Panel defaultSize={70} minSize={20}>
               {bottomLeft}
             </Panel>
           </PanelGroup>
         </Panel>
 
-        <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-300 transition-colors" />
+        {/* <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-300 transition-colors" /> */}
 
         {/* Right Column */}
         <Panel defaultSize={70} minSize={20}>
@@ -121,7 +121,7 @@ export function ResizableGrid({
             <Panel defaultSize={30} minSize={20}>
               {topRight}
             </Panel>
-            <PanelResizeHandle className="h-1 bg-gray-200 hover:bg-gray-300 transition-colors" />
+            {/* <PanelResizeHandle className="h-1 bg-gray-200 hover:bg-gray-300 transition-colors" /> */}
             <Panel defaultSize={70} minSize={20}>
               {bottomRight}
             </Panel>
@@ -131,7 +131,7 @@ export function ResizableGrid({
 
       {/* Cross-section handle */}
       <div
-        className={`absolute w-6 h-6 bg-gray-100 hover:bg-gray-200 rounded-full cursor-move transform -translate-x-1/2 -translate-y-1/2 transition-colors z-50 flex items-center justify-center shadow-md ${
+        className={`absolute w-6 h-6 bg-gray-100 hover:bg-gray-200 rounded-full cursor-move transform -translate-x-1/2 -translate-y-1/2 transition-colors z-50 flex items-center justify-center shadow-md border border-gray-300 ${
           isDragging ? "bg-gray-200 scale-110" : ""
         }`}
         style={{
@@ -139,14 +139,7 @@ export function ResizableGrid({
           top: `${leftVerticalSizes[0]}%`,
         }}
         onMouseDown={handleCrossDragStart}
-      >
-        <FontAwesomeIcon
-          icon={faUpDownLeftRight}
-          className={`text-sm transition-transform ${
-            isDragging ? "scale-110" : ""
-          }`}
-        />
-      </div>
+      ></div>
     </div>
   );
 }

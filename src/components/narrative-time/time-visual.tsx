@@ -115,35 +115,35 @@ export function NarrativeTimeVisual({
       .curve(d3.curveMonotoneY); // Use monotoneY for better vertical progression
 
     // Add grid lines behind points
-    const gridGroup = g.append("g").attr("class", "grid-group");
+    // const gridGroup = g.append("g").attr("class", "grid-group");
 
-    gridGroup
-      .append("g")
-      .attr("class", "grid-lines")
-      .selectAll("line")
-      .data(yScale.ticks())
-      .enter()
-      .append("line")
-      .attr("x1", 0)
-      .attr("x2", width)
-      .attr("y1", (d) => yScale(d))
-      .attr("y2", (d) => yScale(d))
-      .attr("stroke", "#e5e7eb")
-      .attr("stroke-dasharray", "2,2");
+    // gridGroup
+    //   .append("g")
+    //   .attr("class", "grid-lines")
+    //   .selectAll("line")
+    //   .data(yScale.ticks())
+    //   .enter()
+    //   .append("line")
+    //   .attr("x1", 0)
+    //   .attr("x2", width)
+    //   .attr("y1", (d) => yScale(d))
+    //   .attr("y2", (d) => yScale(d))
+    //   .attr("stroke", "#e5e7eb")
+    //   .attr("stroke-dasharray", "2,2");
 
-    gridGroup
-      .append("g")
-      .attr("class", "grid-lines")
-      .selectAll("line")
-      .data(xScale.ticks())
-      .enter()
-      .append("line")
-      .attr("x1", (d) => xScale(d))
-      .attr("x2", (d) => xScale(d))
-      .attr("y1", 0)
-      .attr("y2", height)
-      .attr("stroke", "#e5e7eb")
-      .attr("stroke-dasharray", "2,2");
+    // gridGroup
+    //   .append("g")
+    //   .attr("class", "grid-lines")
+    //   .selectAll("line")
+    //   .data(xScale.ticks())
+    //   .enter()
+    //   .append("line")
+    //   .attr("x1", (d) => xScale(d))
+    //   .attr("x2", (d) => xScale(d))
+    //   .attr("y1", 0)
+    //   .attr("y2", height)
+    //   .attr("stroke", "#e5e7eb")
+    //   .attr("stroke-dasharray", "2,2");
 
     // Create fixed header for x-axis
     const headerContainer = d3
@@ -166,18 +166,18 @@ export function NarrativeTimeVisual({
     headerSvg
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0,25)`)
+      .attr("transform", `translate(0,30)`)
       .call(xAxis)
       .style("font-size", `${TIME_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
-      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
-      .append("text")
-      .attr("class", "axis-label")
-      .attr("x", width / 2)
-      .attr("y", -TIME_CONFIG.axis.labelOffset + 25)
-      .attr("fill", "#64748b")
-      .attr("text-anchor", "middle")
-      .text("Real Time");
+      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"));
+    // .append("text")
+    // .attr("class", "axis-label")
+    // .attr("x", width / 2)
+    // .attr("y", -TIME_CONFIG.axis.labelOffset + 25)
+    // .attr("fill", "#64748b")
+    // .attr("text-anchor", "middle")
+    // .text("Real Time");
 
     // Add y-axis
     const yAxis = d3
@@ -212,7 +212,7 @@ export function NarrativeTimeVisual({
       .datum(sortedPoints)
       .attr("class", "line-shadow")
       .attr("fill", "none")
-      .attr("stroke", "#6366f1")
+      .attr("stroke", "black")
       .attr("stroke-width", TIME_CONFIG.curve.strokeWidth + 2)
       .attr("stroke-opacity", 0.1)
       .attr("stroke-linecap", "round")
@@ -225,7 +225,7 @@ export function NarrativeTimeVisual({
       .datum(sortedPoints)
       .attr("class", "main-line")
       .attr("fill", "none")
-      .attr("stroke", "#6366f1")
+      .attr("stroke", "black")
       .attr("stroke-width", TIME_CONFIG.curve.strokeWidth)
       .attr("stroke-opacity", TIME_CONFIG.curve.opacity)
       .attr("stroke-linecap", "round")
@@ -242,7 +242,7 @@ export function NarrativeTimeVisual({
       .attr("y1", (d) => yScale(d.narrativeTime))
       .attr("x2", (d, i) => xScale(sortedPoints[i + 1].realTime))
       .attr("y2", (d, i) => yScale(sortedPoints[i + 1].narrativeTime))
-      .attr("stroke", "#6366f1")
+      .attr("stroke", "black")
       .attr("stroke-width", 1)
       .attr("stroke-opacity", 0.15)
       .attr("stroke-dasharray", "2,2");
@@ -318,7 +318,7 @@ export function NarrativeTimeVisual({
       .append("circle")
       .attr("r", TIME_CONFIG.point.radius)
       .attr("fill", "white")
-      .attr("stroke", "#6366f1")
+      .attr("stroke", "black")
       .attr("stroke-width", TIME_CONFIG.point.strokeWidth)
       .style("cursor", "pointer")
       .on("mouseenter", function (event, d) {

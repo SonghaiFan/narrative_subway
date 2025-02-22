@@ -31,11 +31,11 @@ function getSentimentColor(sentiment: number): {
   text: string;
 } {
   if (sentiment > 0) {
-    return { bg: "#dcfce7", border: "#86efac", text: "#166534" };
+    return { bg: "#ffffff", border: "#000000", text: "#000000" };
   } else if (sentiment < 0) {
-    return { bg: "#fee2e2", border: "#fca5a5", text: "#991b1b" };
+    return { bg: "#f3f3f3", border: "#666666", text: "#000000" };
   }
-  return { bg: "#f3f4f6", border: "#d1d5db", text: "#374151" };
+  return { bg: "#ffffff", border: "#999999", text: "#000000" };
 }
 
 export function NarrativeTopicVisual({
@@ -44,6 +44,8 @@ export function NarrativeTopicVisual({
 }: NarrativeTopicVisualProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<cytoscape.Core | null>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Process data for DAG
   const { nodes, edges } = useMemo(() => {
@@ -61,8 +63,9 @@ export function NarrativeTopicVisual({
     const nodeMap = new Map<string, TimelineEvent>();
     const topicTimestampMap = new Map<string, Map<string, string>>();
     const idCounterMap = new Map<string, number>();
+    const connectedNodes = new Set<string>();
 
-    // Create nodes
+    // First pass: Create all nodes
     sortedEvents.forEach((event, idx) => {
       const timestamp =
         event.temporal_anchoring?.real_time ||
@@ -74,21 +77,6 @@ export function NarrativeTopicVisual({
 
       const id = generateEventId(event, counter);
       nodeMap.set(id, event);
-      const colors = getSentimentColor(event.topic.sentiment.intensity);
-
-      nodes.push({
-        data: {
-          id,
-          mainTopic: event.topic.main_topic,
-          subTopics: event.topic.sub_topic,
-          timestamp,
-          sentiment: event.topic.sentiment.intensity,
-          selected: id === selectedEventId,
-          bgColor: colors.bg,
-          borderColor: colors.border,
-          textColor: colors.text,
-        },
-      });
 
       // Track nodes by topic and timestamp for linking
       if (!topicTimestampMap.has(event.topic.main_topic)) {
@@ -97,63 +85,100 @@ export function NarrativeTopicVisual({
       topicTimestampMap.get(event.topic.main_topic)!.set(timestamp, id);
     });
 
-    // Create edges based on topic and temporal relationships
+    // Second pass: Create edges and track connected nodes
     sortedEvents.forEach((event, idx) => {
-      if (idx === 0) return;
-
-      const timestamp =
-        event.temporal_anchoring?.real_time ||
-        event.temporal_anchoring?.anchor ||
-        "Unknown";
-      const baseKey = `${event.topic.main_topic}-${timestamp}`;
-      const counter = idCounterMap.get(baseKey) || 1;
-      const currentId = generateEventId(event, counter);
-
-      const topicNodes = topicTimestampMap.get(event.topic.main_topic)!;
-      const timestamps = Array.from(topicNodes.keys()).sort();
-      const currentTimestampIdx = timestamps.indexOf(timestamp);
-
-      // Link to previous nodes in the same topic
-      if (currentTimestampIdx > 0) {
-        const prevTimestamp = timestamps[currentTimestampIdx - 1];
-        const prevId = topicNodes.get(prevTimestamp)!;
-        edges.push({
-          data: {
-            id: `${prevId}-${currentId}`,
-            source: prevId,
-            target: currentId,
-            weight: 1,
-            type: "same-topic",
-          },
-        });
-      }
-
-      // Create cross-topic links based on shared subtopics
-      const prevEvent = sortedEvents[idx - 1];
-      const sharedSubtopics = event.topic.sub_topic.filter((st) =>
-        prevEvent.topic.sub_topic.includes(st)
-      );
-
-      if (
-        sharedSubtopics.length > 0 &&
-        prevEvent.topic.main_topic !== event.topic.main_topic
-      ) {
-        const prevTimestamp =
-          prevEvent.temporal_anchoring?.real_time ||
-          prevEvent.temporal_anchoring?.anchor ||
+      if (idx === 0) {
+        // Always include the first node
+        const id = generateEventId(event, 1);
+        connectedNodes.add(id);
+      } else {
+        const timestamp =
+          event.temporal_anchoring?.real_time ||
+          event.temporal_anchoring?.anchor ||
           "Unknown";
-        const prevBaseKey = `${prevEvent.topic.main_topic}-${prevTimestamp}`;
-        const prevCounter = idCounterMap.get(prevBaseKey) || 1;
-        const prevId = generateEventId(prevEvent, prevCounter);
+        const baseKey = `${event.topic.main_topic}-${timestamp}`;
+        const counter = idCounterMap.get(baseKey) || 1;
+        const currentId = generateEventId(event, counter);
 
-        edges.push({
+        const topicNodes = topicTimestampMap.get(event.topic.main_topic)!;
+        const timestamps = Array.from(topicNodes.keys()).sort();
+        const currentTimestampIdx = timestamps.indexOf(timestamp);
+
+        let isConnected = false;
+
+        // Link to previous nodes in the same topic
+        if (currentTimestampIdx > 0) {
+          const prevTimestamp = timestamps[currentTimestampIdx - 1];
+          const prevId = topicNodes.get(prevTimestamp)!;
+          edges.push({
+            data: {
+              id: `${prevId}-${currentId}`,
+              source: prevId,
+              target: currentId,
+              weight: 1,
+              type: "same-topic",
+            },
+          });
+          connectedNodes.add(prevId);
+          connectedNodes.add(currentId);
+          isConnected = true;
+        }
+
+        // Create cross-topic links
+        const prevEvent = sortedEvents[idx - 1];
+        const sharedSubtopics = event.topic.sub_topic.filter((st) =>
+          prevEvent.topic.sub_topic.includes(st)
+        );
+
+        if (
+          sharedSubtopics.length > 0 &&
+          prevEvent.topic.main_topic !== event.topic.main_topic
+        ) {
+          const prevTimestamp =
+            prevEvent.temporal_anchoring?.real_time ||
+            prevEvent.temporal_anchoring?.anchor ||
+            "Unknown";
+          const prevBaseKey = `${prevEvent.topic.main_topic}-${prevTimestamp}`;
+          const prevCounter = idCounterMap.get(prevBaseKey) || 1;
+          const prevId = generateEventId(prevEvent, prevCounter);
+
+          edges.push({
+            data: {
+              id: `${prevId}-${currentId}-cross`,
+              source: prevId,
+              target: currentId,
+              weight: sharedSubtopics.length,
+              type: "cross-topic",
+              sharedTopics: sharedSubtopics,
+            },
+          });
+          connectedNodes.add(prevId);
+          connectedNodes.add(currentId);
+          isConnected = true;
+        }
+      }
+    });
+
+    // Only create nodes for connected events
+    Array.from(nodeMap.entries()).forEach(([id, event]) => {
+      if (connectedNodes.has(id) || id === selectedEventId) {
+        const colors = getSentimentColor(event.topic.sentiment.intensity);
+        nodes.push({
           data: {
-            id: `${prevId}-${currentId}-cross`,
-            source: prevId,
-            target: currentId,
-            weight: sharedSubtopics.length,
-            type: "cross-topic",
-            sharedTopics: sharedSubtopics,
+            id,
+            mainTopic: event.topic.main_topic,
+            subTopics: event.topic.sub_topic,
+            timestamp:
+              event.temporal_anchoring?.real_time ||
+              event.temporal_anchoring?.anchor ||
+              "Unknown",
+            sentiment: event.topic.sentiment.intensity,
+            selected: id === selectedEventId,
+            bgColor: colors.bg,
+            borderColor: colors.border,
+            textColor: colors.text,
+            text: event.text,
+            event: event,
           },
         });
       }
@@ -165,7 +190,6 @@ export function NarrativeTopicVisual({
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Initialize Cytoscape
     const cy = cytoscape({
       container: containerRef.current,
       elements: {
@@ -178,29 +202,48 @@ export function NarrativeTopicVisual({
           style: {
             "background-color": "data(bgColor)",
             "border-color": "data(borderColor)",
-            "border-width": 2,
-            width: 80,
+            "border-width": 1,
+            width: 100,
             height: 40,
             shape: "round-rectangle",
-            "text-wrap": "wrap",
-            "text-max-width": 70,
+            label: (ele) => {
+              const topic = ele.data("mainTopic");
+              const text = ele.data("text");
+              // Truncate text to ~50 chars
+              const truncatedText =
+                text.length > 50 ? text.slice(0, 47) + "..." : text;
+              return `${topic}\n${truncatedText}`;
+            },
             "text-valign": "center",
             "text-halign": "center",
-            "font-size": 10,
+            "text-wrap": "wrap",
+            "text-max-width": "90px",
+            "font-size": "7px",
+            "text-overflow-wrap": "anywhere",
+            "text-justification": "center",
+            "text-margin-y": 3,
+            "line-height": 1.2,
             color: "data(textColor)",
-            "text-margin-y": -5,
-            label: "data(mainTopic)",
-            "overlay-padding": "6px",
+            "overlay-padding": "4px",
             "overlay-opacity": 0,
+            "transition-property":
+              "background-color, border-color, border-width",
+            "transition-duration": 150,
           },
         },
         {
-          selector: "node[selected]",
+          selector: "node.highlight",
           style: {
-            "border-width": 3,
-            "border-color": "#3b82f6",
-            "border-opacity": 0.8,
-            "background-opacity": 0.9,
+            "border-width": 1.5,
+            "border-color": "#000000",
+            "background-color": "#ffffff",
+            "z-index": 999,
+          },
+        },
+        {
+          selector: "node.faded",
+          style: {
+            opacity: 0.3,
           },
         },
         {
@@ -208,79 +251,189 @@ export function NarrativeTopicVisual({
           style: {
             "curve-style": "bezier",
             "target-arrow-shape": "triangle",
-            "arrow-scale": 0.8,
+            "arrow-scale": 0.5,
+            width: 1,
+            "line-color": "#666666",
+            "target-arrow-color": "#666666",
+            opacity: 0.8,
+            "transition-property": "opacity, line-color, target-arrow-color",
+            "transition-duration": 200,
+          },
+        },
+        {
+          selector: "edge.highlight",
+          style: {
+            "line-color": "#000000",
+            "target-arrow-color": "#000000",
+            opacity: 1,
             width: 1.5,
-            "line-color": "#cbd5e1",
-            "target-arrow-color": "#cbd5e1",
-            opacity: 0.6,
+            "z-index": 999,
+          },
+        },
+        {
+          selector: "edge.faded",
+          style: {
+            opacity: 0.1,
           },
         },
         {
           selector: "edge[type='cross-topic']",
           style: {
             "line-style": "dashed",
-            "line-dash-pattern": [6, 3],
-            "line-color": "#94a3b8",
-            "target-arrow-color": "#94a3b8",
-            opacity: 0.4,
+            "line-dash-pattern": [4, 4],
+            "line-color": "#999999",
+            "target-arrow-color": "#999999",
+            opacity: 0.6,
           },
         },
       ],
       layout: {
         name: "dagre",
-        rankDir: "LR",
+        rankDir: "LR" as const,
+        align: "UL" as const,
+        ranker: "longest-path" as const,
         nodeSep: 50,
-        rankSep: 80,
+        rankSep: 100,
         edgeSep: 20,
-        ranker: "network-simplex",
+        marginX: 40,
+        marginY: 20,
         animate: true,
         animationDuration: 300,
         fit: true,
-        padding: 30,
+        padding: { top: 20, bottom: 20, left: 30, right: 30 },
+        spacingFactor: 1.5,
+        acyclicer: "greedy" as const,
       },
       wheelSensitivity: 0.2,
       minZoom: 0.2,
       maxZoom: 2.5,
+      maxBounds: [
+        {
+          x1: 0,
+          y1: 0,
+          x2: 10000,
+          y2: 10000,
+        },
+      ],
+      panningEnabled: true,
+      userPanningEnabled: true,
+      userZoomingEnabled: true,
+      boxSelectionEnabled: false,
     });
 
-    // Save reference for cleanup
+    // Save reference immediately
     cyRef.current = cy;
+
+    // Function to handle layout and fit
+    const handleResize = () => {
+      if (!cyRef.current) return;
+
+      // Clear any pending timeout
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+
+      // Delay layout to avoid multiple rapid calls
+      resizeTimeoutRef.current = setTimeout(() => {
+        if (!cyRef.current) return;
+
+        const layout = cyRef.current.layout({
+          name: "dagre",
+          rankDir: "LR" as const,
+          align: "UL" as const,
+          ranker: "longest-path" as const,
+          nodeSep: 50,
+          rankSep: 100,
+          animate: true,
+          animationDuration: 300,
+          fit: true,
+          padding: { top: 20, bottom: 20, left: 30, right: 30 },
+        });
+
+        layout.run();
+
+        // Additional delay for fit and center
+        setTimeout(() => {
+          if (!cyRef.current) return;
+          cyRef.current.fit();
+          cyRef.current.center();
+        }, 310);
+      }, 250);
+    };
+
+    // Set up ResizeObserver
+    resizeObserverRef.current = new ResizeObserver(handleResize);
+
+    if (containerRef.current) {
+      resizeObserverRef.current.observe(containerRef.current);
+    }
+
+    // Initialize layout
+    cy.ready(handleResize);
 
     // Add hover effect
     cy.on("mouseover", "node", (evt) => {
       const node = evt.target;
-      node.style({
-        "border-width": 3,
-        "border-opacity": 1,
-        "background-opacity": 1,
-        "z-index": 999,
-      });
+
+      // Highlight the node and its neighborhood
+      const neighborhood = node.neighborhood().add(node);
+      const others = cy.elements().not(neighborhood);
+
+      neighborhood.addClass("highlight");
+      others.addClass("faded");
 
       // Show tooltip with additional info
       const data = node.data();
+      const event = data.event;
+      if (!event) return;
+
       const tooltip = document.createElement("div");
       tooltip.className =
-        "fixed bg-white p-2 rounded-lg shadow-lg text-xs z-50 pointer-events-none";
-      tooltip.style.maxWidth = "200px";
+        "fixed bg-white p-4 rounded-lg shadow-lg text-sm z-50 pointer-events-none border border-gray-200";
+      tooltip.style.maxWidth = "300px";
       tooltip.innerHTML = `
-        <div class="font-medium">${data.mainTopic}</div>
-        <div class="text-gray-600 mt-1">${data.subTopics.join(", ")}</div>
-        <div class="text-gray-500 mt-1">${data.timestamp}</div>
-        <div class="mt-1">Sentiment: ${data.sentiment.toFixed(2)}</div>
+        <div class="font-semibold text-gray-900">${event.topic.main_topic}</div>
+        <div class="text-gray-700 mt-2 line-clamp-4">${event.text}</div>
+        <div class="mt-2 flex items-center gap-2 text-xs">
+          <span class="text-gray-600">${event.temporal_anchoring.anchor}</span>
+          <span class="text-gray-400">•</span>
+          <span class="text-gray-600">${event.narrative_phase}</span>
+        </div>
       `;
       document.body.appendChild(tooltip);
 
       cy.on("mousemove", (e) => {
         const containerBounds = containerRef.current!.getBoundingClientRect();
-        tooltip.style.left = `${e.originalEvent.clientX + 10}px`;
-        tooltip.style.top = `${e.originalEvent.clientY + 10}px`;
+        const x = e.originalEvent.clientX;
+        const y = e.originalEvent.clientY;
+
+        // Position tooltip to avoid going off screen
+        const tooltipBounds = tooltip.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        let left = x + 10;
+        let top = y + 10;
+
+        // Adjust horizontal position if needed
+        if (left + tooltipBounds.width > viewportWidth - 10) {
+          left = x - tooltipBounds.width - 10;
+        }
+
+        // Adjust vertical position if needed
+        if (top + tooltipBounds.height > viewportHeight - 10) {
+          top = y - tooltipBounds.height - 10;
+        }
+
+        tooltip.style.left = `${left}px`;
+        tooltip.style.top = `${top}px`;
       });
 
       node.once("mouseout", () => {
         tooltip.remove();
         if (!node.data("selected")) {
           node.style({
-            "border-width": 2,
+            "border-width": 1,
             "border-opacity": 1,
             "background-opacity": 1,
             "z-index": "auto",
@@ -289,13 +442,37 @@ export function NarrativeTopicVisual({
       });
     });
 
+    cy.on("mouseout", "node", (evt) => {
+      const node = evt.target;
+
+      // Remove highlights
+      cy.elements().removeClass("highlight faded");
+
+      // Remove tooltip
+      const tooltip = document.querySelector(
+        ".fixed.bg-white.p-4.rounded-lg.shadow-lg.text-sm.z-50.pointer-events-none.border.border-gray-200"
+      );
+      if (tooltip) {
+        tooltip.remove();
+      }
+    });
+
     return () => {
+      // Clear any pending timeouts
+      if (resizeTimeoutRef.current) {
+        clearTimeout(resizeTimeoutRef.current);
+      }
+      // Disconnect observer
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
+      }
+      // Destroy cytoscape instance
       if (cyRef.current) {
         cyRef.current.destroy();
         cyRef.current = null;
       }
     };
-  }, [nodes, edges]);
+  }, [nodes, edges, events]);
 
   return <div ref={containerRef} className="w-full h-full" />;
 }

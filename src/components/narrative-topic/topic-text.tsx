@@ -8,24 +8,18 @@ interface NarrativeTopicTextProps {
   selectedEventId?: string;
 }
 
-interface TopicNode {
-  id: string;
+interface TopicContext {
   mainTopic: string;
-  subTopics: string[];
-  timestamp: string;
-  sentiment: number;
-}
-
-function generateEventId(event: TimelineEvent): string {
-  // Create a unique ID based on topic and timestamp
-  const timestamp =
-    event.temporal_anchoring?.real_time ||
-    event.temporal_anchoring?.anchor ||
-    "unknown";
-  return `${event.topic.main_topic}-${timestamp}`.replace(
-    /[^a-zA-Z0-9-]/g,
-    "-"
-  );
+  frequency: number;
+  subTopics: Set<string>;
+  averageSentiment: number;
+  sentimentPolarity: {
+    positive: number;
+    negative: number;
+    neutral: number;
+  };
+  relatedEntities: Set<string>;
+  timeline: string[];
 }
 
 export function NarrativeTopicText({
@@ -33,88 +27,119 @@ export function NarrativeTopicText({
   selectedEventId,
 }: NarrativeTopicTextProps) {
   const topicFlow = useMemo(() => {
-    // Sort events by timestamp
-    const sortedEvents = [...events].sort((a, b) => {
-      const timeA =
-        a.temporal_anchoring?.real_time || a.temporal_anchoring?.anchor || "";
-      const timeB =
-        b.temporal_anchoring?.real_time || b.temporal_anchoring?.anchor || "";
-      return timeA.localeCompare(timeB);
-    });
+    // Build topic analysis
+    const topicMap = new Map<string, TopicContext>();
 
-    // Group events by main topic
-    const topicGroups = new Map<string, TopicNode[]>();
-
-    sortedEvents.forEach((event) => {
+    events.forEach((event) => {
       const mainTopic = event.topic.main_topic;
-      const node: TopicNode = {
-        id: generateEventId(event),
+      const existingTopic = topicMap.get(mainTopic) || {
         mainTopic,
-        subTopics: event.topic.sub_topic,
-        timestamp:
-          event.temporal_anchoring?.real_time ||
-          event.temporal_anchoring?.anchor ||
-          "Unknown",
-        sentiment: event.topic.sentiment.intensity,
+        frequency: 0,
+        subTopics: new Set<string>(),
+        averageSentiment: 0,
+        sentimentPolarity: {
+          positive: 0,
+          negative: 0,
+          neutral: 0,
+        },
+        relatedEntities: new Set<string>(),
+        timeline: [],
       };
 
-      if (!topicGroups.has(mainTopic)) {
-        topicGroups.set(mainTopic, []);
-      }
-      topicGroups.get(mainTopic)!.push(node);
+      // Update frequency
+      existingTopic.frequency += 1;
+
+      // Add sub-topics
+      event.topic.sub_topic.forEach((sub) => existingTopic.subTopics.add(sub));
+
+      // Update sentiment
+      existingTopic.averageSentiment =
+        (existingTopic.averageSentiment * (existingTopic.frequency - 1) +
+          event.topic.sentiment.intensity) /
+        existingTopic.frequency;
+
+      // Update polarity count
+      existingTopic.sentimentPolarity[event.topic.sentiment.polarity] += 1;
+
+      // Add related entities
+      event.entities.forEach((entity) =>
+        existingTopic.relatedEntities.add(entity.name)
+      );
+
+      // Add to timeline
+      existingTopic.timeline.push(
+        event.temporal_anchoring?.real_time ||
+          event.temporal_anchoring?.anchor ||
+          "Unknown date"
+      );
+
+      topicMap.set(mainTopic, existingTopic);
     });
 
-    return Array.from(topicGroups.entries()).sort(
-      (a, b) => b[1].length - a[1].length
-    ); // Sort by frequency
+    return Array.from(topicMap.values()).sort(
+      (a, b) => b.frequency - a.frequency
+    );
   }, [events]);
 
   return (
-    <div className="p-4 space-y-6">
-      {topicFlow.map(([topic, nodes]) => (
-        <div key={topic} className="border-l-4 border-gray-200 pl-4">
-          <h3 className="font-medium text-lg mb-2">{topic}</h3>
-          <div className="space-y-3">
-            {nodes.map((node, idx) => (
-              <div
-                key={node.id}
-                className={`p-3 rounded-lg ${
-                  selectedEventId === node.id
-                    ? "bg-blue-50 border border-blue-200"
-                    : "bg-gray-50"
-                }`}
-              >
-                <div className="flex justify-between items-start">
+    <div className="p-6 h-full flex flex-col overflow-auto">
+      <div className="space-y-6">
+        <div>
+          <h3 className="font-medium mb-2">
+            Topic Distribution ({topicFlow.length} unique topics)
+          </h3>
+          <div className="space-y-4">
+            {topicFlow.map((topic) => (
+              <div key={topic.mainTopic} className="bg-gray-50 p-3 rounded-lg">
+                <div className="flex justify-between items-start mb-2">
                   <div>
-                    <div className="text-sm text-gray-600">
-                      {node.subTopics.join(", ")}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-1">
-                      {node.timestamp}
+                    <span className="font-medium">{topic.mainTopic}</span>
+                    <div className="text-sm text-gray-600 mt-1">
+                      {Array.from(topic.subTopics).join(", ")}
                     </div>
                   </div>
-                  <div className="text-sm">
-                    <span
-                      className={`px-2 py-1 rounded ${
-                        node.sentiment > 0
-                          ? "bg-green-100 text-green-700"
-                          : node.sentiment < 0
-                          ? "bg-red-100 text-red-700"
-                          : "bg-gray-100 text-gray-700"
-                      }`}
-                    >
-                      {node.sentiment.toFixed(2)}
+                  <div className="text-right">
+                    <span className="text-sm bg-gray-200 px-2 py-1 rounded">
+                      {topic.frequency} mentions
                     </span>
+                    <div className="text-xs text-gray-500 mt-1">
+                      avg sentiment: {topic.averageSentiment.toFixed(2)}
+                    </div>
                   </div>
                 </div>
-                {idx < nodes.length - 1 && (
-                  <div className="h-4 border-l border-dashed border-gray-300 ml-2 my-1" />
-                )}
+                <div className="mt-2">
+                  <div className="flex gap-2 mb-2">
+                    {topic.sentimentPolarity.positive > 0 && (
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
+                        +{topic.sentimentPolarity.positive}
+                      </span>
+                    )}
+                    {topic.sentimentPolarity.negative > 0 && (
+                      <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded">
+                        -{topic.sentimentPolarity.negative}
+                      </span>
+                    )}
+                    {topic.sentimentPolarity.neutral > 0 && (
+                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
+                        ={topic.sentimentPolarity.neutral}
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    Key entities:{" "}
+                    {Array.from(topic.relatedEntities).slice(0, 3).join(", ")}
+                    {topic.relatedEntities.size > 3 &&
+                      ` +${topic.relatedEntities.size - 3} more`}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    Timeline: {topic.timeline.join(" → ")}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
-      ))}
+      </div>
     </div>
   );
 }

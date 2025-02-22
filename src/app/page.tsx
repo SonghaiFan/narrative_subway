@@ -16,9 +16,9 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("/api/timeline");
+        const response = await fetch("/api/narrative");
         if (!response.ok) {
-          throw new Error("Failed to fetch timeline data");
+          throw new Error("Failed to fetch narrative data");
         }
         const timelineData = await response.json();
         setData(timelineData);

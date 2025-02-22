@@ -52,7 +52,7 @@ export const TIME_CONFIG = {
     hoverRadius: 8,
   },
   curve: {
-    strokeWidth: 20,
-    opacity: 0.8,
+    strokeWidth: 30,
+    opacity: 0.2,
   },
 };
