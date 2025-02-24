@@ -101,7 +101,7 @@ export function getPointColors(sentiment: number) {
         : EVENT_COLORS.neutralFill,
     stroke:
       sentiment > 0
-        ? EVENT_COLORS.positiveStroke
+        ? EVENT_COLORS.NarrativeMetadata
         : sentiment < 0
         ? EVENT_COLORS.negativeStroke
         : EVENT_COLORS.neutralStroke,

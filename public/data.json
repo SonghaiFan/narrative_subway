@@ -1,14 +1,16 @@
 {
   "metadata": {
-    "title": "US Imposes New Tariffs on Trading Partners",
-    "description": "President Trump announces new tariffs on Mexico, Canada and China, citing concerns over fentanyl trafficking and illegal immigration.",
-    "author": "Financial Times",
-    "publishDate": "2024-02-26"
+    "title": "What We Know About the War Between Israel and Hamas",
+    "description": "After Hamas's surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
+    "author": "Ephrat Livni and Gaya Gupta",
+    "publishDate": "2023-11-20",
+    "imageUrl": "https://static01.nyt.com/images/2023/10/26/multimedia/26israel-gaza-what-we-know-01-jmpb/26israel-gaza-what-we-know-01-jmpb-superJumbo.jpg?quality=75&auto=webp"
   },
   "events": [
     {
       "index": 1,
-      "text": "After Hamas’s surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
+      "text": "After Hamas's surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
+      "short_text": "Israel besieging and bombarding Gaza after Hamas attack",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -41,7 +43,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military conflict",
+        "main_topic": "war_military",
         "sub_topic": ["siege", "bombardment", "humanitarian crisis"],
         "sentiment": {
           "polarity": "negative",
@@ -51,44 +53,8 @@
     },
     {
       "index": 2,
-      "text": "Sergey Ponomarev for The New York Times",
-      "narrative_level": "extradiegetic",
-      "narrator_type": "document",
-      "temporal_position": "past",
-      "source_name": "The New York Times",
-      "narrative_phase": "equilibrium",
-      "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 2,
-        "temporal_type": "relative",
-        "anchor": ""
-      },
-      "entities": [
-        {
-          "id": "E4",
-          "name": "Sergey Ponomarev",
-          "role_type": "secondary",
-          "social_role": "photographer"
-        },
-        {
-          "id": "E5",
-          "name": "The New York Times",
-          "role_type": "secondary",
-          "social_role": "organization"
-        }
-      ],
-      "topic": {
-        "main_topic": "photo credit",
-        "sub_topic": [],
-        "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.5
-        }
-      }
-    },
-    {
-      "index": 3,
       "text": "On Oct. 7, Hamas led a surprise attack on towns, a music festival, army bases and other locations in Israel, killing roughly 1,200 people and taking about 240 hostages, including children, according to the Israeli government.",
+      "short_text": "Hamas attacks Israeli towns, a music festival, and military bases",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -115,7 +81,7 @@
         }
       ],
       "topic": {
-        "main_topic": "terrorist attack",
+        "main_topic": "war_military",
         "sub_topic": ["casualties", "hostage-taking"],
         "sentiment": {
           "polarity": "negative",
@@ -124,8 +90,9 @@
       }
     },
     {
-      "index": 4,
+      "index": 3,
       "text": "Israeli officials vowed to destroy Hamas, the Palestinian group that controls the Gaza Strip and is considered a terrorist organization by the United States, Israel and other countries.",
+      "short_text": "Israeli officials vow to destroy Hamas",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -158,7 +125,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military resolve",
+        "main_topic": "war_military",
         "sub_topic": ["retaliation", "terrorism designation"],
         "sentiment": {
           "polarity": "negative",
@@ -167,8 +134,9 @@
       }
     },
     {
-      "index": 5,
+      "index": 4,
       "text": "Israel has since besieged Gaza in one of the most intense bombing campaigns of this century, and launched a ground invasion.",
+      "short_text": "Israel launches a ground invasion of Gaza",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -195,7 +163,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military operations",
+        "main_topic": "war_military",
         "sub_topic": ["siege", "bombing", "ground invasion"],
         "sentiment": {
           "polarity": "negative",
@@ -204,12 +172,13 @@
       }
     },
     {
-      "index": 6,
-      "text": "More than 11,000 Palestinians, including more than 4,600 children, have been killed since the Israeli campaign began, according to Gaza’s health ministry.",
+      "index": 5,
+      "text": "More than 11,000 Palestinians, including more than 4,600 children, have been killed since the Israeli campaign began, according to Gaza's health ministry.",
+      "short_text": "Over 11,000 Palestinians, including 4,600 children, killed in Gaza",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
-      "source_name": "Gaza’s health ministry",
+      "source_name": "Gaza's health ministry",
       "narrative_phase": "disruption",
       "temporal_anchoring": {
         "real_time": "",
@@ -226,7 +195,7 @@
         }
       ],
       "topic": {
-        "main_topic": "casualties",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["civilian deaths", "child casualties"],
         "sentiment": {
           "polarity": "negative",
@@ -235,8 +204,9 @@
       }
     },
     {
-      "index": 7,
+      "index": 6,
       "text": "The violence, its fallout and the humanitarian crisis afflicting Gazan civilians have shaken the region and the world.",
+      "short_text": "Humanitarian crisis worsens in Gaza",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -263,7 +233,7 @@
         }
       ],
       "topic": {
-        "main_topic": "humanitarian crisis",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["regional instability", "global impact"],
         "sentiment": {
           "polarity": "negative",
@@ -272,8 +242,9 @@
       }
     },
     {
-      "index": 8,
+      "index": 7,
       "text": "Early on Oct. 7, Hamas fired volleys of rockets that struck as far away as Tel Aviv and the outskirts of Jerusalem.",
+      "short_text": "Hamas fires rockets at Tel Aviv and Jerusalem",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -306,7 +277,7 @@
         }
       ],
       "topic": {
-        "main_topic": "rocket attack",
+        "main_topic": "war_military",
         "sub_topic": ["military escalation"],
         "sentiment": {
           "polarity": "negative",
@@ -315,8 +286,9 @@
       }
     },
     {
-      "index": 9,
+      "index": 8,
       "text": "The attackers also infiltrated border communities and army bases, as well as an outdoor music festival, opening fire on men, women and children.",
+      "short_text": "Hamas infiltrates Israeli communities, attacking civilians",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -337,7 +309,7 @@
         }
       ],
       "topic": {
-        "main_topic": "infiltration and violence",
+        "main_topic": "war_military",
         "sub_topic": ["attacks on civilians", "mass violence"],
         "sentiment": {
           "polarity": "negative",
@@ -346,8 +318,9 @@
       }
     },
     {
-      "index": 10,
+      "index": 9,
       "text": "It took days for Israeli forces to regain control after the attack.",
+      "short_text": "Israeli forces take days to regain control after the attack",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -368,7 +341,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military response",
+        "main_topic": "war_military",
         "sub_topic": ["regaining control"],
         "sentiment": {
           "polarity": "neutral",
@@ -377,8 +350,9 @@
       }
     },
     {
-      "index": 11,
-      "text": "Hamas and other armed Palestinian groups also took about 240 civilians and soldiers hostage.",
+      "index": 10,
+      "text": "Hamas and other armed Palestinian groups also took about 240 civilians and soldiers hostage. Four have since been released.",
+      "short_text": "Hamas takes 240 hostages, including civilians and soldiers, and four hostages are released",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -399,7 +373,7 @@
         }
       ],
       "topic": {
-        "main_topic": "hostage-taking",
+        "main_topic": "crime_security",
         "sub_topic": [],
         "sentiment": {
           "polarity": "negative",
@@ -408,32 +382,9 @@
       }
     },
     {
-      "index": 12,
-      "text": "Four have since been released.",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "repair",
-      "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 12,
-        "temporal_type": "relative",
-        "anchor": "post-hostage event"
-      },
-      "entities": [],
-      "topic": {
-        "main_topic": "hostage situation",
-        "sub_topic": ["release"],
-        "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.6
-        }
-      }
-    },
-    {
-      "index": 13,
+      "index": 11,
       "text": "After the Hamas attack on Oct. 7, the Israeli military soon began a siege to block food, water, and fuel from entering the territory, and it launched a ground invasion on Oct. 27.",
+      "short_text": "Israel imposes a siege and launches a ground invasion",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -460,7 +411,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military counteraction",
+        "main_topic": "war_military",
         "sub_topic": ["siege", "invasion"],
         "sentiment": {
           "polarity": "negative",
@@ -469,8 +420,9 @@
       }
     },
     {
-      "index": 14,
+      "index": 12,
       "text": "Israeli troops encircled Gaza City on Nov. 7, effectively splitting control of the strip in half.",
+      "short_text": "Israeli troops encircle Gaza City",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -497,7 +449,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military maneuver",
+        "main_topic": "war_military",
         "sub_topic": ["encirclement", "control"],
         "sentiment": {
           "polarity": "neutral",
@@ -506,8 +458,9 @@
       }
     },
     {
-      "index": 15,
+      "index": 13,
       "text": "On Nov. 17, Israel signaled that it was preparing to expand military operations into southern Gaza, where Palestinians had been told to evacuate.",
+      "short_text": "Israel plans to expand operations into southern Gaza",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -534,7 +487,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military escalation",
+        "main_topic": "war_military",
         "sub_topic": ["expansion", "evacuation"],
         "sentiment": {
           "polarity": "negative",
@@ -543,8 +496,9 @@
       }
     },
     {
-      "index": 16,
-      "text": "More than one million Palestinians have been displaced following Israel’s warnings for civilians to leave northern Gaza, aid workers say.",
+      "index": 14,
+      "text": "More than one million Palestinians have been displaced following Israel's warnings for civilians to leave northern Gaza, aid workers say.",
+      "short_text": "More than 1 million Palestinians displaced following Israeli evacuation orders",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -571,7 +525,7 @@
         }
       ],
       "topic": {
-        "main_topic": "displacement",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["warnings", "evacuation"],
         "sentiment": {
           "polarity": "negative",
@@ -580,9 +534,9 @@
       }
     },
     {
-      "index": 17,
+      "index": 15,
       "text": "Many Gazans say no part of the enclave is safe.",
-      "narrative_level": "diegetic",
+      "narrative_level": "metadiegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "present",
       "source_name": "",
@@ -602,17 +556,19 @@
         }
       ],
       "topic": {
-        "main_topic": "safety concerns",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["civilian insecurity"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Gazans report no safe zones in the enclave"
     },
     {
       "index": 18,
-      "text": "Israel says Hamas uses civilian structures, including hospitals, as bases for military operations in violation of international law; areas including medical centers, schools, mosques and residential locations have been struck under Israel’s bombardment.",
+      "text": "Israel says Hamas uses civilian structures, including hospitals, as bases for military operations in violation of international law; areas including medical centers, schools, mosques and residential locations have been struck under Israel's bombardment.",
+      "short_text": "Israel accuses Hamas of using civilian structures for military operations",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -639,7 +595,7 @@
         }
       ],
       "topic": {
-        "main_topic": "military tactics",
+        "main_topic": "war_military",
         "sub_topic": ["use of civilian infrastructure", "international law"],
         "sentiment": {
           "polarity": "negative",
@@ -670,17 +626,18 @@
         }
       ],
       "topic": {
-        "main_topic": "legal accountability",
+        "main_topic": "politics_government",
         "sub_topic": ["military response", "proportionality"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.75
         }
-      }
+      },
+      "short_text": "Palestinians and some international observers accuse Israel of disproportionate military response"
     },
     {
       "index": 20,
-      "text": "On Nov. 15, the Israeli military stormed Gaza’s largest hospital, Al-Shifa, and said it discovered weapons and other evidence to support its assertions that Hamas operated in a network of tunnels under the complex.",
+      "text": "On Nov. 15, the Israeli military stormed Gaza's largest hospital, Al-Shifa, and said it discovered weapons and other evidence to support its assertions that Hamas operated in a network of tunnels under the complex.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -713,18 +670,19 @@
         }
       ],
       "topic": {
-        "main_topic": "military raid",
+        "main_topic": "war_military",
         "sub_topic": ["evidence of tunnels", "hospital strike"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.85
         }
-      }
+      },
+      "short_text": "Israel raids Al-Shifa hospital, claims Hamas used it for military purposes"
     },
     {
       "index": 21,
       "text": "Senior U.S. officials have backed Israel, though the Israeli military has yet to show incontrovertible proof of a vast Hamas tunnel network.",
-      "narrative_level": "diegetic",
+      "narrative_level": "metadiegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "present",
       "source_name": "U.S. officials",
@@ -750,13 +708,14 @@
         }
       ],
       "topic": {
-        "main_topic": "international backing",
+        "main_topic": "politics_government",
         "sub_topic": ["evidence and claims"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.65
         }
-      }
+      },
+      "short_text": "Senior U.S. officials back Israel but await more evidence on Hamas tunnels"
     },
     {
       "index": 22,
@@ -787,13 +746,14 @@
         }
       ],
       "topic": {
-        "main_topic": "denial of allegations",
+        "main_topic": "crime_security",
         "sub_topic": [],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.6
         }
-      }
+      },
+      "short_text": "Hamas and hospital officials deny allegations of tunnel networks"
     },
     {
       "index": 23,
@@ -824,13 +784,14 @@
         }
       ],
       "topic": {
-        "main_topic": "media access",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["controlled tour", "evidence observation"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.65
         }
-      }
+      },
+      "short_text": "The New York Times tours Al-Shifa hospital site"
     },
     {
       "index": 24,
@@ -848,17 +809,18 @@
       },
       "entities": [],
       "topic": {
-        "main_topic": "inconclusive evidence",
+        "main_topic": "crime_security",
         "sub_topic": ["infrastructure details"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.6
         }
-      }
+      },
+      "short_text": "Journalists observe an unclear shaft at Al-Shifa hospital"
     },
     {
       "index": 25,
-      "text": "As conditions have worsened for civilians in Gaza, Israel’s campaign has drawn increasing outcries from the United Nations, aid organizations and much of the world.",
+      "text": "As conditions have worsened for civilians in Gaza, Israel's campaign has drawn increasing outcries from the United Nations, aid organizations and much of the world.",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -885,17 +847,18 @@
         }
       ],
       "topic": {
-        "main_topic": "global reaction",
+        "main_topic": "war_military",
         "sub_topic": ["humanitarian outcry"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Israel's military campaign faces global criticism"
     },
     {
       "index": 26,
-      "text": "Without challenging Israel’s right to defend itself, the Biden administration has repeatedly called for “humanitarian pauses” to protect Palestinian civilians and allow the delivery of desperately needed aid.",
+      "text": "Without challenging Israel's right to defend itself, the Biden administration has repeatedly called for 'humanitarian pauses' to protect Palestinian civilians and allow the delivery of desperately needed aid.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -916,13 +879,14 @@
         }
       ],
       "topic": {
-        "main_topic": "diplomatic intervention",
+        "main_topic": "politics_government",
         "sub_topic": ["humanitarian aid", "pause in conflict"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "Biden administration calls for humanitarian pauses"
     },
     {
       "index": 27,
@@ -947,13 +911,14 @@
         }
       ],
       "topic": {
-        "main_topic": "humanitarian crisis",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["access to essentials"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.9
         }
-      }
+      },
+      "short_text": "Gaza's humanitarian crisis worsens, limiting access to basic necessities"
     },
     {
       "index": 28,
@@ -978,17 +943,18 @@
         }
       ],
       "topic": {
-        "main_topic": "starvation risk",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["internal displacement"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.85
         }
-      }
+      },
+      "short_text": "The U.N. warns Gaza is at risk of mass starvation"
     },
     {
       "index": 29,
-      "text": "Thousands of children, who make up nearly half of Gaza’s population, have been killed, according to health officials.",
+      "text": "Thousands of children, who make up nearly half of Gaza's population, have been killed, according to health officials.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -1009,13 +975,14 @@
         }
       ],
       "topic": {
-        "main_topic": "child casualties",
+        "main_topic": "crime_security",
         "sub_topic": ["population impact"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.95
         }
-      }
+      },
+      "short_text": "Thousands of children killed in Gaza, according to health officials"
     },
     {
       "index": 30,
@@ -1046,17 +1013,18 @@
         }
       ],
       "topic": {
-        "main_topic": "humanitarian aid",
+        "main_topic": "economy_infrastructure",
         "sub_topic": ["fuel supply", "critical infrastructure"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "Israel allows fuel into Gaza after shortages"
     },
     {
       "index": 31,
-      "text": "Before Israel’s raid of Al-Shifa, the hospital complex had been struggling to treat patients, with operations limited by a dearth of supplies, including water, medicine and oxygen.",
+      "text": "Before Israel's raid of Al-Shifa, the hospital complex had been struggling to treat patients, with operations limited by a dearth of supplies, including water, medicine and oxygen.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -1077,13 +1045,14 @@
         }
       ],
       "topic": {
-        "main_topic": "healthcare crisis",
+        "main_topic": "economy_infrastructure",
         "sub_topic": ["supply shortages"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.85
         }
-      }
+      },
+      "short_text": "Gaza hospitals struggle with limited medical supplies"
     },
     {
       "index": 32,
@@ -1108,13 +1077,14 @@
         }
       ],
       "topic": {
-        "main_topic": "healthcare crisis",
+        "main_topic": "economy_infrastructure",
         "sub_topic": ["operational collapse"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.85
         }
-      }
+      },
+      "short_text": "Healthcare facilities on the brink of collapse"
     },
     {
       "index": 33,
@@ -1139,13 +1109,14 @@
         }
       ],
       "topic": {
-        "main_topic": "escalation",
+        "main_topic": "war_military",
         "sub_topic": ["West Bank violence"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Violence in the Israeli-occupied West Bank escalates"
     },
     {
       "index": 34,
@@ -1170,17 +1141,18 @@
         }
       ],
       "topic": {
-        "main_topic": "casualties",
+        "main_topic": "crime_security",
         "sub_topic": ["settler attacks"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.9
         }
-      }
+      },
+      "short_text": "200 Palestinians killed in West Bank clashes with Israeli forces and settlers"
     },
     {
       "index": 35,
-      "text": "Freeing the 240 hostages abducted by Hamas on Oct. 7 has been one of Israel’s two main goals of the war, in addition to destroying Hamas.",
+      "text": "Freeing the 240 hostages abducted by Hamas on Oct. 7 has been one of Israel's two main goals of the war, in addition to destroying Hamas.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -1207,13 +1179,14 @@
         }
       ],
       "topic": {
-        "main_topic": "hostage rescue",
+        "main_topic": "crime_security",
         "sub_topic": ["military objectives"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Israel prioritizes hostage rescue and Hamas destruction"
     },
     {
       "index": 36,
@@ -1244,13 +1217,14 @@
         }
       ],
       "topic": {
-        "main_topic": "hostage situation",
+        "main_topic": "crime_security",
         "sub_topic": ["release", "rescue"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "Hamas releases four hostages; Israel rescues one"
     },
     {
       "index": 37,
@@ -1281,17 +1255,18 @@
         }
       ],
       "topic": {
-        "main_topic": "information warfare",
+        "main_topic": "crime_security",
         "sub_topic": ["social media", "psychological operations"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Hamas posts hostage videos; Israel calls it psychological warfare"
     },
     {
       "index": 38,
-      "text": "Following Israel’s raid of the Al-Shifa hospital, Israeli soldiers said they found the bodies of two Israeli hostages nearby, which they called an indication that Hamas used the complex for military operations.",
+      "text": "Following Israel's raid of the Al-Shifa hospital, Israeli soldiers said they found the bodies of two Israeli hostages nearby, which they called an indication that Hamas used the complex for military operations.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -1318,13 +1293,14 @@
         }
       ],
       "topic": {
-        "main_topic": "evidence of military use",
+        "main_topic": "crime_security",
         "sub_topic": ["hostage bodies", "tunnel network implication"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Israel finds hostage bodies near Al-Shifa, reinforcing Hamas tunnel claims"
     },
     {
       "index": 39,
@@ -1349,13 +1325,14 @@
         }
       ],
       "topic": {
-        "main_topic": "prisoner exchange negotiations",
+        "main_topic": "international_relations",
         "sub_topic": ["captivity", "diplomacy"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "Negotiations underway for prisoner exchange deal"
     },
     {
       "index": 40,
@@ -1386,13 +1363,14 @@
         }
       ],
       "topic": {
-        "main_topic": "international reaction",
+        "main_topic": "international_relations",
         "sub_topic": ["condemnation", "support"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "World leaders condemn Hamas and affirm support for Israel"
     },
     {
       "index": 41,
@@ -1417,13 +1395,14 @@
         }
       ],
       "topic": {
-        "main_topic": "diplomatic solidarity",
+        "main_topic": "international_relations",
         "sub_topic": ["visits", "support"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.75
         }
-      }
+      },
+      "short_text": "President Biden and other leaders visit to show solidarity"
     },
     {
       "index": 42,
@@ -1441,13 +1420,14 @@
       },
       "entities": [],
       "topic": {
-        "main_topic": "international division",
+        "main_topic": "international_relations",
         "sub_topic": ["calls for restraint", "cease-fire demands"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.65
         }
-      }
+      },
+      "short_text": "Support for Israel tempered by calls for restraint and ceasefire"
     },
     {
       "index": 43,
@@ -1472,13 +1452,14 @@
         }
       ],
       "topic": {
-        "main_topic": "humanitarian warning",
+        "main_topic": "humanitarian_social_issues",
         "sub_topic": ["crisis escalation"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Aid groups warn of an escalating humanitarian crisis"
     },
     {
       "index": 44,
@@ -1503,13 +1484,14 @@
         }
       ],
       "topic": {
-        "main_topic": "diplomatic resolution",
+        "main_topic": "international_relations",
         "sub_topic": ["humanitarian pauses"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "U.N. Security Council calls for humanitarian pauses"
     },
     {
       "index": 45,
@@ -1534,13 +1516,14 @@
         }
       ],
       "topic": {
-        "main_topic": "call for cease-fire",
+        "main_topic": "international_relations",
         "sub_topic": ["diplomatic appeal"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.75
         }
-      }
+      },
+      "short_text": "U.N. Secretary-General calls for a humanitarian ceasefire"
     },
     {
       "index": 46,
@@ -1571,13 +1554,14 @@
         }
       ],
       "topic": {
-        "main_topic": "diplomatic meeting",
+        "main_topic": "international_relations",
         "sub_topic": ["regional dialogue"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.65
         }
-      }
+      },
+      "short_text": "Arab and Muslim nations convene in Saudi Arabia"
     },
     {
       "index": 47,
@@ -1595,13 +1579,14 @@
       },
       "entities": [],
       "topic": {
-        "main_topic": "diplomatic stance",
+        "main_topic": "international_relations",
         "sub_topic": ["cease-fire calls", "blame avoidance"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.65
         }
-      }
+      },
+      "short_text": "Arab and Muslim leaders call for a ceasefire but avoid blaming Hamas"
     },
     {
       "index": 48,
@@ -1632,13 +1617,14 @@
         }
       ],
       "topic": {
-        "main_topic": "regional conflict",
+        "main_topic": "war_military",
         "sub_topic": ["diplomatic strain", "protests"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.85
         }
-      }
+      },
+      "short_text": "War in Gaza strains Israel's diplomatic relations and risks regional conflict"
     },
     {
       "index": 49,
@@ -1669,13 +1655,14 @@
         }
       ],
       "topic": {
-        "main_topic": "diplomatic prevention",
+        "main_topic": "war_military",
         "sub_topic": ["regional spillover", "proxy conflict"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "Biden seeks to prevent war from expanding to Iran and its proxies"
     },
     {
       "index": 50,
@@ -1700,13 +1687,14 @@
         }
       ],
       "topic": {
-        "main_topic": "military reinforcement",
+        "main_topic": "war_military",
         "sub_topic": ["naval deployment", "air support"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "The Pentagon sends aircraft carriers and warplanes to the region"
     },
     {
       "index": 51,
@@ -1737,17 +1725,18 @@
         }
       ],
       "topic": {
-        "main_topic": "military clashes",
+        "main_topic": "war_military",
         "sub_topic": ["Hezbollah engagement"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.85
         }
-      }
+      },
+      "short_text": "Israel clashes with Hezbollah on the Lebanese border"
     },
     {
       "index": 52,
-      "text": "Israel’s military also has responded to fire from Syria.",
+      "text": "Israel's military also has responded to fire from Syria.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -1768,13 +1757,14 @@
         }
       ],
       "topic": {
-        "main_topic": "military response",
+        "main_topic": "war_military",
         "sub_topic": ["fire exchange"],
         "sentiment": {
           "polarity": "negative",
           "intensity": 0.8
         }
-      }
+      },
+      "short_text": "Israel responds to fire from Syria"
     },
     {
       "index": 53,
@@ -1799,13 +1789,14 @@
         }
       ],
       "topic": {
-        "main_topic": "postwar planning",
+        "main_topic": "politics_government",
         "sub_topic": ["two-state solution", "governance"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.7
         }
-      }
+      },
+      "short_text": "Palestinian Authority expresses willingness to oversee post-Hamas Gaza"
     },
     {
       "index": 54,
@@ -1836,18 +1827,19 @@
         }
       ],
       "topic": {
-        "main_topic": "diplomatic urging",
+        "main_topic": "politics_government",
         "sub_topic": ["humanitarian aid", "de-escalation"],
         "sentiment": {
           "polarity": "positive",
           "intensity": 0.75
         }
-      }
+      },
+      "short_text": "Mahmoud Abbas meets U.S. officials to discuss the war"
     },
     {
       "index": 55,
-      "text": "But Mr. Netanyahu said on NBC’s “Meet the Press” on Nov. 12 that his postwar vision would not include the Palestinian Authority in the near term.",
-      "narrative_level": "diegetic",
+      "text": "But Mr. Netanyahu said on NBC's 'Meet the Press' on Nov. 12 that his postwar vision would not include the Palestinian Authority in the near term.",
+      "narrative_level": "metadiegetic",
       "narrator_type": "quoted_source",
       "temporal_position": "past",
       "source_name": "Mr. Netanyahu",
@@ -1873,18 +1865,19 @@
         }
       ],
       "topic": {
-        "main_topic": "postwar vision",
+        "main_topic": "politics_government",
         "sub_topic": ["exclusion", "future governance"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.65
         }
-      }
+      },
+      "short_text": "Netanyahu excludes the Palestinian Authority from postwar plans"
     },
     {
       "index": 56,
-      "text": "Earlier, he had said that Israel would indefinitely “have the overall security responsibility” of the enclave, though he seemed to stop short of suggesting a full re-occupation of Gaza.",
-      "narrative_level": "diegetic",
+      "text": "Earlier, he had said that Israel would indefinitely 'have the overall security responsibility' of the enclave, though he seemed to stop short of suggesting a full re-occupation of Gaza.",
+      "narrative_level": "metadiegetic",
       "narrator_type": "quoted_source",
       "temporal_position": "past",
       "source_name": "Mr. Netanyahu",
@@ -1910,17 +1903,19 @@
         }
       ],
       "topic": {
-        "main_topic": "security responsibility",
+        "main_topic": "politics_government",
         "sub_topic": ["postwar governance", "re-occupation debate"],
         "sentiment": {
           "polarity": "neutral",
           "intensity": 0.65
         }
-      }
+      },
+      "short_text": "Netanyahu insists Israel will maintain security control over Gaza"
     },
     {
       "index": 57,
       "text": "His statement was at odds with the postwar plan that Secretary of State Antony Blinken suggested on Nov. 8, in which Gaza would be unified with the West Bank under the Palestinian Authority.",
+      "short_text": "U.S. and Israel diverge on postwar governance plans for Gaza",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -1947,7 +1942,7 @@
         }
       ],
       "topic": {
-        "main_topic": "postwar planning divergence",
+        "main_topic": "politics_government",
         "sub_topic": ["governance", "territorial unification"],
         "sentiment": {
           "polarity": "neutral",

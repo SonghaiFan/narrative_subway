@@ -18,41 +18,36 @@ export function ProfileSection({
   imageUrl,
   events,
 }: ProfileSectionProps) {
-  // Calculate stats
-  const uniqueEntities = new Set(
-    events.flatMap((event) => event.entities.map((e) => e.id))
-  ).size;
-  const uniqueTopics = new Set(events.map((event) => event.topic.main_topic))
-    .size;
+  const stats = {
+    entities: new Set(
+      events.flatMap((event) => event.entities.map((e) => e.id))
+    ).size,
+    topics: new Set(events.map((event) => event.topic.main_topic)).size,
+    events: events.length,
+  };
 
   return (
-    <article className="p-6 h-full flex flex-col overflow-auto">
-      {/* Header with category and date */}
-      <div className="flex items-center gap-3 text-sm mb-4">
-        <span className="bg-neutral-100 text-neutral-800 rounded-full px-3 py-1">
-          Artificial Intelligence
-        </span>
-        <time className="text-neutral-600" dateTime={publishDate}>
-          {new Date(publishDate).toLocaleDateString("en-US", {
-            weekday: "short",
-            day: "2-digit",
-            month: "short",
-          })}
-        </time>
-      </div>
+    <article className="flex flex-col h-full p-4 space-y-4 overflow-auto">
+      <header className="space-y-3">
+        <div className="flex items-center gap-2 text-sm">
+          <span className="px-2 py-0.5 bg-neutral-100 text-neutral-800 rounded-full">
+            AI
+          </span>
+          <time className="text-neutral-600" dateTime={publishDate}>
+            {new Date(publishDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "2-digit",
+            })}
+          </time>
+        </div>
 
-      {/* Title */}
-      <h1 className="text-2xl font-bold text-neutral-900 mb-4 leading-tight">
-        {title}
-      </h1>
+        <h1 className="text-xl font-bold text-neutral-900 leading-tight">
+          {title}
+        </h1>
+        <p className="text-sm text-neutral-600">By {author}</p>
+      </header>
 
-      {/* Author */}
-      <div className="flex items-center gap-2 mb-6">
-        <span className="text-sm text-neutral-600">By {author}</span>
-      </div>
-
-      {/* Image Section */}
-      <div className="relative w-full aspect-[4/3] mb-6 bg-neutral-100 rounded-lg overflow-hidden">
+      <div className="relative aspect-video w-full bg-neutral-100 rounded-lg overflow-hidden">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -64,7 +59,7 @@ export function ProfileSection({
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
             <svg
-              className="w-16 h-16 text-neutral-300"
+              className="w-12 h-12 text-neutral-300"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -80,32 +75,22 @@ export function ProfileSection({
         )}
       </div>
 
-      {/* Description */}
-      <p className="text-neutral-600 leading-relaxed mb-8">{description}</p>
+      <p className="text-sm text-neutral-600 leading-relaxed">{description}</p>
 
-      {/* Stats */}
-      <div className="mt-auto border-t border-neutral-100 pt-4">
-        <div className="grid grid-cols-3 gap-4 text-center">
-          <div>
-            <div className="text-sm font-medium text-neutral-500">Events</div>
-            <div className="mt-1 text-xl font-semibold text-neutral-900">
-              {events.length}
+      <footer className="mt-auto pt-3 border-t border-neutral-100">
+        <div className="grid grid-cols-3 gap-2 text-center">
+          {Object.entries(stats).map(([key, value]) => (
+            <div key={key}>
+              <div className="text-xs font-medium text-neutral-500 capitalize">
+                {key}
+              </div>
+              <div className="text-lg font-semibold text-neutral-900">
+                {value}
+              </div>
             </div>
-          </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-500">Entities</div>
-            <div className="mt-1 text-xl font-semibold text-neutral-900">
-              {uniqueEntities}
-            </div>
-          </div>
-          <div>
-            <div className="text-sm font-medium text-neutral-500">Topics</div>
-            <div className="mt-1 text-xl font-semibold text-neutral-900">
-              {uniqueTopics}
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+      </footer>
     </article>
   );
 }

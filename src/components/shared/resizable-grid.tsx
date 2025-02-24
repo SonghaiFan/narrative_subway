@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Panel,
   PanelGroup,
   PanelResizeHandle,
   ImperativePanelGroupHandle,
 } from "react-resizable-panels";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpDownLeftRight } from "@fortawesome/free-solid-svg-icons";
 
 interface ResizableGridProps {
   topLeft: React.ReactNode;
@@ -35,6 +33,31 @@ export function ResizableGrid({
   const leftPanelGroupRef = useRef<ImperativePanelGroupHandle>(null);
   const rightPanelGroupRef = useRef<ImperativePanelGroupHandle>(null);
   const horizontalPanelGroupRef = useRef<ImperativePanelGroupHandle>(null);
+
+  useEffect(() => {
+    const divs = document.querySelectorAll(".overflow-auto");
+
+    const handleScroll = (e: Event) => {
+      const scrolledDiv = e.target as HTMLDivElement;
+      divs.forEach((div) => {
+        if (div !== scrolledDiv) {
+          const d = div as HTMLDivElement;
+          d.scrollTop = scrolledDiv.scrollTop;
+          d.scrollLeft = scrolledDiv.scrollLeft;
+        }
+      });
+    };
+
+    divs.forEach((div) => {
+      div.addEventListener("scroll", handleScroll);
+    });
+
+    return () => {
+      divs.forEach((div) => {
+        div.removeEventListener("scroll", handleScroll);
+      });
+    };
+  }, []);
 
   // Handle cross-section drag
   const handleCrossDragStart = (e: React.MouseEvent) => {

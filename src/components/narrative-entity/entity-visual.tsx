@@ -17,30 +17,6 @@ interface EntityVisualProps {
   events: NarrativeEvent[];
 }
 
-const TIMELINE_CONFIG = {
-  entity: {
-    labelFontSize: 14,
-    lineStrokeWidth: 6,
-    columnPadding: 0.2,
-    headerHeight: 50,
-  },
-  event: {
-    nodeRadius: 6,
-    nodeStrokeWidth: 2,
-    connectorStrokeWidth: 3,
-    labelFontSize: 12,
-  },
-  animation: {
-    duration: 200,
-  },
-  margin: {
-    top: 30,
-    right: 40,
-    bottom: 20,
-    left: 40,
-  },
-};
-
 export function EntityVisual({ events }: EntityVisualProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);

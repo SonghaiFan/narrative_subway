@@ -13,10 +13,7 @@ export async function GET() {
 
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error loading timeline data:", error);
-    return NextResponse.json(
-      { error: "Failed to load timeline data" },
-      { status: 500 }
-    );
+    console.error("Error loading data:", error);
+    return NextResponse.json({ error: "Failed to load data" }, { status: 500 });
   }
 }

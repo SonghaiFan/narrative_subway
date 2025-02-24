@@ -1,451 +1,219 @@
 "use client";
 
 import { NarrativeEvent } from "@/types/article";
-import { useEffect, useMemo, useRef } from "react";
-import cytoscape from "cytoscape";
-import dagre from "cytoscape-dagre";
+import { useEffect, useRef, useCallback } from "react";
+import * as d3 from "d3";
+import { SHARED_CONFIG } from "../shared/visualization-config";
 import {
   NarrativeTooltip,
   useNarrativeTooltip,
 } from "../shared/narrative-tooltip";
+import {
+  processEvents,
+  getTopicCounts,
+  getTopTopics,
+  getScales,
+  getPointColors,
+  calculateDimensions,
+  createAxes,
+} from "./topic-visual.utils";
 
-// Register the dagre layout
-cytoscape.use(dagre);
-
-interface NarrativeTopicVisualProps {
+interface TopicVisualProps {
   events: NarrativeEvent[];
   selectedEventId?: string;
-}
-
-function generateEventId(event: NarrativeEvent, index: number): string {
-  const timestamp =
-    event.temporal_anchoring?.real_time ||
-    event.temporal_anchoring?.anchor ||
-    "unknown";
-  const baseId = `${event.topic.main_topic}-${timestamp}`.replace(
-    /[^a-zA-Z0-9-]/g,
-    "-"
-  );
-  return `${baseId}-${index}`;
-}
-
-function getSentimentColor(sentiment: number): {
-  bg: string;
-  border: string;
-  text: string;
-} {
-  if (sentiment > 0) {
-    return { bg: "#ffffff", border: "#000000", text: "#000000" };
-  } else if (sentiment < 0) {
-    return { bg: "#f3f3f3", border: "#666666", text: "#000000" };
-  }
-  return { bg: "#ffffff", border: "#999999", text: "#000000" };
 }
 
 export function NarrativeTopicVisual({
   events,
   selectedEventId,
-}: NarrativeTopicVisualProps) {
+}: TopicVisualProps) {
+  const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const cyRef = useRef<cytoscape.Core | null>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
-  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isDraggingRef = useRef(false);
   const { tooltipState, showTooltip, hideTooltip, updatePosition } =
     useNarrativeTooltip();
 
-  // Process data for DAG
-  const { nodes, edges } = useMemo(() => {
-    // Sort events by timestamp
-    const sortedEvents = [...events].sort((a, b) => {
-      const timeA =
-        a.temporal_anchoring?.real_time || a.temporal_anchoring?.anchor || "";
-      const timeB =
-        b.temporal_anchoring?.real_time || b.temporal_anchoring?.anchor || "";
-      return timeA.localeCompare(timeB);
-    });
+  // Function to update the visualization
+  const updateVisualization = useCallback(() => {
+    if (
+      !events.length ||
+      !svgRef.current ||
+      !containerRef.current ||
+      !headerRef.current
+    )
+      return;
 
-    const nodes: cytoscape.NodeDefinition[] = [];
-    const edges: cytoscape.EdgeDefinition[] = [];
-    const nodeMap = new Map<string, NarrativeEvent>();
-    const topicTimestampMap = new Map<string, Map<string, string>>();
-    const idCounterMap = new Map<string, number>();
-    const connectedNodes = new Set<string>();
+    // Clear previous content
+    d3.select(svgRef.current).selectAll("*").remove();
+    d3.select(headerRef.current).selectAll("*").remove();
 
-    // First pass: Create all nodes
-    sortedEvents.forEach((event, idx) => {
-      const timestamp =
-        event.temporal_anchoring?.real_time ||
-        event.temporal_anchoring?.anchor ||
-        "Unknown";
-      const baseKey = `${event.topic.main_topic}-${timestamp}`;
-      const counter = (idCounterMap.get(baseKey) || 0) + 1;
-      idCounterMap.set(baseKey, counter);
+    // Process data points
+    const dataPoints = processEvents(events);
+    const topicCounts = getTopicCounts(dataPoints);
+    const topTopics = getTopTopics(topicCounts);
 
-      const id = generateEventId(event, counter);
-      nodeMap.set(id, event);
+    // Calculate dimensions
+    const { containerWidth, containerHeight, width, height } =
+      calculateDimensions(
+        containerRef.current.clientWidth,
+        containerRef.current.clientHeight
+      );
 
-      // Track nodes by topic and timestamp for linking
-      if (!topicTimestampMap.has(event.topic.main_topic)) {
-        topicTimestampMap.set(event.topic.main_topic, new Map());
-      }
-      topicTimestampMap.get(event.topic.main_topic)!.set(timestamp, id);
-    });
+    // Create scales
+    const { xScale, yScale } = getScales(dataPoints, topTopics, width, height);
 
-    // Second pass: Create edges and track connected nodes
-    sortedEvents.forEach((event, idx) => {
-      if (idx === 0) {
-        // Always include the first node
-        const id = generateEventId(event, 1);
-        connectedNodes.add(id);
-      } else {
-        const timestamp =
-          event.temporal_anchoring?.real_time ||
-          event.temporal_anchoring?.anchor ||
-          "Unknown";
-        const baseKey = `${event.topic.main_topic}-${timestamp}`;
-        const counter = idCounterMap.get(baseKey) || 1;
-        const currentId = generateEventId(event, counter);
+    // Create fixed header for x-axis
+    const headerContainer = d3
+      .select(headerRef.current)
+      .style("width", `${width}px`)
+      .style("margin-left", `${SHARED_CONFIG.margin.left}px`);
 
-        const topicNodes = topicTimestampMap.get(event.topic.main_topic)!;
-        const timestamps = Array.from(topicNodes.keys()).sort();
-        const currentTimestampIdx = timestamps.indexOf(timestamp);
+    // Create axes
+    const { xAxis, yAxis } = createAxes(xScale, yScale);
 
-        let isConnected = false;
+    // Add x-axis to header
+    const headerSvg = headerContainer
+      .append("svg")
+      .attr("width", width + SHARED_CONFIG.margin.right)
+      .attr("height", SHARED_CONFIG.header.height)
+      .style("overflow", "visible");
 
-        // Link to previous nodes in the same topic
-        if (currentTimestampIdx > 0) {
-          const prevTimestamp = timestamps[currentTimestampIdx - 1];
-          const prevId = topicNodes.get(prevTimestamp)!;
-          edges.push({
-            data: {
-              id: `${prevId}-${currentId}`,
-              source: prevId,
-              target: currentId,
-              weight: 1,
-              type: "same-topic",
-            },
-          });
-          connectedNodes.add(prevId);
-          connectedNodes.add(currentId);
-          isConnected = true;
-        }
+    headerSvg
+      .append("g")
+      .attr("class", "x-axis")
+      .attr("transform", `translate(0,30)`)
+      .call(xAxis)
+      .style("font-size", `${SHARED_CONFIG.axis.fontSize}px`)
+      .call((g) => g.select(".domain").remove())
+      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"));
 
-        // Create cross-topic links
-        const prevEvent = sortedEvents[idx - 1];
-        const sharedSubtopics = event.topic.sub_topic.filter((st) =>
-          prevEvent.topic.sub_topic.includes(st)
-        );
+    // Create SVG
+    const svg = d3
+      .select(svgRef.current)
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
+      .style("overflow", "visible");
 
-        if (
-          sharedSubtopics.length > 0 &&
-          prevEvent.topic.main_topic !== event.topic.main_topic
-        ) {
-          const prevTimestamp =
-            prevEvent.temporal_anchoring?.real_time ||
-            prevEvent.temporal_anchoring?.anchor ||
-            "Unknown";
-          const prevBaseKey = `${prevEvent.topic.main_topic}-${prevTimestamp}`;
-          const prevCounter = idCounterMap.get(prevBaseKey) || 1;
-          const prevId = generateEventId(prevEvent, prevCounter);
+    // Create main group with proper margins
+    const g = svg
+      .append("g")
+      .attr(
+        "transform",
+        `translate(${SHARED_CONFIG.margin.left},${SHARED_CONFIG.margin.top})`
+      );
 
-          edges.push({
-            data: {
-              id: `${prevId}-${currentId}-cross`,
-              source: prevId,
-              target: currentId,
-              weight: sharedSubtopics.length,
-              type: "cross-topic",
-              sharedTopics: sharedSubtopics,
-            },
-          });
-          connectedNodes.add(prevId);
-          connectedNodes.add(currentId);
-          isConnected = true;
-        }
-      }
-    });
+    // Add y-axis
+    g.append("g")
+      .attr("class", "y-axis")
+      .call(yAxis)
+      .style("font-size", `${SHARED_CONFIG.axis.fontSize}px`)
+      .call((g) => g.select(".domain").remove())
+      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
+      .call((g) =>
+        g
+          .selectAll(".tick text")
+          .style("font-weight", "500")
+          .style("text-anchor", "end")
+          .attr("dy", "0.32em")
+      );
 
-    // Only create nodes for connected events
-    Array.from(nodeMap.entries()).forEach(([id, event]) => {
-      if (connectedNodes.has(id) || id === selectedEventId) {
-        const colors = getSentimentColor(event.topic.sentiment.intensity);
-        nodes.push({
-          data: {
-            id,
-            mainTopic: event.topic.main_topic,
-            subTopics: event.topic.sub_topic,
-            timestamp:
-              event.temporal_anchoring?.real_time ||
-              event.temporal_anchoring?.anchor ||
-              "Unknown",
-            sentiment: event.topic.sentiment.intensity,
-            selected: id === selectedEventId,
-            bgColor: colors.bg,
-            borderColor: colors.border,
-            textColor: colors.text,
-            text: event.text,
-            event: event,
-          },
-        });
-      }
-    });
+    // Add points
+    const pointsGroup = g.append("g").attr("class", "points-group");
 
-    return { nodes, edges };
-  }, [events, selectedEventId]);
+    pointsGroup
+      .selectAll(".point")
+      .data(dataPoints)
+      .enter()
+      .append("circle")
+      .attr("class", (d) => `point point-${d.index}`)
+      .attr("cx", (d) => xScale(d.realTime))
+      .attr("cy", (d) => yScale(d.mainTopic)! + yScale.bandwidth() / 2)
+      .attr("r", SHARED_CONFIG.point.radius)
+      .attr("fill", (d) => getPointColors(d.sentiment).fill)
+      .attr("stroke", (d) => getPointColors(d.sentiment).stroke)
+      .attr("stroke-width", SHARED_CONFIG.point.strokeWidth)
+      .style("cursor", "pointer")
+      .on("mouseover", function (event, d) {
+        const point = d3.select(this);
+        point
+          .transition()
+          .duration(150)
+          .attr("r", SHARED_CONFIG.point.hoverRadius)
+          .attr("stroke-width", SHARED_CONFIG.point.hoverStrokeWidth);
 
+        showTooltip(d.event, event.pageX, event.pageY);
+      })
+      .on("mousemove", function (event) {
+        updatePosition(event.pageX, event.pageY);
+      })
+      .on("mouseout", function (event, d) {
+        const point = d3.select(this);
+        point
+          .transition()
+          .duration(150)
+          .attr("r", SHARED_CONFIG.point.radius)
+          .attr("stroke-width", SHARED_CONFIG.point.strokeWidth);
+
+        hideTooltip();
+      });
+  }, [events, selectedEventId, showTooltip, hideTooltip, updatePosition]);
+
+  // Initial setup and cleanup
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const cy = cytoscape({
-      container: containerRef.current,
-      elements: {
-        nodes,
-        edges,
-      },
-      style: [
-        {
-          selector: "node",
-          style: {
-            "background-color": "data(bgColor)",
-            "border-color": "data(borderColor)",
-            "border-width": 1,
-            width: 100,
-            height: 40,
-            shape: "round-rectangle",
-            label: (ele) => {
-              const topic = ele.data("mainTopic");
-              const text = ele.data("text");
-              // Truncate text to ~50 chars
-              const truncatedText =
-                text.length > 50 ? text.slice(0, 47) + "..." : text;
-              return `${topic}\n${truncatedText}`;
-            },
-            "text-valign": "center",
-            "text-halign": "center",
-            "text-wrap": "wrap",
-            "text-max-width": "90px",
-            "font-size": "7px",
-            "text-overflow-wrap": "anywhere",
-            "text-justification": "center",
-            "text-margin-y": 3,
-            "line-height": 1.2,
-            color: "data(textColor)",
-            "overlay-padding": "4px",
-            "overlay-opacity": 0,
-            "transition-property":
-              "background-color, border-color, border-width",
-            "transition-duration": 150,
-          },
-        },
-        {
-          selector: "node.highlight",
-          style: {
-            "border-width": 1.5,
-            "border-color": "#000000",
-            "background-color": "#ffffff",
-            "z-index": 999,
-          },
-        },
-        {
-          selector: "node.faded",
-          style: {
-            opacity: 0.3,
-          },
-        },
-        {
-          selector: "edge",
-          style: {
-            "curve-style": "bezier",
-            "target-arrow-shape": "triangle",
-            "arrow-scale": 0.5,
-            width: 1,
-            "line-color": "#666666",
-            "target-arrow-color": "#666666",
-            opacity: 0.8,
-            "transition-property": "opacity, line-color, target-arrow-color",
-            "transition-duration": 200,
-          },
-        },
-        {
-          selector: "edge.highlight",
-          style: {
-            "line-color": "#000000",
-            "target-arrow-color": "#000000",
-            opacity: 1,
-            width: 1.5,
-            "z-index": 999,
-          },
-        },
-        {
-          selector: "edge.faded",
-          style: {
-            opacity: 0.1,
-          },
-        },
-        {
-          selector: "edge[type='cross-topic']",
-          style: {
-            "line-style": "dashed",
-            "line-dash-pattern": [4, 4],
-            "line-color": "#999999",
-            "target-arrow-color": "#999999",
-            opacity: 0.6,
-          },
-        },
-      ],
-      layout: {
-        name: "dagre",
-        rankDir: "LR" as const,
-        align: "UL" as const,
-        ranker: "longest-path" as const,
-        nodeSep: 50,
-        rankSep: 100,
-        edgeSep: 20,
-        marginX: 40,
-        marginY: 20,
-        animate: true,
-        animationDuration: 300,
-        fit: true,
-        padding: { top: 20, bottom: 20, left: 30, right: 30 },
-        spacingFactor: 1.5,
-        acyclicer: "greedy" as const,
-      },
-      wheelSensitivity: 0.2,
-      minZoom: 0.2,
-      maxZoom: 2.5,
-      maxBounds: [
-        {
-          x1: 0,
-          y1: 0,
-          x2: 10000,
-          y2: 10000,
-        },
-      ],
-      panningEnabled: true,
-      userPanningEnabled: true,
-      userZoomingEnabled: true,
-      boxSelectionEnabled: false,
-    });
+    // Create ResizeObserver
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) return;
 
-    // Save reference immediately
-    cyRef.current = cy;
+      // Get the actual content dimensions
+      const contentRect = entry.contentRect;
 
-    // Function to handle layout and fit
-    const handleResize = () => {
-      if (!cyRef.current) return;
-
-      // Clear any pending timeout
-      if (resizeTimeoutRef.current) {
-        clearTimeout(resizeTimeoutRef.current);
-      }
-
-      // Delay layout to avoid multiple rapid calls
-      resizeTimeoutRef.current = setTimeout(() => {
-        if (!cyRef.current) return;
-
-        const layout = cyRef.current.layout({
-          name: "dagre",
-          rankDir: "LR" as const,
-          align: "UL" as const,
-          ranker: "longest-path" as const,
-          nodeSep: 50,
-          rankSep: 100,
-          animate: true,
-          animationDuration: 300,
-          fit: true,
-          padding: { top: 20, bottom: 20, left: 30, right: 30 },
-        });
-
-        layout.run();
-
-        // Additional delay for fit and center
-        setTimeout(() => {
-          if (!cyRef.current) return;
-          cyRef.current.fit();
-          cyRef.current.center();
-        }, 310);
-      }, 250);
-    };
-
-    // Set up ResizeObserver
-    resizeObserverRef.current = new ResizeObserver(handleResize);
-
-    if (containerRef.current) {
-      resizeObserverRef.current.observe(containerRef.current);
-    }
-
-    // Initialize layout
-    cy.ready(handleResize);
-
-    // Add hover effect
-    cy.on("mouseover", "node", (evt) => {
-      const node = evt.target;
-
-      // Highlight the node and its neighborhood
-      const neighborhood = node.neighborhood().add(node);
-      const others = cy.elements().not(neighborhood);
-
-      neighborhood.addClass("highlight");
-      others.addClass("faded");
-
-      // Show tooltip with additional info
-      const data = node.data();
-      const event = data.event;
-      if (!event) return;
-
-      showTooltip(event, evt.originalEvent.clientX, evt.originalEvent.clientY);
-
-      cy.on("mousemove", (e) => {
-        updatePosition(e.originalEvent.clientX, e.originalEvent.clientY);
-      });
-
-      node.once("mouseout", () => {
-        hideTooltip();
-        if (!node.data("selected")) {
-          node.style({
-            "border-width": 1,
-            "border-opacity": 1,
-            "background-opacity": 1,
-            "z-index": "auto",
-          });
+      // Use requestAnimationFrame to throttle updates
+      window.requestAnimationFrame(() => {
+        if (containerRef.current) {
+          // Force a style recalculation to get accurate dimensions
+          containerRef.current.style.height = "100%";
+          updateVisualization();
         }
       });
     });
 
-    cy.on("mouseout", "node", (evt) => {
-      const node = evt.target;
+    // Start observing
+    resizeObserver.observe(containerRef.current);
+    resizeObserverRef.current = resizeObserver;
 
-      // Remove highlights
-      cy.elements().removeClass("highlight faded");
-      hideTooltip();
-    });
+    // Initial render
+    updateVisualization();
 
+    // Cleanup
     return () => {
-      // Clear any pending timeouts
-      if (resizeTimeoutRef.current) {
-        clearTimeout(resizeTimeoutRef.current);
-      }
-      // Disconnect observer
       if (resizeObserverRef.current) {
         resizeObserverRef.current.disconnect();
       }
-      // Destroy cytoscape instance
-      if (cyRef.current) {
-        cyRef.current.destroy();
-        cyRef.current = null;
-      }
     };
-  }, [nodes, edges, events]);
+  }, [updateVisualization]);
 
   return (
-    <>
-      <div ref={containerRef} className="w-full h-full" />
-      <NarrativeTooltip
-        event={tooltipState.event}
-        position={tooltipState.position}
-        visible={tooltipState.visible}
-        containerRef={containerRef}
+    <div className="w-full h-full flex flex-col">
+      <div
+        ref={headerRef}
+        className="flex-none bg-white sticky top-0 z-10 flex items-end border-b border-gray-200"
+        style={{ height: `${SHARED_CONFIG.header.height}px` }}
       />
-    </>
+      <div ref={containerRef} className="flex-1 relative overflow-hidden">
+        <svg ref={svgRef} className="w-full h-full" />
+        <NarrativeTooltip
+          event={tooltipState.event}
+          position={tooltipState.position}
+          visible={tooltipState.visible}
+          containerRef={containerRef}
+        />
+      </div>
+    </div>
   );
 }

@@ -3,12 +3,12 @@ export const SHARED_CONFIG = {
     top: 30,
     right: 40,
     bottom: 20,
-    left: 40,
+    left: 180,
   },
   axis: {
     tickSize: 5,
-    tickPadding: 5,
-    labelOffset: 40,
+    tickPadding: 10,
+    labelOffset: 45,
     fontSize: 12,
   },
   animation: {
@@ -18,6 +18,12 @@ export const SHARED_CONFIG = {
     height: 40,
   },
   minHeight: 800,
+  point: {
+    radius: 6,
+    strokeWidth: 2,
+    hoverRadius: 9,
+    hoverStrokeWidth: 3,
+  },
 };
 
 export const ENTITY_COLORS = {
@@ -31,6 +37,10 @@ export const ENTITY_COLORS = {
 
 export const ENTITY_CONFIG = {
   ...SHARED_CONFIG,
+  margin: {
+    ...SHARED_CONFIG.margin,
+    left: 40,
+  },
   entity: {
     labelFontSize: 14,
     lineStrokeWidth: 6,
@@ -44,28 +54,22 @@ export const ENTITY_CONFIG = {
   },
 };
 
+export const EVENT_COLORS = {
+  positiveFill: "#ffffff",
+  negativeFill: "#f3f3f3",
+  neutralFill: "#ffffff",
+  positiveStroke: "#000000",
+  negativeStroke: "#666666",
+  neutralStroke: "#999999",
+};
+
 export const TIME_CONFIG = {
-  margin: {
-    top: 30,
-    right: 40,
-    bottom: 20,
-    left: 40,
-  },
-  minHeight: 800,
-  header: {
-    height: 40,
-  },
+  ...SHARED_CONFIG,
   point: {
     radius: 6,
     strokeWidth: 2,
     hoverRadius: 9,
     hoverStrokeWidth: 3,
-    positiveFill: "#ffffff",
-    negativeFill: "#f3f3f3",
-    neutralFill: "#ffffff",
-    positiveStroke: "#000000",
-    negativeStroke: "#666666",
-    neutralStroke: "#999999",
   },
   axis: {
     tickSize: 5,
