@@ -52,6 +52,9 @@ export const TIME_CONFIG = {
     left: 40,
   },
   minHeight: 800,
+  header: {
+    height: 40,
+  },
   point: {
     radius: 6,
     strokeWidth: 2,
@@ -71,7 +74,7 @@ export const TIME_CONFIG = {
     labelOffset: 40,
   },
   curve: {
-    strokeWidth: 2,
-    opacity: 0.8,
+    strokeWidth: 6,
+    opacity: 0.2,
   },
 };
