@@ -119,18 +119,84 @@ export function NarrativeTimeVisual({
       .call(yAxis)
       .style("font-size", `${TIME_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
-      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
+      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"));
+    // .append("text")
+    // .attr("class", "axis-label")
+    // .attr("transform", "rotate(-90)")
+    // .attr("x", -height / 2)
+    // .attr("y", -TIME_CONFIG.axis.labelOffset)
+    // .attr("fill", "#64748b")
+    // .attr("text-anchor", "middle")
+    // .text("Narrative Time");
+
+    // Add lead titles
+    const leadTitles = g
+      .append("g")
+      .attr("class", "lead-titles")
+      .selectAll(".lead-title")
+      .data(dataPoints.filter((d) => d.event.lead_title))
+      .enter()
+      .append("g")
+      .attr("class", "lead-title-group");
+
+    // Add dashed lines for lead titles
+    leadTitles
+      .append("line")
+      .attr("class", "lead-title-line")
+      .attr("x1", 0)
+      .attr("x2", width)
+      .attr("y1", (d) => yScale(d.narrativeTime))
+      .attr("y2", (d) => yScale(d.narrativeTime))
+      .attr("stroke", "#94a3b8")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "4,4")
+      .attr("opacity", 0.5);
+    // Add lead title text
+    leadTitles
       .append("text")
-      .attr("class", "axis-label")
-      .attr("transform", "rotate(-90)")
-      .attr("x", -height / 2)
-      .attr("y", -TIME_CONFIG.axis.labelOffset)
+      .attr("x", -TIME_CONFIG.margin.left + 10)
+      .attr("y", (d) => yScale(d.narrativeTime))
+      .attr("dy", "0.32em")
+      .attr("text-anchor", "start")
       .attr("fill", "#64748b")
-      .attr("text-anchor", "middle")
-      .text("Narrative Time");
+      .style("font-size", "12px")
+      .style("font-weight", "500")
+      .text((d) => {
+        const title = d.event.lead_title ?? "";
+        return title.length > 50 ? title.slice(0, 47) + "..." : title;
+      });
 
     // Create line generator
     const smoothLine = createLineGenerator(xScale, yScale);
+
+    // Add main line with gradient stroke inside clipping path
+    const lineGroup = g.append("g").attr("class", "line-group");
+    // .attr("clip-path", "url(#plot-area)");
+
+    // // Add shadow effect for depth
+    // lineGroup
+    //   .append("path")
+    //   .datum(sortedPoints)
+    //   .attr("class", "line-shadow")
+    //   .attr("fill", "none")
+    //   .attr("stroke", "black")
+    //   .attr("stroke-width", TIME_CONFIG.curve.strokeWidth + 2)
+    //   .attr("stroke-opacity", 0.1)
+    //   .attr("stroke-linecap", "round")
+    //   .attr("filter", "blur(4px)")
+    //   .attr("d", smoothLine);
+
+    // Add main line
+    lineGroup
+      .append("path")
+      .datum(sortedPoints)
+      .attr("class", "main-line")
+      .attr("fill", "none")
+      .attr("stroke", "black")
+      .attr("stroke-width", TIME_CONFIG.curve.strokeWidth)
+      .attr("stroke-opacity", TIME_CONFIG.curve.opacity)
+      .attr("stroke-linecap", "round")
+      .attr("d", smoothLine);
 
     // Create labels group first (so it's underneath)
     const labelsGroup = g.append("g").attr("class", "labels");
@@ -226,37 +292,6 @@ export function NarrativeTimeVisual({
       .attr("stroke", "#94a3b8")
       .attr("stroke-width", 1)
       .attr("stroke-dasharray", "2,2");
-
-    // Add main line with gradient stroke inside clipping path
-    const lineGroup = g
-      .append("g")
-      .attr("class", "line-group")
-      .attr("clip-path", "url(#plot-area)");
-
-    // // Add shadow effect for depth
-    // lineGroup
-    //   .append("path")
-    //   .datum(sortedPoints)
-    //   .attr("class", "line-shadow")
-    //   .attr("fill", "none")
-    //   .attr("stroke", "black")
-    //   .attr("stroke-width", TIME_CONFIG.curve.strokeWidth + 2)
-    //   .attr("stroke-opacity", 0.1)
-    //   .attr("stroke-linecap", "round")
-    //   .attr("filter", "blur(4px)")
-    //   .attr("d", smoothLine);
-
-    // Add main line
-    lineGroup
-      .append("path")
-      .datum(sortedPoints)
-      .attr("class", "main-line")
-      .attr("fill", "none")
-      .attr("stroke", "black")
-      .attr("stroke-width", TIME_CONFIG.curve.strokeWidth)
-      .attr("stroke-opacity", TIME_CONFIG.curve.opacity)
-      .attr("stroke-linecap", "round")
-      .attr("d", smoothLine);
 
     // Add label backgrounds
     const labelBackgrounds = labelContainers

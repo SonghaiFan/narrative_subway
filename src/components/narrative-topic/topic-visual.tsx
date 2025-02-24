@@ -16,6 +16,7 @@ import {
   getPointColors,
   calculateDimensions,
   createAxes,
+  createEdges,
 } from "./topic-visual.utils";
 
 interface TopicVisualProps {
@@ -120,15 +121,64 @@ export function NarrativeTopicVisual({
           .attr("dy", "0.32em")
       );
 
-    // Add points
-    const pointsGroup = g.append("g").attr("class", "points-group");
+    // Create edges
+    const edges = createEdges(dataPoints);
 
+    // Add edges group first (so it's underneath points)
+    const edgesGroup = g
+      .append("g")
+      .attr("class", "edges")
+      .attr("clip-path", "url(#plot-area)");
+
+    // Create curved line generator for edges
+    const lineGenerator = d3
+      .line<[number, number]>()
+      .x((d) => d[0])
+      .y((d) => d[1])
+      .curve(d3.curveCatmullRom);
+
+    // Add edges with neutral color
+    edgesGroup
+      .selectAll(".edge")
+      .data(edges)
+      .enter()
+      .append("path")
+      .attr("class", "edge")
+      .attr("d", (d) => {
+        const sourceX = xScale(d.source.realTime);
+        const sourceY = yScale(d.source.mainTopic)! + yScale.bandwidth() / 2;
+        const targetX = xScale(d.target.realTime);
+        const targetY = yScale(d.target.mainTopic)! + yScale.bandwidth() / 2;
+
+        const midX = (sourceX + targetX) / 2;
+        const points: [number, number][] = [
+          [sourceX, sourceY],
+          [midX, sourceY],
+          [midX, targetY],
+          [targetX, targetY],
+        ];
+
+        return lineGenerator(points);
+      })
+      .attr("fill", "none")
+      .attr("stroke", "#94a3b8")
+      .attr("stroke-width", 1.5)
+      .attr("stroke-opacity", 0.4)
+      .attr("stroke-dasharray", "4,4");
+
+    // Add points group
+    const pointsGroup = g
+      .append("g")
+      .attr("class", "points")
+      .attr("clip-path", "url(#plot-area)");
+
+    // Add points with sentiment-based colors
     pointsGroup
       .selectAll(".point")
       .data(dataPoints)
       .enter()
       .append("circle")
-      .attr("class", (d) => `point point-${d.index}`)
+      .attr("class", "point")
       .attr("cx", (d) => xScale(d.realTime))
       .attr("cy", (d) => yScale(d.mainTopic)! + yScale.bandwidth() / 2)
       .attr("r", SHARED_CONFIG.point.radius)
@@ -138,26 +188,35 @@ export function NarrativeTopicVisual({
       .style("cursor", "pointer")
       .on("mouseover", function (event, d) {
         const point = d3.select(this);
-        point
+        point.transition().duration(200).attr("r", 7).attr("stroke-width", 2);
+
+        // Highlight related edges
+        edgesGroup
+          .selectAll(".edge")
+          .filter((edge: Edge) => edge.source === d || edge.target === d)
           .transition()
-          .duration(150)
-          .attr("r", SHARED_CONFIG.point.hoverRadius)
-          .attr("stroke-width", SHARED_CONFIG.point.hoverStrokeWidth);
+          .duration(200)
+          .attr("stroke-opacity", 0.8)
+          .attr("stroke-width", 2);
 
         showTooltip(d.event, event.pageX, event.pageY);
       })
-      .on("mousemove", function (event) {
-        updatePosition(event.pageX, event.pageY);
-      })
       .on("mouseout", function (event, d) {
         const point = d3.select(this);
-        point
+        point.transition().duration(200).attr("r", 5).attr("stroke-width", 1.5);
+
+        // Reset edge styles
+        edgesGroup
+          .selectAll(".edge")
           .transition()
-          .duration(150)
-          .attr("r", SHARED_CONFIG.point.radius)
-          .attr("stroke-width", SHARED_CONFIG.point.strokeWidth);
+          .duration(200)
+          .attr("stroke-opacity", 0.4)
+          .attr("stroke-width", 1.5);
 
         hideTooltip();
+      })
+      .on("mousemove", function (event) {
+        updatePosition(event.pageX, event.pageY);
       });
   }, [events, selectedEventId, showTooltip, hideTooltip, updatePosition]);
 

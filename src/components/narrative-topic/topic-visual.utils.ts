@@ -13,6 +13,12 @@ export interface DataPoint {
   index: number;
 }
 
+export interface Edge {
+  source: DataPoint;
+  target: DataPoint;
+  mainTopic: string;
+}
+
 // Process events into data points
 export function processEvents(events: NarrativeEvent[]): DataPoint[] {
   const validEvents = events.filter((e) => e.temporal_anchoring.real_time);
@@ -116,4 +122,30 @@ export function createAxes(
     .tickPadding(SHARED_CONFIG.axis.tickPadding);
 
   return { xAxis, yAxis };
+}
+
+// Create edges between events that share the same main topic and are adjacent in time
+export function createEdges(dataPoints: DataPoint[]): Edge[] {
+  const edges: Edge[] = [];
+
+  // Sort data points by real time
+  const sortedPoints = [...dataPoints].sort(
+    (a, b) => a.realTime.getTime() - b.realTime.getTime()
+  );
+
+  // Create edges between consecutive events with the same main topic
+  for (let i = 0; i < sortedPoints.length - 1; i++) {
+    const current = sortedPoints[i];
+    const next = sortedPoints[i + 1];
+
+    if (current.mainTopic === next.mainTopic) {
+      edges.push({
+        source: current,
+        target: next,
+        mainTopic: current.mainTopic,
+      });
+    }
+  }
+
+  return edges;
 }

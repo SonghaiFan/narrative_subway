@@ -3,7 +3,7 @@ export const SHARED_CONFIG = {
     top: 30,
     right: 40,
     bottom: 20,
-    left: 180,
+    left: 250,
   },
   axis: {
     tickSize: 5,
@@ -39,7 +39,7 @@ export const ENTITY_CONFIG = {
   ...SHARED_CONFIG,
   margin: {
     ...SHARED_CONFIG.margin,
-    left: 40,
+    left: 30,
   },
   entity: {
     labelFontSize: 14,

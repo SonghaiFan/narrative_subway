@@ -207,6 +207,7 @@
       "index": 6,
       "text": "The violence, its fallout and the humanitarian crisis afflicting Gazan civilians have shaken the region and the world.",
       "short_text": "Humanitarian crisis worsens in Gaza",
+      "lead_title": "What happened during the Hamas attack?",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -353,6 +354,7 @@
       "index": 10,
       "text": "Hamas and other armed Palestinian groups also took about 240 civilians and soldiers hostage. Four have since been released.",
       "short_text": "Hamas takes 240 hostages, including civilians and soldiers, and four hostages are released",
+      "lead_title": "How has Israel responded?",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -536,6 +538,7 @@
     {
       "index": 15,
       "text": "Many Gazans say no part of the enclave is safe.",
+      "short_text": "Gazans report no safe zones in the enclave",
       "narrative_level": "metadiegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "present",
@@ -562,8 +565,7 @@
           "polarity": "negative",
           "intensity": 0.8
         }
-      },
-      "short_text": "Gazans report no safe zones in the enclave"
+      }
     },
     {
       "index": 18,
@@ -606,6 +608,7 @@
     {
       "index": 19,
       "text": "Palestinians and some international observers have accused Israel of breaking the law with a disproportionate military response.",
+      "short_text": "Palestinians and some international observers accuse Israel of disproportionate military response",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "present",
@@ -632,12 +635,12 @@
           "polarity": "negative",
           "intensity": 0.75
         }
-      },
-      "short_text": "Palestinians and some international observers accuse Israel of disproportionate military response"
+      }
     },
     {
       "index": 20,
       "text": "On Nov. 15, the Israeli military stormed Gaza's largest hospital, Al-Shifa, and said it discovered weapons and other evidence to support its assertions that Hamas operated in a network of tunnels under the complex.",
+      "short_text": "Israel raids Al-Shifa hospital, claims Hamas used it for military purposes",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -676,12 +679,12 @@
           "polarity": "negative",
           "intensity": 0.85
         }
-      },
-      "short_text": "Israel raids Al-Shifa hospital, claims Hamas used it for military purposes"
+      }
     },
     {
       "index": 21,
       "text": "Senior U.S. officials have backed Israel, though the Israeli military has yet to show incontrovertible proof of a vast Hamas tunnel network.",
+      "short_text": "Senior U.S. officials back Israel but await more evidence on Hamas tunnels",
       "narrative_level": "metadiegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "present",
@@ -714,12 +717,12 @@
           "polarity": "neutral",
           "intensity": 0.65
         }
-      },
-      "short_text": "Senior U.S. officials back Israel but await more evidence on Hamas tunnels"
+      }
     },
     {
       "index": 22,
       "text": "Hamas and hospital officials had denied the accusations.",
+      "short_text": "Hamas and hospital officials deny allegations of tunnel networks",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -752,12 +755,12 @@
           "polarity": "neutral",
           "intensity": 0.6
         }
-      },
-      "short_text": "Hamas and hospital officials deny allegations of tunnel networks"
+      }
     },
     {
       "index": 23,
       "text": "Almost two days after Israel began its raid of Al-Shifa, New York Times journalists were taken on a controlled tour of the complex by Israeli military officials, and saw a shaft on the hospital grounds.",
+      "short_text": "The New York Times tours Al-Shifa hospital site",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -790,12 +793,12 @@
           "polarity": "neutral",
           "intensity": 0.65
         }
-      },
-      "short_text": "The New York Times tours Al-Shifa hospital site"
+      }
     },
     {
       "index": 24,
       "text": "Electrical wiring was visible inside, along with a metal staircase, but it was unclear how deep the shaft was or where it led.",
+      "short_text": "Journalists observe an unclear shaft at Al-Shifa hospital",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -815,12 +818,12 @@
           "polarity": "neutral",
           "intensity": 0.6
         }
-      },
-      "short_text": "Journalists observe an unclear shaft at Al-Shifa hospital"
+      }
     },
     {
       "index": 25,
       "text": "As conditions have worsened for civilians in Gaza, Israel's campaign has drawn increasing outcries from the United Nations, aid organizations and much of the world.",
+      "short_text": "Israel's military campaign faces global criticism",
       "narrative_level": "extradiegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -853,8 +856,7 @@
           "polarity": "negative",
           "intensity": 0.8
         }
-      },
-      "short_text": "Israel's military campaign faces global criticism"
+      }
     },
     {
       "index": 26,
@@ -891,6 +893,8 @@
     {
       "index": 27,
       "text": "After more than a month of war, the humanitarian crisis in Gaza has grown increasingly dire, leaving Gazans with severely limited access to food, clean water and medical care.",
+      "short_text": "Gaza's humanitarian crisis worsens, limiting access to basic necessities",
+      "lead_title": "What is the situation in Gaza?",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "present",
@@ -917,12 +921,12 @@
           "polarity": "negative",
           "intensity": 0.9
         }
-      },
-      "short_text": "Gaza's humanitarian crisis worsens, limiting access to basic necessities"
+      }
     },
     {
       "index": 28,
       "text": "The United Nations has warned that the entire territory is at risk of starvation amid mass internal displacement.",
+      "short_text": "The U.N. warns Gaza is at risk of mass starvation",
       "narrative_level": "diegetic",
       "narrator_type": "quoted_source",
       "temporal_position": "present",
@@ -949,12 +953,12 @@
           "polarity": "negative",
           "intensity": 0.85
         }
-      },
-      "short_text": "The U.N. warns Gaza is at risk of mass starvation"
+      }
     },
     {
       "index": 29,
       "text": "Thousands of children, who make up nearly half of Gaza's population, have been killed, according to health officials.",
+      "short_text": "Thousands of children killed in Gaza, according to health officials",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -981,12 +985,12 @@
           "polarity": "negative",
           "intensity": 0.95
         }
-      },
-      "short_text": "Thousands of children killed in Gaza, according to health officials"
+      }
     },
     {
       "index": 30,
       "text": "After weeks of desperate fuel shortages that put hospitals on the verge of collapse, Israel agreed on Nov. 17 to the entry of two tankers of fuel into Gaza each day to operate desalination and sewage plants.",
+      "short_text": "Israel allows fuel into Gaza after shortages",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -1019,12 +1023,12 @@
           "polarity": "positive",
           "intensity": 0.7
         }
-      },
-      "short_text": "Israel allows fuel into Gaza after shortages"
+      }
     },
     {
       "index": 31,
       "text": "Before Israel's raid of Al-Shifa, the hospital complex had been struggling to treat patients, with operations limited by a dearth of supplies, including water, medicine and oxygen.",
+      "short_text": "Gaza hospitals struggle with limited medical supplies",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -1051,12 +1055,12 @@
           "polarity": "negative",
           "intensity": 0.85
         }
-      },
-      "short_text": "Gaza hospitals struggle with limited medical supplies"
+      }
     },
     {
       "index": 32,
       "text": "Medical workers at other hospitals have described similar scenes of operations at the verge of collapse.",
+      "short_text": "Healthcare facilities on the brink of collapse",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "present",
@@ -1083,8 +1087,7 @@
           "polarity": "negative",
           "intensity": 0.85
         }
-      },
-      "short_text": "Healthcare facilities on the brink of collapse"
+      }
     },
     {
       "index": 33,
@@ -1153,6 +1156,7 @@
     {
       "index": 35,
       "text": "Freeing the 240 hostages abducted by Hamas on Oct. 7 has been one of Israel's two main goals of the war, in addition to destroying Hamas.",
+      "lead_title": "What happened with the hostages?",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -1191,6 +1195,7 @@
     {
       "index": 36,
       "text": "Since Oct. 7, Hamas has released four Israeli hostages, while Israeli troops rescued a 19-year-old Israeli soldier in October.",
+      "short_text": "Hamas releases four hostages; Israel rescues one",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
       "temporal_position": "past",
@@ -1223,8 +1228,7 @@
           "polarity": "neutral",
           "intensity": 0.7
         }
-      },
-      "short_text": "Hamas releases four hostages; Israel rescues one"
+      }
     },
     {
       "index": 37,

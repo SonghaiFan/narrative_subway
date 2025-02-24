@@ -23,6 +23,8 @@ export interface Topic {
 export interface NarrativeEvent {
   index: number;
   text: string;
+  short_text: string;
+  lead_title?: string;
   narrative_level: string;
   narrator_type: string;
   temporal_position: string;
