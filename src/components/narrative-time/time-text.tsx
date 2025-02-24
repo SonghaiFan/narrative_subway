@@ -1,8 +1,8 @@
-import { TimelineEvent } from "@/types/article";
+import { NarrativeEvent } from "@/types/article";
 import { useState } from "react";
 
 interface TimeTextProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
   selectedEventId?: string;
 }
 

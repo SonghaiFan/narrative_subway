@@ -20,7 +20,7 @@ export interface Topic {
   };
 }
 
-export interface TimelineEvent {
+export interface NarrativeEvent {
   index: number;
   text: string;
   narrative_level: string;
@@ -38,7 +38,7 @@ export interface TimelineEvent {
   topic: Topic;
 }
 
-export interface TimelineMetadata {
+export interface NarrativeMetadata {
   title: string;
   description: string;
   author: string;
@@ -47,6 +47,6 @@ export interface TimelineMetadata {
 }
 
 export interface TimelineData {
-  metadata: TimelineMetadata;
-  events: TimelineEvent[];
+  metadata: NarrativeMetadata;
+  events: NarrativeEvent[];
 }

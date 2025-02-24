@@ -1,7 +1,7 @@
-import { TimelineEvent, Topic } from "@/types/article";
+import { NarrativeEvent, Topic } from "@/types/article";
 
 interface TopicAnalysisProps {
-  events?: TimelineEvent[];
+  events?: NarrativeEvent[];
 }
 
 interface TopicContext {

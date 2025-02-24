@@ -1,12 +1,20 @@
 "use client";
 
-import { TimelineEvent } from "@/types/article";
-import { useEffect, useRef } from "react";
+import { Entity, NarrativeEvent } from "@/types/article";
+import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
-import { ENTITY_CONFIG, ENTITY_COLORS } from "../shared/visualization-config";
+import {
+  ENTITY_CONFIG,
+  ENTITY_COLORS,
+  SHARED_CONFIG,
+} from "../shared/visualization-config";
+import {
+  NarrativeTooltip,
+  useNarrativeTooltip,
+} from "../shared/narrative-tooltip";
 
 interface EntityVisualProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
 }
 
 const TIMELINE_CONFIG = {
@@ -37,8 +45,12 @@ export function EntityVisual({ events }: EntityVisualProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const { tooltipState, showTooltip, hideTooltip, updatePosition } =
+    useNarrativeTooltip();
 
-  useEffect(() => {
+  // Function to update the visualization
+  const updateVisualization = useCallback(() => {
     if (
       !events.length ||
       !svgRef.current ||
@@ -73,31 +85,35 @@ export function EntityVisual({ events }: EntityVisualProps) {
     const containerWidth = containerRef.current.clientWidth;
     const minHeight =
       events.length * 20 +
-      TIMELINE_CONFIG.margin.top +
-      TIMELINE_CONFIG.margin.bottom;
-    const containerHeight = Math.max(minHeight, 800);
+      ENTITY_CONFIG.margin.top +
+      ENTITY_CONFIG.margin.bottom;
+    const containerHeight = Math.max(minHeight, ENTITY_CONFIG.minHeight);
     const width =
-      containerWidth -
-      TIMELINE_CONFIG.margin.left -
-      TIMELINE_CONFIG.margin.right;
+      containerWidth - ENTITY_CONFIG.margin.left - ENTITY_CONFIG.margin.right;
     const height =
-      containerHeight -
-      TIMELINE_CONFIG.margin.top -
-      TIMELINE_CONFIG.margin.bottom;
+      containerHeight - ENTITY_CONFIG.margin.top - ENTITY_CONFIG.margin.bottom;
+
+    // Calculate scales with minimum column width
+    const columnWidth = Math.max(100, width / (top5Entities.length + 1));
+    const totalColumnsWidth = columnWidth * top5Entities.length;
+    const xScale = d3
+      .scaleBand()
+      .domain(top5Entities.map((e) => e.name))
+      .range([0, totalColumnsWidth])
+      .padding(ENTITY_CONFIG.entity.columnPadding);
 
     // Create fixed header for entity labels
     const headerContainer = d3
       .select(headerRef.current)
-      .style("width", `${width + TIMELINE_CONFIG.margin.left}px`)
-      .style("margin-left", `${TIMELINE_CONFIG.margin.left}px`);
-
-    // Calculate scales with minimum column width
-    const columnWidth = Math.max(100, width / (top5Entities.length + 1)); // Add padding for better spacing
-    const xScale = d3
-      .scaleBand()
-      .domain(top5Entities.map((e) => e.name))
-      .range([0, columnWidth * top5Entities.length])
-      .padding(TIMELINE_CONFIG.entity.columnPadding);
+      .style(
+        "width",
+        `${
+          totalColumnsWidth +
+          ENTITY_CONFIG.margin.left +
+          ENTITY_CONFIG.margin.right
+        }px`
+      )
+      .style("margin-left", `${ENTITY_CONFIG.margin.left}px`);
 
     // Create entity labels in the fixed header
     top5Entities.forEach((entity) => {
@@ -111,33 +127,29 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .style("transition", "color 200ms")
         .style("max-width", `${xScale.bandwidth()}px`)
         .on("mouseenter", function () {
-          // Highlight corresponding column
           d3.select(this).style("color", ENTITY_COLORS[entity.role_type]);
           g.select(`.guide-line-${entity.name.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.8)
-            .attr("stroke-width", TIMELINE_CONFIG.entity.lineStrokeWidth * 1.5);
+            .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth * 1.5);
         })
         .on("mouseleave", function () {
-          // Reset highlight
           d3.select(this).style("color", "#374151");
           g.select(`.guide-line-${entity.name.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.3)
-            .attr("stroke-width", TIMELINE_CONFIG.entity.lineStrokeWidth);
+            .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
         });
 
-      // Entity name with truncation
       labelContainer
         .append("div")
         .style("font-weight", "600")
-        .style("font-size", `${TIMELINE_CONFIG.entity.labelFontSize}px`)
+        .style("font-size", `${ENTITY_CONFIG.entity.labelFontSize}px`)
         .style("color", "#374151")
         .style("white-space", "nowrap")
         .style("overflow", "hidden")
         .style("text-overflow", "ellipsis")
-        .attr("title", entity.name) // Add tooltip for full name
+        .attr("title", entity.name)
         .text(entity.name);
 
-      // Add role type label
       labelContainer
         .append("div")
         .style("font-size", "12px")
@@ -149,86 +161,26 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .text(entity.role_type);
     });
 
-    // Create SVG with adjusted width
+    // Create SVG
     const svg = d3
       .select(svgRef.current)
-      .attr(
-        "width",
-        width + TIMELINE_CONFIG.margin.left + TIMELINE_CONFIG.margin.right
-      )
+      .attr("width", containerWidth)
       .attr("height", containerHeight)
-      .style("max-width", "100%"); // Ensure SVG doesn't overflow
-
-    // Create tooltip
-    const tooltip = d3
-      .select(containerRef.current)
-      .append("div")
-      .attr(
-        "class",
-        "absolute bg-white p-3 rounded-lg shadow-lg text-sm max-w-md pointer-events-none z-20"
-      )
-      .style("opacity", 0)
-      .style("border", "1px solid #e5e7eb")
-      .style("position", "fixed") // Change to fixed positioning
-      .style("max-width", "300px") // Limit tooltip width
-      .style("word-wrap", "break-word"); // Allow text wrapping
-
-    // Helper function to position tooltip
-    const positionTooltip = (event: MouseEvent, content: string) => {
-      const containerRect = containerRef.current!.getBoundingClientRect();
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
-
-      tooltip
-        .style("opacity", 1)
-        .html(content)
-        .style("visibility", "hidden") // Hide temporarily to measure size
-        .style("display", "block");
-
-      // Get tooltip dimensions
-      const tooltipNode = tooltip.node() as HTMLElement;
-      const tooltipRect = tooltipNode.getBoundingClientRect();
-
-      // Calculate position to keep tooltip within container
-      let left = mouseX + 15;
-      let top = mouseY - 15;
-
-      // Adjust horizontal position if tooltip would overflow right edge
-      if (left + tooltipRect.width > containerRect.right - 10) {
-        left = mouseX - tooltipRect.width - 15;
-      }
-
-      // Adjust vertical position if tooltip would overflow bottom edge
-      if (top + tooltipRect.height > containerRect.bottom - 10) {
-        top = mouseY - tooltipRect.height - 15;
-      }
-
-      // Ensure tooltip doesn't go beyond left edge
-      left = Math.max(containerRect.left + 10, left);
-
-      // Ensure tooltip doesn't go beyond top edge
-      top = Math.max(containerRect.top + 10, top);
-
-      tooltip
-        .style("left", `${left}px`)
-        .style("top", `${top}px`)
-        .style("visibility", "visible"); // Show tooltip again
-    };
+      .style("max-width", "100%");
 
     // Create main group
     const g = svg
       .append("g")
       .attr(
         "transform",
-        `translate(${TIMELINE_CONFIG.margin.left},${TIMELINE_CONFIG.margin.top})`
+        `translate(${ENTITY_CONFIG.margin.left},${ENTITY_CONFIG.margin.top})`
       );
 
-    // Draw entity columns with improved styling
+    // Draw entity columns
     top5Entities.forEach((entity) => {
       const x = xScale(entity.name)!;
       const entityColor = ENTITY_COLORS[entity.role_type] || "#9E9E9E";
 
-      // Add vertical guide line
       g.append("line")
         .attr("class", `guide-line-${entity.name.replace(/\s+/g, "-")}`)
         .attr("x1", x + xScale.bandwidth() / 2)
@@ -236,7 +188,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .attr("x2", x + xScale.bandwidth() / 2)
         .attr("y2", height)
         .attr("stroke", entityColor)
-        .attr("stroke-width", TIMELINE_CONFIG.entity.lineStrokeWidth)
+        .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth)
         .attr("opacity", 0.3);
     });
 
@@ -254,7 +206,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
       .range([0, height])
       .nice();
 
-    // Add y-axis with styling
+    // Add y-axis
     const yAxis = d3.axisLeft(yScale).tickSize(5).tickPadding(5);
 
     g.append("g")
@@ -272,69 +224,17 @@ export function EntityVisual({ events }: EntityVisualProps) {
       .attr("text-anchor", "middle")
       .text("Narrative Time");
 
-    // Draw events
-    const eventGroups = g
-      .selectAll(".event-group")
-      .data(events)
-      .enter()
-      .append("g")
-      .attr("class", "event-group")
-      .on("mouseenter", (e, d) => {
-        // Only raise the current group to front
-        d3.select(e.currentTarget).raise();
-
-        // Show tooltip with enhanced content
-        const content = `
-          <div class="space-y-2">
-            <div class="font-medium">Event ${
-              d.temporal_anchoring.narrative_time
-            }</div>
-            <div class="text-gray-600">${d.text}</div>
-            <div class="flex flex-wrap gap-2 text-xs">
-              <span class="text-gray-500">${d.temporal_anchoring.anchor}</span>
-              <span class="px-2 py-0.5 bg-gray-100 rounded-full">${
-                d.topic.main_topic
-              }</span>
-            </div>
-            <div class="flex flex-wrap gap-2 text-xs">
-              ${d.entities
-                .map(
-                  (entity) => `
-                <span class="px-2 py-0.5 rounded" style="background-color: ${
-                  ENTITY_COLORS[entity.role_type]
-                }20; color: ${ENTITY_COLORS[entity.role_type]}">
-                  ${entity.name}
-                </span>
-              `
-                )
-                .join("")}
-            </div>
-          </div>
-        `;
-        positionTooltip(e, content);
-      })
-      .on("mousemove", (e) => {
-        // Update tooltip position on mouse move if needed
-        const tooltipNode = tooltip.node() as HTMLElement;
-        const content = tooltipNode.innerHTML;
-        positionTooltip(e, content);
-      })
-      .on("mouseleave", () => {
-        // Hide tooltip
-        tooltip.style("opacity", 0);
-      });
-
-    // Draw event elements within groups
-    eventGroups.each(function (event) {
-      const eventGroup = d3.select(this);
+    // Draw event nodes
+    events.forEach((event) => {
+      // First collect all relevant entities for this event
       const relevantEntities = event.entities.filter((entity) =>
-        top5Entities.some((e) => e.name === entity.name)
+        top5Entities.find((e) => e.name === entity.name)
       );
 
       if (relevantEntities.length > 0) {
         const y = yScale(event.temporal_anchoring.narrative_time);
 
-        // Draw horizontal connection line if multiple entities
+        // Draw connector line if multiple entities
         if (relevantEntities.length > 1) {
           const xPoints = relevantEntities.map(
             (entity) => xScale(entity.name)! + xScale.bandwidth() / 2
@@ -343,8 +243,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
           const maxX = Math.max(...xPoints);
 
           // 1. First draw the outer black connector
-          eventGroup
-            .append("line")
+          g.append("line")
             .attr("class", "connector-outer")
             .attr("x1", minX)
             .attr("y1", y)
@@ -353,29 +252,49 @@ export function EntityVisual({ events }: EntityVisualProps) {
             .attr("stroke", "#000")
             .attr(
               "stroke-width",
-              TIMELINE_CONFIG.event.connectorStrokeWidth +
-                TIMELINE_CONFIG.event.nodeStrokeWidth * 1.25
+              ENTITY_CONFIG.event.connectorStrokeWidth +
+                ENTITY_CONFIG.event.nodeStrokeWidth * 1.25
             )
             .attr("stroke-linecap", "round");
         }
 
-        // 2. Then draw all nodes
+        // 2. Draw nodes in the middle
         relevantEntities.forEach((entity) => {
           const x = xScale(entity.name)! + xScale.bandwidth() / 2;
 
-          const nodeGroup = eventGroup
-            .append("g")
-            .attr("class", "node")
-            .attr("transform", `translate(${x},${y})`);
-
-          // Outer circle (black border)
-          nodeGroup
-            .append("circle")
-            .attr("class", "node-outer")
-            .attr("r", TIMELINE_CONFIG.event.nodeRadius)
+          // Add event node
+          g.append("circle")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", ENTITY_CONFIG.event.nodeRadius)
             .attr("fill", "white")
-            .attr("stroke", "#000")
-            .attr("stroke-width", TIMELINE_CONFIG.event.nodeStrokeWidth);
+            .attr("stroke", "black")
+            .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth)
+            .style("cursor", "pointer")
+            .on("mouseover", function (e) {
+              d3.select(this)
+                .transition()
+                .duration(150)
+                .attr("r", ENTITY_CONFIG.event.nodeRadius * 1.5)
+                .attr(
+                  "stroke-width",
+                  ENTITY_CONFIG.event.nodeStrokeWidth * 1.5
+                );
+
+              showTooltip(event, e.pageX, e.pageY);
+            })
+            .on("mousemove", function (e) {
+              updatePosition(e.pageX, e.pageY);
+            })
+            .on("mouseout", function () {
+              d3.select(this)
+                .transition()
+                .duration(150)
+                .attr("r", ENTITY_CONFIG.event.nodeRadius)
+                .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth);
+
+              hideTooltip();
+            });
         });
 
         // 3. Finally draw the inner white connector on top
@@ -386,8 +305,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
           const minX = Math.min(...xPoints);
           const maxX = Math.max(...xPoints);
 
-          eventGroup
-            .append("line")
+          g.append("line")
             .attr("class", "connector-inner")
             .attr("x1", minX)
             .attr("y1", y)
@@ -396,52 +314,57 @@ export function EntityVisual({ events }: EntityVisualProps) {
             .attr("stroke", "#fff")
             .attr(
               "stroke-width",
-              TIMELINE_CONFIG.event.connectorStrokeWidth * 0.85
+              ENTITY_CONFIG.event.connectorStrokeWidth * 0.85
             )
             .attr("stroke-linecap", "round");
         }
-
-        // 4. Add invisible hover area last
-        eventGroup
-          .append("rect")
-          .attr(
-            "x",
-            Math.min(...relevantEntities.map((e) => xScale(e.name)!)) - 10
-          )
-          .attr("y", y - 10)
-          .attr(
-            "width",
-            Math.max(...relevantEntities.map((e) => xScale(e.name)!)) -
-              Math.min(...relevantEntities.map((e) => xScale(e.name)!)) +
-              xScale.bandwidth() +
-              20
-          )
-          .attr("height", 20)
-          .attr("fill", "transparent")
-          .attr("class", "hover-area");
       }
     });
+  }, [events, showTooltip, hideTooltip, updatePosition]);
 
-    // Cleanup function
+  // Initial setup and cleanup
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Create ResizeObserver
+    const resizeObserver = new ResizeObserver((entries) => {
+      // Use requestAnimationFrame to throttle updates
+      window.requestAnimationFrame(() => {
+        updateVisualization();
+      });
+    });
+
+    // Start observing
+    resizeObserver.observe(containerRef.current);
+    resizeObserverRef.current = resizeObserver;
+
+    // Initial render
+    updateVisualization();
+
+    // Cleanup
     return () => {
-      tooltip.remove();
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
+      }
     };
-  }, [events]);
+  }, [updateVisualization]);
 
   return (
-    <div className="entity-visual relative w-full" ref={containerRef}>
+    <div className="w-full h-full flex flex-col">
       <div
         ref={headerRef}
-        className="bg-white sticky top-0 z-10 flex items-end  border-b border-gray-200 h-10"
+        className="flex-none bg-white sticky top-0 z-10 flex items-end border-b border-gray-200"
+        style={{ height: `${SHARED_CONFIG.header.height}px` }}
       />
-      <svg
-        ref={svgRef}
-        className="w-full"
-        style={{
-          minHeight: "800px",
-          overflow: "visible", // Allow labels to overflow if needed
-        }}
-      />
+      <div ref={containerRef} className="flex-1 relative">
+        <svg ref={svgRef} className="w-full h-full" />
+        <NarrativeTooltip
+          event={tooltipState.event}
+          position={tooltipState.position}
+          visible={tooltipState.visible}
+          containerRef={containerRef}
+        />
+      </div>
     </div>
   );
 }

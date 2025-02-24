@@ -1,4 +1,4 @@
-import { TimelineEvent } from "@/types/article";
+import { NarrativeEvent } from "@/types/article";
 import Image from "next/image";
 
 interface ProfileSectionProps {
@@ -7,7 +7,7 @@ interface ProfileSectionProps {
   author: string;
   publishDate: string;
   imageUrl?: string | null;
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
 }
 
 export function ProfileSection({

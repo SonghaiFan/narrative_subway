@@ -1,10 +1,10 @@
 "use client";
 
-import { TimelineEvent } from "@/types/article";
+import { NarrativeEvent } from "@/types/article";
 import { useMemo } from "react";
 
 interface NarrativeTopicTextProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
   selectedEventId?: string;
 }
 

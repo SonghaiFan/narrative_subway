@@ -1,13 +1,13 @@
 "use client";
 
-import { TimelineEvent } from "@/types/article";
+import { NarrativeEvent } from "@/types/article";
 import { useState } from "react";
 import { VisualizationDisplay } from "../shared/visualization-display";
 import { NarrativeTimeVisual } from "./time-visual";
 import { NarrativeTimeText } from "./time-text";
 
 interface TimeDisplayProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
   selectedEventId?: string;
 }
 

@@ -1,13 +1,13 @@
 "use client";
 
-import { TimelineEvent } from "@/types/article";
+import { NarrativeEvent } from "@/types/article";
 import { useState } from "react";
 import { VisualizationDisplay } from "../shared/visualization-display";
 import { EntityVisual } from "./entity-visual";
 import { EntityText } from "./entity-text";
 
 interface EntityDisplayProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
 }
 
 type ViewMode = "visual" | "text";

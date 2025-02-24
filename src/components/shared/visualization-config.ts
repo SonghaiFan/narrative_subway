@@ -21,12 +21,12 @@ export const SHARED_CONFIG = {
 };
 
 export const ENTITY_COLORS = {
-  agent: "#2563EB", // Strong blue for primary actors
-  patient: "#DC2626", // Red for those affected
-  protagonist: "#059669", // Green for main positive actors
-  antagonist: "#7C3AED", // Purple for main negative actors
-  secondary: "#6B7280", // Gray for supporting entities
-  expert: "#EA580C", // Orange for expert entities
+  agent: "#2563eb", // blue-600
+  patient: "#dc2626", // red-600
+  protagonist: "#059669", // emerald-600
+  antagonist: "#9333ea", // purple-600
+  secondary: "#ca8a04", // yellow-600
+  expert: "#0891b2", // cyan-600
 };
 
 export const ENTITY_CONFIG = {
@@ -45,14 +45,33 @@ export const ENTITY_CONFIG = {
 };
 
 export const TIME_CONFIG = {
-  ...SHARED_CONFIG,
+  margin: {
+    top: 30,
+    right: 40,
+    bottom: 20,
+    left: 40,
+  },
+  minHeight: 800,
   point: {
     radius: 6,
     strokeWidth: 2,
-    hoverRadius: 8,
+    hoverRadius: 9,
+    hoverStrokeWidth: 3,
+    positiveFill: "#ffffff",
+    negativeFill: "#f3f3f3",
+    neutralFill: "#ffffff",
+    positiveStroke: "#000000",
+    negativeStroke: "#666666",
+    neutralStroke: "#999999",
+  },
+  axis: {
+    tickSize: 5,
+    tickPadding: 5,
+    fontSize: 12,
+    labelOffset: 40,
   },
   curve: {
-    strokeWidth: 30,
-    opacity: 0.2,
+    strokeWidth: 2,
+    opacity: 0.8,
   },
 };

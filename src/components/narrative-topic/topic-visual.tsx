@@ -1,19 +1,23 @@
 "use client";
 
-import { TimelineEvent } from "@/types/article";
+import { NarrativeEvent } from "@/types/article";
 import { useEffect, useMemo, useRef } from "react";
 import cytoscape from "cytoscape";
 import dagre from "cytoscape-dagre";
+import {
+  NarrativeTooltip,
+  useNarrativeTooltip,
+} from "../shared/narrative-tooltip";
 
 // Register the dagre layout
 cytoscape.use(dagre);
 
 interface NarrativeTopicVisualProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
   selectedEventId?: string;
 }
 
-function generateEventId(event: TimelineEvent, index: number): string {
+function generateEventId(event: NarrativeEvent, index: number): string {
   const timestamp =
     event.temporal_anchoring?.real_time ||
     event.temporal_anchoring?.anchor ||
@@ -46,6 +50,8 @@ export function NarrativeTopicVisual({
   const cyRef = useRef<cytoscape.Core | null>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { tooltipState, showTooltip, hideTooltip, updatePosition } =
+    useNarrativeTooltip();
 
   // Process data for DAG
   const { nodes, edges } = useMemo(() => {
@@ -60,7 +66,7 @@ export function NarrativeTopicVisual({
 
     const nodes: cytoscape.NodeDefinition[] = [];
     const edges: cytoscape.EdgeDefinition[] = [];
-    const nodeMap = new Map<string, TimelineEvent>();
+    const nodeMap = new Map<string, NarrativeEvent>();
     const topicTimestampMap = new Map<string, Map<string, string>>();
     const idCounterMap = new Map<string, number>();
     const connectedNodes = new Set<string>();
@@ -387,50 +393,14 @@ export function NarrativeTopicVisual({
       const event = data.event;
       if (!event) return;
 
-      const tooltip = document.createElement("div");
-      tooltip.className =
-        "fixed bg-white p-4 rounded-lg shadow-lg text-sm z-50 pointer-events-none border border-gray-200";
-      tooltip.style.maxWidth = "300px";
-      tooltip.innerHTML = `
-        <div class="font-semibold text-gray-900">${event.topic.main_topic}</div>
-        <div class="text-gray-700 mt-2 line-clamp-4">${event.text}</div>
-        <div class="mt-2 flex items-center gap-2 text-xs">
-          <span class="text-gray-600">${event.temporal_anchoring.anchor}</span>
-          <span class="text-gray-400">•</span>
-          <span class="text-gray-600">${event.narrative_phase}</span>
-        </div>
-      `;
-      document.body.appendChild(tooltip);
+      showTooltip(event, evt.originalEvent.clientX, evt.originalEvent.clientY);
 
       cy.on("mousemove", (e) => {
-        const containerBounds = containerRef.current!.getBoundingClientRect();
-        const x = e.originalEvent.clientX;
-        const y = e.originalEvent.clientY;
-
-        // Position tooltip to avoid going off screen
-        const tooltipBounds = tooltip.getBoundingClientRect();
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        let left = x + 10;
-        let top = y + 10;
-
-        // Adjust horizontal position if needed
-        if (left + tooltipBounds.width > viewportWidth - 10) {
-          left = x - tooltipBounds.width - 10;
-        }
-
-        // Adjust vertical position if needed
-        if (top + tooltipBounds.height > viewportHeight - 10) {
-          top = y - tooltipBounds.height - 10;
-        }
-
-        tooltip.style.left = `${left}px`;
-        tooltip.style.top = `${top}px`;
+        updatePosition(e.originalEvent.clientX, e.originalEvent.clientY);
       });
 
       node.once("mouseout", () => {
-        tooltip.remove();
+        hideTooltip();
         if (!node.data("selected")) {
           node.style({
             "border-width": 1,
@@ -447,14 +417,7 @@ export function NarrativeTopicVisual({
 
       // Remove highlights
       cy.elements().removeClass("highlight faded");
-
-      // Remove tooltip
-      const tooltip = document.querySelector(
-        ".fixed.bg-white.p-4.rounded-lg.shadow-lg.text-sm.z-50.pointer-events-none.border.border-gray-200"
-      );
-      if (tooltip) {
-        tooltip.remove();
-      }
+      hideTooltip();
     });
 
     return () => {
@@ -474,5 +437,15 @@ export function NarrativeTopicVisual({
     };
   }, [nodes, edges, events]);
 
-  return <div ref={containerRef} className="w-full h-full" />;
+  return (
+    <>
+      <div ref={containerRef} className="w-full h-full" />
+      <NarrativeTooltip
+        event={tooltipState.event}
+        position={tooltipState.position}
+        visible={tooltipState.visible}
+        containerRef={containerRef}
+      />
+    </>
+  );
 }

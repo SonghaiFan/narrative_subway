@@ -1,12 +1,16 @@
 "use client";
 
-import { TimelineEvent } from "@/types/article";
-import { useEffect, useRef } from "react";
+import { NarrativeEvent } from "@/types/article";
+import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
-import { TIME_CONFIG } from "../shared/visualization-config";
+import { TIME_CONFIG, SHARED_CONFIG } from "../shared/visualization-config";
+import {
+  NarrativeTooltip,
+  useNarrativeTooltip,
+} from "../shared/narrative-tooltip";
 
 interface TimeVisualProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
   selectedEventId?: string;
 }
 
@@ -17,8 +21,12 @@ export function NarrativeTimeVisual({
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const { tooltipState, showTooltip, hideTooltip, updatePosition } =
+    useNarrativeTooltip();
 
-  useEffect(() => {
+  // Function to update the visualization
+  const updateVisualization = useCallback(() => {
     if (
       !events.length ||
       !svgRef.current ||
@@ -35,10 +43,11 @@ export function NarrativeTimeVisual({
     const validEvents = events.filter((e) => e.temporal_anchoring.real_time);
 
     // Parse dates and create data points
-    const dataPoints = validEvents.map((event) => ({
+    const dataPoints = validEvents.map((event, index) => ({
       event,
       realTime: new Date(event.temporal_anchoring.real_time!),
       narrativeTime: event.temporal_anchoring.narrative_time,
+      index, // Add index to track position
     }));
 
     // Setup dimensions
@@ -114,37 +123,6 @@ export function NarrativeTimeVisual({
       .y((d) => yScale(d.narrativeTime))
       .curve(d3.curveMonotoneY); // Use monotoneY for better vertical progression
 
-    // Add grid lines behind points
-    // const gridGroup = g.append("g").attr("class", "grid-group");
-
-    // gridGroup
-    //   .append("g")
-    //   .attr("class", "grid-lines")
-    //   .selectAll("line")
-    //   .data(yScale.ticks())
-    //   .enter()
-    //   .append("line")
-    //   .attr("x1", 0)
-    //   .attr("x2", width)
-    //   .attr("y1", (d) => yScale(d))
-    //   .attr("y2", (d) => yScale(d))
-    //   .attr("stroke", "#e5e7eb")
-    //   .attr("stroke-dasharray", "2,2");
-
-    // gridGroup
-    //   .append("g")
-    //   .attr("class", "grid-lines")
-    //   .selectAll("line")
-    //   .data(xScale.ticks())
-    //   .enter()
-    //   .append("line")
-    //   .attr("x1", (d) => xScale(d))
-    //   .attr("x2", (d) => xScale(d))
-    //   .attr("y1", 0)
-    //   .attr("y2", height)
-    //   .attr("stroke", "#e5e7eb")
-    //   .attr("stroke-dasharray", "2,2");
-
     // Create fixed header for x-axis
     const headerContainer = d3
       .select(headerRef.current)
@@ -171,13 +149,6 @@ export function NarrativeTimeVisual({
       .style("font-size", `${TIME_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
       .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"));
-    // .append("text")
-    // .attr("class", "axis-label")
-    // .attr("x", width / 2)
-    // .attr("y", -TIME_CONFIG.axis.labelOffset + 25)
-    // .attr("fill", "#64748b")
-    // .attr("text-anchor", "middle")
-    // .text("Real Time");
 
     // Add y-axis
     const yAxis = d3
@@ -247,146 +218,351 @@ export function NarrativeTimeVisual({
       .attr("stroke-opacity", 0.15)
       .attr("stroke-dasharray", "2,2");
 
-    // Create tooltip
-    const tooltip = d3
-      .select(containerRef.current)
-      .append("div")
-      .attr(
-        "class",
-        "absolute bg-white p-3 rounded-lg shadow-lg text-sm max-w-md pointer-events-none z-20 hidden"
-      )
-      .style("border", "1px solid #e5e7eb")
-      .style("position", "fixed");
+    // Create points group
+    const pointsGroup = g
+      .append("g")
+      .attr("class", "points-group")
+      .attr("clip-path", "url(#plot-area)");
 
-    // Helper function to position tooltip
-    const positionTooltip = (event: MouseEvent, content: string) => {
-      const tooltipNode = tooltip.node() as HTMLElement;
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-
-      // Set content first to calculate dimensions
-      tooltip
-        .html(content)
-        .style("visibility", "hidden")
-        .classed("hidden", false);
-
-      // Get tooltip dimensions after setting content
-      const tooltipRect = tooltipNode.getBoundingClientRect();
-      const tooltipWidth = tooltipRect.width;
-      const tooltipHeight = tooltipRect.height;
-
-      // Calculate position relative to mouse pointer
-      let left = event.clientX + 15;
-      let top = event.clientY + 15;
-
-      // Adjust if tooltip would overflow right edge
-      if (left + tooltipWidth > viewportWidth - 20) {
-        left = event.clientX - tooltipWidth - 15;
-      }
-
-      // Adjust if tooltip would overflow bottom edge
-      if (top + tooltipHeight > viewportHeight - 20) {
-        top = event.clientY - tooltipHeight - 15;
-      }
-
-      // Ensure tooltip doesn't go beyond left edge
-      left = Math.max(20, left);
-
-      // Ensure tooltip doesn't go beyond top edge
-      top = Math.max(20, top);
-
-      // Apply final position and show tooltip
-      tooltip
-        .style("left", `${left}px`)
-        .style("top", `${top}px`)
-        .style("visibility", "visible");
-    };
-
-    // Add points with enhanced styling
-    const points = g
+    // Add points
+    pointsGroup
       .selectAll(".point")
       .data(dataPoints)
       .enter()
-      .append("g")
-      .attr("class", "point")
-      .attr(
-        "transform",
-        (d) => `translate(${xScale(d.realTime)},${yScale(d.narrativeTime)})`
-      );
-
-    points
       .append("circle")
+      .attr("class", (d) => `point point-${d.index}`) // Add index-based class
+      .attr("cx", (d) => xScale(d.realTime))
+      .attr("cy", (d) => yScale(d.narrativeTime))
       .attr("r", TIME_CONFIG.point.radius)
-      .attr("fill", "white")
-      .attr("stroke", "black")
+      .attr("fill", (d) =>
+        d.event.topic.sentiment.intensity > 0
+          ? TIME_CONFIG.point.positiveFill
+          : d.event.topic.sentiment.intensity < 0
+          ? TIME_CONFIG.point.negativeFill
+          : TIME_CONFIG.point.neutralFill
+      )
+      .attr("stroke", (d) =>
+        d.event.topic.sentiment.intensity > 0
+          ? TIME_CONFIG.point.positiveStroke
+          : d.event.topic.sentiment.intensity < 0
+          ? TIME_CONFIG.point.negativeStroke
+          : TIME_CONFIG.point.neutralStroke
+      )
       .attr("stroke-width", TIME_CONFIG.point.strokeWidth)
       .style("cursor", "pointer")
-      .on("mouseenter", function (event, d) {
-        // Highlight point
-        d3.select(this)
+      .on("mouseover", function (event, d) {
+        const point = d3.select(this);
+        point
           .transition()
-          .duration(TIME_CONFIG.animation.duration)
+          .duration(150)
           .attr("r", TIME_CONFIG.point.hoverRadius)
-          .attr("stroke-width", TIME_CONFIG.point.strokeWidth * 1.5);
+          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
 
-        // Show tooltip with enhanced content
-        const content = `
-          <div class="space-y-2">
-            <div class="font-medium">Event ${
-              d.event.temporal_anchoring.narrative_time
-            }</div>
-            <div class="text-gray-600">${d.event.text}</div>
-            <div class="flex flex-wrap gap-2 mt-2">
-              <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
-                ${new Date(
-                  d.event.temporal_anchoring.real_time!
-                ).toLocaleDateString()}
-              </span>
-              <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">
-                ${d.event.temporal_anchoring.temporal_type}
-              </span>
-            </div>
-          </div>
-        `;
-        positionTooltip(event, content);
-      })
-      .on("mousemove", function (event, d) {
-        // Update tooltip position on mouse move
-        const content = tooltip.html();
-        positionTooltip(event, content);
-      })
-      .on("mouseleave", function () {
-        // Reset point
-        d3.select(this)
+        // Find and highlight corresponding label
+        const label = labelsGroup.select(`.label-container-${d.index}`);
+        label.raise();
+
+        label
+          .select(".label-background")
           .transition()
-          .duration(TIME_CONFIG.animation.duration)
+          .duration(150)
+          .attr("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.15))")
+          .attr("stroke", "#64748b");
+
+        label
+          .select(".connector")
+          .transition()
+          .duration(150)
+          .attr("stroke", "#64748b")
+          .attr("stroke-width", 1.5);
+
+        showTooltip(d.event, event.pageX, event.pageY);
+      })
+      .on("mousemove", function (event) {
+        updatePosition(event.pageX, event.pageY);
+      })
+      .on("mouseout", function (event, d) {
+        const point = d3.select(this);
+        point
+          .transition()
+          .duration(150)
           .attr("r", TIME_CONFIG.point.radius)
           .attr("stroke-width", TIME_CONFIG.point.strokeWidth);
 
-        // Hide tooltip
-        tooltip.classed("hidden", true);
+        // Reset corresponding label
+        const label = labelsGroup.select(`.label-container-${d.index}`);
+
+        label
+          .select(".label-background")
+          .transition()
+          .duration(150)
+          .attr("filter", "drop-shadow(0 1px 1px rgba(0,0,0,0.05))")
+          .attr("stroke", "#94a3b8");
+
+        label
+          .select(".connector")
+          .transition()
+          .duration(150)
+          .attr("stroke", "#94a3b8")
+          .attr("stroke-width", 1);
+
+        label.select(".connector").lower();
+
+        hideTooltip();
       });
 
-    // Cleanup function
+    // Create force-directed label data
+    interface LabelDatum extends d3.SimulationNodeDatum {
+      id: number;
+      x: number;
+      y: number;
+      text: string;
+      point: { x: number; y: number };
+      width: number;
+      height: number;
+      index: number; // Add index to interface
+    }
+
+    const labelData: LabelDatum[] = dataPoints.map((d, i) => ({
+      id: i,
+      x: xScale(d.realTime),
+      y: yScale(d.narrativeTime) - 30,
+      text:
+        d.event.text.length > 30
+          ? d.event.text.slice(0, 27) + "..."
+          : d.event.text,
+      point: {
+        x: xScale(d.realTime),
+        y: yScale(d.narrativeTime),
+      },
+      width: 0,
+      height: 0,
+      fx: undefined,
+      fy: undefined,
+      index: d.index, // Use the same index from dataPoints
+    }));
+
+    // Create labels group
+    const labelsGroup = g.append("g").attr("class", "labels");
+
+    // Add label containers
+    const labelContainers = labelsGroup
+      .selectAll(".label-container")
+      .data(labelData)
+      .enter()
+      .append("g")
+      .attr("class", (d) => `label-container label-container-${d.index}`) // Add index-based class
+      .style("cursor", "pointer");
+
+    // Add connector lines first (so they'll be underneath)
+    const connectors = labelContainers
+      .append("line")
+      .attr("class", "connector")
+      .attr("stroke", "#94a3b8")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "2,2")
+      .lower(); // Force connectors to be underneath
+
+    // Add label backgrounds
+    const labelBackgrounds = labelContainers
+      .append("rect")
+      .attr("class", "label-background")
+      .attr("rx", 5)
+      .attr("ry", 5)
+      .attr("fill", "white")
+      .attr("stroke", "#94a3b8")
+      .attr("stroke-width", 1)
+      .attr("filter", "drop-shadow(0 1px 1px rgba(0,0,0,0.05))");
+
+    // Add label text
+    const labelTexts = labelContainers
+      .append("text")
+      .attr("class", "label-text")
+      .style("font-size", "12px")
+      .style("font-weight", "500")
+      .style("fill", "#475569")
+      .style("pointer-events", "none")
+      .attr("x", 8)
+      .attr("y", 16)
+      .text((d) => d.text);
+
+    // Calculate label dimensions and update data
+    labelTexts.each(function (d) {
+      const bbox = this.getBBox();
+      d.width = bbox.width + 16;
+      d.height = bbox.height + 16;
+    });
+
+    // Update background dimensions
+    labelBackgrounds
+      .attr("width", (d) => d.width)
+      .attr("height", (d) => d.height);
+
+    // Create force simulation
+    const simulation = d3
+      .forceSimulation<LabelDatum>(labelData)
+      .force(
+        "collision",
+        d3
+          .forceCollide<LabelDatum>()
+          .radius(
+            (d) => Math.sqrt(d.width / 2 + d.height / 2) // Reduced padding
+          )
+          .strength(0.2) // Reduced strength to allow slight overlap
+      )
+      .force(
+        "y",
+        d3
+          .forceY<LabelDatum>()
+          .y((d) => d.point.y - 30) // Reduced distance from point
+          .strength(0.15) // Increased strength for more compact layout
+      )
+      .force("boundary", () => {
+        for (let node of labelData) {
+          // Keep x position fixed at point x, constrained within bounds
+          node.x = Math.max(
+            node.width / 2,
+            Math.min(width - node.width / 2, node.point.x)
+          );
+          // Only constrain y within bounds with reduced padding
+          node.y = Math.max(
+            node.height / 2 - 2,
+            Math.min(height - node.height / 2 + 2, node.y)
+          );
+        }
+      });
+
+    // Update positions on each tick
+    simulation.on("tick", () => {
+      labelContainers.attr(
+        "transform",
+        (d) => `translate(${d.x - d.width / 2},${d.y - d.height / 2})`
+      );
+
+      // Update connector lines with bottom attachment
+      connectors
+        .attr("x1", (d) => d.width / 2) // Start from middle of label
+        .attr("y1", (d) => d.height) // Start from bottom of label
+        .attr("x2", (d) => d.point.x - (d.x - d.width / 2)) // End at point x
+        .attr("y2", (d) => d.point.y - d.y + d.height / 2); // End at point y
+    });
+
+    // Add hover interactions
+    labelContainers
+      .on("mouseover", function (event, d) {
+        const container = d3.select(this);
+        container.raise();
+
+        // Find and highlight corresponding point
+        pointsGroup
+          .select(`.point-${d.index}`)
+          .transition()
+          .duration(150)
+          .attr("r", TIME_CONFIG.point.hoverRadius)
+          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+
+        container
+          .select(".label-background")
+          .transition()
+          .duration(150)
+          .attr("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.15))")
+          .attr("stroke", "#64748b");
+
+        container
+          .select(".connector")
+          .transition()
+          .duration(150)
+          .attr("stroke", "#64748b")
+          .attr("stroke-width", 1.5);
+
+        // Show tooltip
+        const mouseEvent = event as MouseEvent;
+        showTooltip(
+          dataPoints[d.index].event,
+          mouseEvent.pageX,
+          mouseEvent.pageY
+        );
+      })
+      .on("mousemove", function (event) {
+        const mouseEvent = event as MouseEvent;
+        updatePosition(mouseEvent.pageX, mouseEvent.pageY);
+      })
+      .on("mouseout", function (event, d) {
+        const container = d3.select(this);
+
+        // Reset corresponding point
+        pointsGroup
+          .select(`.point-${d.index}`)
+          .transition()
+          .duration(150)
+          .attr("r", TIME_CONFIG.point.radius)
+          .attr("stroke-width", TIME_CONFIG.point.strokeWidth);
+
+        container
+          .select(".label-background")
+          .transition()
+          .duration(150)
+          .attr("filter", "drop-shadow(0 1px 1px rgba(0,0,0,0.05))")
+          .attr("stroke", "#94a3b8");
+
+        container
+          .select(".connector")
+          .transition()
+          .duration(150)
+          .attr("stroke", "#94a3b8")
+          .attr("stroke-width", 1);
+
+        // Lower the connector back underneath after hover
+        container.select(".connector").lower();
+
+        // Hide tooltip
+        hideTooltip();
+      });
+  }, [events, selectedEventId, showTooltip, hideTooltip, updatePosition]);
+
+  // Initial setup and cleanup
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // Create ResizeObserver
+    const resizeObserver = new ResizeObserver((entries) => {
+      // Use requestAnimationFrame to throttle updates
+      window.requestAnimationFrame(() => {
+        updateVisualization();
+      });
+    });
+
+    // Start observing
+    resizeObserver.observe(containerRef.current);
+    resizeObserverRef.current = resizeObserver;
+
+    // Initial render
+    updateVisualization();
+
+    // Cleanup
     return () => {
-      tooltip.remove();
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
+      }
     };
-  }, [events]);
+  }, [updateVisualization]);
 
   return (
-    <div ref={containerRef} className="relative w-full">
+    <div className="w-full h-full flex flex-col">
       <div
         ref={headerRef}
-        className="bg-white sticky top-0 z-10 flex items-end border-b border-gray-200 h-10"
+        className="flex-none bg-white sticky top-0 z-10 flex items-end border-b border-gray-200"
+        style={{ height: `${SHARED_CONFIG.header.height}px` }}
       />
-      <svg
-        ref={svgRef}
-        className="w-full"
-        style={{
-          minHeight: TIME_CONFIG.minHeight,
-          overflow: "visible",
-        }}
-      />
+      <div ref={containerRef} className="flex-1 relative">
+        <svg ref={svgRef} className="w-full h-full" />
+        <NarrativeTooltip
+          event={tooltipState.event}
+          position={tooltipState.position}
+          visible={tooltipState.visible}
+          containerRef={containerRef}
+        />
+      </div>
     </div>
   );
 }

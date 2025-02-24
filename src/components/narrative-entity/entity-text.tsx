@@ -1,4 +1,4 @@
-import { Entity, TimelineEvent } from "@/types/article";
+import { Entity, NarrativeEvent } from "@/types/article";
 import { useState } from "react";
 
 interface EntityContext {
@@ -17,7 +17,7 @@ interface EntityContext {
 }
 
 interface EntityTextProps {
-  events: TimelineEvent[];
+  events: NarrativeEvent[];
 }
 
 export function EntityText({ events }: EntityTextProps) {
