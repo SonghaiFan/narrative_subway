@@ -9,7 +9,6 @@ import {
   useNarrativeTooltip,
 } from "../shared/narrative-tooltip";
 import {
-  DataPoint,
   LabelDatum,
   processEvents,
   getSortedPoints,
@@ -35,6 +34,7 @@ export function NarrativeTimeVisual({
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const isDraggingRef = useRef(false);
   const { tooltipState, showTooltip, hideTooltip, updatePosition } =
     useNarrativeTooltip();
 
@@ -132,24 +132,119 @@ export function NarrativeTimeVisual({
     // Create line generator
     const smoothLine = createLineGenerator(xScale, yScale);
 
+    // Create labels group first (so it's underneath)
+    const labelsGroup = g.append("g").attr("class", "labels");
+
+    // Create label data
+    const labelData = createLabelData(dataPoints, xScale, yScale);
+
+    // Add label containers
+    const labelContainers = labelsGroup
+      .selectAll(".label-container")
+      .data(labelData)
+      .enter()
+      .append("g")
+      .attr("class", (d) => `label-container label-container-${d.index}`)
+      .style("cursor", "grab")
+      .call(
+        d3
+          .drag<SVGGElement, LabelDatum>()
+          .subject(function (event, d) {
+            return { x: d.x, y: d.y };
+          })
+          .on("start", (event, d) => {
+            if (!event.sourceEvent.target.closest(".label-container")) return;
+
+            // Set dragging state
+            isDraggingRef.current = true;
+
+            // Hide tooltip during drag
+            hideTooltip();
+
+            // Stop force simulation during drag
+            simulation.alphaTarget(0).stop();
+
+            // Change cursor style
+            d3.select(
+              event.sourceEvent.target.closest(".label-container")
+            ).style("cursor", "grabbing");
+
+            // Fix position during drag
+            d.fx = d.x;
+            d.fy = d.y;
+          })
+          .on("drag", (event, d) => {
+            if (!event.sourceEvent.target.closest(".label-container")) return;
+
+            // Update the fixed position
+            d.fx = event.x;
+            d.fy = event.y;
+
+            // Get the container element
+            const container = d3.select(
+              event.sourceEvent.target.closest(".label-container")
+            );
+
+            // Update position immediately during drag
+            container.attr(
+              "transform",
+              `translate(${event.x - d.width / 2},${event.y - d.height / 2})`
+            );
+
+            // Update connector line during drag
+            container
+              .select(".connector")
+              .attr("x1", d.width / 2)
+              .attr("y1", d.height)
+              .attr("x2", d.point.x - (event.x - d.width / 2))
+              .attr("y2", d.point.y - event.y + d.height / 2);
+          })
+          .on("end", (event, d) => {
+            if (!event.sourceEvent.target.closest(".label-container")) return;
+
+            // Reset dragging state
+            isDraggingRef.current = false;
+
+            // Reset cursor style
+            d3.select(
+              event.sourceEvent.target.closest(".label-container")
+            ).style("cursor", "grab");
+
+            // Clear fixed position
+            d.fx = null;
+            d.fy = null;
+
+            // Restart simulation with reduced force
+            simulation.alphaTarget(0.3).restart();
+          })
+      );
+
+    // Add connector lines first (so they'll be underneath)
+    const connectors = labelContainers
+      .append("line")
+      .attr("class", "connector")
+      .attr("stroke", "#94a3b8")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "2,2");
+
     // Add main line with gradient stroke inside clipping path
     const lineGroup = g
       .append("g")
       .attr("class", "line-group")
       .attr("clip-path", "url(#plot-area)");
 
-    // Add shadow effect for depth
-    lineGroup
-      .append("path")
-      .datum(sortedPoints)
-      .attr("class", "line-shadow")
-      .attr("fill", "none")
-      .attr("stroke", "black")
-      .attr("stroke-width", TIME_CONFIG.curve.strokeWidth + 2)
-      .attr("stroke-opacity", 0.1)
-      .attr("stroke-linecap", "round")
-      .attr("filter", "blur(4px)")
-      .attr("d", smoothLine);
+    // // Add shadow effect for depth
+    // lineGroup
+    //   .append("path")
+    //   .datum(sortedPoints)
+    //   .attr("class", "line-shadow")
+    //   .attr("fill", "none")
+    //   .attr("stroke", "black")
+    //   .attr("stroke-width", TIME_CONFIG.curve.strokeWidth + 2)
+    //   .attr("stroke-opacity", 0.1)
+    //   .attr("stroke-linecap", "round")
+    //   .attr("filter", "blur(4px)")
+    //   .attr("d", smoothLine);
 
     // Add main line
     lineGroup
@@ -163,7 +258,42 @@ export function NarrativeTimeVisual({
       .attr("stroke-linecap", "round")
       .attr("d", smoothLine);
 
-    // Create points group
+    // Add label backgrounds
+    const labelBackgrounds = labelContainers
+      .append("rect")
+      .attr("class", "label-background")
+      .attr("rx", 5)
+      .attr("ry", 5)
+      .attr("fill", "white")
+      .attr("stroke", "#94a3b8")
+      .attr("stroke-width", 1)
+      .attr("filter", "drop-shadow(0 1px 1px rgba(0,0,0,0.05))");
+
+    // Add label text
+    const labelTexts = labelContainers
+      .append("text")
+      .attr("class", "label-text")
+      .style("font-size", "12px")
+      .style("font-weight", "500")
+      .style("fill", "#475569")
+      .style("pointer-events", "none")
+      .attr("x", 8)
+      .attr("y", 16)
+      .text((d) => d.text);
+
+    // Calculate label dimensions and update data
+    labelTexts.each(function (d) {
+      const bbox = this.getBBox();
+      d.width = bbox.width + 16;
+      d.height = bbox.height + 16;
+    });
+
+    // Update background dimensions
+    labelBackgrounds
+      .attr("width", (d) => d.width)
+      .attr("height", (d) => d.height);
+
+    // Create points group last (so it's on top)
     const pointsGroup = g
       .append("g")
       .attr("class", "points-group")
@@ -245,69 +375,8 @@ export function NarrativeTimeVisual({
           .attr("stroke", "#94a3b8")
           .attr("stroke-width", 1);
 
-        label.select(".connector").lower();
-
         hideTooltip();
       });
-
-    // Create labels group
-    const labelsGroup = g.append("g").attr("class", "labels");
-
-    // Create label data
-    const labelData = createLabelData(dataPoints, xScale, yScale);
-
-    // Add label containers
-    const labelContainers = labelsGroup
-      .selectAll(".label-container")
-      .data(labelData)
-      .enter()
-      .append("g")
-      .attr("class", (d) => `label-container label-container-${d.index}`)
-      .style("cursor", "pointer");
-
-    // Add connector lines first (so they'll be underneath)
-    const connectors = labelContainers
-      .append("line")
-      .attr("class", "connector")
-      .attr("stroke", "#94a3b8")
-      .attr("stroke-width", 1)
-      .attr("stroke-dasharray", "2,2")
-      .lower();
-
-    // Add label backgrounds
-    const labelBackgrounds = labelContainers
-      .append("rect")
-      .attr("class", "label-background")
-      .attr("rx", 5)
-      .attr("ry", 5)
-      .attr("fill", "white")
-      .attr("stroke", "#94a3b8")
-      .attr("stroke-width", 1)
-      .attr("filter", "drop-shadow(0 1px 1px rgba(0,0,0,0.05))");
-
-    // Add label text
-    const labelTexts = labelContainers
-      .append("text")
-      .attr("class", "label-text")
-      .style("font-size", "12px")
-      .style("font-weight", "500")
-      .style("fill", "#475569")
-      .style("pointer-events", "none")
-      .attr("x", 8)
-      .attr("y", 16)
-      .text((d) => d.text);
-
-    // Calculate label dimensions and update data
-    labelTexts.each(function (d) {
-      const bbox = this.getBBox();
-      d.width = bbox.width + 16;
-      d.height = bbox.height + 16;
-    });
-
-    // Update background dimensions
-    labelBackgrounds
-      .attr("width", (d) => d.width)
-      .attr("height", (d) => d.height);
 
     // Create force simulation
     const simulation = createForceSimulation(labelData, width, height);
@@ -330,6 +399,9 @@ export function NarrativeTimeVisual({
     // Add hover interactions
     labelContainers
       .on("mouseover", function (event, d) {
+        // Skip hover effects if dragging
+        if (isDraggingRef.current) return;
+
         const container = d3.select(this);
         container.raise();
 
@@ -364,10 +436,16 @@ export function NarrativeTimeVisual({
         );
       })
       .on("mousemove", function (event) {
+        // Skip tooltip update if dragging
+        if (isDraggingRef.current) return;
+
         const mouseEvent = event as MouseEvent;
         updatePosition(mouseEvent.pageX, mouseEvent.pageY);
       })
       .on("mouseout", function (event, d) {
+        // Skip hover effects if dragging
+        if (isDraggingRef.current) return;
+
         const container = d3.select(this);
 
         // Reset corresponding point
@@ -391,9 +469,6 @@ export function NarrativeTimeVisual({
           .duration(150)
           .attr("stroke", "#94a3b8")
           .attr("stroke-width", 1);
-
-        // Lower the connector back underneath after hover
-        container.select(".connector").lower();
 
         // Hide tooltip
         hideTooltip();
