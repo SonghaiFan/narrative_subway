@@ -128,7 +128,6 @@ export function NarrativeTimeVisual({
     // .attr("fill", "#64748b")
     // .attr("text-anchor", "middle")
     // .text("Narrative Time");
-
     // Add lead titles
     const leadTitles = g
       .append("g")
@@ -151,20 +150,52 @@ export function NarrativeTimeVisual({
       .attr("stroke-width", 1)
       .attr("stroke-dasharray", "4,4")
       .attr("opacity", 0.5);
-    // Add lead title text
-    leadTitles
-      .append("text")
-      .attr("x", -TIME_CONFIG.margin.left + 10)
-      .attr("y", (d) => yScale(d.narrativeTime))
-      .attr("dy", "0.32em")
-      .attr("text-anchor", "start")
-      .attr("fill", "#64748b")
-      .style("font-size", "12px")
-      .style("font-weight", "500")
-      .text((d) => {
-        const title = d.event.lead_title ?? "";
-        return title.length > 50 ? title.slice(0, 47) + "..." : title;
-      });
+
+    // Add lead title text with wrapping
+    leadTitles.each(function (d) {
+      const text = d3
+        .select(this)
+        .append("text")
+        .attr("x", -TIME_CONFIG.margin.left + 10)
+        .attr("y", yScale(d.narrativeTime))
+        .attr("dy", "0.32em")
+        .attr("text-anchor", "start")
+        .attr("fill", "#64748b")
+        .style("font-size", "12px")
+        .style("font-weight", "500");
+
+      const maxWidth = TIME_CONFIG.margin.left - 30;
+      const words = (d.event.lead_title ?? "").split(/\s+/);
+      let line: string[] = [];
+      let lineNumber = 0;
+      let tspan = text
+        .append("tspan")
+        .attr("x", -TIME_CONFIG.margin.left + 10)
+        .attr("dy", 0);
+
+      for (let word of words) {
+        line.push(word);
+        tspan.text(line.join(" "));
+
+        if (tspan.node()!.getComputedTextLength() > maxWidth) {
+          line.pop();
+          tspan.text(line.join(" "));
+          line = [word];
+          tspan = text
+            .append("tspan")
+            .attr("x", -TIME_CONFIG.margin.left + 10)
+            .attr("dy", "1.1em")
+            .text(word);
+          lineNumber++;
+        }
+      }
+
+      // Adjust vertical position to center multi-line text
+      const totalHeight = lineNumber * 1.1;
+      text
+        .selectAll("tspan")
+        .attr("dy", (_, i) => `${i === 0 ? -totalHeight / 2 : 1.1}em`);
+    });
 
     // Create line generator
     const smoothLine = createLineGenerator(xScale, yScale);
