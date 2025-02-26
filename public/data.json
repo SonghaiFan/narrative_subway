@@ -1540,7 +1540,7 @@
       "source_name": "",
       "narrative_phase": "recognition",
       "temporal_anchoring": {
-        "real_time": "",
+        "real_time": "2023-11-11",
         "narrative_time": 46,
         "temporal_type": "relative",
         "anchor": "mid-November"
@@ -1680,7 +1680,7 @@
       "source_name": "The Pentagon",
       "narrative_phase": "repair",
       "temporal_anchoring": {
-        "real_time": "",
+        "real_time": "2023-10-14",
         "narrative_time": 50,
         "temporal_type": "relative",
         "anchor": "military reinforcement phase"
@@ -1750,7 +1750,7 @@
       "source_name": "",
       "narrative_phase": "disruption",
       "temporal_anchoring": {
-        "real_time": "",
+        "real_time": "2023-10-07",
         "narrative_time": 52,
         "temporal_type": "relative",
         "anchor": "during ongoing conflict"
@@ -1891,7 +1891,7 @@
       "source_name": "Mr. Netanyahu",
       "narrative_phase": "new_equilibrium",
       "temporal_anchoring": {
-        "real_time": "",
+        "real_time": "2023-11-07",
         "narrative_time": 56,
         "temporal_type": "relative",
         "anchor": "earlier in postwar discussion"
