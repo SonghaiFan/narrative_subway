@@ -7,6 +7,7 @@ import {
   ENTITY_CONFIG,
   ENTITY_COLORS,
   SHARED_CONFIG,
+  SOCIAL_ROLE_COLORS,
 } from "../shared/visualization-config";
 import {
   NarrativeTooltip,
@@ -121,7 +122,10 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .style("transition", "color 200ms")
         .style("max-width", `${xScale.bandwidth()}px`)
         .on("mouseenter", function () {
-          d3.select(this).style("color", ENTITY_COLORS[entity.role_type]);
+          d3.select(this).style(
+            "color",
+            SOCIAL_ROLE_COLORS[entity.social_role]
+          );
           g.select(`.guide-line-${entity.name.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.8)
             .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth * 1.5);
@@ -173,7 +177,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
     // Draw entity columns
     top5Entities.forEach((entity) => {
       const x = xScale(entity.name)!;
-      const entityColor = ENTITY_COLORS[entity.role_type] || "#9E9E9E";
+      const entityColor = SOCIAL_ROLE_COLORS[entity.social_role] || "#94a3b8";
 
       g.append("line")
         .attr("class", `guide-line-${entity.name.replace(/\s+/g, "-")}`)
