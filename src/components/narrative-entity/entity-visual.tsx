@@ -152,7 +152,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .style("white-space", "nowrap")
         .style("overflow", "hidden")
         .style("text-overflow", "ellipsis")
-        .text(entity.role_type);
+        .text(entity.social_role);
     });
 
     // Create SVG

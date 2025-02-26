@@ -4,9 +4,10 @@ import * as d3 from "d3";
 
 export interface DataPoint {
   event: NarrativeEvent;
-  realTime: Date;
+  realTime: Date | null;
   narrativeTime: number;
   index: number;
+  hasRealTime: boolean;
 }
 
 export interface LabelDatum extends d3.SimulationNodeDatum {
@@ -26,7 +27,7 @@ export interface LeadTitlePoint {
   hasRealTime: boolean;
 }
 
-// Modify processEvents to return both valid points and lead titles
+// Process events into data points
 export function processEvents(events: NarrativeEvent[]): {
   dataPoints: DataPoint[];
   leadTitlePoints: LeadTitlePoint[];
@@ -39,25 +40,42 @@ export function processEvents(events: NarrativeEvent[]): {
       hasRealTime: !!event.temporal_anchoring.real_time,
     }));
 
-  const dataPoints = events
+  // Separate events into those with and without real_time
+  const timePoints = events
     .filter((e) => e.temporal_anchoring.real_time)
     .map((event, index) => ({
       event,
       realTime: new Date(event.temporal_anchoring.real_time!),
       narrativeTime: event.temporal_anchoring.narrative_time,
       index,
+      hasRealTime: true,
     }));
+
+  const noTimePoints = events
+    .filter((e) => !e.temporal_anchoring.real_time)
+    .map((event, index) => ({
+      event,
+      realTime: null,
+      narrativeTime: event.temporal_anchoring.narrative_time,
+      index: timePoints.length + index,
+      hasRealTime: false,
+    }));
+
+  // Combine all points
+  const dataPoints = [...timePoints, ...noTimePoints];
 
   return { dataPoints, leadTitlePoints };
 }
 
-// Create sorted points for line drawing
+// Create sorted points for line drawing (only points with real time)
 export function getSortedPoints(dataPoints: DataPoint[]): DataPoint[] {
-  return [...dataPoints].sort((a, b) => {
-    const timeCompare = a.narrativeTime - b.narrativeTime;
-    if (timeCompare !== 0) return timeCompare;
-    return a.realTime.getTime() - b.realTime.getTime();
-  });
+  return [...dataPoints]
+    .filter((d) => d.hasRealTime)
+    .sort((a, b) => {
+      const timeCompare = a.narrativeTime - b.narrativeTime;
+      if (timeCompare !== 0) return timeCompare;
+      return a.realTime!.getTime() - b.realTime!.getTime();
+    });
 }
 
 // Get scales for the visualization
@@ -66,9 +84,11 @@ export function getScales(
   width: number,
   height: number
 ) {
+  const timePoints = dataPoints.filter((d) => d.hasRealTime);
+
   const xScale = d3
     .scaleTime()
-    .domain(d3.extent(dataPoints, (d) => d.realTime) as [Date, Date])
+    .domain(d3.extent(timePoints, (d) => d.realTime) as [Date, Date])
     .range([0, width])
     .nice();
 
@@ -82,33 +102,35 @@ export function getScales(
   return { xScale, yScale };
 }
 
-// Create label data for force layout
+// Create label data for force layout (only for points with real time)
 export function createLabelData(
   dataPoints: DataPoint[],
   xScale: d3.ScaleTime<number, number>,
   yScale: d3.ScaleLinear<number, number>
 ): LabelDatum[] {
-  return dataPoints.map((d, i) => {
-    const displayText = d.event.short_text || d.event.text;
-    return {
-      id: i,
-      x: xScale(d.realTime),
-      y: yScale(d.narrativeTime) - 30,
-      text:
-        displayText.length > 30
-          ? displayText.slice(0, 27) + "..."
-          : displayText,
-      point: {
-        x: xScale(d.realTime),
-        y: yScale(d.narrativeTime),
-      },
-      width: 0,
-      height: 0,
-      fx: undefined,
-      fy: undefined,
-      index: d.index,
-    };
-  });
+  return dataPoints
+    .filter((d) => d.hasRealTime)
+    .map((d, i) => {
+      const displayText = d.event.short_text || d.event.text;
+      return {
+        id: i,
+        x: xScale(d.realTime!),
+        y: yScale(d.narrativeTime) - 30,
+        text:
+          displayText.length > 30
+            ? displayText.slice(0, 27) + "..."
+            : displayText,
+        point: {
+          x: xScale(d.realTime!),
+          y: yScale(d.narrativeTime),
+        },
+        width: 0,
+        height: 0,
+        fx: undefined,
+        fy: undefined,
+        index: d.index,
+      };
+    });
 }
 
 // Get fill and stroke colors based on sentiment
@@ -208,9 +230,14 @@ export function createLineGenerator(
   xScale: d3.ScaleTime<number, number>,
   yScale: d3.ScaleLinear<number, number>
 ) {
-  return d3
-    .line<DataPoint>()
-    .x((d) => xScale(d.realTime))
-    .y((d) => yScale(d.narrativeTime))
-    .curve(d3.curveLinear);
+  return (
+    d3
+      .line<DataPoint>()
+      // Added .defined(d => d.hasRealTime) to skip points without real-time and
+      // used non-null assertion for realTime since we know it exists when hasRealTime is true.
+      .defined((d) => d.hasRealTime)
+      .x((d) => xScale(d.realTime!))
+      .y((d) => yScale(d.narrativeTime))
+      .curve(d3.curveLinear)
+  );
 }

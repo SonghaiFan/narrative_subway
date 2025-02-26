@@ -40,6 +40,17 @@ export const ENTITY_COLORS = {
   expert: "#0891b2", // cyan-600
 };
 
+export const SOCIAL_ROLE_COLORS = {
+  government: "#2563eb", // blue-600
+  organization: "#059669", // emerald-600
+  expert: "#0891b2", // cyan-600
+  public: "#dc2626", // red-600
+  stakeholder: "#ca8a04", // yellow-600
+  geographical: "#9333ea", // purple-600
+  infrastructure: "#0d9488", // teal-600
+  object: "#94a3b8", // slate-400
+};
+
 export const ENTITY_CONFIG = {
   ...SHARED_CONFIG,
   margin: {

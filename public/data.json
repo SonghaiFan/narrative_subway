@@ -100,7 +100,7 @@
       "source_name": "",
       "narrative_phase": "recognition",
       "temporal_anchoring": {
-        "real_time": "",
+        "real_time": "2023-10-07",
         "narrative_time": 4,
         "temporal_type": "relative",
         "anchor": "post-attack"
@@ -182,7 +182,7 @@
       "source_name": "Gaza's health ministry",
       "narrative_phase": "disruption",
       "temporal_anchoring": {
-        "real_time": "",
+        "real_time": "2023-11-20",
         "narrative_time": 6,
         "temporal_type": "relative",
         "anchor": "campaign period"
@@ -297,7 +297,7 @@
       "source_name": "",
       "narrative_phase": "disruption",
       "temporal_anchoring": {
-        "real_time": "",
+        "real_time": "2023-10-07",
         "narrative_time": 9,
         "temporal_type": "relative",
         "anchor": "during attack"

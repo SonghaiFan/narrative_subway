@@ -24,11 +24,15 @@ import {
 interface TimeVisualProps {
   events: NarrativeEvent[];
   selectedEventId?: string;
+  metadata: {
+    publishDate: string;
+  };
 }
 
 export function NarrativeTimeVisual({
   events,
   selectedEventId,
+  metadata,
 }: TimeVisualProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -109,6 +113,30 @@ export function NarrativeTimeVisual({
         "transform",
         `translate(${TIME_CONFIG.margin.left},${TIME_CONFIG.margin.top})`
       );
+
+    // Add vertical line for published date
+    const publishDate = new Date(metadata.publishDate);
+    const publishX = xScale(publishDate);
+
+    g.append("line")
+      .attr("class", "publish-date-line")
+      .attr("x1", publishX)
+      .attr("x2", publishX)
+      .attr("y1", 0)
+      .attr("y2", height)
+      .attr("stroke", "#64748b")
+      .attr("stroke-width", 1)
+      .attr("stroke-dasharray", "4,4")
+      .attr("opacity", 0.6);
+
+    g.append("text")
+      .attr("class", "publish-date-label")
+      .attr("x", publishX)
+      .attr("y", -8)
+      .attr("text-anchor", "middle")
+      .attr("fill", "#64748b")
+      .attr("font-size", "10px")
+      .text("Current");
 
     // Define clipping path for the plot area
     // g.append("defs")
@@ -379,7 +407,7 @@ export function NarrativeTimeVisual({
       .enter()
       .append("circle")
       .attr("class", (d) => `point point-${d.index}`)
-      .attr("cx", (d) => xScale(d.realTime))
+      .attr("cx", (d) => (d.hasRealTime ? xScale(d.realTime!) : publishX))
       .attr("cy", (d) => yScale(d.narrativeTime))
       .attr("r", TIME_CONFIG.point.radius)
       .attr(
@@ -390,7 +418,10 @@ export function NarrativeTimeVisual({
         "stroke",
         (d) => getPointColors(d.event.topic.sentiment.intensity).stroke
       )
-      .attr("stroke-width", TIME_CONFIG.point.strokeWidth)
+      .attr("stroke-width", (d) =>
+        d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
+      )
+      .attr("stroke-dasharray", (d) => (d.hasRealTime ? "none" : "2,2"))
       .style("cursor", "pointer")
       .on("mouseover", function (event, d) {
         const point = d3.select(this);
@@ -398,25 +429,31 @@ export function NarrativeTimeVisual({
           .transition()
           .duration(150)
           .attr("r", TIME_CONFIG.point.hoverRadius)
-          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+          .attr(
+            "stroke-width",
+            d.hasRealTime ? TIME_CONFIG.point.hoverStrokeWidth : 1.5
+          );
 
-        // Find and highlight corresponding label
-        const label = labelsGroup.select(`.label-container-${d.index}`);
-        label.raise();
+        // Only highlight label if point has real time
+        if (d.hasRealTime) {
+          // Find and highlight corresponding label
+          const label = labelsGroup.select(`.label-container-${d.index}`);
+          label.raise();
 
-        label
-          .select(".label-background")
-          .transition()
-          .duration(150)
-          .attr("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.15))")
-          .attr("stroke", "#64748b");
+          label
+            .select(".label-background")
+            .transition()
+            .duration(150)
+            .attr("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.15))")
+            .attr("stroke", "#64748b");
 
-        label
-          .select(".connector")
-          .transition()
-          .duration(150)
-          .attr("stroke", "#64748b")
-          .attr("stroke-width", 1.5);
+          label
+            .select(".connector")
+            .transition()
+            .duration(150)
+            .attr("stroke", "#64748b")
+            .attr("stroke-width", 1.5);
+        }
 
         showTooltip(d.event, event.pageX, event.pageY);
       })
@@ -429,24 +466,30 @@ export function NarrativeTimeVisual({
           .transition()
           .duration(150)
           .attr("r", TIME_CONFIG.point.radius)
-          .attr("stroke-width", TIME_CONFIG.point.strokeWidth);
+          .attr(
+            "stroke-width",
+            d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
+          );
 
-        // Reset corresponding label
-        const label = labelsGroup.select(`.label-container-${d.index}`);
+        // Only reset label if point has real time
+        if (d.hasRealTime) {
+          // Reset corresponding label
+          const label = labelsGroup.select(`.label-container-${d.index}`);
 
-        label
-          .select(".label-background")
-          .transition()
-          .duration(150)
-          .attr("filter", "drop-shadow(0 1px 1px rgba(0,0,0,0.05))")
-          .attr("stroke", "#94a3b8");
+          label
+            .select(".label-background")
+            .transition()
+            .duration(150)
+            .attr("filter", "drop-shadow(0 1px 1px rgba(0,0,0,0.05))")
+            .attr("stroke", "#94a3b8");
 
-        label
-          .select(".connector")
-          .transition()
-          .duration(150)
-          .attr("stroke", "#94a3b8")
-          .attr("stroke-width", 1);
+          label
+            .select(".connector")
+            .transition()
+            .duration(150)
+            .attr("stroke", "#94a3b8")
+            .attr("stroke-width", 1);
+        }
 
         hideTooltip();
       });

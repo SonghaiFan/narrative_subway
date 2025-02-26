@@ -9,11 +9,18 @@ import { NarrativeTimeText } from "./time-text";
 interface TimeDisplayProps {
   events: NarrativeEvent[];
   selectedEventId?: string;
+  metadata: {
+    publishDate: string;
+  };
 }
 
 type ViewMode = "visual" | "text";
 
-export function TimeDisplay({ events, selectedEventId }: TimeDisplayProps) {
+export function TimeDisplay({
+  events,
+  selectedEventId,
+  metadata,
+}: TimeDisplayProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("visual");
 
   return (
@@ -27,6 +34,7 @@ export function TimeDisplay({ events, selectedEventId }: TimeDisplayProps) {
         <NarrativeTimeVisual
           events={events}
           selectedEventId={selectedEventId}
+          metadata={metadata}
         />
       ) : (
         <NarrativeTimeText events={events} selectedEventId={selectedEventId} />

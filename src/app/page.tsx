@@ -83,7 +83,11 @@ export default function Home() {
         )}
         bottomLeft={renderPanel(<EntityDisplay events={events} />)}
         bottomRight={renderPanel(
-          <TimeDisplay events={events} selectedEventId={undefined} />
+          <TimeDisplay
+            events={events}
+            selectedEventId={undefined}
+            metadata={metadata}
+          />
         )}
       />
     </div>
