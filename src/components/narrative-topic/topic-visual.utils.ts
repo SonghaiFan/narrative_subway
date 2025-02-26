@@ -19,6 +19,15 @@ export interface Edge {
   mainTopic: string;
 }
 
+interface GroupedPoint {
+  key: string;
+  points: DataPoint[];
+  mainTopic: string;
+  x: number;
+  y: number;
+  isExpanded: boolean;
+}
+
 // Process events into data points
 export function processEvents(events: NarrativeEvent[]): DataPoint[] {
   const validEvents = events.filter((e) => e.temporal_anchoring.real_time);
@@ -64,7 +73,7 @@ export function getScales(
     .scaleBand()
     .domain(topTopics)
     .range([0, height])
-    .padding(0.2);
+    .padding(0.3);
 
   const xScale = d3
     .scaleTime()
@@ -76,10 +85,46 @@ export function getScales(
 }
 
 // Get fill and stroke colors based on sentiment
-export function getPointColors(sentiment: number) {
+export function getPointColors(sentiment: {
+  polarity: string;
+  intensity: number;
+}) {
+  // Base colors for each polarity
+  const colors = {
+    positive: {
+      light: "#22c55e", // green-500
+      medium: "#16a34a", // green-600
+      dark: "#15803d", // green-700
+    },
+    negative: {
+      light: "#f87171", // red-400
+      medium: "#ef4444", // red-500
+      dark: "#dc2626", // red-600
+    },
+    neutral: {
+      light: "#6b7280", // gray-500
+      medium: "#4b5563", // gray-600
+      dark: "#374151", // gray-700
+    },
+  };
+
+  // Get color set based on polarity
+  const colorSet =
+    colors[sentiment.polarity as keyof typeof colors] || colors.neutral;
+
+  // Determine color intensity based on sentiment intensity
+  let strokeColor;
+  if (sentiment.intensity < 0.33) {
+    strokeColor = colorSet.light;
+  } else if (sentiment.intensity < 0.66) {
+    strokeColor = colorSet.medium;
+  } else {
+    strokeColor = colorSet.dark;
+  }
+
   return {
-    fill: sentiment > 0 ? "#ffffff" : sentiment < 0 ? "#f3f3f3" : "#ffffff",
-    stroke: sentiment > 0 ? "#000000" : sentiment < 0 ? "#666666" : "#999999",
+    fill: "#ffffff",
+    stroke: strokeColor,
   };
 }
 
@@ -111,15 +156,9 @@ export function createAxes(
   xScale: d3.ScaleTime<number, number>,
   yScale: d3.ScaleBand<string>
 ) {
-  const xAxis = d3
-    .axisTop(xScale)
-    .tickSize(SHARED_CONFIG.axis.tickSize)
-    .tickPadding(SHARED_CONFIG.axis.tickPadding);
+  const xAxis = d3.axisTop(xScale).tickSize(5).tickPadding(10);
 
-  const yAxis = d3
-    .axisLeft(yScale)
-    .tickSize(SHARED_CONFIG.axis.tickSize)
-    .tickPadding(SHARED_CONFIG.axis.tickPadding);
+  const yAxis = d3.axisLeft(yScale).tickSize(5).tickPadding(5);
 
   return { xAxis, yAxis };
 }
@@ -148,4 +187,102 @@ export function createEdges(dataPoints: DataPoint[]): Edge[] {
   }
 
   return edges;
+}
+
+// Group overlapping points
+export function groupOverlappingPoints(
+  dataPoints: DataPoint[],
+  xScale: d3.ScaleTime<number, number>,
+  yScale: d3.ScaleBand<string>
+): GroupedPoint[] {
+  const groups = new Map<string, DataPoint[]>();
+  const nodeSize = SHARED_CONFIG.point.radius * 2;
+  const timeThreshold = Math.abs(
+    xScale.invert(nodeSize / 4).getTime() - xScale.invert(0).getTime()
+  );
+
+  // Sort points by time and topic
+  const sortedPoints = [...dataPoints].sort((a, b) => {
+    const timeCompare = a.realTime.getTime() - b.realTime.getTime();
+    if (timeCompare === 0) {
+      return a.mainTopic.localeCompare(b.mainTopic);
+    }
+    return timeCompare;
+  });
+
+  // Group points that are close in time and in same topic
+  sortedPoints.forEach((point) => {
+    let foundGroup = false;
+
+    // Check existing groups for a match
+    for (const [key, points] of groups.entries()) {
+      const lastPoint = points[points.length - 1];
+      const timeDiff = Math.abs(
+        point.realTime.getTime() - lastPoint.realTime.getTime()
+      );
+
+      if (
+        point.mainTopic === lastPoint.mainTopic &&
+        timeDiff <= timeThreshold
+      ) {
+        points.push(point);
+        foundGroup = true;
+        break;
+      }
+    }
+
+    // Create new group if no match found
+    if (!foundGroup) {
+      const x = xScale(point.realTime);
+      const y = yScale(point.mainTopic)! + yScale.bandwidth() / 2;
+      const key = `${Math.round(x)},${Math.round(y)}`;
+      groups.set(key, [point]);
+    }
+  });
+
+  // Create GroupedPoints from the groups
+  return Array.from(groups.entries())
+    .filter(([_, points]) => points.length > 0)
+    .map(([key, points]) => {
+      // Calculate average time for the group
+      const avgTime = new Date(
+        points.reduce((sum, p) => sum + p.realTime.getTime(), 0) / points.length
+      );
+
+      return {
+        key,
+        points,
+        mainTopic: points[0].mainTopic,
+        x: xScale(avgTime),
+        y: yScale(points[0].mainTopic)! + yScale.bandwidth() / 2,
+        isExpanded: false,
+      };
+    });
+}
+
+// Calculate positions for expanded child nodes
+export function calculateExpandedPositions(
+  group: GroupedPoint,
+  radius: number
+): { x: number; y: number }[] {
+  const positions: { x: number; y: number }[] = [];
+  const n = group.points.length;
+
+  if (n === 1) {
+    return [{ x: group.x, y: group.y }];
+  }
+
+  // Calculate radius for the circle of nodes
+  const circleRadius = radius * 2;
+  const angleStep = (2 * Math.PI) / n;
+
+  for (let i = 0; i < n; i++) {
+    const angle = i * angleStep;
+    positions.push({
+      x: group.x + circleRadius * Math.cos(angle),
+      y: group.y + circleRadius * Math.sin(angle),
+    });
+  }
+
+  return positions;
 }

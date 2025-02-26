@@ -69,9 +69,26 @@ export function EntityVisual({ events }: EntityVisualProps) {
     const height =
       containerHeight - ENTITY_CONFIG.margin.top - ENTITY_CONFIG.margin.bottom;
 
-    // Calculate scales with minimum column width
-    const columnWidth = Math.max(100, width / (top5Entities.length + 1));
-    const totalColumnsWidth = columnWidth * top5Entities.length;
+    // Calculate responsive column width
+    const totalGapWidth =
+      (top5Entities.length - 1) * ENTITY_CONFIG.entity.columnGap;
+    const availableWidth = width - totalGapWidth;
+    const columnWidth = Math.min(
+      ENTITY_CONFIG.entity.maxColumnWidth,
+      Math.max(
+        ENTITY_CONFIG.entity.minColumnWidth,
+        availableWidth / top5Entities.length
+      )
+    );
+
+    // Calculate total width including gaps
+    const totalColumnsWidth = columnWidth * top5Entities.length + totalGapWidth;
+
+    // Center the visualization if total width is less than available width
+    const leftOffset =
+      ENTITY_CONFIG.margin.left + (width - totalColumnsWidth) / 2;
+
+    // Create scale with responsive width
     const xScale = d3
       .scaleBand()
       .domain(top5Entities.map((e) => e.name))
@@ -85,10 +102,11 @@ export function EntityVisual({ events }: EntityVisualProps) {
       .style("margin-left", "0")
       .style("background-color", "white");
 
-    // Create header content container
+    // Create header content container with centered alignment
     const headerContent = headerContainer
       .append("div")
-      .style("margin-left", `${ENTITY_CONFIG.margin.left}px`)
+      .style("position", "relative")
+      .style("margin-left", `${leftOffset}px`)
       .style("width", `${totalColumnsWidth}px`);
 
     // Create entity labels in the fixed header
@@ -144,12 +162,12 @@ export function EntityVisual({ events }: EntityVisualProps) {
       .attr("height", containerHeight)
       .style("max-width", "100%");
 
-    // Create main group
+    // Create main group with centered alignment
     const g = svg
       .append("g")
       .attr(
         "transform",
-        `translate(${ENTITY_CONFIG.margin.left},${ENTITY_CONFIG.margin.top})`
+        `translate(${leftOffset},${ENTITY_CONFIG.margin.top})`
       );
 
     // Draw entity columns
@@ -178,12 +196,17 @@ export function EntityVisual({ events }: EntityVisualProps) {
 
     const yScale = d3
       .scaleLinear()
-      .domain([minTime, maxTime])
+      .domain([0, Math.ceil(maxTime) + 1])
       .range([0, height])
       .nice();
 
-    // Add y-axis
-    const yAxis = d3.axisLeft(yScale).tickSize(5).tickPadding(5);
+    // Add y-axis with integer ticks
+    const yAxis = d3
+      .axisLeft(yScale)
+      .tickSize(5)
+      .tickPadding(5)
+      .ticks(Math.ceil(maxTime) + 1)
+      .tickFormat(d3.format("d"));
 
     g.append("g")
       .attr("class", "y-axis")
@@ -337,6 +360,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
           position={tooltipState.position}
           visible={tooltipState.visible}
           containerRef={containerRef}
+          type="entity"
         />
       </div>
     </div>

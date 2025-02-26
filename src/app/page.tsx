@@ -5,7 +5,7 @@ import { EntityDisplay } from "@/components/narrative-entity/entity-display";
 import { TopicDisplay } from "@/components/narrative-topic/topic-display";
 import { ProfileSection } from "@/components/profile-section";
 import { ResizableGrid } from "@/components/shared/resizable-grid";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TimelineData } from "@/types/article";
 
 export default function Home() {
@@ -13,23 +13,29 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("/api/narrative");
-        if (!response.ok) {
-          throw new Error("Failed to fetch narrative data");
-        }
-        const timelineData = await response.json();
-        setData(timelineData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-      } finally {
-        setLoading(false);
+  const fetchData = useCallback(async (fileName: string = "data.json") => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/${fileName}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${fileName}`);
       }
+      const timelineData = await response.json();
+      setData(timelineData);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setLoading(false);
     }
+  }, []);
 
+  useEffect(() => {
     fetchData();
+  }, [fetchData]);
+
+  const handleDataChange = useCallback((newData: TimelineData) => {
+    setData(newData);
   }, []);
 
   if (loading) {
@@ -64,10 +70,12 @@ export default function Home() {
           <ProfileSection
             title={metadata.title}
             description={metadata.description}
+            topic={metadata.topic}
             author={metadata.author}
             publishDate={metadata.publishDate}
             imageUrl={metadata.imageUrl}
             events={events}
+            onDataChange={handleDataChange}
           />
         )}
         topRight={renderPanel(

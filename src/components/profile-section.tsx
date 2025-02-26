@@ -1,23 +1,33 @@
-import { NarrativeEvent } from "@/types/article";
+import { NarrativeEvent, TimelineData } from "@/types/article";
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { FileSelect } from "@/components/ui/file-select";
 
 interface ProfileSectionProps {
   title: string;
+  topic: string;
   description: string;
   author: string;
   publishDate: string;
   imageUrl?: string | null;
   events: NarrativeEvent[];
+  onDataChange?: (data: TimelineData) => void;
 }
 
 export function ProfileSection({
   title,
+  topic,
   description,
   author,
   publishDate,
   imageUrl,
   events,
+  onDataChange,
 }: ProfileSectionProps) {
+  const [availableFiles, setAvailableFiles] = useState<string[]>([]);
+  const [selectedFile, setSelectedFile] = useState("data.json");
+  const [isLoading, setIsLoading] = useState(false);
+
   const stats = {
     entities: new Set(
       events.flatMap((event) => event.entities.map((e) => e.id))
@@ -26,19 +36,64 @@ export function ProfileSection({
     events: events.length,
   };
 
+  // Fetch available data files from public directory
+  useEffect(() => {
+    const fetchAvailableFiles = async () => {
+      try {
+        const response = await fetch("/api/data-files");
+        const files = await response.json();
+        setAvailableFiles(files);
+      } catch (error) {
+        console.error("Failed to fetch available data files:", error);
+      }
+    };
+    fetchAvailableFiles();
+  }, []);
+
+  // Handle file selection
+  const handleFileChange = useCallback(
+    async (fileName: string) => {
+      setIsLoading(true);
+      setSelectedFile(fileName);
+      try {
+        const response = await fetch(`/${fileName}`);
+        const data: TimelineData = await response.json();
+        onDataChange?.(data);
+      } catch (error) {
+        console.error("Failed to load data file:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [onDataChange]
+  );
+
   return (
     <article className="flex flex-col h-full p-4 space-y-4 overflow-hidden">
       <header className="space-y-3">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="px-2 py-0.5 bg-neutral-100 text-neutral-800 rounded-full">
-            AI
-          </span>
-          <time className="text-neutral-600" dateTime={publishDate}>
-            {new Date(publishDate).toLocaleDateString("en-US", {
-              month: "short",
-              day: "2-digit",
-            })}
-          </time>
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 text-sm">
+            <span className="px-2 py-0.5 bg-neutral-100 text-neutral-800 rounded-full">
+              {topic}
+            </span>
+            <time className="text-neutral-600" dateTime={publishDate}>
+              {new Date(publishDate).toLocaleDateString("en-US", {
+                month: "short",
+                day: "2-digit",
+              })}
+            </time>
+          </div>
+          <div className="flex items-center gap-2">
+            {isLoading && (
+              <span className="text-sm text-neutral-500">Loading...</span>
+            )}
+            <FileSelect
+              value={selectedFile}
+              onChange={handleFileChange}
+              options={availableFiles}
+              placeholder="Select data file"
+            />
+          </div>
         </div>
 
         <h1 className="text-xl font-bold text-neutral-900 leading-tight">

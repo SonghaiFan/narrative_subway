@@ -43,6 +43,7 @@ export interface NarrativeEvent {
 export interface NarrativeMetadata {
   title: string;
   description: string;
+  topic: string;
   author: string;
   publishDate: string;
   imageUrl?: string | null;

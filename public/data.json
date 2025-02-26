@@ -1,6 +1,7 @@
 {
   "metadata": {
     "title": "What We Know About the War Between Israel and Hamas",
+    "topic": "War",
     "description": "After Hamas's surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
     "author": "Ephrat Livni and Gaya Gupta",
     "publishDate": "2023-11-20",
@@ -568,7 +569,7 @@
       }
     },
     {
-      "index": 18,
+      "index": 16,
       "text": "Israel says Hamas uses civilian structures, including hospitals, as bases for military operations in violation of international law; areas including medical centers, schools, mosques and residential locations have been struck under Israel's bombardment.",
       "short_text": "Israel accuses Hamas of using civilian structures for military operations",
       "narrative_level": "diegetic",
@@ -606,7 +607,7 @@
       }
     },
     {
-      "index": 19,
+      "index": 17,
       "text": "Palestinians and some international observers have accused Israel of breaking the law with a disproportionate military response.",
       "short_text": "Palestinians and some international observers accuse Israel of disproportionate military response",
       "narrative_level": "diegetic",
@@ -638,7 +639,7 @@
       }
     },
     {
-      "index": 20,
+      "index": 18,
       "text": "On Nov. 15, the Israeli military stormed Gaza's largest hospital, Al-Shifa, and said it discovered weapons and other evidence to support its assertions that Hamas operated in a network of tunnels under the complex.",
       "short_text": "Israel raids Al-Shifa hospital, claims Hamas used it for military purposes",
       "narrative_level": "diegetic",
@@ -682,7 +683,7 @@
       }
     },
     {
-      "index": 21,
+      "index": 19,
       "text": "Senior U.S. officials have backed Israel, though the Israeli military has yet to show incontrovertible proof of a vast Hamas tunnel network.",
       "short_text": "Senior U.S. officials back Israel but await more evidence on Hamas tunnels",
       "narrative_level": "metadiegetic",
@@ -720,7 +721,7 @@
       }
     },
     {
-      "index": 22,
+      "index": 20,
       "text": "Hamas and hospital officials had denied the accusations.",
       "short_text": "Hamas and hospital officials deny allegations of tunnel networks",
       "narrative_level": "diegetic",
@@ -758,7 +759,7 @@
       }
     },
     {
-      "index": 23,
+      "index": 21,
       "text": "Almost two days after Israel began its raid of Al-Shifa, New York Times journalists were taken on a controlled tour of the complex by Israeli military officials, and saw a shaft on the hospital grounds.",
       "short_text": "The New York Times tours Al-Shifa hospital site",
       "narrative_level": "diegetic",
@@ -796,7 +797,7 @@
       }
     },
     {
-      "index": 24,
+      "index": 22,
       "text": "Electrical wiring was visible inside, along with a metal staircase, but it was unclear how deep the shaft was or where it led.",
       "short_text": "Journalists observe an unclear shaft at Al-Shifa hospital",
       "narrative_level": "diegetic",
@@ -821,7 +822,7 @@
       }
     },
     {
-      "index": 25,
+      "index": 23,
       "text": "As conditions have worsened for civilians in Gaza, Israel's campaign has drawn increasing outcries from the United Nations, aid organizations and much of the world.",
       "short_text": "Israel's military campaign faces global criticism",
       "narrative_level": "extradiegetic",
@@ -859,7 +860,7 @@
       }
     },
     {
-      "index": 26,
+      "index": 24,
       "text": "Without challenging Israel's right to defend itself, the Biden administration has repeatedly called for 'humanitarian pauses' to protect Palestinian civilians and allow the delivery of desperately needed aid.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
@@ -891,7 +892,7 @@
       "short_text": "Biden administration calls for humanitarian pauses"
     },
     {
-      "index": 27,
+      "index": 25,
       "text": "After more than a month of war, the humanitarian crisis in Gaza has grown increasingly dire, leaving Gazans with severely limited access to food, clean water and medical care.",
       "short_text": "Gaza's humanitarian crisis worsens, limiting access to basic necessities",
       "lead_title": "What is the situation in Gaza?",
@@ -924,7 +925,7 @@
       }
     },
     {
-      "index": 28,
+      "index": 26,
       "text": "The United Nations has warned that the entire territory is at risk of starvation amid mass internal displacement.",
       "short_text": "The U.N. warns Gaza is at risk of mass starvation",
       "narrative_level": "diegetic",
@@ -956,7 +957,7 @@
       }
     },
     {
-      "index": 29,
+      "index": 27,
       "text": "Thousands of children, who make up nearly half of Gaza's population, have been killed, according to health officials.",
       "short_text": "Thousands of children killed in Gaza, according to health officials",
       "narrative_level": "diegetic",
@@ -988,7 +989,7 @@
       }
     },
     {
-      "index": 30,
+      "index": 28,
       "text": "After weeks of desperate fuel shortages that put hospitals on the verge of collapse, Israel agreed on Nov. 17 to the entry of two tankers of fuel into Gaza each day to operate desalination and sewage plants.",
       "short_text": "Israel allows fuel into Gaza after shortages",
       "narrative_level": "diegetic",
@@ -1026,7 +1027,7 @@
       }
     },
     {
-      "index": 31,
+      "index": 29,
       "text": "Before Israel's raid of Al-Shifa, the hospital complex had been struggling to treat patients, with operations limited by a dearth of supplies, including water, medicine and oxygen.",
       "short_text": "Gaza hospitals struggle with limited medical supplies",
       "narrative_level": "diegetic",
@@ -1058,7 +1059,7 @@
       }
     },
     {
-      "index": 32,
+      "index": 30,
       "text": "Medical workers at other hospitals have described similar scenes of operations at the verge of collapse.",
       "short_text": "Healthcare facilities on the brink of collapse",
       "narrative_level": "diegetic",
@@ -1090,7 +1091,7 @@
       }
     },
     {
-      "index": 33,
+      "index": 31,
       "text": "Violence in the Israeli-occupied West Bank has also sharply escalated since Oct. 7.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
@@ -1122,7 +1123,7 @@
       "short_text": "Violence in the Israeli-occupied West Bank escalates"
     },
     {
-      "index": 34,
+      "index": 32,
       "text": "About 200 Palestinians have been killed in confrontations with Israeli forces and in escalating settler attacks, local officials say.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1154,7 +1155,7 @@
       "short_text": "200 Palestinians killed in West Bank clashes with Israeli forces and settlers"
     },
     {
-      "index": 35,
+      "index": 33,
       "text": "Freeing the 240 hostages abducted by Hamas on Oct. 7 has been one of Israel's two main goals of the war, in addition to destroying Hamas.",
       "lead_title": "What happened with the hostages?",
       "narrative_level": "diegetic",
@@ -1193,7 +1194,7 @@
       "short_text": "Israel prioritizes hostage rescue and Hamas destruction"
     },
     {
-      "index": 36,
+      "index": 34,
       "text": "Since Oct. 7, Hamas has released four Israeli hostages, while Israeli troops rescued a 19-year-old Israeli soldier in October.",
       "short_text": "Hamas releases four hostages; Israel rescues one",
       "narrative_level": "diegetic",
@@ -1231,7 +1232,7 @@
       }
     },
     {
-      "index": 37,
+      "index": 35,
       "text": "Hamas has published some videos of hostages on social media, which Israel has called psychological terrorism.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
@@ -1269,7 +1270,7 @@
       "short_text": "Hamas posts hostage videos; Israel calls it psychological warfare"
     },
     {
-      "index": 38,
+      "index": 36,
       "text": "Following Israel's raid of the Al-Shifa hospital, Israeli soldiers said they found the bodies of two Israeli hostages nearby, which they called an indication that Hamas used the complex for military operations.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1307,7 +1308,7 @@
       "short_text": "Israel finds hostage bodies near Al-Shifa, reinforcing Hamas tunnel claims"
     },
     {
-      "index": 39,
+      "index": 37,
       "text": "Negotiations for a deal that would have exchanged 50 women and children captives with roughly the same number of Palestinian women and children held in Israeli prisons had been underway, according to Israeli officials.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1339,8 +1340,10 @@
       "short_text": "Negotiations underway for prisoner exchange deal"
     },
     {
-      "index": 40,
+      "index": 38,
       "text": "In the immediate aftermath of the Oct. 7 attacks, many world leaders condemned Hamas and affirmed their support for Israel.",
+      "short_text": "World leaders condemn Hamas and affirm support for Israel",
+      "lead_title": "How have other leaders reacted?",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -1373,11 +1376,10 @@
           "polarity": "positive",
           "intensity": 0.7
         }
-      },
-      "short_text": "World leaders condemn Hamas and affirm support for Israel"
+      }
     },
     {
-      "index": 41,
+      "index": 39,
       "text": "President Biden visited to show solidarity, as did the leaders of Britain, France and Germany.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1409,7 +1411,7 @@
       "short_text": "President Biden and other leaders visit to show solidarity"
     },
     {
-      "index": 42,
+      "index": 40,
       "text": "But the strong support for Israel has since been tempered by calls for restraint from its allies, while protesters across the world have been calling for a cease-fire.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1434,7 +1436,7 @@
       "short_text": "Support for Israel tempered by calls for restraint and ceasefire"
     },
     {
-      "index": 43,
+      "index": 41,
       "text": "Aid groups are warning about the spiraling crisis in Gaza.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1466,7 +1468,7 @@
       "short_text": "Aid groups warn of an escalating humanitarian crisis"
     },
     {
-      "index": 44,
+      "index": 42,
       "text": "On Nov. 16, the U.N. Security Council adopted a resolution calling for days-long humanitarian pauses to the fighting in Gaza.",
       "narrative_level": "diegetic",
       "narrator_type": "document",
@@ -1498,7 +1500,7 @@
       "short_text": "U.N. Security Council calls for humanitarian pauses"
     },
     {
-      "index": 45,
+      "index": 43,
       "text": "António Guterres, the secretary general of the United Nations, is among the leaders who has called for a humanitarian cease-fire.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1530,7 +1532,7 @@
       "short_text": "U.N. Secretary-General calls for a humanitarian ceasefire"
     },
     {
-      "index": 46,
+      "index": 44,
       "text": "Leaders of dozens of Arab and Muslim nations convened in Saudi Arabia in mid-November.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1568,7 +1570,7 @@
       "short_text": "Arab and Muslim nations convene in Saudi Arabia"
     },
     {
-      "index": 47,
+      "index": 45,
       "text": "They also called for a cease-fire and avoided blaming Hamas, but those with ties to Israel have not cut off relations.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1593,8 +1595,10 @@
       "short_text": "Arab and Muslim leaders call for a ceasefire but avoid blaming Hamas"
     },
     {
-      "index": 48,
+      "index": 46,
       "text": "The war in Gaza is straining relations between Israel and its immediate neighbors, jeopardizing months of U.S. diplomacy to push Saudi Arabia to normalize ties with Israel, leading to protests across the Middle East and the world and stoking fears of a broader regional conflict.",
+      "short_text": "War in Gaza strains Israel's diplomatic relations and risks regional conflict",
+      "lead_title": "Is a broader conflict possible?",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "present",
@@ -1627,11 +1631,10 @@
           "polarity": "negative",
           "intensity": 0.85
         }
-      },
-      "short_text": "War in Gaza strains Israel's diplomatic relations and risks regional conflict"
+      }
     },
     {
-      "index": 49,
+      "index": 47,
       "text": "President Biden has sought to prevent the war between Israel and Hamas from spilling over into a fight with Iran and its proxies in Lebanon, Syria and Iraq.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1669,7 +1672,7 @@
       "short_text": "Biden seeks to prevent war from expanding to Iran and its proxies"
     },
     {
-      "index": 50,
+      "index": 48,
       "text": "The Pentagon sent two aircraft carriers and dozens of extra warplanes to the region to make this point.",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
@@ -1701,7 +1704,7 @@
       "short_text": "The Pentagon sends aircraft carriers and warplanes to the region"
     },
     {
-      "index": 51,
+      "index": 49,
       "text": "Since the Oct. 7 attacks, the Israeli army has engaged in almost daily clashes with Hezbollah, the Lebanese militant group allied with Hamas and backed by Iran.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
@@ -1739,7 +1742,7 @@
       "short_text": "Israel clashes with Hezbollah on the Lebanese border"
     },
     {
-      "index": 52,
+      "index": 50,
       "text": "Israel's military also has responded to fire from Syria.",
       "narrative_level": "diegetic",
       "narrator_type": "journalist",
@@ -1771,8 +1774,10 @@
       "short_text": "Israel responds to fire from Syria"
     },
     {
-      "index": 53,
+      "index": 51,
       "text": "The Palestinian Authority, which controls parts of the West Bank, said on Nov. 9 it would be open to a role overseeing a post-Hamas Gaza as long as the Biden administration commits to a two-state solution to end the war, according to a top Palestinian official.",
+      "short_text": "Palestinian Authority expresses willingness to oversee post-Hamas Gaza",
+      "lead_title": "What happens after the war?",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -1799,12 +1804,12 @@
           "polarity": "positive",
           "intensity": 0.7
         }
-      },
-      "short_text": "Palestinian Authority expresses willingness to oversee post-Hamas Gaza"
+      }
     },
     {
-      "index": 54,
+      "index": 52,
       "text": "The head of the authority, President Mahmoud Abbas, met with U.S. officials in Ramallah on Nov. 15, urging them to pressure Israel to stop the war, speed up humanitarian aid and crack down on violence in the West Bank.",
+      "short_text": "Mahmoud Abbas meets U.S. officials to discuss the war",
       "narrative_level": "diegetic",
       "narrator_type": "paraphrased_source",
       "temporal_position": "past",
@@ -1837,11 +1842,10 @@
           "polarity": "positive",
           "intensity": 0.75
         }
-      },
-      "short_text": "Mahmoud Abbas meets U.S. officials to discuss the war"
+      }
     },
     {
-      "index": 55,
+      "index": 53,
       "text": "But Mr. Netanyahu said on NBC's 'Meet the Press' on Nov. 12 that his postwar vision would not include the Palestinian Authority in the near term.",
       "narrative_level": "metadiegetic",
       "narrator_type": "quoted_source",
@@ -1879,7 +1883,7 @@
       "short_text": "Netanyahu excludes the Palestinian Authority from postwar plans"
     },
     {
-      "index": 56,
+      "index": 54,
       "text": "Earlier, he had said that Israel would indefinitely 'have the overall security responsibility' of the enclave, though he seemed to stop short of suggesting a full re-occupation of Gaza.",
       "narrative_level": "metadiegetic",
       "narrator_type": "quoted_source",
@@ -1917,7 +1921,7 @@
       "short_text": "Netanyahu insists Israel will maintain security control over Gaza"
     },
     {
-      "index": 57,
+      "index": 55,
       "text": "His statement was at odds with the postwar plan that Secretary of State Antony Blinken suggested on Nov. 8, in which Gaza would be unified with the West Bank under the Palestinian Authority.",
       "short_text": "U.S. and Israel diverge on postwar governance plans for Gaza",
       "narrative_level": "diegetic",

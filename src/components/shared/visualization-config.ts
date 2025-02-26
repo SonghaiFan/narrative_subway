@@ -24,6 +24,11 @@ export const SHARED_CONFIG = {
     hoverRadius: 9,
     hoverStrokeWidth: 3,
   },
+  edge: {
+    strokeWidth: 1.5,
+    opacity: 0.4,
+    dashArray: "4,4",
+  },
 };
 
 export const ENTITY_COLORS = {
@@ -38,13 +43,18 @@ export const ENTITY_COLORS = {
 export const ENTITY_CONFIG = {
   ...SHARED_CONFIG,
   margin: {
-    ...SHARED_CONFIG.margin,
-    left: 30,
+    top: 30,
+    right: 20,
+    bottom: 20,
+    left: 50,
   },
   entity: {
     labelFontSize: 14,
     lineStrokeWidth: 6,
     columnPadding: 0.2,
+    minColumnWidth: 50,
+    maxColumnWidth: 200,
+    columnGap: 20,
   },
   event: {
     nodeRadius: 6,
@@ -65,17 +75,9 @@ export const EVENT_COLORS = {
 
 export const TIME_CONFIG = {
   ...SHARED_CONFIG,
-  point: {
-    radius: 6,
-    strokeWidth: 2,
-    hoverRadius: 9,
-    hoverStrokeWidth: 3,
-  },
   axis: {
-    tickSize: 5,
+    ...SHARED_CONFIG.axis,
     tickPadding: 5,
-    fontSize: 12,
-    labelOffset: 40,
   },
   curve: {
     strokeWidth: 6,

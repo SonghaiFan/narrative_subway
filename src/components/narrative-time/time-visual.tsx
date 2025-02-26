@@ -53,7 +53,7 @@ export function NarrativeTimeVisual({
     d3.select(headerRef.current).selectAll("*").remove();
 
     // Process data points
-    const dataPoints = processEvents(events);
+    const { dataPoints, leadTitlePoints } = processEvents(events);
     const sortedPoints = getSortedPoints(dataPoints);
 
     // Calculate dimensions
@@ -111,14 +111,14 @@ export function NarrativeTimeVisual({
       );
 
     // Define clipping path for the plot area
-    g.append("defs")
-      .append("clipPath")
-      .attr("id", "plot-area")
-      .append("rect")
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("width", width)
-      .attr("height", height);
+    // g.append("defs")
+    //   .append("clipPath")
+    //   .attr("id", "plot-area")
+    //   .append("rect")
+    //   .attr("x", 0)
+    //   .attr("y", 0)
+    //   .attr("width", width)
+    //   .attr("height", height);
 
     // Add y-axis
     g.append("g")
@@ -140,7 +140,7 @@ export function NarrativeTimeVisual({
       .append("g")
       .attr("class", "lead-titles")
       .selectAll(".lead-title")
-      .data(dataPoints.filter((d) => d.event.lead_title))
+      .data(leadTitlePoints)
       .enter()
       .append("g")
       .attr("class", "lead-title-group");
@@ -587,6 +587,7 @@ export function NarrativeTimeVisual({
           position={tooltipState.position}
           visible={tooltipState.visible}
           containerRef={containerRef}
+          type="time"
         />
       </div>
     </div>

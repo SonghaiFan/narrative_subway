@@ -1,16 +1,130 @@
-import { NarrativeEvent } from "@/types/article";
+import { Entity, NarrativeEvent } from "@/types/article";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ENTITY_COLORS } from "../shared/visualization-config";
 
 interface TooltipPosition {
   x: number;
   y: number;
 }
 
+type VisualizationType = "entity" | "time" | "topic";
+
 interface TooltipProps {
   event: NarrativeEvent | null;
   position: TooltipPosition;
   visible: boolean;
   containerRef: React.RefObject<HTMLElement | null>;
+  type?: VisualizationType;
+}
+
+function EntityTooltipContent({ event }: { event: NarrativeEvent }) {
+  return (
+    <>
+      <div className="font-semibold text-gray-900 mb-2">{event.short_text}</div>
+      <div className="space-y-2">
+        <div className="text-sm text-gray-700 mb-2 border-b border-gray-100 pb-2">
+          {event.text}
+        </div>
+        <div className="text-sm text-gray-700">
+          <span className="text-gray-500">Phase:</span> {event.narrative_phase}
+        </div>
+        <div className="text-sm">
+          <span className="text-gray-500">Entities:</span>
+          <div className="mt-1 flex flex-wrap gap-1">
+            {event.entities.map((entity: Entity) => (
+              <span
+                key={entity.id}
+                className="inline-flex items-center px-2 py-0.5 rounded text-xs"
+                style={{
+                  backgroundColor: `${ENTITY_COLORS[entity.role_type]}15`,
+                  color: ENTITY_COLORS[entity.role_type],
+                }}
+              >
+                {entity.name}
+                <span className="ml-1 text-[10px] opacity-75">
+                  ({entity.role_type})
+                </span>
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function TimeTooltipContent({ event }: { event: NarrativeEvent }) {
+  return (
+    <>
+      <div className="font-semibold text-gray-900 mb-2">{event.short_text}</div>
+      <div className="space-y-2">
+        <div className="text-sm text-gray-700 mb-2 border-b border-gray-100 pb-2">
+          {event.text}
+        </div>
+        <div className="text-sm text-gray-700">
+          <span className="text-gray-500">Time:</span>{" "}
+          {event.temporal_anchoring.real_time ||
+            event.temporal_anchoring.anchor}
+        </div>
+        {event.lead_title && (
+          <div className="text-sm text-gray-700">
+            <span className="text-gray-500">Section:</span> {event.lead_title}
+          </div>
+        )}
+        <div className="text-sm text-gray-700">
+          <span className="text-gray-500">Source:</span>{" "}
+          {event.source_name || "Not specified"}
+        </div>
+      </div>
+    </>
+  );
+}
+
+function TopicTooltipContent({ event }: { event: NarrativeEvent }) {
+  return (
+    <>
+      <div className="font-semibold text-gray-900 mb-2">{event.short_text}</div>
+      <div className="space-y-2">
+        <div className="text-sm text-gray-700 mb-2 border-b border-gray-100 pb-2">
+          {event.text}
+        </div>
+        <div className="text-sm text-gray-700">
+          <span className="text-gray-500">Main Topic:</span>{" "}
+          {event.topic.main_topic}
+        </div>
+        {event.topic.sub_topic.length > 0 && (
+          <div className="text-sm">
+            <span className="text-gray-500">Sub-topics:</span>
+            <div className="mt-1 flex flex-wrap gap-1">
+              {event.topic.sub_topic.map((topic) => (
+                <span
+                  key={topic}
+                  className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-700"
+                >
+                  {topic}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="text-sm text-gray-700">
+          <span className="text-gray-500">Sentiment:</span>{" "}
+          <span
+            className={`${
+              event.topic.sentiment.polarity === "positive"
+                ? "text-green-600"
+                : event.topic.sentiment.polarity === "negative"
+                ? "text-red-600"
+                : "text-gray-600"
+            }`}
+          >
+            {event.topic.sentiment.polarity} (
+            {Math.round(event.topic.sentiment.intensity * 100)}%)
+          </span>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export function NarrativeTooltip({
@@ -18,6 +132,7 @@ export function NarrativeTooltip({
   position,
   visible,
   containerRef,
+  type = "topic",
 }: TooltipProps) {
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -59,17 +174,11 @@ export function NarrativeTooltip({
     <div
       ref={tooltipRef}
       className="fixed bg-white p-4 rounded-lg shadow-lg text-sm z-50 pointer-events-none border border-gray-200"
-      style={{ maxWidth: "300px" }}
+      style={{ maxWidth: "320px" }}
     >
-      <div className="font-semibold text-gray-900">
-        {event.topic.main_topic}
-      </div>
-      <div className="text-gray-700 mt-2 line-clamp-4">{event.text}</div>
-      <div className="mt-2 flex items-center gap-2 text-xs">
-        <span className="text-gray-600">{event.temporal_anchoring.anchor}</span>
-        <span className="text-gray-400">•</span>
-        <span className="text-gray-600">{event.narrative_phase}</span>
-      </div>
+      {type === "entity" && <EntityTooltipContent event={event} />}
+      {type === "time" && <TimeTooltipContent event={event} />}
+      {type === "topic" && <TopicTooltipContent event={event} />}
     </div>
   );
 }

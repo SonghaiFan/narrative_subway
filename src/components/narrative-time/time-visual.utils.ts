@@ -20,15 +20,35 @@ export interface LabelDatum extends d3.SimulationNodeDatum {
   index: number;
 }
 
-// Process events into data points
-export function processEvents(events: NarrativeEvent[]): DataPoint[] {
-  const validEvents = events.filter((e) => e.temporal_anchoring.real_time);
-  return validEvents.map((event, index) => ({
-    event,
-    realTime: new Date(event.temporal_anchoring.real_time!),
-    narrativeTime: event.temporal_anchoring.narrative_time,
-    index,
-  }));
+export interface LeadTitlePoint {
+  event: NarrativeEvent;
+  narrativeTime: number;
+  hasRealTime: boolean;
+}
+
+// Modify processEvents to return both valid points and lead titles
+export function processEvents(events: NarrativeEvent[]): {
+  dataPoints: DataPoint[];
+  leadTitlePoints: LeadTitlePoint[];
+} {
+  const leadTitlePoints = events
+    .filter((e) => e.lead_title)
+    .map((event) => ({
+      event,
+      narrativeTime: event.temporal_anchoring.narrative_time,
+      hasRealTime: !!event.temporal_anchoring.real_time,
+    }));
+
+  const dataPoints = events
+    .filter((e) => e.temporal_anchoring.real_time)
+    .map((event, index) => ({
+      event,
+      realTime: new Date(event.temporal_anchoring.real_time!),
+      narrativeTime: event.temporal_anchoring.narrative_time,
+      index,
+    }));
+
+  return { dataPoints, leadTitlePoints };
 }
 
 // Create sorted points for line drawing
@@ -52,12 +72,10 @@ export function getScales(
     .range([0, width])
     .nice();
 
-  const minTime = Math.min(...dataPoints.map((d) => d.narrativeTime));
-  const maxTime = Math.max(...dataPoints.map((d) => d.narrativeTime));
-
+  const maxNarrativeTime = Math.max(...dataPoints.map((d) => d.narrativeTime));
   const yScale = d3
     .scaleLinear()
-    .domain([minTime, maxTime])
+    .domain([0, Math.ceil(maxNarrativeTime) + 1])
     .range([0, height])
     .nice();
 
@@ -70,24 +88,27 @@ export function createLabelData(
   xScale: d3.ScaleTime<number, number>,
   yScale: d3.ScaleLinear<number, number>
 ): LabelDatum[] {
-  return dataPoints.map((d, i) => ({
-    id: i,
-    x: xScale(d.realTime),
-    y: yScale(d.narrativeTime) - 30,
-    text:
-      d.event.text.length > 30
-        ? d.event.text.slice(0, 27) + "..."
-        : d.event.text,
-    point: {
+  return dataPoints.map((d, i) => {
+    const displayText = d.event.short_text || d.event.text;
+    return {
+      id: i,
       x: xScale(d.realTime),
-      y: yScale(d.narrativeTime),
-    },
-    width: 0,
-    height: 0,
-    fx: undefined,
-    fy: undefined,
-    index: d.index,
-  }));
+      y: yScale(d.narrativeTime) - 30,
+      text:
+        displayText.length > 30
+          ? displayText.slice(0, 27) + "..."
+          : displayText,
+      point: {
+        x: xScale(d.realTime),
+        y: yScale(d.narrativeTime),
+      },
+      width: 0,
+      height: 0,
+      fx: undefined,
+      fy: undefined,
+      index: d.index,
+    };
+  });
 }
 
 // Get fill and stroke colors based on sentiment
@@ -121,7 +142,7 @@ export function createForceSimulation(
       d3
         .forceCollide<LabelDatum>()
         .radius((d) => Math.sqrt(d.width / 2 + d.height / 2))
-        .strength(0.2)
+        .strength(0.5)
     )
     .force(
       "y",
@@ -170,15 +191,14 @@ export function createAxes(
   xScale: d3.ScaleTime<number, number>,
   yScale: d3.ScaleLinear<number, number>
 ) {
-  const xAxis = d3
-    .axisTop(xScale)
-    .tickSize(TIME_CONFIG.axis.tickSize)
-    .tickPadding(TIME_CONFIG.axis.tickPadding);
+  const xAxis = d3.axisTop(xScale).tickSize(5).tickPadding(10);
 
   const yAxis = d3
     .axisLeft(yScale)
-    .tickSize(TIME_CONFIG.axis.tickSize)
-    .tickPadding(TIME_CONFIG.axis.tickPadding);
+    .tickSize(5)
+    .tickPadding(5)
+    .ticks(Math.ceil(yScale.domain()[1]))
+    .tickFormat(d3.format("d"));
 
   return { xAxis, yAxis };
 }

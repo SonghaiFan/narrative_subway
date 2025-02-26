@@ -121,7 +121,7 @@ export function createForceSimulation(
       d3
         .forceCollide<LabelDatum>()
         .radius((d) => Math.sqrt(d.width / 2 + d.height / 2))
-        .strength(0.2)
+        .strength(0.3)
     )
     .force(
       "y",
