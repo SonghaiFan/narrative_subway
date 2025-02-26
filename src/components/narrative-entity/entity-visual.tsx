@@ -303,11 +303,9 @@ export function EntityVisual({ events }: EntityVisualProps) {
     if (!containerRef.current) return;
 
     // Create ResizeObserver
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver(() => {
       // Use requestAnimationFrame to throttle updates
-      window.requestAnimationFrame(() => {
-        updateVisualization();
-      });
+      window.requestAnimationFrame(updateVisualization);
     });
 
     // Start observing

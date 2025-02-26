@@ -232,21 +232,9 @@ export function NarrativeTopicVisual({
     if (!containerRef.current) return;
 
     // Create ResizeObserver
-    const resizeObserver = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (!entry) return;
-
-      // Get the actual content dimensions
-      const contentRect = entry.contentRect;
-
+    const resizeObserver = new ResizeObserver(() => {
       // Use requestAnimationFrame to throttle updates
-      window.requestAnimationFrame(() => {
-        if (containerRef.current) {
-          // Force a style recalculation to get accurate dimensions
-          containerRef.current.style.height = "100%";
-          updateVisualization();
-        }
-      });
+      window.requestAnimationFrame(updateVisualization);
     });
 
     // Start observing
