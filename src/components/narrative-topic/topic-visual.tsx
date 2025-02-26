@@ -65,17 +65,24 @@ export function NarrativeTopicVisual({
     // Create scales
     const { xScale, yScale } = getScales(dataPoints, topTopics, width, height);
 
-    // Create fixed header for x-axis
-    const headerContainer = d3
-      .select(headerRef.current)
-      .style("width", `${width}px`)
-      .style("margin-left", `${SHARED_CONFIG.margin.left}px`);
-
     // Create axes
     const { xAxis, yAxis } = createAxes(xScale, yScale);
 
+    // Create fixed header for x-axis
+    const headerContainer = d3
+      .select(headerRef.current)
+      .style("width", `${containerWidth}px`)
+      .style("margin-left", "0")
+      .style("background-color", "white");
+
+    // Create header content container
+    const headerContent = headerContainer
+      .append("div")
+      .style("margin-left", `${SHARED_CONFIG.margin.left}px`)
+      .style("width", `${width}px`);
+
     // Add x-axis to header
-    const headerSvg = headerContainer
+    const headerSvg = headerContent
       .append("svg")
       .attr("width", width + SHARED_CONFIG.margin.right)
       .attr("height", SHARED_CONFIG.header.height)
@@ -258,13 +265,13 @@ export function NarrativeTopicVisual({
   }, [updateVisualization]);
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col overflow-hidden">
       <div
         ref={headerRef}
-        className="flex-none bg-white sticky top-0 z-10 flex items-end border-b border-gray-200"
+        className="flex-none bg-white sticky top-0 z-10 shadow-sm"
         style={{ height: `${SHARED_CONFIG.header.height}px` }}
       />
-      <div ref={containerRef} className="flex-1 relative overflow-hidden">
+      <div ref={containerRef} className="flex-1 relative overflow-y-auto">
         <svg ref={svgRef} className="w-full h-full" />
         <NarrativeTooltip
           event={tooltipState.event}

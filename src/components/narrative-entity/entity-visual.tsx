@@ -81,20 +81,20 @@ export function EntityVisual({ events }: EntityVisualProps) {
     // Create fixed header for entity labels
     const headerContainer = d3
       .select(headerRef.current)
-      .style(
-        "width",
-        `${
-          totalColumnsWidth +
-          ENTITY_CONFIG.margin.left +
-          ENTITY_CONFIG.margin.right
-        }px`
-      )
-      .style("margin-left", `${ENTITY_CONFIG.margin.left}px`);
+      .style("width", `${containerWidth}px`)
+      .style("margin-left", "0")
+      .style("background-color", "white");
+
+    // Create header content container
+    const headerContent = headerContainer
+      .append("div")
+      .style("margin-left", `${ENTITY_CONFIG.margin.left}px`)
+      .style("width", `${totalColumnsWidth}px`);
 
     // Create entity labels in the fixed header
     top5Entities.forEach((entity) => {
       const x = xScale(entity.name)!;
-      const labelContainer = headerContainer
+      const labelContainer = headerContent
         .append("div")
         .style("position", "absolute")
         .style("left", `${x + xScale.bandwidth() / 2}px`)
@@ -326,11 +326,11 @@ export function EntityVisual({ events }: EntityVisualProps) {
   }, [updateVisualization]);
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col overflow-auto">
       <div
         ref={headerRef}
-        className="flex-none bg-white sticky top-0 z-10 flex items-end border-b border-gray-200"
-        style={{ height: `${SHARED_CONFIG.header.height}px` }}
+        className="flex-none bg-white sticky top-0 z-10 shadow-sm"
+        style={{ height: `${ENTITY_CONFIG.header.height}px` }}
       />
       <div ref={containerRef} className="flex-1 relative">
         <svg ref={svgRef} className="w-full h-full" />

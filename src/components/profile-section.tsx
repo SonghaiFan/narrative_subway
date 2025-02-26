@@ -27,7 +27,7 @@ export function ProfileSection({
   };
 
   return (
-    <article className="flex flex-col h-full p-4 space-y-4 overflow-scroll">
+    <article className="flex flex-col h-full p-4 space-y-4 overflow-hidden">
       <header className="space-y-3">
         <div className="flex items-center gap-2 text-sm">
           <span className="px-2 py-0.5 bg-neutral-100 text-neutral-800 rounded-full">

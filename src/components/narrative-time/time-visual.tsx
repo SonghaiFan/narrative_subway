@@ -66,14 +66,21 @@ export function NarrativeTimeVisual({
     // Create fixed header for x-axis
     const headerContainer = d3
       .select(headerRef.current)
-      .style("width", `${width}px`)
-      .style("margin-left", `${TIME_CONFIG.margin.left}px`);
+      .style("width", `${containerWidth}px`)
+      .style("margin-left", "0")
+      .style("background-color", "white");
+
+    // Create header content container
+    const headerContent = headerContainer
+      .append("div")
+      .style("margin-left", `${TIME_CONFIG.margin.left}px`)
+      .style("width", `${width}px`);
 
     // Create axes
     const { xAxis, yAxis } = createAxes(xScale, yScale);
 
     // Add x-axis to header
-    const headerSvg = headerContainer
+    const headerSvg = headerContent
       .append("svg")
       .attr("width", width + TIME_CONFIG.margin.right)
       .attr("height", "40")
@@ -569,7 +576,7 @@ export function NarrativeTimeVisual({
   }, [updateVisualization]);
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-full flex flex-col overflow-auto">
       <div
         ref={headerRef}
         className="flex-none bg-white sticky top-0 z-10 flex items-end border-b border-gray-200"
