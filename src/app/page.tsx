@@ -4,7 +4,7 @@ import { TimeDisplay } from "@/components/narrative-time/time-display";
 import { EntityDisplay } from "@/components/narrative-entity/entity-display";
 import { TopicDisplay } from "@/components/narrative-topic/topic-display";
 import { ProfileSection } from "@/components/profile-section";
-import { ResizableGrid } from "@/components/shared/resizable-grid";
+import { ResizableGrid } from "@/components/ui/resizable-grid";
 import { useCallback, useEffect, useState } from "react";
 import { TimelineData } from "@/types/article";
 

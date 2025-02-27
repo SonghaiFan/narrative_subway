@@ -9,10 +9,7 @@ import {
   SHARED_CONFIG,
   SOCIAL_ROLE_COLORS,
 } from "../shared/visualization-config";
-import {
-  NarrativeTooltip,
-  useNarrativeTooltip,
-} from "../shared/narrative-tooltip";
+import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
 
 interface EntityVisualProps {
   events: NarrativeEvent[];

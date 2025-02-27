@@ -4,10 +4,7 @@ import { NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { TIME_CONFIG } from "../shared/visualization-config";
-import {
-  NarrativeTooltip,
-  useNarrativeTooltip,
-} from "../shared/narrative-tooltip";
+import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
 import {
   LabelDatum,
   processEvents,

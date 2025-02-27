@@ -19,7 +19,7 @@ export interface Edge {
   mainTopic: string;
 }
 
-interface GroupedPoint {
+export interface GroupedPoint {
   key: string;
   points: DataPoint[];
   mainTopic: string;

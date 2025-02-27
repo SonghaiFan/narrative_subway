@@ -4,10 +4,7 @@ import { NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { SHARED_CONFIG } from "../shared/visualization-config";
-import {
-  NarrativeTooltip,
-  useNarrativeTooltip,
-} from "../shared/narrative-tooltip";
+import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
 import {
   processEvents,
   getTopicCounts,
@@ -359,10 +356,7 @@ export function NarrativeTopicVisual({
     });
 
     // Handle hover events
-    const handleMouseOver = (
-      event: MouseEvent,
-      d: GroupedPoint | ChildPoint
-    ) => {
+    const handleMouseOver = (event: MouseEvent, d: any) => {
       if (!event.currentTarget) return;
 
       const target = d3.select(event.currentTarget as Element);
@@ -376,10 +370,7 @@ export function NarrativeTopicVisual({
       showTooltip(eventData, event.pageX, event.pageY);
     };
 
-    const handleMouseOut = (
-      event: MouseEvent,
-      d: GroupedPoint | ChildPoint
-    ) => {
+    const handleMouseOut = (event: MouseEvent, d: any) => {
       if (!event.currentTarget) return;
 
       const target = d3.select(event.currentTarget as Element);

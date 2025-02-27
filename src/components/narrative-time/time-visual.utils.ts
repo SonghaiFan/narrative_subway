@@ -213,12 +213,15 @@ export function createAxes(
   xScale: d3.ScaleTime<number, number>,
   yScale: d3.ScaleLinear<number, number>
 ) {
-  const xAxis = d3.axisTop(xScale).tickSize(5).tickPadding(10);
+  const xAxis = d3
+    .axisTop(xScale)
+    .tickSize(TIME_CONFIG.axis.tickSize)
+    .tickPadding(TIME_CONFIG.axis.tickPadding);
 
   const yAxis = d3
     .axisLeft(yScale)
-    .tickSize(5)
-    .tickPadding(5)
+    .tickSize(TIME_CONFIG.axis.tickSize)
+    .tickPadding(TIME_CONFIG.axis.tickPadding)
     .ticks(Math.ceil(yScale.domain()[1]))
     .tickFormat(d3.format("d"));
 
