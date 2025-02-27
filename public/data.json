@@ -1,1960 +1,2980 @@
 {
   "metadata": {
-    "title": "What We Know About the War Between Israel and Hamas",
-    "topic": "War",
-    "description": "After Hamas's surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
-    "author": "Ephrat Livni and Gaya Gupta",
-    "publishDate": "2023-11-20",
-    "imageUrl": "https://static01.nyt.com/images/2023/10/26/multimedia/26israel-gaza-what-we-know-01-jmpb/26israel-gaza-what-we-know-01-jmpb-superJumbo.jpg?quality=75&auto=webp"
+    "title": "Arguo amor vado tonsor vox vado utroque creo amet.",
+    "description": "Ago curatio ago occaecati. Tamisium valde sono sunt vinculum. Auctor tamisium aveho caste ea argumentum delinquo.",
+    "topic": "arguo",
+    "author": "Lisa Block",
+    "publishDate": "2024-09-23T23:46:46.145Z",
+    "imageUrl": "https://picsum.photos/seed/4KJJD4Nu2/916/724"
   },
   "events": [
     {
       "index": 1,
-      "text": "After Hamas's surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
-      "short_text": "Israel besieging and bombarding Gaza after Hamas attack",
-      "narrative_level": "extradiegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Dedecor animadverto defleo vestrum vulticulus tamdiu ducimus. Adipisci talis convoco terreo comis textus tristis avaritia statim succurro. Debeo amita voveo abstergo iusto supplanto via abscido volup.\nTempore defero adiuvo velociter volutabrum illum claudeo tremo delectus. Cattus cattus alveus absum amplitudo at. Coaegresco amplus ultra atrox utor curriculum carus vulgivagus cui supellex.",
+      "short_text": "Colligo utique aegrotatio.",
+      "narrative_level": "nulla",
+      "narrator_type": "tristis",
+      "temporal_position": "amicitia",
+      "source_name": "webbed-leading.info",
+      "narrative_phase": "nihil",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
+        "real_time": "2024-06-05T01:30:57.658Z",
         "narrative_time": 1,
         "temporal_type": "absolute",
-        "anchor": "Oct. 7"
+        "anchor": "soluta"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "agent",
-          "social_role": "organization"
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
         },
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
+          "role_type": "patient",
+          "social_role": "government"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
           "social_role": "government"
         },
         {
-          "id": "E3",
-          "name": "Gaza Strip",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
+          "role_type": "agent",
+          "social_role": "expert"
+        },
+        {
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
+          "role_type": "secondary",
+          "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["siege", "bombardment", "humanitarian crisis"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.8
+          "intensity": 0.6684739901098381
         }
-      }
+      },
+      "lead_title": "Alo alioqui patruus aestas undique."
     },
     {
       "index": 2,
-      "text": "On Oct. 7, Hamas led a surprise attack on towns, a music festival, army bases and other locations in Israel, killing roughly 1,200 people and taking about 240 hostages, including children, according to the Israeli government.",
-      "short_text": "Hamas attacks Israeli towns, a music festival, and military bases",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "Israeli government",
-      "narrative_phase": "disruption",
+      "text": "Arcus vomica desolo cernuus acsi basium accommodo delego. Color delego molestiae. Canis debitis magnam cattus uter tero animadverto summa dicta vulnus.\nUtrum cupio tamquam. Contego deduco apud decerno alienus velociter cribro vetus odit usus. Adhaero conitor creator undique itaque vitium.",
+      "short_text": "Carcer abstergo villa conforto aegrus uredo canonicus depraedor administratio.",
+      "narrative_level": "bellum",
+      "narrator_type": "vesper",
+      "temporal_position": "cura",
+      "source_name": "secret-instructor.com",
+      "narrative_phase": "campana",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 3,
+        "real_time": "2024-11-27T08:43:56.049Z",
+        "narrative_time": 2,
         "temporal_type": "absolute",
-        "anchor": "Oct. 7"
+        "anchor": "antepono"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "agent",
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
           "social_role": "organization"
         },
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
           "role_type": "patient",
           "social_role": "government"
+        },
+        {
+          "id": "4287da47-94d2-47c4-8200-a1757aaa8183",
+          "name": "Stephanie Feil",
+          "role_type": "antagonist",
+          "social_role": "public"
+        },
+        {
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
+          "role_type": "agent",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["casualties", "hostage-taking"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.9
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 3,
-      "text": "Israeli officials vowed to destroy Hamas, the Palestinian group that controls the Gaza Strip and is considered a terrorist organization by the United States, Israel and other countries.",
-      "short_text": "Israeli officials vow to destroy Hamas",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Aegre cometes repellendus natus comitatus versus ea terminatio. Nobis suffragium voro tergeo. Degero combibo voveo temperantia tibi cohors cotidie.\nReiciendis totam pel suscipit creator quasi. Facere maiores arcus corrupti triduana succedo chirographum. Magni aperte amita amissio carus creber tepidus avarus.",
+      "short_text": "Trado uberrime creator veniam bis vere comis sto.",
+      "narrative_level": "cur",
+      "narrator_type": "ago",
+      "temporal_position": "minus",
+      "source_name": "shrill-in-joke.biz",
+      "narrative_phase": "viriliter",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 4,
-        "temporal_type": "relative",
-        "anchor": "post-attack"
+        "real_time": "2024-04-12T15:39:38.263Z",
+        "narrative_time": 3,
+        "temporal_type": "absolute",
+        "anchor": "ut"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "becc5580-4e6b-45d8-95b4-dd05d223e8c7",
+          "name": "Connie Hahn",
+          "role_type": "patient",
+          "social_role": "object"
+        },
+        {
+          "id": "7179be0d-94ad-4122-8fdf-5c6a7855d8a1",
+          "name": "Sandy Cartwright",
+          "role_type": "agent",
+          "social_role": "expert"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "ef2bc6ba-44e2-44bd-96db-fc7c2925d990",
+          "name": "Ms. Janie Lueilwitz",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
           "social_role": "government"
         },
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "antagonist",
-          "social_role": "organization"
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
+          "role_type": "secondary",
+          "social_role": "government"
         },
         {
-          "id": "E3",
-          "name": "Gaza Strip",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["retaliation", "terrorism designation"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 4,
-      "text": "Israel has since besieged Gaza in one of the most intense bombing campaigns of this century, and launched a ground invasion.",
-      "short_text": "Israel launches a ground invasion of Gaza",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Vero animi aggredior acervus aduro tabula. Amissio amoveo amita textus audacia tamen officiis tam aeneus. Succurro cavus sortitus.\nUnus carpo vinco amoveo sonitus odit subiungo enim administratio vulgaris. Abscido avaritia audeo vindico eligendi capillus repellat suasoria. Suppellex cohaero patior.",
+      "short_text": "Deputo tergeo ancilla arbustum auditor acies vobis soluta.",
+      "narrative_level": "sunt",
+      "narrator_type": "nesciunt",
+      "temporal_position": "vociferor",
+      "source_name": "well-groomed-dandelion.biz",
+      "narrative_phase": "fugiat",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 5,
+        "real_time": "2024-09-06T06:18:45.606Z",
+        "narrative_time": 4,
         "temporal_type": "relative",
-        "anchor": "post-attack"
+        "anchor": "sui"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
           "social_role": "government"
         },
         {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
+          "role_type": "patient",
+          "social_role": "government"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["siege", "bombing", "ground invasion"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.9
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 5,
-      "text": "More than 11,000 Palestinians, including more than 4,600 children, have been killed since the Israeli campaign began, according to Gaza's health ministry.",
-      "short_text": "Over 11,000 Palestinians, including 4,600 children, killed in Gaza",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "Gaza's health ministry",
-      "narrative_phase": "disruption",
+      "text": "Nemo suppellex conculco bardus adnuo vesco varius tenuis atqui. Dens tum similique adsidue derelinquo deporto. Eum astrum venustas adversus tendo doloremque coepi congregatio circumvenio derelinquo.\nAdficio odio suasoria. Vito confugo aggredior amo ter. Sordeo amor dens abeo.",
+      "short_text": "Molestiae crastinus illum collum verecundia dedecor.",
+      "narrative_level": "vindico",
+      "narrator_type": "decumbo",
+      "temporal_position": "terreo",
+      "source_name": "grim-obedience.net",
+      "narrative_phase": "demergo",
       "temporal_anchoring": {
-        "real_time": "2023-11-20",
-        "narrative_time": 6,
-        "temporal_type": "relative",
-        "anchor": "campaign period"
+        "real_time": "2025-01-05T02:14:23.087Z",
+        "narrative_time": 5,
+        "temporal_type": "absolute",
+        "anchor": "coma"
       },
       "entities": [
         {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "patient",
-          "social_role": "public"
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "2cbef4ca-c3cf-4417-8d7d-adac108c9112",
+          "name": "Barbara Murphy",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["civilian deaths", "child casualties"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.95
+          "intensity": 0.6684739901098381
         }
       }
     },
     {
       "index": 6,
-      "text": "The violence, its fallout and the humanitarian crisis afflicting Gazan civilians have shaken the region and the world.",
-      "short_text": "Humanitarian crisis worsens in Gaza",
-      "lead_title": "What happened during the Hamas attack?",
-      "narrative_level": "extradiegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Cibus torqueo laudantium copiose tergo benigne creta ulciscor stultus theca. Esse capto venia. Patruus catena atrox decimus cedo votum valde.\nTredecim nam vel numquam talio spiritus. Ter temperantia viscus textor modi. Cursim demens ciminatio.",
+      "short_text": "Terra arguo calco ustilo tego bestia desparatus virgo.",
+      "narrative_level": "cauda",
+      "narrator_type": "thymbra",
+      "temporal_position": "culpa",
+      "source_name": "meager-cd.net",
+      "narrative_phase": "utique",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 7,
+        "real_time": "2025-02-07T09:42:32.791Z",
+        "narrative_time": 6,
         "temporal_type": "relative",
-        "anchor": "current"
+        "anchor": "ascisco"
       },
       "entities": [
         {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "patient",
-          "social_role": "public"
-        },
-        {
-          "id": "E2",
-          "name": "Israel",
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
           "role_type": "agent",
           "social_role": "government"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
         }
       ],
       "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["regional instability", "global impact"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.85
+          "intensity": 0.6684739901098381
         }
       }
     },
     {
       "index": 7,
-      "text": "Early on Oct. 7, Hamas fired volleys of rockets that struck as far away as Tel Aviv and the outskirts of Jerusalem.",
-      "short_text": "Hamas fires rockets at Tel Aviv and Jerusalem",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Tremo ventito decet arbustum vestrum ex aut optio thesis. Cilicium aspernatur spargo vobis concedo vehemens combibo atqui. Allatus absens pectus.\nDepereo nulla abstergo soluta. Conventus conservo valde. Acerbitas aufero textor ustilo caritas voluptatum praesentium supplanto aggero.",
+      "short_text": "Derelinquo atrocitas tracto uberrime audax sunt demum.",
+      "narrative_level": "depraedor",
+      "narrator_type": "vilicus",
+      "temporal_position": "sulum",
+      "source_name": "pointed-paintwork.name",
+      "narrative_phase": "contego",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 8,
-        "temporal_type": "absolute",
-        "anchor": "Oct. 7"
+        "real_time": "2024-11-16T22:12:31.695Z",
+        "narrative_time": 7,
+        "temporal_type": "relative",
+        "anchor": "tot"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
-          "social_role": "organization"
+          "social_role": "government"
         },
         {
-          "id": "E6",
-          "name": "Tel Aviv",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         },
         {
-          "id": "E7",
-          "name": "Jerusalem",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "3512a90a-4e3b-4df4-a54b-f993ef59147f",
+          "name": "Mr. Clarence Crist I",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["military escalation"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.85
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 8,
-      "text": "The attackers also infiltrated border communities and army bases, as well as an outdoor music festival, opening fire on men, women and children.",
-      "short_text": "Hamas infiltrates Israeli communities, attacking civilians",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Color uxor compono unus doloribus aranea natus ultra adimpleo via. Suscipio acquiro cibus stabilis theologus alienus tero aer. Armarium cursim caput deludo.\nSubiungo uxor tepesco quod. Arto solium facilis praesentium delinquo conservo veritas viriliter sono. Culpa auctus victus absorbeo abstergo accommodo consequuntur subnecto textor.",
+      "short_text": "Torrens aperiam argumentum anser creptio adulescens urbanus deprimo atqui supellex.",
+      "narrative_level": "cupressus",
+      "narrator_type": "ascit",
+      "temporal_position": "amplus",
+      "source_name": "orderly-pocket-watch.org",
+      "narrative_phase": "socius",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 9,
-        "temporal_type": "relative",
-        "anchor": "during attack"
+        "real_time": "2025-01-03T08:22:53.585Z",
+        "narrative_time": 8,
+        "temporal_type": "absolute",
+        "anchor": "quaerat"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "agent",
+          "id": "7ddbe040-122e-4474-a231-75aa57273c7b",
+          "name": "Rickey Hoeger",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
           "social_role": "organization"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
+          "role_type": "agent",
+          "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["attacks on civilians", "mass violence"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.9
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 9,
-      "text": "It took days for Israeli forces to regain control after the attack.",
-      "short_text": "Israeli forces take days to regain control after the attack",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Canonicus vulgus corrigo crur vesica vix. Denuo verus volaticus statua atqui crur suffragium blandior conduco undique. Solum blandior spoliatio cupio studio tonsor corporis vulgaris arcus quam.\nUna celebrer exercitationem vulgivagus degusto cicuta. Vester audeo crepusculum amplitudo. Ultio volup coruscus tollo.",
+      "short_text": "Cuius paens demo alienus numquam adfero spiritus cumque apparatus.",
+      "narrative_level": "cerno",
+      "narrator_type": "conor",
+      "temporal_position": "contigo",
+      "source_name": "awesome-chasuble.net",
+      "narrative_phase": "curis",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 10,
+        "real_time": "2024-06-10T21:34:46.446Z",
+        "narrative_time": 9,
         "temporal_type": "relative",
-        "anchor": "post-attack recovery"
+        "anchor": "ducimus"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "2cbef4ca-c3cf-4417-8d7d-adac108c9112",
+          "name": "Barbara Murphy",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
           "social_role": "government"
+        },
+        {
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
+          "role_type": "agent",
+          "social_role": "organization"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["regaining control"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
           "polarity": "neutral",
-          "intensity": 0.6
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 10,
-      "text": "Hamas and other armed Palestinian groups also took about 240 civilians and soldiers hostage. Four have since been released.",
-      "short_text": "Hamas takes 240 hostages, including civilians and soldiers, and four hostages are released",
-      "lead_title": "How has Israel responded?",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Tyrannus vox amplitudo auditor pecto auditor beatus. Spes circumvenio auxilium torqueo demoror careo. Agnosco suadeo synagoga varius.\nVenio magni delibero delinquo aveho tamisium arbor sequi clarus possimus. Culpo dolorum carbo depraedor commodi pauci commodi. Claustrum accusamus amor annus absorbeo sonitus vobis.",
+      "short_text": "Arceo speculum approbo.",
+      "narrative_level": "paens",
+      "narrator_type": "cura",
+      "temporal_position": "copiose",
+      "source_name": "unwelcome-nudge.info",
+      "narrative_phase": "quia",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 11,
-        "temporal_type": "relative",
-        "anchor": "during attack"
+        "real_time": "2024-12-23T03:13:48.844Z",
+        "narrative_time": 10,
+        "temporal_type": "absolute",
+        "anchor": "constans"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "agent",
-          "social_role": "organization"
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": [],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.9
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 11,
-      "text": "After the Hamas attack on Oct. 7, the Israeli military soon began a siege to block food, water, and fuel from entering the territory, and it launched a ground invasion on Oct. 27.",
-      "short_text": "Israel imposes a siege and launches a ground invasion",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Aptus accendo comburo crapula barba bene cerno expedita. Ara apparatus aveho tabernus somnus maxime uxor suspendo vulgaris. Turba absum ambulo adeo degenero antepono iste abutor.\nTimidus viriliter depromo ulterius demo accendo vere amplitudo barba. Teres calcar catena magni bestia sint uterque tamdiu. Valens contra delectatio velociter censura.",
+      "short_text": "Armarium cultellus vigilo studio assentator caste adsum.",
+      "narrative_level": "tertius",
+      "narrator_type": "voluptate",
+      "temporal_position": "cavus",
+      "source_name": "adolescent-space.info",
+      "narrative_phase": "degenero",
       "temporal_anchoring": {
-        "real_time": "2023-10-27",
-        "narrative_time": 13,
+        "real_time": "2024-07-15T00:14:20.061Z",
+        "narrative_time": 11,
         "temporal_type": "absolute",
-        "anchor": "Oct. 7"
+        "anchor": "adulatio"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
           "role_type": "antagonist",
-          "social_role": "organization"
-        },
-        {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["siege", "invasion"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.85
+          "intensity": 0.6684739901098381
         }
-      }
+      },
+      "lead_title": "Quo libero timor vicissitudo voco ver."
     },
     {
       "index": 12,
-      "text": "Israeli troops encircled Gaza City on Nov. 7, effectively splitting control of the strip in half.",
-      "short_text": "Israeli troops encircle Gaza City",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Amor curia acceptus quasi animadverto esse amissio audacia. Tondeo alienus theca officia amet. Voluptates aut avaritia clarus corrigo curia.\nCorpus sit adnuo ver auditor cupio tabula. Vigilo magni absorbeo capto velut copiose tametsi complectus. Amplitudo cum cetera vulticulus.",
+      "short_text": "Alias atavus tolero crux colligo doloribus appositus tandem viridis.",
+      "narrative_level": "constans",
+      "narrator_type": "amitto",
+      "temporal_position": "vitium",
+      "source_name": "cavernous-slide.biz",
+      "narrative_phase": "aurum",
       "temporal_anchoring": {
-        "real_time": "2023-11-07",
-        "narrative_time": 14,
-        "temporal_type": "absolute",
-        "anchor": "Nov. 7"
+        "real_time": "2024-11-22T05:04:45.077Z",
+        "narrative_time": 12,
+        "temporal_type": "relative",
+        "anchor": "talus"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         },
         {
-          "id": "E3",
-          "name": "Gaza City",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["encirclement", "control"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.7
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 13,
-      "text": "On Nov. 17, Israel signaled that it was preparing to expand military operations into southern Gaza, where Palestinians had been told to evacuate.",
-      "short_text": "Israel plans to expand operations into southern Gaza",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Solvo venio pel. Aegrus depopulo bos casus sursum atqui. Cupio asporto eius quae sed quidem arca corrumpo claro.\nBeatus tremo ascisco arbustum consectetur tamisium addo demonstro. Curso nihil arguo saepe talio adeptio. Quas colligo synagoga vesco caput corrigo magnam thorax aedificium at.",
+      "short_text": "Deludo tracto spero.",
+      "narrative_level": "atrox",
+      "narrator_type": "cilicium",
+      "temporal_position": "tabella",
+      "source_name": "honorable-dish.com",
+      "narrative_phase": "vulgivagus",
       "temporal_anchoring": {
-        "real_time": "2023-11-17",
-        "narrative_time": 15,
+        "real_time": "2024-05-22T03:04:50.101Z",
+        "narrative_time": 13,
         "temporal_type": "absolute",
-        "anchor": "Nov. 17"
+        "anchor": "celebrer"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "becc5580-4e6b-45d8-95b4-dd05d223e8c7",
+          "name": "Connie Hahn",
+          "role_type": "patient",
+          "social_role": "object"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "3512a90a-4e3b-4df4-a54b-f993ef59147f",
+          "name": "Mr. Clarence Crist I",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
           "social_role": "government"
         },
         {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["expansion", "evacuation"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 14,
-      "text": "More than one million Palestinians have been displaced following Israel's warnings for civilians to leave northern Gaza, aid workers say.",
-      "short_text": "More than 1 million Palestinians displaced following Israeli evacuation orders",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Commodi theca tricesimus tenax. Culpo absum video aggero aggredior dolor bibo cibus. Adsidue ventito virtus quae clementia vulnero pauci tamisium.\nHarum tam stabilis assentator vesco iste mollitia compono cupiditas. Ab venustas aeternus astrum quas atavus. Testimonium cado acer pariatur tepidus supplanto officia anser blanditiis torqueo.",
+      "short_text": "Derelinquo desidero mollitia casus aestus arbor.",
+      "narrative_level": "virtus",
+      "narrator_type": "tubineus",
+      "temporal_position": "tandem",
+      "source_name": "waterlogged-bathrobe.biz",
+      "narrative_phase": "ait",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 16,
+        "real_time": "2024-12-07T04:11:44.804Z",
+        "narrative_time": 14,
         "temporal_type": "relative",
-        "anchor": "post-warning"
+        "anchor": "valde"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
           "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
+          "role_type": "secondary",
           "social_role": "government"
         },
         {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "patient",
-          "social_role": "public"
+          "id": "2cbef4ca-c3cf-4417-8d7d-adac108c9112",
+          "name": "Barbara Murphy",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["warnings", "evacuation"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.85
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 15,
-      "text": "Many Gazans say no part of the enclave is safe.",
-      "short_text": "Gazans report no safe zones in the enclave",
-      "narrative_level": "metadiegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Verecundia aspernatur amitto vergo xiphias cedo. Ipsa volutabrum suffoco cattus tendo benevolentia. Catena vesica expedita supra sponte.\nMaiores appositus laudantium. Et alo vociferor desipio cerno praesentium. Xiphias eveniet suadeo taedium uterque adimpleo.",
+      "short_text": "Aperte possimus abundans aduro depulso absens repudiandae crinis celer aegrus.",
+      "narrative_level": "utpote",
+      "narrator_type": "quibusdam",
+      "temporal_position": "ut",
+      "source_name": "posh-programme.com",
+      "narrative_phase": "testimonium",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 17,
+        "real_time": "2024-08-09T10:43:27.318Z",
+        "narrative_time": 15,
         "temporal_type": "relative",
-        "anchor": "current conditions"
+        "anchor": "ad"
       },
-      "entities": [
-        {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "patient",
-          "social_role": "public"
-        }
-      ],
+      "entities": [],
       "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["civilian insecurity"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 16,
-      "text": "Israel says Hamas uses civilian structures, including hospitals, as bases for military operations in violation of international law; areas including medical centers, schools, mosques and residential locations have been struck under Israel's bombardment.",
-      "short_text": "Israel accuses Hamas of using civilian structures for military operations",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Basium deserunt pecus patruus commemoro versus. Bene patruus atrocitas valeo texo maxime infit. Amaritudo sapiente trado demergo barba.\nStrues armarium exercitationem cado confugo. Tracto aperiam amaritudo trado. Esse totus vicissitudo sunt quisquam adiuvo tactus testimonium tabella sto.",
+      "short_text": "Delectatio strenuus et accendo.",
+      "narrative_level": "caelestis",
+      "narrator_type": "thymbra",
+      "temporal_position": "decerno",
+      "source_name": "wry-waterspout.name",
+      "narrative_phase": "verbera",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 18,
+        "real_time": "2024-06-29T05:05:29.155Z",
+        "narrative_time": 16,
         "temporal_type": "relative",
-        "anchor": "ongoing"
+        "anchor": "alveus"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "antagonist",
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
+          "role_type": "agent",
           "social_role": "organization"
         },
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
+          "id": "7ddbe040-122e-4474-a231-75aa57273c7b",
+          "name": "Rickey Hoeger",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "ef2bc6ba-44e2-44bd-96db-fc7c2925d990",
+          "name": "Ms. Janie Lueilwitz",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
           "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["use of civilian infrastructure", "international law"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 17,
-      "text": "Palestinians and some international observers have accused Israel of breaking the law with a disproportionate military response.",
-      "short_text": "Palestinians and some international observers accuse Israel of disproportionate military response",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Bis cras hic aperio cicuta beneficium eligendi cohors viscus pecto. Cibo eveniet tenuis callide antea apparatus amiculum veniam. Absconditus abbas coerceo approbo praesentium vox tabgo.\nDenique tondeo nulla crudelis acquiro. Tergeo conculco animi caveo unde corroboro tamisium. Consectetur aperio caelestis despecto verumtamen carcer.",
+      "short_text": "Cimentarius qui aggero tamen.",
+      "narrative_level": "civis",
+      "narrator_type": "curatio",
+      "temporal_position": "civitas",
+      "source_name": "evil-dash.name",
+      "narrative_phase": "brevis",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 19,
+        "real_time": "2024-11-25T21:19:20.621Z",
+        "narrative_time": 17,
         "temporal_type": "relative",
-        "anchor": "current debate"
+        "anchor": "degero"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
           "social_role": "government"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["military response", "proportionality"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.75
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 18,
-      "text": "On Nov. 15, the Israeli military stormed Gaza's largest hospital, Al-Shifa, and said it discovered weapons and other evidence to support its assertions that Hamas operated in a network of tunnels under the complex.",
-      "short_text": "Israel raids Al-Shifa hospital, claims Hamas used it for military purposes",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Torrens dolore cunabula umbra placeat accusator expedita tantillus. Abeo comparo adimpleo creator vox. Damno tepidus quas artificiose abutor apostolus confugo terror cogo.\nAltus amiculum complectus asper architecto cuppedia. Totidem curtus conservo bos. Creber suadeo theatrum carcer vesco curtus combibo antiquus temeritas.",
+      "short_text": "Caterva bis culpa rerum umbra cornu capitulus casso.",
+      "narrative_level": "cernuus",
+      "narrator_type": "adsuesco",
+      "temporal_position": "verecundia",
+      "source_name": "far-off-netsuke.biz",
+      "narrative_phase": "umbra",
       "temporal_anchoring": {
-        "real_time": "2023-11-15",
-        "narrative_time": 20,
+        "real_time": "2024-05-19T02:40:46.785Z",
+        "narrative_time": 18,
         "temporal_type": "absolute",
-        "anchor": "Nov. 15"
+        "anchor": "eum"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
           "role_type": "agent",
-          "social_role": "government"
+          "social_role": "stakeholder"
         },
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "antagonist",
-          "social_role": "organization"
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
         },
         {
-          "id": "E8",
-          "name": "Al-Shifa Hospital",
-          "role_type": "location",
-          "social_role": "infrastructure"
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["evidence of tunnels", "hospital strike"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.85
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 19,
-      "text": "Senior U.S. officials have backed Israel, though the Israeli military has yet to show incontrovertible proof of a vast Hamas tunnel network.",
-      "short_text": "Senior U.S. officials back Israel but await more evidence on Hamas tunnels",
-      "narrative_level": "metadiegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "U.S. officials",
-      "narrative_phase": "recognition",
+      "text": "Acer blanditiis cubicularis antea alveus voco veritas urbs theca. Tamdiu arceo voluptate corrigo corporis ubi tyrannus advenio ventito tredecim. Occaecati tandem adsuesco cribro civis caelum adipisci inventore beatae.\nAro turpis alius. Vociferor cohaero compono tandem tabella bos aggero. Vulnero accedo amiculum aptus denuo communis ullus.",
+      "short_text": "Summa avarus repellat reiciendis consequuntur votum sopor ipsam adeo.",
+      "narrative_level": "carmen",
+      "narrator_type": "conor",
+      "temporal_position": "civitas",
+      "source_name": "friendly-chap.info",
+      "narrative_phase": "utor",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 21,
-        "temporal_type": "relative",
-        "anchor": "post-raid"
+        "real_time": "2025-01-14T20:23:19.319Z",
+        "narrative_time": 19,
+        "temporal_type": "absolute",
+        "anchor": "aliquam"
       },
       "entities": [
         {
-          "id": "E9",
-          "name": "U.S. officials",
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "3512a90a-4e3b-4df4-a54b-f993ef59147f",
+          "name": "Mr. Clarence Crist I",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
           "role_type": "agent",
           "social_role": "government"
         },
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
           "role_type": "agent",
+          "social_role": "expert"
+        },
+        {
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "ef2bc6ba-44e2-44bd-96db-fc7c2925d990",
+          "name": "Ms. Janie Lueilwitz",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
+          "role_type": "patient",
           "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["evidence and claims"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.65
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 20,
-      "text": "Hamas and hospital officials had denied the accusations.",
-      "short_text": "Hamas and hospital officials deny allegations of tunnel networks",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Defaeco curis cultellus adsidue depulso sustineo cito conculco ager addo. Recusandae laborum vulnero adversus uredo. Sui vae ait bestia celebrer thesis.\nConsidero ater cultura tot tametsi virgo quasi ante. A voro via vehemens tenus nemo. Textor civitas uxor sustineo sto auctor aut tener aliqua.",
+      "short_text": "Aeneus vinitor surculus tertius tamquam aequitas quibusdam numquam stips clam.",
+      "narrative_level": "pariatur",
+      "narrator_type": "beatae",
+      "temporal_position": "uberrime",
+      "source_name": "acidic-signature.biz",
+      "narrative_phase": "arto",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 22,
-        "temporal_type": "relative",
-        "anchor": "post-raid"
+        "real_time": "2024-06-30T22:26:29.466Z",
+        "narrative_time": 20,
+        "temporal_type": "absolute",
+        "anchor": "cubo"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
           "role_type": "agent",
-          "social_role": "organization"
+          "social_role": "expert"
         },
         {
-          "id": "E8",
-          "name": "Al-Shifa Hospital",
-          "role_type": "location",
-          "social_role": "infrastructure"
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
         }
       ],
       "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": [],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
           "polarity": "neutral",
-          "intensity": 0.6
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 21,
-      "text": "Almost two days after Israel began its raid of Al-Shifa, New York Times journalists were taken on a controlled tour of the complex by Israeli military officials, and saw a shaft on the hospital grounds.",
-      "short_text": "The New York Times tours Al-Shifa hospital site",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "The New York Times",
-      "narrative_phase": "repair",
+      "text": "Desipio utrum sto tero universe audio arbor. Laudantium arbustum utique curia tondeo copiose. Vulpes antea subito.\nDecipio beneficium carbo cunae provident iusto adamo tonsor. Vos perspiciatis alo bellicus color ancilla dolor. Enim contigo amet correptius eveniet adicio turbo arcus sumptus volaticus.",
+      "short_text": "Laudantium virgo ocer bellum.",
+      "narrative_level": "quisquam",
+      "narrator_type": "apud",
+      "temporal_position": "defendo",
+      "source_name": "grubby-kettledrum.info",
+      "narrative_phase": "defungo",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 23,
+        "real_time": "2024-04-15T05:47:56.025Z",
+        "narrative_time": 21,
         "temporal_type": "relative",
-        "anchor": "post-raid"
+        "anchor": "dedecor"
       },
       "entities": [
         {
-          "id": "E5",
-          "name": "The New York Times",
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
           "role_type": "secondary",
-          "social_role": "organization"
+          "social_role": "government"
         },
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
           "role_type": "agent",
-          "social_role": "government"
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["controlled tour", "evidence observation"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.65
+          "polarity": "negative",
+          "intensity": 0.6684739901098381
         }
-      }
+      },
+      "lead_title": "Depopulo tersus defero beatae candidus utor deleo absconditus."
     },
     {
       "index": 22,
-      "text": "Electrical wiring was visible inside, along with a metal staircase, but it was unclear how deep the shaft was or where it led.",
-      "short_text": "Journalists observe an unclear shaft at Al-Shifa hospital",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Tertius veritas pel ventito utpote. Velum creta creator vulgo conduco vesica dolorum. Spes vorax alo pecto desipio carcer decretum.\nBis admitto dedecor thymbra arca illum asporto vestrum ultio. Nostrum cilicium asperiores tibi cernuus uterque curo vulpes. Creber testimonium alo complectus.",
+      "short_text": "Perspiciatis super voluptatibus careo.",
+      "narrative_level": "crebro",
+      "narrator_type": "vilicus",
+      "temporal_position": "quisquam",
+      "source_name": "other-dwell.net",
+      "narrative_phase": "acceptus",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 24,
-        "temporal_type": "relative",
-        "anchor": "during tour"
+        "real_time": "2024-06-14T09:04:15.385Z",
+        "narrative_time": 22,
+        "temporal_type": "absolute",
+        "anchor": "appello"
       },
-      "entities": [],
+      "entities": [
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "7ddbe040-122e-4474-a231-75aa57273c7b",
+          "name": "Rickey Hoeger",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        }
+      ],
       "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": ["infrastructure details"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
           "polarity": "neutral",
-          "intensity": 0.6
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 23,
-      "text": "As conditions have worsened for civilians in Gaza, Israel's campaign has drawn increasing outcries from the United Nations, aid organizations and much of the world.",
-      "short_text": "Israel's military campaign faces global criticism",
-      "narrative_level": "extradiegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Totidem cohors accusantium. Magni charisma denuo molestias attero magni vita. Cattus pariatur titulus clementia vito audax vae.\nCultellus clam thymbra caritas crur. Talis ambulo solum ipsam crinis deorsum. Ratione temporibus tam vacuus.",
+      "short_text": "Odio sto facere.",
+      "narrative_level": "ambulo",
+      "narrator_type": "synagoga",
+      "temporal_position": "depono",
+      "source_name": "grimy-swanling.info",
+      "narrative_phase": "certus",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 25,
+        "real_time": "2025-01-12T14:33:20.721Z",
+        "narrative_time": 23,
         "temporal_type": "relative",
-        "anchor": "current"
+        "anchor": "ventito"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
           "role_type": "agent",
           "social_role": "government"
         },
         {
-          "id": "E10",
-          "name": "United Nations",
-          "role_type": "secondary",
-          "social_role": "organization"
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "becc5580-4e6b-45d8-95b4-dd05d223e8c7",
+          "name": "Connie Hahn",
+          "role_type": "patient",
+          "social_role": "object"
+        },
+        {
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["humanitarian outcry"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 24,
-      "text": "Without challenging Israel's right to defend itself, the Biden administration has repeatedly called for 'humanitarian pauses' to protect Palestinian civilians and allow the delivery of desperately needed aid.",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "Biden administration",
-      "narrative_phase": "repair",
+      "text": "Canonicus acies arma abeo absorbeo autus cras. Maxime libero vivo arx tero. Ciminatio desparatus depraedor cornu patior ademptio adipiscor.\nAter vulnero atque perferendis arto tondeo degero amet. Creta perspiciatis catena saepe suscipio spiritus tenuis. Voro hic benigne.",
+      "short_text": "Dapifer clarus speculum conqueror accusantium cedo tamquam amo pariatur dolore.",
+      "narrative_level": "dolor",
+      "narrator_type": "uter",
+      "temporal_position": "vulnus",
+      "source_name": "unwritten-mortise.biz",
+      "narrative_phase": "ago",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 26,
+        "real_time": "2024-09-04T15:25:30.791Z",
+        "narrative_time": 24,
         "temporal_type": "relative",
-        "anchor": "current"
+        "anchor": "deripio"
       },
       "entities": [
         {
-          "id": "E9",
-          "name": "Biden administration",
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "2cbef4ca-c3cf-4417-8d7d-adac108c9112",
+          "name": "Barbara Murphy",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
           "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        }
+      ],
+      "topic": {
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
+        }
+      }
+    },
+    {
+      "index": 25,
+      "text": "Alo correptius sapiente molestias curatio admiratio comitatus atrocitas. Alienus temporibus ustulo enim. Avaritia eligendi tracto caecus tergiversatio solium.\nClaudeo tunc atavus aveho. Repellendus nesciunt absum varietas appositus tyrannus quasi adduco concido desolo. Ante volo vitae stipes officia celo bestia ventus audax cotidie.",
+      "short_text": "Odio adnuo mollitia aveho deserunt explicabo urbs.",
+      "narrative_level": "contra",
+      "narrator_type": "admoneo",
+      "temporal_position": "uberrime",
+      "source_name": "sardonic-overcoat.name",
+      "narrative_phase": "bene",
+      "temporal_anchoring": {
+        "real_time": "2024-11-24T23:59:57.366Z",
+        "narrative_time": 25,
+        "temporal_type": "absolute",
+        "anchor": "pel"
+      },
+      "entities": [
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "4287da47-94d2-47c4-8200-a1757aaa8183",
+          "name": "Stephanie Feil",
+          "role_type": "antagonist",
+          "social_role": "public"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
+          "role_type": "patient",
           "social_role": "government"
         }
       ],
       "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["humanitarian aid", "pause in conflict"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.7
-        }
-      },
-      "short_text": "Biden administration calls for humanitarian pauses"
-    },
-    {
-      "index": 25,
-      "text": "After more than a month of war, the humanitarian crisis in Gaza has grown increasingly dire, leaving Gazans with severely limited access to food, clean water and medical care.",
-      "short_text": "Gaza's humanitarian crisis worsens, limiting access to basic necessities",
-      "lead_title": "What is the situation in Gaza?",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "disruption",
-      "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 27,
-        "temporal_type": "relative",
-        "anchor": "ongoing conflict"
-      },
-      "entities": [
-        {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "patient",
-          "social_role": "public"
-        }
-      ],
-      "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["access to essentials"],
-        "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.9
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 26,
-      "text": "The United Nations has warned that the entire territory is at risk of starvation amid mass internal displacement.",
-      "short_text": "The U.N. warns Gaza is at risk of mass starvation",
-      "narrative_level": "diegetic",
-      "narrator_type": "quoted_source",
-      "temporal_position": "present",
-      "source_name": "United Nations",
-      "narrative_phase": "recognition",
+      "text": "Labore stabilis at conservo conventus studio. Beneficium veritas titulus cupressus celo sodalitas debeo advoco asporto vado. Trucido quidem explicabo vae tristis.\nAperte stillicidium adipiscor urbs. Veniam tepidus subito abutor umerus contigo. Perferendis laborum confido spes attollo molestiae expedita bibo.",
+      "short_text": "Coerceo denique totus degenero adimpleo stultus iste undique vulticulus cibo.",
+      "narrative_level": "sortitus",
+      "narrator_type": "tardus",
+      "temporal_position": "delibero",
+      "source_name": "admired-mousse.info",
+      "narrative_phase": "crebro",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 28,
-        "temporal_type": "relative",
-        "anchor": "current"
+        "real_time": "2024-05-16T16:00:10.949Z",
+        "narrative_time": 26,
+        "temporal_type": "absolute",
+        "anchor": "voluptas"
       },
       "entities": [
         {
-          "id": "E10",
-          "name": "United Nations",
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
           "role_type": "agent",
-          "social_role": "organization"
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "2cbef4ca-c3cf-4417-8d7d-adac108c9112",
+          "name": "Barbara Murphy",
+          "role_type": "protagonist",
+          "social_role": "object"
         }
       ],
       "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["internal displacement"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.85
+          "intensity": 0.6684739901098381
         }
       }
     },
     {
       "index": 27,
-      "text": "Thousands of children, who make up nearly half of Gaza's population, have been killed, according to health officials.",
-      "short_text": "Thousands of children killed in Gaza, according to health officials",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "health officials",
-      "narrative_phase": "disruption",
+      "text": "Supplanto clibanus cupiditate accedo. Curriculum curatio caveo caute aestus volutabrum solvo arbor aspernatur. Deputo turpis surgo constans tot vesper assentator.\nUtroque taceo desipio tristis calamitas consequuntur tepesco solium anser. Viriliter deleo neque. Ager tamen incidunt.",
+      "short_text": "Trucido dicta vulgus quo contego cimentarius.",
+      "narrative_level": "absens",
+      "narrator_type": "super",
+      "temporal_position": "adaugeo",
+      "source_name": "jagged-curl.name",
+      "narrative_phase": "clibanus",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 29,
+        "real_time": "2024-07-03T19:37:13.861Z",
+        "narrative_time": 27,
         "temporal_type": "relative",
-        "anchor": "during conflict"
+        "anchor": "dolores"
       },
       "entities": [
         {
-          "id": "E3",
-          "name": "Gaza",
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
           "role_type": "patient",
-          "social_role": "public"
+          "social_role": "government"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": ["population impact"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.95
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 28,
-      "text": "After weeks of desperate fuel shortages that put hospitals on the verge of collapse, Israel agreed on Nov. 17 to the entry of two tankers of fuel into Gaza each day to operate desalination and sewage plants.",
-      "short_text": "Israel allows fuel into Gaza after shortages",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Conqueror denuo voluptatibus. Unus occaecati attollo umquam. Suppellex supellex est quo cetera depono comminor.\nCaste audeo timidus approbo tamquam. Aureus volva varius vulnus arbustum subito ventosus catena acsi apostolus. Succurro super fuga volaticus.",
+      "short_text": "Accendo cuppedia desino.",
+      "narrative_level": "amplus",
+      "narrator_type": "esse",
+      "temporal_position": "cursim",
+      "source_name": "scientific-nightlife.name",
+      "narrative_phase": "unus",
       "temporal_anchoring": {
-        "real_time": "2023-11-17",
-        "narrative_time": 30,
+        "real_time": "2024-09-10T08:28:37.514Z",
+        "narrative_time": 28,
         "temporal_type": "absolute",
-        "anchor": "Nov. 17"
+        "anchor": "varius"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "7ddbe040-122e-4474-a231-75aa57273c7b",
+          "name": "Rickey Hoeger",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
           "social_role": "government"
         },
         {
-          "id": "E3",
-          "name": "Gaza",
-          "role_type": "location",
-          "social_role": "geographical"
+          "id": "4287da47-94d2-47c4-8200-a1757aaa8183",
+          "name": "Stephanie Feil",
+          "role_type": "antagonist",
+          "social_role": "public"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
+          "role_type": "agent",
+          "social_role": "expert"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
         }
       ],
       "topic": {
-        "main_topic": "economy_infrastructure",
-        "sub_topic": ["fuel supply", "critical infrastructure"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.7
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 29,
-      "text": "Before Israel's raid of Al-Shifa, the hospital complex had been struggling to treat patients, with operations limited by a dearth of supplies, including water, medicine and oxygen.",
-      "short_text": "Gaza hospitals struggle with limited medical supplies",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Crastinus est arceo. Sui vae ipsam quae depono tempore defluo cedo creber patria. Ademptio capillus aro torqueo abeo communis armarium sodalitas doloremque comitatus.\nSocius crur copiose somnus vomito testimonium summa. Subvenio aiunt vae sui depulso deduco. Vorago adhuc utrum tenax articulus summisse abduco absum libero sordeo.",
+      "short_text": "Cavus conqueror demens.",
+      "narrative_level": "velociter",
+      "narrator_type": "considero",
+      "temporal_position": "curo",
+      "source_name": "youthful-tennis.org",
+      "narrative_phase": "vix",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 31,
+        "real_time": "2025-01-03T15:34:04.337Z",
+        "narrative_time": 29,
         "temporal_type": "relative",
-        "anchor": "pre-raid conditions"
+        "anchor": "at"
       },
       "entities": [
         {
-          "id": "E8",
-          "name": "Al-Shifa Hospital",
-          "role_type": "location",
-          "social_role": "infrastructure"
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "7179be0d-94ad-4122-8fdf-5c6a7855d8a1",
+          "name": "Sandy Cartwright",
+          "role_type": "agent",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "economy_infrastructure",
-        "sub_topic": ["supply shortages"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.85
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       }
     },
     {
       "index": 30,
-      "text": "Medical workers at other hospitals have described similar scenes of operations at the verge of collapse.",
-      "short_text": "Healthcare facilities on the brink of collapse",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Benevolentia beatae cunctatio decretum summisse quasi cruentus viriliter studio. Somniculosus coadunatio atrox cupio arceo. Pectus canonicus carus.\nTardus velut corrupti excepturi defessus. Crapula error decretum defluo. Bellum deserunt viriliter abutor summa recusandae thorax velut.",
+      "short_text": "Sollers auctor pecco valeo.",
+      "narrative_level": "voco",
+      "narrator_type": "voveo",
+      "temporal_position": "abstergo",
+      "source_name": "red-bob.org",
+      "narrative_phase": "supra",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 32,
+        "real_time": "2024-04-26T17:23:53.848Z",
+        "narrative_time": 30,
         "temporal_type": "relative",
-        "anchor": "current"
+        "anchor": "textor"
       },
       "entities": [
         {
-          "id": "E8",
-          "name": "Al-Shifa Hospital",
-          "role_type": "location",
-          "social_role": "infrastructure"
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "economy_infrastructure",
-        "sub_topic": ["operational collapse"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.85
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 31,
-      "text": "Violence in the Israeli-occupied West Bank has also sharply escalated since Oct. 7.",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Tepesco alii cedo tum. Apparatus armarium infit defendo subiungo validus cogito terror spero desolo. Congregatio quidem tergiversatio.\nCreator repellendus admitto cumque delectatio et vaco tandem adulatio. Quod vinco uredo beatus amaritudo consuasor confero succurro summisse deputo. Testimonium cum verus sto teneo.",
+      "short_text": "Patrocinor nemo decet.",
+      "narrative_level": "ventosus",
+      "narrator_type": "auctor",
+      "temporal_position": "timor",
+      "source_name": "red-pacemaker.org",
+      "narrative_phase": "qui",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 33,
+        "real_time": "2024-10-10T01:23:54.143Z",
+        "narrative_time": 31,
         "temporal_type": "absolute",
-        "anchor": "Oct. 7"
+        "anchor": "vinculum"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "81c61b4d-3fe7-4fff-9267-936a84eadaad",
+          "name": "Mrs. Robyn Bechtelar",
+          "role_type": "protagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
           "role_type": "agent",
+          "social_role": "expert"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
           "social_role": "government"
+        },
+        {
+          "id": "ef2bc6ba-44e2-44bd-96db-fc7c2925d990",
+          "name": "Ms. Janie Lueilwitz",
+          "role_type": "protagonist",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["West Bank violence"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
       },
-      "short_text": "Violence in the Israeli-occupied West Bank escalates"
+      "lead_title": "Tumultus vulnero aeger cado blanditiis."
     },
     {
       "index": 32,
-      "text": "About 200 Palestinians have been killed in confrontations with Israeli forces and in escalating settler attacks, local officials say.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "local officials",
-      "narrative_phase": "disruption",
+      "text": "Cupio aurum adiuvo. Aegrus vapulus spectaculum stella traho turpis circumvenio calamitas. Alveus cometes substantia.\nAegrus utrimque cauda capillus enim turbo culpo degenero. Uredo ea comptus tui demonstro custodia curso suppono solutio claustrum. Temeritas sollicito cubo desolo canonicus fuga ceno aeneus claro cupiditate.",
+      "short_text": "Vulariter consequatur tactus amplitudo ocer creta calco ubi cometes.",
+      "narrative_level": "vapulus",
+      "narrator_type": "tempus",
+      "temporal_position": "verumtamen",
+      "source_name": "elementary-stitcher.net",
+      "narrative_phase": "aduro",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 34,
+        "real_time": "2024-12-06T12:23:20.632Z",
+        "narrative_time": 32,
         "temporal_type": "relative",
-        "anchor": "during confrontations"
+        "anchor": "vilitas"
+      },
+      "entities": [],
+      "topic": {
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
+        }
+      }
+    },
+    {
+      "index": 33,
+      "text": "Aequitas utrimque strues. Territo corrupti aestivus assumenda causa titulus. Carpo coniecto suppono aestas tenus.\nAspicio thymbra corrigo commemoro. Illum magni sustineo decor. Caelestis labore officiis suscipit.",
+      "short_text": "Coepi angustus administratio ventito suffoco sursum aptus acies aliquid.",
+      "narrative_level": "somniculosus",
+      "narrator_type": "cogito",
+      "temporal_position": "brevis",
+      "source_name": "utter-dress.com",
+      "narrative_phase": "incidunt",
+      "temporal_anchoring": {
+        "real_time": "2024-08-18T20:32:46.230Z",
+        "narrative_time": 33,
+        "temporal_type": "absolute",
+        "anchor": "sperno"
       },
       "entities": [
         {
-          "id": "E3",
-          "name": "Palestinians",
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
+          "role_type": "patient",
+          "social_role": "government"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
+        }
+      ],
+      "topic": {
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
+        }
+      }
+    },
+    {
+      "index": 34,
+      "text": "Et carpo uxor caterva. Carmen deorsum conqueror amissio confugo stultus debilito aut volutabrum. Advoco expedita agnitio laudantium carbo vir versus angustus averto.\nAit aqua ocer statua umerus approbo. Aeternus pel aspernatur averto beatae. Coerceo nihil bibo delinquo textor.",
+      "short_text": "Patrocinor desino amaritudo.",
+      "narrative_level": "calcar",
+      "narrator_type": "utilis",
+      "temporal_position": "abeo",
+      "source_name": "tired-tenant.info",
+      "narrative_phase": "creator",
+      "temporal_anchoring": {
+        "real_time": "2024-07-26T22:34:33.761Z",
+        "narrative_time": 34,
+        "temporal_type": "absolute",
+        "anchor": "demo"
+      },
+      "entities": [
+        {
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "7ddbe040-122e-4474-a231-75aa57273c7b",
+          "name": "Rickey Hoeger",
           "role_type": "patient",
           "social_role": "public"
         }
       ],
       "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": ["settler attacks"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.9
-        }
-      },
-      "short_text": "200 Palestinians killed in West Bank clashes with Israeli forces and settlers"
-    },
-    {
-      "index": 33,
-      "text": "Freeing the 240 hostages abducted by Hamas on Oct. 7 has been one of Israel's two main goals of the war, in addition to destroying Hamas.",
-      "lead_title": "What happened with the hostages?",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
-      "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 35,
-        "temporal_type": "absolute",
-        "anchor": "Oct. 7"
-      },
-      "entities": [
-        {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "antagonist",
-          "social_role": "organization"
-        },
-        {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
-        }
-      ],
-      "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": ["military objectives"],
-        "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
-        }
-      },
-      "short_text": "Israel prioritizes hostage rescue and Hamas destruction"
-    },
-    {
-      "index": 34,
-      "text": "Since Oct. 7, Hamas has released four Israeli hostages, while Israeli troops rescued a 19-year-old Israeli soldier in October.",
-      "short_text": "Hamas releases four hostages; Israel rescues one",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "recognition",
-      "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 36,
-        "temporal_type": "absolute",
-        "anchor": "Oct. 7"
-      },
-      "entities": [
-        {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "agent",
-          "social_role": "organization"
-        },
-        {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
-        }
-      ],
-      "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": ["release", "rescue"],
-        "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.7
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 35,
-      "text": "Hamas has published some videos of hostages on social media, which Israel has called psychological terrorism.",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Solutio tertius vociferor corroboro. Copiose depraedor quam audio timor cur autem. Valeo aufero vulnus torrens.\nCernuus cupiditas combibo. Copia vigilo omnis aufero cruciamentum. Ara tres thesaurus auxilium aureus solum collum cultellus debitis animi.",
+      "short_text": "Expedita viduo velum.",
+      "narrative_level": "antiquus",
+      "narrator_type": "decumbo",
+      "temporal_position": "aliquid",
+      "source_name": "showy-government.net",
+      "narrative_phase": "cunabula",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 37,
-        "temporal_type": "relative",
-        "anchor": "current"
+        "real_time": "2024-05-17T12:40:46.544Z",
+        "narrative_time": 35,
+        "temporal_type": "absolute",
+        "anchor": "balbus"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "agent",
-          "social_role": "organization"
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         },
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
         }
       ],
       "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": ["social media", "psychological operations"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.8
+          "intensity": 0.6684739901098381
         }
-      },
-      "short_text": "Hamas posts hostage videos; Israel calls it psychological warfare"
+      }
     },
     {
       "index": 36,
-      "text": "Following Israel's raid of the Al-Shifa hospital, Israeli soldiers said they found the bodies of two Israeli hostages nearby, which they called an indication that Hamas used the complex for military operations.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Cariosus ullam decens amiculum carcer spiculum. Vergo ultra corrupti turpis. Patria alienus cuppedia adicio admoveo substantia vestrum tantum adipisci consuasor.\nAmita aestivus conor. Titulus artificiose aestas cinis verus statim amiculum cogo ustilo. Substantia commodo talus auditor.",
+      "short_text": "Templum sollicito aut statim amplitudo sequi contego usitas tumultus.",
+      "narrative_level": "quisquam",
+      "narrator_type": "uter",
+      "temporal_position": "cui",
+      "source_name": "scary-underpants.name",
+      "narrative_phase": "utor",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 38,
+        "real_time": "2025-01-05T15:22:43.080Z",
+        "narrative_time": 36,
         "temporal_type": "relative",
-        "anchor": "post-raid"
+        "anchor": "deludo"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
           "social_role": "government"
         },
         {
-          "id": "E1",
-          "name": "Hamas",
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
           "role_type": "antagonist",
-          "social_role": "organization"
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "crime_security",
-        "sub_topic": ["hostage bodies", "tunnel network implication"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.8
+          "intensity": 0.6684739901098381
         }
-      },
-      "short_text": "Israel finds hostage bodies near Al-Shifa, reinforcing Hamas tunnel claims"
+      }
     },
     {
       "index": 37,
-      "text": "Negotiations for a deal that would have exchanged 50 women and children captives with roughly the same number of Palestinian women and children held in Israeli prisons had been underway, according to Israeli officials.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "Israeli officials",
-      "narrative_phase": "repair",
+      "text": "Defluo vacuus aestus est peccatus arceo casus adfectus. Terga nam cicuta varius debeo basium ager velum. Vestigium barba atrox teres deserunt blanditiis cervus appello benevolentia.\nVirtus cura possimus tamquam accedo vulnero combibo itaque. Molestias super constans tredecim suppono. Audacia antea atque ara sono venio acerbitas.",
+      "short_text": "Adhuc aliqua adiuvo uberrime carcer pauper laudantium uxor.",
+      "narrative_level": "vitium",
+      "narrator_type": "confido",
+      "temporal_position": "rem",
+      "source_name": "infamous-newsprint.name",
+      "narrative_phase": "antea",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 39,
+        "real_time": "2024-05-05T01:16:00.948Z",
+        "narrative_time": 37,
         "temporal_type": "relative",
-        "anchor": "negotiation phase"
+        "anchor": "amiculum"
       },
-      "entities": [
-        {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
-        }
-      ],
+      "entities": [],
       "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["captivity", "diplomacy"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.7
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
-      },
-      "short_text": "Negotiations underway for prisoner exchange deal"
+      }
     },
     {
       "index": 38,
-      "text": "In the immediate aftermath of the Oct. 7 attacks, many world leaders condemned Hamas and affirmed their support for Israel.",
-      "short_text": "World leaders condemn Hamas and affirm support for Israel",
-      "lead_title": "How have other leaders reacted?",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Succedo concedo basium statua. Vallum communis varius aufero copia. Degero non carcer.\nConculco voluptate volva cohaero in ciminatio minima. Sit considero templum abutor trepide speculum agnosco amoveo demergo. Deleo dolorem tollo modi pauper abscido bellicus crastinus.",
+      "short_text": "Defero pel contabesco fugiat.",
+      "narrative_level": "tremo",
+      "narrator_type": "certus",
+      "temporal_position": "callide",
+      "source_name": "alert-handful.net",
+      "narrative_phase": "vado",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 40,
-        "temporal_type": "absolute",
-        "anchor": "Oct. 7"
+        "real_time": "2024-08-23T13:08:38.783Z",
+        "narrative_time": 38,
+        "temporal_type": "relative",
+        "anchor": "voluptatibus"
       },
       "entities": [
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "antagonist",
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
           "social_role": "organization"
         },
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
           "social_role": "government"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "3512a90a-4e3b-4df4-a54b-f993ef59147f",
+          "name": "Mr. Clarence Crist I",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["condemnation", "support"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
           "polarity": "positive",
-          "intensity": 0.7
+          "intensity": 0.3336173361393322
         }
       }
     },
     {
       "index": 39,
-      "text": "President Biden visited to show solidarity, as did the leaders of Britain, France and Germany.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Votum delibero in abundans bestia. Demulceo calculus terror succedo suffoco arguo ab amo deporto claustrum. Sed cohaero universe vereor copia amplitudo comis calcar neque.\nNeque verbum vomer aestivus voluptatum approbo. Alter concedo bene asper solus tenetur tibi cum decor. Armarium utique deficio.",
+      "short_text": "Attonbitus laudantium coma credo consequuntur.",
+      "narrative_level": "uredo",
+      "narrator_type": "omnis",
+      "temporal_position": "ullam",
+      "source_name": "thorough-chapel.net",
+      "narrative_phase": "tandem",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 41,
-        "temporal_type": "relative",
-        "anchor": "post-attack"
+        "real_time": "2025-01-13T16:36:46.265Z",
+        "narrative_time": 39,
+        "temporal_type": "absolute",
+        "anchor": "tum"
       },
       "entities": [
         {
-          "id": "E13",
-          "name": "President Biden",
+          "id": "3512a90a-4e3b-4df4-a54b-f993ef59147f",
+          "name": "Mr. Clarence Crist I",
           "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "becc5580-4e6b-45d8-95b4-dd05d223e8c7",
+          "name": "Connie Hahn",
+          "role_type": "patient",
+          "social_role": "object"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
           "social_role": "government"
+        },
+        {
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
+          "role_type": "agent",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["visits", "support"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.75
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
-      },
-      "short_text": "President Biden and other leaders visit to show solidarity"
+      }
     },
     {
       "index": 40,
-      "text": "But the strong support for Israel has since been tempered by calls for restraint from its allies, while protesters across the world have been calling for a cease-fire.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Apto odio absens aequitas vero contra tantillus sortitus cito templum. Antea benevolentia comes assumenda combibo adficio solus aliquid. Excepturi super recusandae.\nUbi caveo sustineo certe sufficio depromo absque appono certe. Crustulum totidem caterva vestigium cilicium tepidus tricesimus. Error debitis thesis.",
+      "short_text": "Compono uter abeo.",
+      "narrative_level": "sub",
+      "narrator_type": "carbo",
+      "temporal_position": "arcus",
+      "source_name": "nervous-flat.com",
+      "narrative_phase": "torqueo",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 42,
+        "real_time": "2024-06-24T13:36:53.944Z",
+        "narrative_time": 40,
         "temporal_type": "relative",
-        "anchor": "current"
+        "anchor": "tyrannus"
       },
-      "entities": [],
+      "entities": [
+        {
+          "id": "7179be0d-94ad-4122-8fdf-5c6a7855d8a1",
+          "name": "Sandy Cartwright",
+          "role_type": "agent",
+          "social_role": "expert"
+        },
+        {
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "2695c89d-90ee-4510-a24c-548d958c1a4c",
+          "name": "Mr. Albert Beier",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
       "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["calls for restraint", "cease-fire demands"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
           "polarity": "neutral",
-          "intensity": 0.65
+          "intensity": 0.4291764362180044
         }
-      },
-      "short_text": "Support for Israel tempered by calls for restraint and ceasefire"
+      }
     },
     {
       "index": 41,
-      "text": "Aid groups are warning about the spiraling crisis in Gaza.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Accedo vilis vindico tibi delectus autem. Textilis adhuc terminatio arbitro vicinus advenio adficio. Adhaero ratione debitis arbor vulnus cena auxilium depromo avaritia.\nTam ascisco paens blanditiis attollo cruentus at curatio. Adulescens tibi caries. Turpis capio triumphus ipsa id basium magnam aliquam.",
+      "short_text": "Vulpes harum suppellex bene itaque facere voluptate voluptatem curiositas.",
+      "narrative_level": "deduco",
+      "narrator_type": "balbus",
+      "temporal_position": "attero",
+      "source_name": "grouchy-louse.info",
+      "narrative_phase": "vacuus",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 43,
-        "temporal_type": "relative",
-        "anchor": "current"
+        "real_time": "2024-03-18T14:34:48.164Z",
+        "narrative_time": 41,
+        "temporal_type": "absolute",
+        "anchor": "cohaero"
       },
       "entities": [
         {
-          "id": "E10",
-          "name": "United Nations",
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
           "role_type": "secondary",
-          "social_role": "organization"
+          "social_role": "object"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "ef2bc6ba-44e2-44bd-96db-fc7c2925d990",
+          "name": "Ms. Janie Lueilwitz",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
+          "role_type": "agent",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "humanitarian_social_issues",
-        "sub_topic": ["crisis escalation"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
       },
-      "short_text": "Aid groups warn of an escalating humanitarian crisis"
+      "lead_title": "Alo pecus accusamus vinco accusator aurum triduana defungo."
     },
     {
       "index": 42,
-      "text": "On Nov. 16, the U.N. Security Council adopted a resolution calling for days-long humanitarian pauses to the fighting in Gaza.",
-      "narrative_level": "diegetic",
-      "narrator_type": "document",
-      "temporal_position": "past",
-      "source_name": "U.N. Security Council",
-      "narrative_phase": "repair",
+      "text": "Minima defaeco callide arceo tabgo deprimo casso virgo. Corporis nemo defetiscor vulgus carus quo ad tersus quasi arceo. Attonbitus vulgivagus perferendis complectus.\nArbitro neque vorax. Sustineo decens anser defetiscor. Comptus compello volup annus ambulo doloribus vorago conculco.",
+      "short_text": "Deludo provident tandem abundans.",
+      "narrative_level": "acquiro",
+      "narrator_type": "sumo",
+      "temporal_position": "decimus",
+      "source_name": "aggravating-quit.net",
+      "narrative_phase": "adversus",
       "temporal_anchoring": {
-        "real_time": "2023-11-16",
-        "narrative_time": 44,
-        "temporal_type": "absolute",
-        "anchor": "Nov. 16"
+        "real_time": "2024-10-18T11:09:28.389Z",
+        "narrative_time": 42,
+        "temporal_type": "relative",
+        "anchor": "denuncio"
       },
       "entities": [
         {
-          "id": "E10",
-          "name": "U.N. Security Council",
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
+          "role_type": "patient",
+          "social_role": "government"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "ef2bc6ba-44e2-44bd-96db-fc7c2925d990",
+          "name": "Ms. Janie Lueilwitz",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
           "role_type": "agent",
           "social_role": "organization"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["humanitarian pauses"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.7
+          "polarity": "neutral",
+          "intensity": 0.4291764362180044
         }
-      },
-      "short_text": "U.N. Security Council calls for humanitarian pauses"
+      }
     },
     {
       "index": 43,
-      "text": "António Guterres, the secretary general of the United Nations, is among the leaders who has called for a humanitarian cease-fire.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Videlicet aqua adstringo repellat delectatio ascit capio. Vilitas tersus curiositas cura turpis. Contabesco admoveo vester vallum trepide earum tam conqueror.\nCras volup via. Aestus utrimque repudiandae harum tempus somnus cognomen. Solum temporibus pariatur turba repellendus suspendo cogito appello.",
+      "short_text": "Adiuvo possimus sono.",
+      "narrative_level": "spiritus",
+      "narrator_type": "hic",
+      "temporal_position": "deserunt",
+      "source_name": "dramatic-stay.info",
+      "narrative_phase": "tremo",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 45,
+        "real_time": "2024-07-05T09:35:30.474Z",
+        "narrative_time": 43,
         "temporal_type": "relative",
-        "anchor": "current"
+        "anchor": "verto"
       },
       "entities": [
         {
-          "id": "E11",
-          "name": "António Guterres",
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "1f61fe41-85c6-4c6b-b23e-bbd6d9b3c347",
+          "name": "Lauren Harvey",
           "role_type": "agent",
-          "social_role": "government"
+          "social_role": "organization"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["diplomatic appeal"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.75
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
-      },
-      "short_text": "U.N. Secretary-General calls for a humanitarian ceasefire"
+      }
     },
     {
       "index": 44,
-      "text": "Leaders of dozens of Arab and Muslim nations convened in Saudi Arabia in mid-November.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "recognition",
+      "text": "Ademptio desidero charisma commemoro totam cruentus. Comis constans cibus bardus vetus cibo aqua. Verbera succurro depono beatae aeneus vobis theatrum.\nNon aperio tener. Claustrum alii alter adflicto desolo. Blandior claustrum testimonium laudantium ambulo.",
+      "short_text": "Aegrotatio volaticus terebro ab triumphus.",
+      "narrative_level": "demergo",
+      "narrator_type": "arcesso",
+      "temporal_position": "curto",
+      "source_name": "witty-interior.name",
+      "narrative_phase": "demens",
       "temporal_anchoring": {
-        "real_time": "2023-11-11",
-        "narrative_time": 46,
+        "real_time": "2025-01-25T01:12:51.138Z",
+        "narrative_time": 44,
         "temporal_type": "relative",
-        "anchor": "mid-November"
+        "anchor": "sed"
       },
       "entities": [
         {
-          "id": "E12",
-          "name": "Arab and Muslim nations",
-          "role_type": "secondary",
-          "social_role": "organization"
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
         },
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
           "social_role": "government"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["regional dialogue"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.65
+          "polarity": "negative",
+          "intensity": 0.6684739901098381
         }
-      },
-      "short_text": "Arab and Muslim nations convene in Saudi Arabia"
+      }
     },
     {
       "index": 45,
-      "text": "They also called for a cease-fire and avoided blaming Hamas, but those with ties to Israel have not cut off relations.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "repair",
+      "text": "Adnuo audeo virga quia vis cerno adhaero. Ducimus articulus velum aspicio caput bene amiculum corrupti suus. Torrens aduro asper.\nVidelicet repellat ustilo vulnus cicuta ventosus capillus advenio abbas abutor. Vulariter canto dolores villa ara. Adnuo solium stabilis vel trado coma corrumpo.",
+      "short_text": "Atavus censura aedificium derelinquo vaco.",
+      "narrative_level": "aureus",
+      "narrator_type": "reiciendis",
+      "temporal_position": "delectatio",
+      "source_name": "eminent-tuxedo.biz",
+      "narrative_phase": "ad",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 47,
+        "real_time": "2024-10-29T14:48:38.311Z",
+        "narrative_time": 45,
         "temporal_type": "relative",
-        "anchor": "current"
-      },
-      "entities": [],
-      "topic": {
-        "main_topic": "international_relations",
-        "sub_topic": ["cease-fire calls", "blame avoidance"],
-        "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.65
-        }
-      },
-      "short_text": "Arab and Muslim leaders call for a ceasefire but avoid blaming Hamas"
-    },
-    {
-      "index": 46,
-      "text": "The war in Gaza is straining relations between Israel and its immediate neighbors, jeopardizing months of U.S. diplomacy to push Saudi Arabia to normalize ties with Israel, leading to protests across the Middle East and the world and stoking fears of a broader regional conflict.",
-      "short_text": "War in Gaza strains Israel's diplomatic relations and risks regional conflict",
-      "lead_title": "Is a broader conflict possible?",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "",
-      "narrative_phase": "disruption",
-      "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 48,
-        "temporal_type": "relative",
-        "anchor": "current"
+        "anchor": "error"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
+          "id": "f7a6b313-15fa-4165-ab63-f2fd2c2bc899",
+          "name": "Justin MacGyver",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
+          "role_type": "secondary",
           "social_role": "government"
         },
         {
-          "id": "E12",
-          "name": "Arab and Muslim nations",
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "a7cdd4b7-da4f-48fb-8dff-830334ce7e50",
+          "name": "Rene Lehner",
+          "role_type": "agent",
+          "social_role": "expert"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
           "role_type": "secondary",
-          "social_role": "organization"
+          "social_role": "object"
+        },
+        {
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["diplomatic strain", "protests"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.85
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
+        }
+      }
+    },
+    {
+      "index": 46,
+      "text": "Conservo chirographum usus clibanus confido sumo delectus angustus admoveo velut. Assumenda tui spero cruentus calco vito vilitas dedico capto. Vulgus timor virgo cotidie et.\nSuggero acsi provident cunctatio curtus optio aetas. Amplitudo minus taceo depraedor verecundia antiquus dens socius. Sapiente cultellus bellum vomica cito conicio repellendus certe nesciunt acceptus.",
+      "short_text": "Absens substantia chirographum contigo comedo officiis.",
+      "narrative_level": "solio",
+      "narrator_type": "doloremque",
+      "temporal_position": "cerno",
+      "source_name": "sick-heroine.name",
+      "narrative_phase": "textor",
+      "temporal_anchoring": {
+        "real_time": "2024-03-12T15:58:56.337Z",
+        "narrative_time": 46,
+        "temporal_type": "relative",
+        "anchor": "vergo"
+      },
+      "entities": [
+        {
+          "id": "0ed37c50-e518-43ba-be44-a37dbe7b7d06",
+          "name": "Claire Hauck",
+          "role_type": "protagonist",
+          "social_role": "object"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "9f9e5f9a-573d-4a71-a8dc-fbba11649312",
+          "name": "Tasha Pollich",
+          "role_type": "secondary",
+          "social_role": "expert"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "37ee92b2-ffdb-4c57-9902-653b3b07bb45",
+          "name": "Kyle Corkery",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "3512a90a-4e3b-4df4-a54b-f993ef59147f",
+          "name": "Mr. Clarence Crist I",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "9a154d47-ec0a-416c-819d-c7c110df7dce",
+          "name": "Ramona Mraz",
+          "role_type": "patient",
+          "social_role": "public"
+        }
+      ],
+      "topic": {
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
       }
     },
     {
       "index": 47,
-      "text": "President Biden has sought to prevent the war between Israel and Hamas from spilling over into a fight with Iran and its proxies in Lebanon, Syria and Iraq.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "present",
-      "source_name": "President Biden",
-      "narrative_phase": "repair",
+      "text": "Vigor antiquus conculco terebro canonicus crustulum saepe minus vergo eius. Nihil adulescens ubi sono caute viduo venustas audacia collum. Crastinus cunctatio tenus dedecor curriculum triumphus desidero censura bos adsuesco.\nComplectus tamquam varietas alius volva necessitatibus audacia crux. Pax vaco vapulus collum tego solum exercitationem. Distinctio credo tametsi arbustum antepono beatus asporto inflammatio acsi auditor.",
+      "short_text": "Amissio censura magnam tui absorbeo trepide.",
+      "narrative_level": "ad",
+      "narrator_type": "defungo",
+      "temporal_position": "termes",
+      "source_name": "interesting-dream.net",
+      "narrative_phase": "ager",
       "temporal_anchoring": {
-        "real_time": "",
-        "narrative_time": 49,
+        "real_time": "2024-09-08T06:23:11.933Z",
+        "narrative_time": 47,
         "temporal_type": "relative",
-        "anchor": "current diplomatic efforts"
+        "anchor": "cultellus"
       },
       "entities": [
         {
-          "id": "E13",
-          "name": "President Biden",
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
           "role_type": "agent",
-          "social_role": "government"
+          "social_role": "stakeholder"
         },
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "antagonist",
-          "social_role": "organization"
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["regional spillover", "proxy conflict"],
+        "main_topic": "trucido",
+        "sub_topic": ["agnitio", "cunae"],
         "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.7
+          "polarity": "neutral",
+          "intensity": 0.36971875887692307
         }
-      },
-      "short_text": "Biden seeks to prevent war from expanding to Iran and its proxies"
+      }
     },
     {
       "index": 48,
-      "text": "The Pentagon sent two aircraft carriers and dozens of extra warplanes to the region to make this point.",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "The Pentagon",
-      "narrative_phase": "repair",
+      "text": "Cupio cavus dignissimos basium cicuta via truculenter concedo. Audax cras verto dedecor aequitas aperiam eligendi. Autus tutamen inflammatio crudelis asperiores balbus carpo.\nTergum decet paulatim subseco testimonium. Cura amitto angelus arbor totam cohors desipio claro decretum. Cultura vitium suffragium solus bardus adinventitias vulpes quaerat adfero spoliatio.",
+      "short_text": "Comparo vulticulus defero tutis vulgus adimpleo ut carcer.",
+      "narrative_level": "decumbo",
+      "narrator_type": "sonitus",
+      "temporal_position": "cometes",
+      "source_name": "tidy-descent.com",
+      "narrative_phase": "supellex",
       "temporal_anchoring": {
-        "real_time": "2023-10-14",
-        "narrative_time": 50,
-        "temporal_type": "relative",
-        "anchor": "military reinforcement phase"
+        "real_time": "2024-08-07T22:31:46.602Z",
+        "narrative_time": 48,
+        "temporal_type": "absolute",
+        "anchor": "ipsa"
       },
       "entities": [
         {
-          "id": "E14",
-          "name": "The Pentagon",
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
+        },
+        {
+          "id": "a7122a46-496f-456d-ba4a-38562ae5def3",
+          "name": "Margie Heathcote",
+          "role_type": "protagonist",
+          "social_role": "government"
+        },
+        {
+          "id": "4cccd1ec-358d-4957-b298-b35948aa90f6",
+          "name": "Ann Hills",
+          "role_type": "secondary",
+          "social_role": "government"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "074dcb20-a6b4-4411-8c79-d9f2a555c77d",
+          "name": "Malcolm Kub",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "4255ea5b-e9ee-4214-8b2d-27af9c3c077b",
+          "name": "Alex Wunsch",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "bff93936-fee0-4b21-94d2-f4479f3ff83d",
+          "name": "Elijah Kutch",
           "role_type": "agent",
           "social_role": "government"
+        },
+        {
+          "id": "ef2bc6ba-44e2-44bd-96db-fc7c2925d990",
+          "name": "Ms. Janie Lueilwitz",
+          "role_type": "protagonist",
+          "social_role": "expert"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["naval deployment", "air support"],
+        "main_topic": "contigo",
+        "sub_topic": ["alienus", "volaticus"],
         "sentiment": {
           "polarity": "neutral",
-          "intensity": 0.7
+          "intensity": 0.4291764362180044
         }
-      },
-      "short_text": "The Pentagon sends aircraft carriers and warplanes to the region"
+      }
     },
     {
       "index": 49,
-      "text": "Since the Oct. 7 attacks, the Israeli army has engaged in almost daily clashes with Hezbollah, the Lebanese militant group allied with Hamas and backed by Iran.",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Caelestis tutis incidunt desolo libero civis. Laborum turba comparo acsi ullam vigor. Arcesso asperiores teneo caelum labore convoco chirographum acies.\nSuus subseco nihil blanditiis accusantium armarium demoror balbus colligo taceo. Incidunt degenero teneo vilicus. Communis territo impedit.",
+      "short_text": "Defungo ascisco utrum.",
+      "narrative_level": "currus",
+      "narrator_type": "solum",
+      "temporal_position": "abundans",
+      "source_name": "avaricious-marksman.name",
+      "narrative_phase": "caterva",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 51,
-        "temporal_type": "absolute",
-        "anchor": "Oct. 7"
+        "real_time": "2025-02-22T21:47:29.361Z",
+        "narrative_time": 49,
+        "temporal_type": "relative",
+        "anchor": "amaritudo"
       },
       "entities": [
         {
-          "id": "E15",
-          "name": "Hezbollah",
-          "role_type": "antagonist",
+          "id": "8f7e336b-7972-42c0-9542-5f6f71a57224",
+          "name": "Lorraine Johnston",
+          "role_type": "secondary",
+          "social_role": "object"
+        },
+        {
+          "id": "25f1e09c-8c50-4fd5-b7ca-3ca925718b7b",
+          "name": "Maurice Towne",
+          "role_type": "patient",
+          "social_role": "government"
+        },
+        {
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
           "social_role": "organization"
         },
         {
-          "id": "E1",
-          "name": "Hamas",
-          "role_type": "ally",
-          "social_role": "organization"
+          "id": "b54d5cac-d8c0-4bac-ad8c-564af13652d9",
+          "name": "Jeremy Hettinger",
+          "role_type": "patient",
+          "social_role": "expert"
+        },
+        {
+          "id": "2e006326-a338-49d0-a3d7-a0a223bc6c0a",
+          "name": "Franklin Skiles",
+          "role_type": "antagonist",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "b064a00a-0044-4bb1-86e1-6ea8d4470178",
+          "name": "Brenda Cummings",
+          "role_type": "agent",
+          "social_role": "stakeholder"
+        },
+        {
+          "id": "3512a90a-4e3b-4df4-a54b-f993ef59147f",
+          "name": "Mr. Clarence Crist I",
+          "role_type": "agent",
+          "social_role": "stakeholder"
         }
       ],
       "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["Hezbollah engagement"],
+        "main_topic": "amplexus",
+        "sub_topic": ["claustrum", "defero"],
         "sentiment": {
           "polarity": "negative",
-          "intensity": 0.85
+          "intensity": 0.6684739901098381
         }
-      },
-      "short_text": "Israel clashes with Hezbollah on the Lebanese border"
+      }
     },
     {
       "index": 50,
-      "text": "Israel's military also has responded to fire from Syria.",
-      "narrative_level": "diegetic",
-      "narrator_type": "journalist",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "disruption",
+      "text": "Decimus decens paulatim amiculum thesaurus summa facere reprehenderit solium via. Incidunt ultra ultio bene. Asporto desipio ipsam.\nTalus est confido cuppedia averto vereor cicuta videlicet ager. Quos crur viscus statim vester et tendo cibus absque deprimo. Aedificium veniam conculco defetiscor.",
+      "short_text": "Optio exercitationem minus vitiosus congregatio.",
+      "narrative_level": "adfero",
+      "narrator_type": "cui",
+      "temporal_position": "aegrus",
+      "source_name": "equatorial-overcoat.org",
+      "narrative_phase": "cerno",
       "temporal_anchoring": {
-        "real_time": "2023-10-07",
-        "narrative_time": 52,
+        "real_time": "2024-03-13T15:07:36.927Z",
+        "narrative_time": 50,
         "temporal_type": "relative",
-        "anchor": "during ongoing conflict"
+        "anchor": "harum"
       },
       "entities": [
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
-        }
-      ],
-      "topic": {
-        "main_topic": "war_military",
-        "sub_topic": ["fire exchange"],
-        "sentiment": {
-          "polarity": "negative",
-          "intensity": 0.8
-        }
-      },
-      "short_text": "Israel responds to fire from Syria"
-    },
-    {
-      "index": 51,
-      "text": "The Palestinian Authority, which controls parts of the West Bank, said on Nov. 9 it would be open to a role overseeing a post-Hamas Gaza as long as the Biden administration commits to a two-state solution to end the war, according to a top Palestinian official.",
-      "short_text": "Palestinian Authority expresses willingness to oversee post-Hamas Gaza",
-      "lead_title": "What happens after the war?",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "Palestinian Authority",
-      "narrative_phase": "new_equilibrium",
-      "temporal_anchoring": {
-        "real_time": "2023-11-09",
-        "narrative_time": 53,
-        "temporal_type": "absolute",
-        "anchor": "Nov. 9"
-      },
-      "entities": [
-        {
-          "id": "E16",
-          "name": "Palestinian Authority",
-          "role_type": "agent",
-          "social_role": "government"
-        }
-      ],
-      "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["two-state solution", "governance"],
-        "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.7
-        }
-      }
-    },
-    {
-      "index": 52,
-      "text": "The head of the authority, President Mahmoud Abbas, met with U.S. officials in Ramallah on Nov. 15, urging them to pressure Israel to stop the war, speed up humanitarian aid and crack down on violence in the West Bank.",
-      "short_text": "Mahmoud Abbas meets U.S. officials to discuss the war",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "new_equilibrium",
-      "temporal_anchoring": {
-        "real_time": "2023-11-15",
-        "narrative_time": 54,
-        "temporal_type": "absolute",
-        "anchor": "Nov. 15"
-      },
-      "entities": [
-        {
-          "id": "E16",
-          "name": "Palestinian Authority",
-          "role_type": "agent",
-          "social_role": "government"
+          "id": "2cbef4ca-c3cf-4417-8d7d-adac108c9112",
+          "name": "Barbara Murphy",
+          "role_type": "protagonist",
+          "social_role": "object"
         },
         {
-          "id": "E13",
-          "name": "President Mahmoud Abbas",
-          "role_type": "agent",
-          "social_role": "government"
-        }
-      ],
-      "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["humanitarian aid", "de-escalation"],
-        "sentiment": {
-          "polarity": "positive",
-          "intensity": 0.75
-        }
-      }
-    },
-    {
-      "index": 53,
-      "text": "But Mr. Netanyahu said on NBC's 'Meet the Press' on Nov. 12 that his postwar vision would not include the Palestinian Authority in the near term.",
-      "narrative_level": "metadiegetic",
-      "narrator_type": "quoted_source",
-      "temporal_position": "past",
-      "source_name": "Mr. Netanyahu",
-      "narrative_phase": "new_equilibrium",
-      "temporal_anchoring": {
-        "real_time": "2023-11-12",
-        "narrative_time": 55,
-        "temporal_type": "absolute",
-        "anchor": "Nov. 12"
-      },
-      "entities": [
-        {
-          "id": "E14",
-          "name": "Mr. Netanyahu",
-          "role_type": "agent",
-          "social_role": "government"
+          "id": "870974d2-7f54-45c9-bad2-4299c96c0fcc",
+          "name": "Anna Mitchell",
+          "role_type": "protagonist",
+          "social_role": "expert"
         },
         {
-          "id": "E16",
-          "name": "Palestinian Authority",
+          "id": "4287da47-94d2-47c4-8200-a1757aaa8183",
+          "name": "Stephanie Feil",
+          "role_type": "antagonist",
+          "social_role": "public"
+        },
+        {
+          "id": "7ddbe040-122e-4474-a231-75aa57273c7b",
+          "name": "Rickey Hoeger",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "39fb6979-ef52-4422-93f7-e8653227d4f7",
+          "name": "Gertrude Kemmer",
           "role_type": "secondary",
           "social_role": "government"
-        }
-      ],
-      "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["exclusion", "future governance"],
-        "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.65
-        }
-      },
-      "short_text": "Netanyahu excludes the Palestinian Authority from postwar plans"
-    },
-    {
-      "index": 54,
-      "text": "Earlier, he had said that Israel would indefinitely 'have the overall security responsibility' of the enclave, though he seemed to stop short of suggesting a full re-occupation of Gaza.",
-      "narrative_level": "metadiegetic",
-      "narrator_type": "quoted_source",
-      "temporal_position": "past",
-      "source_name": "Mr. Netanyahu",
-      "narrative_phase": "new_equilibrium",
-      "temporal_anchoring": {
-        "real_time": "2023-11-07",
-        "narrative_time": 56,
-        "temporal_type": "relative",
-        "anchor": "earlier in postwar discussion"
-      },
-      "entities": [
-        {
-          "id": "E14",
-          "name": "Mr. Netanyahu",
-          "role_type": "agent",
-          "social_role": "government"
         },
         {
-          "id": "E2",
-          "name": "Israel",
-          "role_type": "agent",
-          "social_role": "government"
-        }
-      ],
-      "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["postwar governance", "re-occupation debate"],
-        "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.65
-        }
-      },
-      "short_text": "Netanyahu insists Israel will maintain security control over Gaza"
-    },
-    {
-      "index": 55,
-      "text": "His statement was at odds with the postwar plan that Secretary of State Antony Blinken suggested on Nov. 8, in which Gaza would be unified with the West Bank under the Palestinian Authority.",
-      "short_text": "U.S. and Israel diverge on postwar governance plans for Gaza",
-      "narrative_level": "diegetic",
-      "narrator_type": "paraphrased_source",
-      "temporal_position": "past",
-      "source_name": "",
-      "narrative_phase": "new_equilibrium",
-      "temporal_anchoring": {
-        "real_time": "2023-11-08",
-        "narrative_time": 57,
-        "temporal_type": "absolute",
-        "anchor": "Nov. 8"
-      },
-      "entities": [
-        {
-          "id": "E15",
-          "name": "Antony Blinken",
-          "role_type": "agent",
-          "social_role": "government"
+          "id": "60989aa2-c58a-45d3-beaa-2a001e0eb618",
+          "name": "Tomas Skiles",
+          "role_type": "protagonist",
+          "social_role": "stakeholder"
         },
         {
-          "id": "E16",
-          "name": "Palestinian Authority",
-          "role_type": "agent",
-          "social_role": "government"
+          "id": "aa0b2603-7249-4d19-bd4c-4370cc4cdce3",
+          "name": "Katherine Littel",
+          "role_type": "protagonist",
+          "social_role": "organization"
         }
       ],
       "topic": {
-        "main_topic": "politics_government",
-        "sub_topic": ["governance", "territorial unification"],
+        "main_topic": "bibo",
+        "sub_topic": ["eaque", "contabesco"],
         "sentiment": {
-          "polarity": "neutral",
-          "intensity": 0.65
+          "polarity": "positive",
+          "intensity": 0.3336173361393322
         }
       }
     }

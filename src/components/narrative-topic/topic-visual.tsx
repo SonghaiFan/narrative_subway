@@ -236,7 +236,7 @@ export function NarrativeTopicVisual({
               .attr("dy", "0.35em")
               .attr("text-anchor", "middle")
               .style("font-size", "10px")
-              .style("fill", "white")
+              .style("fill", "black")
               .style("pointer-events", "none")
               .text(d.points.length);
           }

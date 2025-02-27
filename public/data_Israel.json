@@ -1,0 +1,2010 @@
+{
+  "metadata": {
+    "title": "What We Know About the War Between Israel and Hamas",
+    "description": "After Hamas's surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
+    "topic": "War",
+    "author": "Ephrat Livni and Gaya Gupta",
+    "publishDate": "2023-11-20",
+    "imageUrl": "https://static01.nyt.com/images/2023/10/26/multimedia/26israel-gaza-what-we-know-01-jmpb/26israel-gaza-what-we-know-01-jmpb-superJumbo.jpg?quality=75&auto=webp"
+  },
+  "events": [
+    {
+      "index": 1,
+      "text": "After Hamas's surprise attack on Israel on Oct. 7, Israel has been besieging and bombarding the Gaza Strip, worsening a humanitarian crisis.",
+      "short_text": "Israel besieging and bombarding Gaza after Hamas attack",
+      "lead_title": null,
+      "narrative_level": "extradiegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 1,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E3",
+          "name": "Gaza Strip",
+          "role_type": "location",
+          "social_role": "geographical"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["siege", "bombardment", "humanitarian crisis"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 2,
+      "text": "On Oct. 7, Hamas led a surprise attack on towns, a music festival, army bases and other locations in Israel, killing roughly 1,200 people and taking about 240 hostages, including children, according to the Israeli government.",
+      "short_text": "Hamas attacks Israeli towns, a music festival, and military bases",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": "Israeli government",
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 3,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "patient",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["casualties", "hostage-taking"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.9
+        }
+      }
+    },
+    {
+      "index": 3,
+      "text": "Israeli officials vowed to destroy Hamas, the Palestinian group that controls the Gaza Strip and is considered a terrorist organization by the United States, Israel and other countries.",
+      "short_text": "Israeli officials vow to destroy Hamas",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 4,
+        "temporal_type": "relative",
+        "anchor": "post-attack"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "E3",
+          "name": "Gaza Strip",
+          "role_type": "location",
+          "social_role": "geographical"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["retaliation", "terrorism designation"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 4,
+      "text": "Israel has since besieged Gaza in one of the most intense bombing campaigns of this century, and launched a ground invasion.",
+      "short_text": "Israel launches a ground invasion of Gaza",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 5,
+        "temporal_type": "relative",
+        "anchor": "post-attack"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "location",
+          "social_role": "geographical"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["siege", "bombing", "ground invasion"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.9
+        }
+      }
+    },
+    {
+      "index": 5,
+      "text": "More than 11,000 Palestinians, including more than 4,600 children, have been killed since the Israeli campaign began, according to Gaza's health ministry.",
+      "short_text": "Over 11,000 Palestinians, including 4,600 children, killed in Gaza",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": "Gaza's health ministry",
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-11-20",
+        "narrative_time": 6,
+        "temporal_type": "relative",
+        "anchor": "campaign period"
+      },
+      "entities": [
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "patient",
+          "social_role": "public"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["civilian deaths", "child casualties"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.95
+        }
+      }
+    },
+    {
+      "index": 6,
+      "text": "The violence, its fallout and the humanitarian crisis afflicting Gazan civilians have shaken the region and the world.",
+      "short_text": "Humanitarian crisis worsens in Gaza",
+      "lead_title": "What happened during the Hamas attack?",
+      "narrative_level": "extradiegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 7,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "patient",
+          "social_role": "public"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["regional instability", "global impact"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 7,
+      "text": "Early on Oct. 7, Hamas fired volleys of rockets that struck as far away as Tel Aviv and the outskirts of Jerusalem.",
+      "short_text": "Hamas fires rockets at Tel Aviv and Jerusalem",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 8,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "E6",
+          "name": "Tel Aviv",
+          "role_type": "location",
+          "social_role": "geographical"
+        },
+        {
+          "id": "E7",
+          "name": "Jerusalem",
+          "role_type": "location",
+          "social_role": "geographical"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["military escalation"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 8,
+      "text": "The attackers also infiltrated border communities and army bases, as well as an outdoor music festival, opening fire on men, women and children.",
+      "short_text": "Hamas infiltrates Israeli communities, attacking civilians",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 9,
+        "temporal_type": "relative",
+        "anchor": "during attack"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["attacks on civilians", "mass violence"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.9
+        }
+      }
+    },
+    {
+      "index": 9,
+      "text": "It took days for Israeli forces to regain control after the attack.",
+      "short_text": "Israeli forces take days to regain control after the attack",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 10,
+        "temporal_type": "relative",
+        "anchor": "post-attack recovery"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["regaining control"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.6
+        }
+      }
+    },
+    {
+      "index": 10,
+      "text": "Hamas and other armed Palestinian groups also took about 240 civilians and soldiers hostage. Four have since been released.",
+      "short_text": "Hamas takes 240 hostages, including civilians and soldiers, and four hostages are released",
+      "lead_title": "How has Israel responded?",
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 11,
+        "temporal_type": "relative",
+        "anchor": "during attack"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": [],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.9
+        }
+      }
+    },
+    {
+      "index": 11,
+      "text": "After the Hamas attack on Oct. 7, the Israeli military soon began a siege to block food, water, and fuel from entering the territory, and it launched a ground invasion on Oct. 27.",
+      "short_text": "Israel imposes a siege and launches a ground invasion",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": "2023-10-27",
+        "narrative_time": 13,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["siege", "invasion"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 12,
+      "text": "Israeli troops encircled Gaza City on Nov. 7, effectively splitting control of the strip in half.",
+      "short_text": "Israeli troops encircle Gaza City",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": "2023-11-07",
+        "narrative_time": 14,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 7"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E3",
+          "name": "Gaza City",
+          "role_type": "location",
+          "social_role": "geographical"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["encirclement", "control"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 13,
+      "text": "On Nov. 17, Israel signaled that it was preparing to expand military operations into southern Gaza, where Palestinians had been told to evacuate.",
+      "short_text": "Israel plans to expand operations into southern Gaza",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": "2023-11-17",
+        "narrative_time": 15,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 17"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "location",
+          "social_role": "geographical"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["expansion", "evacuation"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 14,
+      "text": "More than one million Palestinians have been displaced following Israel's warnings for civilians to leave northern Gaza, aid workers say.",
+      "short_text": "More than 1 million Palestinians displaced following Israeli evacuation orders",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 16,
+        "temporal_type": "relative",
+        "anchor": "post-warning"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "patient",
+          "social_role": "public"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["warnings", "evacuation"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 15,
+      "text": "Many Gazans say no part of the enclave is safe.",
+      "short_text": "Gazans report no safe zones in the enclave",
+      "lead_title": null,
+      "narrative_level": "metadiegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 17,
+        "temporal_type": "relative",
+        "anchor": "current conditions"
+      },
+      "entities": [
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "patient",
+          "social_role": "public"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["civilian insecurity"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 16,
+      "text": "Israel says Hamas uses civilian structures, including hospitals, as bases for military operations in violation of international law; areas including medical centers, schools, mosques and residential locations have been struck under Israel's bombardment.",
+      "short_text": "Israel accuses Hamas of using civilian structures for military operations",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 18,
+        "temporal_type": "relative",
+        "anchor": "ongoing"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["use of civilian infrastructure", "international law"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 17,
+      "text": "Palestinians and some international observers have accused Israel of breaking the law with a disproportionate military response.",
+      "short_text": "Palestinians and some international observers accuse Israel of disproportionate military response",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 19,
+        "temporal_type": "relative",
+        "anchor": "current debate"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["military response", "proportionality"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.75
+        }
+      }
+    },
+    {
+      "index": 18,
+      "text": "On Nov. 15, the Israeli military stormed Gaza's largest hospital, Al-Shifa, and said it discovered weapons and other evidence to support its assertions that Hamas operated in a network of tunnels under the complex.",
+      "short_text": "Israel raids Al-Shifa hospital, claims Hamas used it for military purposes",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-11-15",
+        "narrative_time": 20,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 15"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "E8",
+          "name": "Al-Shifa Hospital",
+          "role_type": "location",
+          "social_role": "infrastructure"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["evidence of tunnels", "hospital strike"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 19,
+      "text": "Senior U.S. officials have backed Israel, though the Israeli military has yet to show incontrovertible proof of a vast Hamas tunnel network.",
+      "short_text": "Senior U.S. officials back Israel but await more evidence on Hamas tunnels",
+      "lead_title": null,
+      "narrative_level": "metadiegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": "U.S. officials",
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 21,
+        "temporal_type": "relative",
+        "anchor": "post-raid"
+      },
+      "entities": [
+        {
+          "id": "E9",
+          "name": "U.S. officials",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["evidence and claims"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "index": 20,
+      "text": "Hamas and hospital officials had denied the accusations.",
+      "short_text": "Hamas and hospital officials deny allegations of tunnel networks",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 22,
+        "temporal_type": "relative",
+        "anchor": "post-raid"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "E8",
+          "name": "Al-Shifa Hospital",
+          "role_type": "location",
+          "social_role": "infrastructure"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": [],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.6
+        }
+      }
+    },
+    {
+      "index": 21,
+      "text": "Almost two days after Israel began its raid of Al-Shifa, New York Times journalists were taken on a controlled tour of the complex by Israeli military officials, and saw a shaft on the hospital grounds.",
+      "short_text": "The New York Times tours Al-Shifa hospital site",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": "The New York Times",
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 23,
+        "temporal_type": "relative",
+        "anchor": "post-raid"
+      },
+      "entities": [
+        {
+          "id": "E5",
+          "name": "The New York Times",
+          "role_type": "secondary",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["controlled tour", "evidence observation"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "index": 22,
+      "text": "Electrical wiring was visible inside, along with a metal staircase, but it was unclear how deep the shaft was or where it led.",
+      "short_text": "Journalists observe an unclear shaft at Al-Shifa hospital",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 24,
+        "temporal_type": "relative",
+        "anchor": "during tour"
+      },
+      "entities": [],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": ["infrastructure details"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.6
+        }
+      }
+    },
+    {
+      "index": 23,
+      "text": "As conditions have worsened for civilians in Gaza, Israel's campaign has drawn increasing outcries from the United Nations, aid organizations and much of the world.",
+      "short_text": "Israel's military campaign faces global criticism",
+      "lead_title": null,
+      "narrative_level": "extradiegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 25,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E10",
+          "name": "United Nations",
+          "role_type": "secondary",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["humanitarian outcry"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 24,
+      "text": "Without challenging Israel's right to defend itself, the Biden administration has repeatedly called for 'humanitarian pauses' to protect Palestinian civilians and allow the delivery of desperately needed aid.",
+      "short_text": "Biden administration calls for humanitarian pauses",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": "Biden administration",
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 26,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E9",
+          "name": "Biden administration",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["humanitarian aid", "pause in conflict"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 25,
+      "text": "After more than a month of war, the humanitarian crisis in Gaza has grown increasingly dire, leaving Gazans with severely limited access to food, clean water and medical care.",
+      "short_text": "Gaza's humanitarian crisis worsens, limiting access to basic necessities",
+      "lead_title": "What is the situation in Gaza?",
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 27,
+        "temporal_type": "relative",
+        "anchor": "ongoing conflict"
+      },
+      "entities": [
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "patient",
+          "social_role": "public"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["access to essentials"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.9
+        }
+      }
+    },
+    {
+      "index": 26,
+      "text": "The United Nations has warned that the entire territory is at risk of starvation amid mass internal displacement.",
+      "short_text": "The U.N. warns Gaza is at risk of mass starvation",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "quoted_source",
+      "temporal_position": "present",
+      "source_name": "United Nations",
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 28,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E10",
+          "name": "United Nations",
+          "role_type": "agent",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["internal displacement"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 27,
+      "text": "Thousands of children, who make up nearly half of Gaza's population, have been killed, according to health officials.",
+      "short_text": "Thousands of children killed in Gaza, according to health officials",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": "health officials",
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 29,
+        "temporal_type": "relative",
+        "anchor": "during conflict"
+      },
+      "entities": [
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "patient",
+          "social_role": "public"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": ["population impact"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.95
+        }
+      }
+    },
+    {
+      "index": 28,
+      "text": "After weeks of desperate fuel shortages that put hospitals on the verge of collapse, Israel agreed on Nov. 17 to the entry of two tankers of fuel into Gaza each day to operate desalination and sewage plants.",
+      "short_text": "Israel allows fuel into Gaza after shortages",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": "2023-11-17",
+        "narrative_time": 30,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 17"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E3",
+          "name": "Gaza",
+          "role_type": "location",
+          "social_role": "geographical"
+        }
+      ],
+      "topic": {
+        "main_topic": "economy_infrastructure",
+        "sub_topic": ["fuel supply", "critical infrastructure"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 29,
+      "text": "Before Israel's raid of Al-Shifa, the hospital complex had been struggling to treat patients, with operations limited by a dearth of supplies, including water, medicine and oxygen.",
+      "short_text": "Gaza hospitals struggle with limited medical supplies",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 31,
+        "temporal_type": "relative",
+        "anchor": "pre-raid conditions"
+      },
+      "entities": [
+        {
+          "id": "E8",
+          "name": "Al-Shifa Hospital",
+          "role_type": "location",
+          "social_role": "infrastructure"
+        }
+      ],
+      "topic": {
+        "main_topic": "economy_infrastructure",
+        "sub_topic": ["supply shortages"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 30,
+      "text": "Medical workers at other hospitals have described similar scenes of operations at the verge of collapse.",
+      "short_text": "Healthcare facilities on the brink of collapse",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 32,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E8",
+          "name": "Al-Shifa Hospital",
+          "role_type": "location",
+          "social_role": "infrastructure"
+        }
+      ],
+      "topic": {
+        "main_topic": "economy_infrastructure",
+        "sub_topic": ["operational collapse"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 31,
+      "text": "Violence in the Israeli-occupied West Bank has also sharply escalated since Oct. 7.",
+      "short_text": "Violence in the Israeli-occupied West Bank escalates",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 33,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["West Bank violence"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 32,
+      "text": "About 200 Palestinians have been killed in confrontations with Israeli forces and in escalating settler attacks, local officials say.",
+      "short_text": "200 Palestinians killed in West Bank clashes with Israeli forces and settlers",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": "local officials",
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 34,
+        "temporal_type": "relative",
+        "anchor": "during confrontations"
+      },
+      "entities": [
+        {
+          "id": "E3",
+          "name": "Palestinians",
+          "role_type": "patient",
+          "social_role": "public"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": ["settler attacks"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.9
+        }
+      }
+    },
+    {
+      "index": 33,
+      "text": "Freeing the 240 hostages abducted by Hamas on Oct. 7 has been one of Israel's two main goals of the war, in addition to destroying Hamas.",
+      "short_text": "Israel prioritizes hostage rescue and Hamas destruction",
+      "lead_title": "What happened with the hostages?",
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 35,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": ["military objectives"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 34,
+      "text": "Since Oct. 7, Hamas has released four Israeli hostages, while Israeli troops rescued a 19-year-old Israeli soldier in October.",
+      "short_text": "Hamas releases four hostages; Israel rescues one",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 36,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": ["release", "rescue"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 35,
+      "text": "Hamas has published some videos of hostages on social media, which Israel has called psychological terrorism.",
+      "short_text": "Hamas posts hostage videos; Israel calls it psychological warfare",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 37,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "agent",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": ["social media", "psychological operations"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 36,
+      "text": "Following Israel's raid of the Al-Shifa hospital, Israeli soldiers said they found the bodies of two Israeli hostages nearby, which they called an indication that Hamas used the complex for military operations.",
+      "short_text": "Israel finds hostage bodies near Al-Shifa, reinforcing Hamas tunnel claims",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 38,
+        "temporal_type": "relative",
+        "anchor": "post-raid"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "crime_security",
+        "sub_topic": ["hostage bodies", "tunnel network implication"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 37,
+      "text": "Negotiations for a deal that would have exchanged 50 women and children captives with roughly the same number of Palestinian women and children held in Israeli prisons had been underway, according to Israeli officials.",
+      "short_text": "Negotiations underway for prisoner exchange deal",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": "Israeli officials",
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 39,
+        "temporal_type": "relative",
+        "anchor": "negotiation phase"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["captivity", "diplomacy"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 38,
+      "text": "In the immediate aftermath of the Oct. 7 attacks, many world leaders condemned Hamas and affirmed their support for Israel.",
+      "short_text": "World leaders condemn Hamas and affirm support for Israel",
+      "lead_title": "How have other leaders reacted?",
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 40,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["condemnation", "support"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 39,
+      "text": "President Biden visited to show solidarity, as did the leaders of Britain, France and Germany.",
+      "short_text": "President Biden and other leaders visit to show solidarity",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 41,
+        "temporal_type": "relative",
+        "anchor": "post-attack"
+      },
+      "entities": [
+        {
+          "id": "E13",
+          "name": "President Biden",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["visits", "support"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.75
+        }
+      }
+    },
+    {
+      "index": 40,
+      "text": "But the strong support for Israel has since been tempered by calls for restraint from its allies, while protesters across the world have been calling for a cease-fire.",
+      "short_text": "Support for Israel tempered by calls for restraint and ceasefire",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 42,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["calls for restraint", "cease-fire demands"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "index": 41,
+      "text": "Aid groups are warning about the spiraling crisis in Gaza.",
+      "short_text": "Aid groups warn of an escalating humanitarian crisis",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 43,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E10",
+          "name": "United Nations",
+          "role_type": "secondary",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "humanitarian_social_issues",
+        "sub_topic": ["crisis escalation"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 42,
+      "text": "On Nov. 16, the U.N. Security Council adopted a resolution calling for days-long humanitarian pauses to the fighting in Gaza.",
+      "short_text": "U.N. Security Council calls for humanitarian pauses",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "document",
+      "temporal_position": "past",
+      "source_name": "U.N. Security Council",
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": "2023-11-16",
+        "narrative_time": 44,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 16"
+      },
+      "entities": [
+        {
+          "id": "E10",
+          "name": "U.N. Security Council",
+          "role_type": "agent",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["humanitarian pauses"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 43,
+      "text": "Ant\u00f3nio Guterres, the secretary general of the United Nations, is among the leaders who has called for a humanitarian cease-fire.",
+      "short_text": "U.N. Secretary-General calls for a humanitarian ceasefire",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 45,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E11",
+          "name": "Ant\u00f3nio Guterres",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["diplomatic appeal"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.75
+        }
+      }
+    },
+    {
+      "index": 44,
+      "text": "Leaders of dozens of Arab and Muslim nations convened in Saudi Arabia in mid-November.",
+      "short_text": "Arab and Muslim nations convene in Saudi Arabia",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "recognition",
+      "temporal_anchoring": {
+        "real_time": "2023-11-11",
+        "narrative_time": 46,
+        "temporal_type": "relative",
+        "anchor": "mid-November"
+      },
+      "entities": [
+        {
+          "id": "E12",
+          "name": "Arab and Muslim nations",
+          "role_type": "secondary",
+          "social_role": "organization"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["regional dialogue"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "index": 45,
+      "text": "They also called for a cease-fire and avoided blaming Hamas, but those with ties to Israel have not cut off relations.",
+      "short_text": "Arab and Muslim leaders call for a ceasefire but avoid blaming Hamas",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 47,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [],
+      "topic": {
+        "main_topic": "international_relations",
+        "sub_topic": ["cease-fire calls", "blame avoidance"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "index": 46,
+      "text": "The war in Gaza is straining relations between Israel and its immediate neighbors, jeopardizing months of U.S. diplomacy to push Saudi Arabia to normalize ties with Israel, leading to protests across the Middle East and the world and stoking fears of a broader regional conflict.",
+      "short_text": "War in Gaza strains Israel's diplomatic relations and risks regional conflict",
+      "lead_title": "Is a broader conflict possible?",
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 48,
+        "temporal_type": "relative",
+        "anchor": "current"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E12",
+          "name": "Arab and Muslim nations",
+          "role_type": "secondary",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["diplomatic strain", "protests"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 47,
+      "text": "President Biden has sought to prevent the war between Israel and Hamas from spilling over into a fight with Iran and its proxies in Lebanon, Syria and Iraq.",
+      "short_text": "Biden seeks to prevent war from expanding to Iran and its proxies",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "present",
+      "source_name": "President Biden",
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": null,
+        "narrative_time": 49,
+        "temporal_type": "relative",
+        "anchor": "current diplomatic efforts"
+      },
+      "entities": [
+        {
+          "id": "E13",
+          "name": "President Biden",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["regional spillover", "proxy conflict"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 48,
+      "text": "The Pentagon sent two aircraft carriers and dozens of extra warplanes to the region to make this point.",
+      "short_text": "The Pentagon sends aircraft carriers and warplanes to the region",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": "The Pentagon",
+      "narrative_phase": "repair",
+      "temporal_anchoring": {
+        "real_time": "2023-10-14",
+        "narrative_time": 50,
+        "temporal_type": "relative",
+        "anchor": "military reinforcement phase"
+      },
+      "entities": [
+        {
+          "id": "E14",
+          "name": "The Pentagon",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["naval deployment", "air support"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 49,
+      "text": "Since the Oct. 7 attacks, the Israeli army has engaged in almost daily clashes with Hezbollah, the Lebanese militant group allied with Hamas and backed by Iran.",
+      "short_text": "Israel clashes with Hezbollah on the Lebanese border",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 51,
+        "temporal_type": "absolute",
+        "anchor": "Oct. 7"
+      },
+      "entities": [
+        {
+          "id": "E15",
+          "name": "Hezbollah",
+          "role_type": "antagonist",
+          "social_role": "organization"
+        },
+        {
+          "id": "E1",
+          "name": "Hamas",
+          "role_type": "ally",
+          "social_role": "organization"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["Hezbollah engagement"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.85
+        }
+      }
+    },
+    {
+      "index": 50,
+      "text": "Israel's military also has responded to fire from Syria.",
+      "short_text": "Israel responds to fire from Syria",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "journalist",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "disruption",
+      "temporal_anchoring": {
+        "real_time": "2023-10-07",
+        "narrative_time": 52,
+        "temporal_type": "relative",
+        "anchor": "during ongoing conflict"
+      },
+      "entities": [
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "war_military",
+        "sub_topic": ["fire exchange"],
+        "sentiment": {
+          "polarity": "negative",
+          "intensity": 0.8
+        }
+      }
+    },
+    {
+      "index": 51,
+      "text": "The Palestinian Authority, which controls parts of the West Bank, said on Nov. 9 it would be open to a role overseeing a post-Hamas Gaza as long as the Biden administration commits to a two-state solution to end the war, according to a top Palestinian official.",
+      "short_text": "Palestinian Authority expresses willingness to oversee post-Hamas Gaza",
+      "lead_title": "What happens after the war?",
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": "Palestinian Authority",
+      "narrative_phase": "new_equilibrium",
+      "temporal_anchoring": {
+        "real_time": "2023-11-09",
+        "narrative_time": 53,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 9"
+      },
+      "entities": [
+        {
+          "id": "E16",
+          "name": "Palestinian Authority",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["two-state solution", "governance"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.7
+        }
+      }
+    },
+    {
+      "index": 52,
+      "text": "The head of the authority, President Mahmoud Abbas, met with U.S. officials in Ramallah on Nov. 15, urging them to pressure Israel to stop the war, speed up humanitarian aid and crack down on violence in the West Bank.",
+      "short_text": "Mahmoud Abbas meets U.S. officials to discuss the war",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "new_equilibrium",
+      "temporal_anchoring": {
+        "real_time": "2023-11-15",
+        "narrative_time": 54,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 15"
+      },
+      "entities": [
+        {
+          "id": "E16",
+          "name": "Palestinian Authority",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E13",
+          "name": "President Mahmoud Abbas",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["humanitarian aid", "de-escalation"],
+        "sentiment": {
+          "polarity": "positive",
+          "intensity": 0.75
+        }
+      }
+    },
+    {
+      "index": 53,
+      "text": "But Mr. Netanyahu said on NBC's 'Meet the Press' on Nov. 12 that his postwar vision would not include the Palestinian Authority in the near term.",
+      "short_text": "Netanyahu excludes the Palestinian Authority from postwar plans",
+      "lead_title": null,
+      "narrative_level": "metadiegetic",
+      "narrator_type": "quoted_source",
+      "temporal_position": "past",
+      "source_name": "Mr. Netanyahu",
+      "narrative_phase": "new_equilibrium",
+      "temporal_anchoring": {
+        "real_time": "2023-11-12",
+        "narrative_time": 55,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 12"
+      },
+      "entities": [
+        {
+          "id": "E14",
+          "name": "Mr. Netanyahu",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E16",
+          "name": "Palestinian Authority",
+          "role_type": "secondary",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["exclusion", "future governance"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "index": 54,
+      "text": "Earlier, he had said that Israel would indefinitely 'have the overall security responsibility' of the enclave, though he seemed to stop short of suggesting a full re-occupation of Gaza.",
+      "short_text": "Netanyahu insists Israel will maintain security control over Gaza",
+      "lead_title": null,
+      "narrative_level": "metadiegetic",
+      "narrator_type": "quoted_source",
+      "temporal_position": "past",
+      "source_name": "Mr. Netanyahu",
+      "narrative_phase": "new_equilibrium",
+      "temporal_anchoring": {
+        "real_time": "2023-11-07",
+        "narrative_time": 56,
+        "temporal_type": "relative",
+        "anchor": "earlier in postwar discussion"
+      },
+      "entities": [
+        {
+          "id": "E14",
+          "name": "Mr. Netanyahu",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E2",
+          "name": "Israel",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["postwar governance", "re-occupation debate"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    },
+    {
+      "index": 55,
+      "text": "His statement was at odds with the postwar plan that Secretary of State Antony Blinken suggested on Nov. 8, in which Gaza would be unified with the West Bank under the Palestinian Authority.",
+      "short_text": "U.S. and Israel diverge on postwar governance plans for Gaza",
+      "lead_title": null,
+      "narrative_level": "diegetic",
+      "narrator_type": "paraphrased_source",
+      "temporal_position": "past",
+      "source_name": null,
+      "narrative_phase": "new_equilibrium",
+      "temporal_anchoring": {
+        "real_time": "2023-11-08",
+        "narrative_time": 57,
+        "temporal_type": "absolute",
+        "anchor": "Nov. 8"
+      },
+      "entities": [
+        {
+          "id": "E15",
+          "name": "Antony Blinken",
+          "role_type": "agent",
+          "social_role": "government"
+        },
+        {
+          "id": "E16",
+          "name": "Palestinian Authority",
+          "role_type": "agent",
+          "social_role": "government"
+        }
+      ],
+      "topic": {
+        "main_topic": "politics_government",
+        "sub_topic": ["governance", "territorial unification"],
+        "sentiment": {
+          "polarity": "neutral",
+          "intensity": 0.65
+        }
+      }
+    }
+  ]
+}
