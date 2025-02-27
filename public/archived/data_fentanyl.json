@@ -26,31 +26,31 @@
         {
           "id": "ent_1_1",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_1_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_1_3",
           "name": "Mexico",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_1_4",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_1_5",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -81,25 +81,25 @@
         {
           "id": "ent_2_1",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_2_2",
           "name": "Mexico",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_2_3",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_2_4",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -130,13 +130,13 @@
         {
           "id": "ent_3_1",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_3_2",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -167,7 +167,7 @@
         {
           "id": "ent_4_1",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -198,7 +198,7 @@
         {
           "id": "ent_5_1",
           "name": "Americans",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -229,7 +229,7 @@
         {
           "id": "ent_6_1",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         }
       ],
@@ -260,13 +260,13 @@
         {
           "id": "ent_7_1",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         },
         {
           "id": "ent_7_2",
           "name": "US Drug Enforcement Administration",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
@@ -297,13 +297,13 @@
         {
           "id": "ent_8_1",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         },
         {
           "id": "ent_8_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -334,7 +334,7 @@
         {
           "id": "ent_9_1",
           "name": "Rodney Coates",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         }
       ],
@@ -365,13 +365,13 @@
         {
           "id": "ent_10_1",
           "name": "US Centers for Disease Control and Prevention (CDC)",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         },
         {
           "id": "ent_10_2",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         }
       ],
@@ -402,13 +402,13 @@
         {
           "id": "ent_11_1",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_11_2",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -439,7 +439,7 @@
         {
           "id": "ent_12_1",
           "name": "Rodney Coates",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         }
       ],
@@ -470,31 +470,31 @@
         {
           "id": "ent_13_1",
           "name": "Vanda Felbab-Brown",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_13_2",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         },
         {
           "id": "ent_13_3",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_13_4",
           "name": "Mexican cartels",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "public"
         },
         {
           "id": "ent_13_5",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -525,19 +525,19 @@
         {
           "id": "ent_14_1",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         },
         {
           "id": "ent_14_2",
           "name": "Vanda Felbab-Brown",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_14_3",
           "name": "Brookings Institute",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
@@ -568,13 +568,13 @@
         {
           "id": "ent_15_1",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_15_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -605,13 +605,13 @@
         {
           "id": "ent_16_1",
           "name": "US Drug Enforcement Administration",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         },
         {
           "id": "ent_16_2",
           "name": "Vanda Felbab-Brown",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         }
       ],
@@ -642,13 +642,13 @@
         {
           "id": "ent_17_1",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_17_2",
           "name": "Mexico",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -679,7 +679,7 @@
         {
           "id": "ent_18_1",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -710,19 +710,19 @@
         {
           "id": "ent_19_1",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_19_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_19_3",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -753,13 +753,13 @@
         {
           "id": "ent_20_1",
           "name": "Mexican cartels",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "public"
         },
         {
           "id": "ent_20_2",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -790,7 +790,7 @@
         {
           "id": "ent_21_1",
           "name": "Nitazenes",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         }
       ],
@@ -821,25 +821,25 @@
         {
           "id": "ent_22_1",
           "name": "Vanda Felbab-Brown",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_22_2",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         },
         {
           "id": "ent_22_3",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_22_4",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -870,7 +870,7 @@
         {
           "id": "ent_23_1",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -901,13 +901,13 @@
         {
           "id": "ent_24_1",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_24_2",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -938,25 +938,25 @@
         {
           "id": "ent_25_1",
           "name": "Justin Trudeau",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_25_2",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         },
         {
           "id": "ent_25_3",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_25_4",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -987,31 +987,31 @@
         {
           "id": "ent_26_1",
           "name": "United States",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_26_2",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_26_3",
           "name": "Mexico",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_26_4",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_26_5",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1042,7 +1042,7 @@
         {
           "id": "ent_27_1",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1097,13 +1097,13 @@
         {
           "id": "ent_29_1",
           "name": "China",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_29_2",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         }
       ],
@@ -1134,13 +1134,13 @@
         {
           "id": "ent_30_1",
           "name": "Beijing",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_30_2",
           "name": "Washington",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1171,13 +1171,13 @@
         {
           "id": "ent_31_1",
           "name": "Biden administration",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_31_2",
           "name": "Xi Jinping",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1208,19 +1208,19 @@
         {
           "id": "ent_32_1",
           "name": "John Coyne",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_32_2",
           "name": "China",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_32_3",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -1251,13 +1251,13 @@
         {
           "id": "ent_33_1",
           "name": "Chinese Communist Party",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_33_2",
           "name": "John Coyne",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         }
       ],
@@ -1288,13 +1288,13 @@
         {
           "id": "ent_34_1",
           "name": "John Coyne",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_34_2",
           "name": "North America",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -1325,19 +1325,19 @@
         {
           "id": "ent_35_1",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_35_2",
           "name": "Mexico",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_35_3",
           "name": "China",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1368,13 +1368,13 @@
         {
           "id": "ent_36_1",
           "name": "John Coyne",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_36_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -1405,13 +1405,13 @@
         {
           "id": "ent_37_1",
           "name": "John Coyne",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_37_2",
           "name": "Mexican cartels",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "public"
         }
       ],
@@ -1442,13 +1442,13 @@
         {
           "id": "ent_38_1",
           "name": "Vanda Felbab-Brown",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_38_2",
           "name": "Brookings Institute",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
@@ -1479,25 +1479,25 @@
         {
           "id": "ent_39_1",
           "name": "Fentanyl cooks",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "public"
         },
         {
           "id": "ent_39_2",
           "name": "Mexico",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_39_3",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_39_4",
           "name": "India",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -1528,19 +1528,19 @@
         {
           "id": "ent_40_1",
           "name": "Rodney Coates",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_40_2",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_40_3",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -1571,13 +1571,13 @@
         {
           "id": "ent_41_1",
           "name": "Rodney Coates",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_41_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -1608,13 +1608,13 @@
         {
           "id": "ent_42_1",
           "name": "Rodney Coates",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "expert"
         },
         {
           "id": "ent_42_2",
           "name": "immigrants",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -1645,13 +1645,13 @@
         {
           "id": "ent_43_1",
           "name": "Canada",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_43_2",
           "name": "American goods",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "object"
         }
       ],
@@ -1682,25 +1682,25 @@
         {
           "id": "ent_44_1",
           "name": "Mexico",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_44_2",
           "name": "China",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_44_3",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         },
         {
           "id": "ent_44_4",
           "name": "World Trade Organization",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
@@ -1731,7 +1731,7 @@
         {
           "id": "ent_45_1",
           "name": "Beijing",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1762,13 +1762,13 @@
         {
           "id": "ent_46_1",
           "name": "China",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "ent_46_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -1799,19 +1799,19 @@
         {
           "id": "ent_47_1",
           "name": "China",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_47_2",
           "name": "Mexico",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         },
         {
           "id": "ent_47_3",
           "name": "Canada",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -1842,13 +1842,13 @@
         {
           "id": "ent_48_1",
           "name": "Fentanyl",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "object"
         },
         {
           "id": "ent_48_2",
           "name": "United States",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],

@@ -28,19 +28,19 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Gaza Strip",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -73,13 +73,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "government"
         }
       ],
@@ -112,19 +112,19 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         },
         {
           "id": "E3",
           "name": "Gaza Strip",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -157,13 +157,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -196,7 +196,7 @@
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -229,13 +229,13 @@
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -268,19 +268,19 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         },
         {
           "id": "E6",
           "name": "Tel Aviv",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         },
         {
           "id": "E7",
           "name": "Jerusalem",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -313,7 +313,7 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         }
       ],
@@ -346,7 +346,7 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -379,7 +379,7 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         }
       ],
@@ -412,13 +412,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -451,13 +451,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Gaza City",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -490,13 +490,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -529,13 +529,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -568,7 +568,7 @@
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -601,13 +601,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -640,7 +640,7 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -673,19 +673,19 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         },
         {
           "id": "E8",
           "name": "Al-Shifa Hospital",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "infrastructure"
         }
       ],
@@ -718,13 +718,13 @@
         {
           "id": "E9",
           "name": "U.S. officials",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -757,13 +757,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         },
         {
           "id": "E8",
           "name": "Al-Shifa Hospital",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "infrastructure"
         }
       ],
@@ -796,13 +796,13 @@
         {
           "id": "E5",
           "name": "The New York Times",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -861,13 +861,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E10",
           "name": "United Nations",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
@@ -900,7 +900,7 @@
         {
           "id": "E9",
           "name": "Biden administration",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -933,7 +933,7 @@
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -966,7 +966,7 @@
         {
           "id": "E10",
           "name": "United Nations",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         }
       ],
@@ -999,7 +999,7 @@
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -1032,13 +1032,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Gaza",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -1071,7 +1071,7 @@
         {
           "id": "E8",
           "name": "Al-Shifa Hospital",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "infrastructure"
         }
       ],
@@ -1104,7 +1104,7 @@
         {
           "id": "E8",
           "name": "Al-Shifa Hospital",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "infrastructure"
         }
       ],
@@ -1137,7 +1137,7 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1170,7 +1170,7 @@
         {
           "id": "E3",
           "name": "Palestinians",
-          "role_type": "patient",
+          "discourse_role": "patient",
           "social_role": "public"
         }
       ],
@@ -1203,13 +1203,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1242,13 +1242,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1281,13 +1281,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1320,13 +1320,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         }
       ],
@@ -1359,7 +1359,7 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1392,13 +1392,13 @@
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1431,7 +1431,7 @@
         {
           "id": "E13",
           "name": "President Biden",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1490,7 +1490,7 @@
         {
           "id": "E10",
           "name": "United Nations",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
@@ -1523,7 +1523,7 @@
         {
           "id": "E10",
           "name": "U.N. Security Council",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "organization"
         }
       ],
@@ -1556,7 +1556,7 @@
         {
           "id": "E11",
           "name": "Ant\u00f3nio Guterres",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1589,13 +1589,13 @@
         {
           "id": "E12",
           "name": "Arab and Muslim nations",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1654,13 +1654,13 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E12",
           "name": "Arab and Muslim nations",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
@@ -1693,13 +1693,13 @@
         {
           "id": "E13",
           "name": "President Biden",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         }
       ],
@@ -1732,7 +1732,7 @@
         {
           "id": "E14",
           "name": "The Pentagon",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1765,13 +1765,13 @@
         {
           "id": "E15",
           "name": "Hezbollah",
-          "role_type": "antagonist",
+          "discourse_role": "antagonist",
           "social_role": "organization"
         },
         {
           "id": "E1",
           "name": "Hamas",
-          "role_type": "ally",
+          "discourse_role": "ally",
           "social_role": "organization"
         }
       ],
@@ -1804,7 +1804,7 @@
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1837,7 +1837,7 @@
         {
           "id": "E16",
           "name": "Palestinian Authority",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1870,13 +1870,13 @@
         {
           "id": "E16",
           "name": "Palestinian Authority",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E13",
           "name": "President Mahmoud Abbas",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1909,13 +1909,13 @@
         {
           "id": "E14",
           "name": "Mr. Netanyahu",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E16",
           "name": "Palestinian Authority",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "government"
         }
       ],
@@ -1948,13 +1948,13 @@
         {
           "id": "E14",
           "name": "Mr. Netanyahu",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Israel",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -1987,13 +1987,13 @@
         {
           "id": "E15",
           "name": "Antony Blinken",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E16",
           "name": "Palestinian Authority",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],

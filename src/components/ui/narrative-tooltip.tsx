@@ -37,7 +37,7 @@ function EntityTooltipContent({ event }: { event: NarrativeEvent }) {
               >
                 {entity.name}
                 <span className="ml-1 text-[10px] opacity-75">
-                  ({entity.role_type})
+                  ({entity.social_role})
                 </span>
               </span>
             ))}

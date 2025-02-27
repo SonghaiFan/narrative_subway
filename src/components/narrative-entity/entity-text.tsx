@@ -75,7 +75,7 @@ export function EntityText({ events }: EntityTextProps) {
   );
 
   // Calculate role type and social role distributions
-  const roleTypeCounts = new Map<string, number>();
+  const discourseRoleCounts = new Map<string, number>();
   const socialRoleCounts = new Map<string, number>();
   const totalMentions = sortedEntities.reduce(
     (sum, { frequency }) => sum + frequency,
@@ -83,10 +83,10 @@ export function EntityText({ events }: EntityTextProps) {
   );
 
   sortedEntities.forEach(({ entity }) => {
-    if (entity.role_type) {
-      roleTypeCounts.set(
-        entity.role_type,
-        (roleTypeCounts.get(entity.role_type) || 0) + 1
+    if (entity.discourse_role) {
+      discourseRoleCounts.set(
+        entity.discourse_role,
+        (discourseRoleCounts.get(entity.discourse_role) || 0) + 1
       );
     }
     if (entity.social_role) {
@@ -119,17 +119,19 @@ export function EntityText({ events }: EntityTextProps) {
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <h4 className="text-sm font-medium mb-2">By Role Type</h4>
+              <h4 className="text-sm font-medium mb-2">By Discourse Role</h4>
               <div className="space-y-1">
-                {Array.from(roleTypeCounts.entries()).map(([role, count]) => (
-                  <div
-                    key={role}
-                    className="flex justify-between text-sm bg-gray-50 px-2 py-1 rounded"
-                  >
-                    <span className="capitalize">{role}</span>
-                    <span className="text-gray-600">{count}</span>
-                  </div>
-                ))}
+                {Array.from(discourseRoleCounts.entries()).map(
+                  ([role, count]) => (
+                    <div
+                      key={role}
+                      className="flex justify-between text-sm bg-gray-50 px-2 py-1 rounded"
+                    >
+                      <span className="capitalize">{role}</span>
+                      <span className="text-gray-600">{count}</span>
+                    </div>
+                  )
+                )}
               </div>
             </div>
             <div>
@@ -174,7 +176,7 @@ export function EntityText({ events }: EntityTextProps) {
                     <div>
                       <span className="font-medium">{entity.name}</span>
                       <div className="text-sm text-gray-600">
-                        {entity.role_type} • {entity.social_role}
+                        {entity.discourse_role} • {entity.social_role}
                       </div>
                     </div>
                   </div>

@@ -28,19 +28,19 @@
         {
           "id": "E1",
           "name": "Emmanuel Macron",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "European leaders",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Britain's prime minister",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -73,19 +73,19 @@
         {
           "id": "E1",
           "name": "United States",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Russia",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Saudi Arabia",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -118,25 +118,25 @@
         {
           "id": "E1",
           "name": "Donald Trump",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Vladimir Putin",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Kyiv",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         },
         {
           "id": "E4",
           "name": "European allies",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "public"
         }
       ],
@@ -169,13 +169,13 @@
         {
           "id": "E1",
           "name": "Keith Kellogg",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Europe",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -208,13 +208,13 @@
         {
           "id": "E1",
           "name": "French presidency official",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Europe",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         }
       ],
@@ -247,55 +247,55 @@
         {
           "id": "E1",
           "name": "Germany",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Italy",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Britain",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E4",
           "name": "Poland",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E5",
           "name": "Spain",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E6",
           "name": "the Netherlands",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E7",
           "name": "Denmark",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E8",
           "name": "European Union",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E9",
           "name": "NATO secretary-general",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -332,43 +332,43 @@
         {
           "id": "E1",
           "name": "United States",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "Russia",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E3",
           "name": "Saudi Arabia",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         },
         {
           "id": "E4",
           "name": "Marco Rubio",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E5",
           "name": "Sergei Lavrov",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E6",
           "name": "Mike Waltz",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E7",
           "name": "Steve Witkoff",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         }
       ],
@@ -401,31 +401,31 @@
         {
           "id": "E1",
           "name": "Volodymyr Zelenskyy",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E2",
           "name": "United Arab Emirates",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         },
         {
           "id": "E3",
           "name": "Abu Dhabi",
-          "role_type": "location",
+          "discourse_role": "location",
           "social_role": "geographical"
         },
         {
           "id": "E4",
           "name": "Yulia Svyrydenko",
-          "role_type": "agent",
+          "discourse_role": "agent",
           "social_role": "government"
         },
         {
           "id": "E5",
           "name": "Munich Security Conference",
-          "role_type": "secondary",
+          "discourse_role": "secondary",
           "social_role": "organization"
         }
       ],
