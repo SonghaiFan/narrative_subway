@@ -3,12 +3,7 @@
 import { Entity, NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
-import {
-  ENTITY_CONFIG,
-  ENTITY_COLORS,
-  SHARED_CONFIG,
-  SOCIAL_ROLE_COLORS,
-} from "../shared/visualization-config";
+import { ENTITY_CONFIG } from "./entity-config";
 import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
 
 interface EntityVisualProps {
@@ -116,19 +111,13 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .style("left", `${x + xScale.bandwidth() / 2}px`)
         .style("transform", "translateX(-50%)")
         .style("cursor", "pointer")
-        .style("transition", "color 200ms")
         .style("max-width", `${xScale.bandwidth()}px`)
         .on("mouseenter", function () {
-          d3.select(this).style(
-            "color",
-            SOCIAL_ROLE_COLORS[entity.social_role]
-          );
           g.select(`.guide-line-${entity.name.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.8)
-            .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth * 1.5);
+            .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
         })
         .on("mouseleave", function () {
-          d3.select(this).style("color", "#374151");
           g.select(`.guide-line-${entity.name.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.3)
             .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
@@ -174,7 +163,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
     // Draw entity columns
     top5Entities.forEach((entity) => {
       const x = xScale(entity.name)!;
-      const entityColor = SOCIAL_ROLE_COLORS[entity.social_role] || "#94a3b8";
+      const entityColor = "#94a3b8";
 
       g.append("line")
         .attr("class", `guide-line-${entity.name.replace(/\s+/g, "-")}`)

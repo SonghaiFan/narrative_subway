@@ -3,7 +3,7 @@
 import { NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
-import { TIME_CONFIG } from "../shared/visualization-config";
+import { TIME_CONFIG } from "./time-config";
 import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
 import {
   LabelDatum,
@@ -11,7 +11,6 @@ import {
   getSortedPoints,
   getScales,
   createLabelData,
-  getPointColors,
   createForceSimulation,
   calculateDimensions,
   createAxes,
@@ -407,14 +406,8 @@ export function NarrativeTimeVisual({
       .attr("cx", (d) => (d.hasRealTime ? xScale(d.realTime!) : publishX))
       .attr("cy", (d) => yScale(d.narrativeTime))
       .attr("r", TIME_CONFIG.point.radius)
-      .attr(
-        "fill",
-        (d) => getPointColors(d.event.topic.sentiment.intensity).fill
-      )
-      .attr(
-        "stroke",
-        (d) => getPointColors(d.event.topic.sentiment.intensity).stroke
-      )
+      .attr("fill", "white")
+      .attr("stroke", "black")
       .attr("stroke-width", (d) =>
         d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
       )

@@ -1,6 +1,6 @@
 import { NarrativeEvent } from "@/types/article";
 import * as d3 from "d3";
-import { SHARED_CONFIG } from "../shared/visualization-config";
+import { TOPIC_CONFIG } from "./topic-config";
 
 export interface DataPoint {
   event: NarrativeEvent;
@@ -84,50 +84,6 @@ export function getScales(
   return { xScale, yScale };
 }
 
-// Get fill and stroke colors based on sentiment
-export function getPointColors(sentiment: {
-  polarity: string;
-  intensity: number;
-}) {
-  // Base colors for each polarity
-  const colors = {
-    positive: {
-      light: "#22c55e", // green-500
-      medium: "#16a34a", // green-600
-      dark: "#15803d", // green-700
-    },
-    negative: {
-      light: "#f87171", // red-400
-      medium: "#ef4444", // red-500
-      dark: "#dc2626", // red-600
-    },
-    neutral: {
-      light: "#6b7280", // gray-500
-      medium: "#4b5563", // gray-600
-      dark: "#374151", // gray-700
-    },
-  };
-
-  // Get color set based on polarity
-  const colorSet =
-    colors[sentiment.polarity as keyof typeof colors] || colors.neutral;
-
-  // Determine color intensity based on sentiment intensity
-  let strokeColor;
-  if (sentiment.intensity < 0.33) {
-    strokeColor = colorSet.light;
-  } else if (sentiment.intensity < 0.66) {
-    strokeColor = colorSet.medium;
-  } else {
-    strokeColor = colorSet.dark;
-  }
-
-  return {
-    fill: "#ffffff",
-    stroke: strokeColor,
-  };
-}
-
 // Calculate dimensions based on container and config
 export function calculateDimensions(
   containerWidth: number,
@@ -136,11 +92,11 @@ export function calculateDimensions(
   // Calculate usable dimensions
   const width = Math.max(
     0,
-    containerWidth - SHARED_CONFIG.margin.left - SHARED_CONFIG.margin.right
+    containerWidth - TOPIC_CONFIG.margin.left - TOPIC_CONFIG.margin.right
   );
   const height = Math.max(
     0,
-    containerHeight - SHARED_CONFIG.margin.top - SHARED_CONFIG.margin.bottom
+    containerHeight - TOPIC_CONFIG.margin.top - TOPIC_CONFIG.margin.bottom
   );
 
   return {
@@ -196,7 +152,7 @@ export function groupOverlappingPoints(
   yScale: d3.ScaleBand<string>
 ): GroupedPoint[] {
   const groups = new Map<string, DataPoint[]>();
-  const nodeSize = SHARED_CONFIG.point.radius * 2;
+  const nodeSize = TOPIC_CONFIG.point.radius * 2;
   const timeThreshold = Math.abs(
     xScale.invert(nodeSize / 4).getTime() - xScale.invert(0).getTime()
   );

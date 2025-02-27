@@ -1,5 +1,5 @@
 import { NarrativeEvent } from "@/types/article";
-import { TIME_CONFIG, EVENT_COLORS } from "../shared/visualization-config";
+import { TIME_CONFIG, EVENT_COLORS } from "./time-config";
 import * as d3 from "d3";
 
 export interface DataPoint {
@@ -131,24 +131,6 @@ export function createLabelData(
         index: d.index,
       };
     });
-}
-
-// Get fill and stroke colors based on sentiment
-export function getPointColors(sentiment: number) {
-  return {
-    fill:
-      sentiment > 0
-        ? EVENT_COLORS.positiveFill
-        : sentiment < 0
-        ? EVENT_COLORS.negativeFill
-        : EVENT_COLORS.neutralFill,
-    stroke:
-      sentiment > 0
-        ? EVENT_COLORS.positiveStroke
-        : sentiment < 0
-        ? EVENT_COLORS.negativeStroke
-        : EVENT_COLORS.neutralStroke,
-  };
 }
 
 // Create force simulation for labels

@@ -3,14 +3,13 @@
 import { NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
-import { SHARED_CONFIG } from "../shared/visualization-config";
+import { TOPIC_CONFIG } from "./topic-config";
 import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
 import {
   processEvents,
   getTopicCounts,
   getTopTopics,
   getScales,
-  getPointColors,
   calculateDimensions,
   createAxes,
   createEdges,
@@ -91,14 +90,14 @@ export function NarrativeTopicVisual({
     // Create header content container
     const headerContent = headerContainer
       .append("div")
-      .style("margin-left", `${SHARED_CONFIG.margin.left}px`)
+      .style("margin-left", `${TOPIC_CONFIG.margin.left}px`)
       .style("width", `${width}px`);
 
     // Add x-axis to header
     const headerSvg = headerContent
       .append("svg")
-      .attr("width", width + SHARED_CONFIG.margin.right)
-      .attr("height", SHARED_CONFIG.header.height)
+      .attr("width", width + TOPIC_CONFIG.margin.right)
+      .attr("height", TOPIC_CONFIG.header.height)
       .style("overflow", "visible");
 
     headerSvg
@@ -106,7 +105,7 @@ export function NarrativeTopicVisual({
       .attr("class", "x-axis")
       .attr("transform", `translate(0,30)`)
       .call(xAxis)
-      .style("font-size", `${SHARED_CONFIG.axis.fontSize}px`)
+      .style("font-size", `${TOPIC_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
       .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"));
 
@@ -123,14 +122,14 @@ export function NarrativeTopicVisual({
       .append("g")
       .attr(
         "transform",
-        `translate(${SHARED_CONFIG.margin.left},${SHARED_CONFIG.margin.top})`
+        `translate(${TOPIC_CONFIG.margin.left},${TOPIC_CONFIG.margin.top})`
       );
 
     // Add y-axis
     g.append("g")
       .attr("class", "y-axis")
       .call(yAxis)
-      .style("font-size", `${SHARED_CONFIG.axis.fontSize}px`)
+      .style("font-size", `${TOPIC_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
       .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
       .call((g) =>
@@ -182,9 +181,9 @@ export function NarrativeTopicVisual({
       })
       .attr("fill", "none")
       .attr("stroke", "#94a3b8")
-      .attr("stroke-width", SHARED_CONFIG.edge.strokeWidth)
-      .attr("stroke-opacity", SHARED_CONFIG.edge.opacity)
-      .attr("stroke-dasharray", SHARED_CONFIG.edge.dashArray);
+      .attr("stroke-width", TOPIC_CONFIG.edge.strokeWidth)
+      .attr("stroke-opacity", TOPIC_CONFIG.edge.opacity)
+      .attr("stroke-dasharray", TOPIC_CONFIG.edge.dashArray);
 
     // Add points group
     const pointsGroup = g
@@ -217,20 +216,12 @@ export function NarrativeTopicVisual({
       .attr("cy", (d: GroupedPoint) => d.y)
       .attr("r", (d: GroupedPoint) =>
         d.points.length > 1
-          ? SHARED_CONFIG.point.radius * 1.2
-          : SHARED_CONFIG.point.radius
+          ? TOPIC_CONFIG.point.radius * 1.2
+          : TOPIC_CONFIG.point.radius
       )
-      .attr(
-        "fill",
-        (d: GroupedPoint) =>
-          getPointColors(d.points[0].event.topic.sentiment).fill
-      )
-      .attr(
-        "stroke",
-        (d: GroupedPoint) =>
-          getPointColors(d.points[0].event.topic.sentiment).stroke
-      )
-      .attr("stroke-width", SHARED_CONFIG.point.strokeWidth)
+      .attr("fill", "white")
+      .attr("stroke", "black")
+      .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
       .style("cursor", (d: GroupedPoint) =>
         d.points.length > 1 ? "pointer" : "default"
       )
@@ -245,10 +236,7 @@ export function NarrativeTopicVisual({
               .attr("dy", "0.35em")
               .attr("text-anchor", "middle")
               .style("font-size", "10px")
-              .style(
-                "fill",
-                getPointColors(d.points[0].event.topic.sentiment).stroke
-              )
+              .style("fill", "white")
               .style("pointer-events", "none")
               .text(d.points.length);
           }
@@ -278,7 +266,7 @@ export function NarrativeTopicVisual({
         const parent = groupedPoints.find((g) => g.key === d.parentKey)!;
         const positions = calculateExpandedPositions(
           parent,
-          SHARED_CONFIG.point.radius
+          TOPIC_CONFIG.point.radius
         );
         return positions[d.index].x;
       })
@@ -286,20 +274,14 @@ export function NarrativeTopicVisual({
         const parent = groupedPoints.find((g) => g.key === d.parentKey)!;
         const positions = calculateExpandedPositions(
           parent,
-          SHARED_CONFIG.point.radius
+          TOPIC_CONFIG.point.radius
         );
         return positions[d.index].y;
       })
-      .attr("r", SHARED_CONFIG.point.radius)
-      .attr(
-        "fill",
-        (d: ChildPoint) => getPointColors(d.event.topic.sentiment).fill
-      )
-      .attr(
-        "stroke",
-        (d: ChildPoint) => getPointColors(d.event.topic.sentiment).stroke
-      )
-      .attr("stroke-width", SHARED_CONFIG.point.strokeWidth)
+      .attr("r", TOPIC_CONFIG.point.radius)
+      .attr("fill", "white")
+      .attr("stroke", "black")
+      .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
       .style("cursor", "pointer");
 
     // Handle click events for parent nodes
@@ -320,7 +302,7 @@ export function NarrativeTopicVisual({
         parentCircle
           .transition()
           .duration(200)
-          .attr("r", SHARED_CONFIG.point.radius * 0.8)
+          .attr("r", TOPIC_CONFIG.point.radius * 0.8)
           .style("opacity", 0.5)
           .style("cursor", "pointer");
 
@@ -339,8 +321,8 @@ export function NarrativeTopicVisual({
           .attr(
             "r",
             d.points.length > 1
-              ? SHARED_CONFIG.point.radius * 1.2
-              : SHARED_CONFIG.point.radius
+              ? TOPIC_CONFIG.point.radius * 1.2
+              : TOPIC_CONFIG.point.radius
           )
           .style("opacity", 1)
           .style("cursor", "pointer");
@@ -363,8 +345,8 @@ export function NarrativeTopicVisual({
       target
         .transition()
         .duration(150)
-        .attr("r", SHARED_CONFIG.point.hoverRadius)
-        .attr("stroke-width", SHARED_CONFIG.point.hoverStrokeWidth);
+        .attr("r", TOPIC_CONFIG.point.hoverRadius)
+        .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
 
       const eventData = "points" in d ? d.points[0].event : d.event;
       showTooltip(eventData, event.pageX, event.pageY);
@@ -387,10 +369,10 @@ export function NarrativeTopicVisual({
         .attr(
           "r",
           isParent && parentData.points.length > 1
-            ? SHARED_CONFIG.point.radius * 1.2
-            : SHARED_CONFIG.point.radius
+            ? TOPIC_CONFIG.point.radius * 1.2
+            : TOPIC_CONFIG.point.radius
         )
-        .attr("stroke-width", SHARED_CONFIG.point.strokeWidth);
+        .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
 
       hideTooltip();
     };
@@ -443,7 +425,7 @@ export function NarrativeTopicVisual({
       <div
         ref={headerRef}
         className="flex-none bg-white sticky top-0 z-10 shadow-sm"
-        style={{ height: `${SHARED_CONFIG.header.height}px` }}
+        style={{ height: `${TOPIC_CONFIG.header.height}px` }}
       />
       <div ref={containerRef} className="flex-1 relative overflow-y-auto">
         <svg ref={svgRef} className="w-full h-full" />

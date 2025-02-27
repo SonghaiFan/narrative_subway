@@ -1,6 +1,5 @@
 import { Entity, NarrativeEvent } from "@/types/article";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ENTITY_COLORS } from "../shared/visualization-config";
 
 interface TooltipPosition {
   x: number;
@@ -35,10 +34,6 @@ function EntityTooltipContent({ event }: { event: NarrativeEvent }) {
               <span
                 key={entity.id}
                 className="inline-flex items-center px-2 py-0.5 rounded text-xs"
-                style={{
-                  backgroundColor: `${ENTITY_COLORS[entity.role_type]}15`,
-                  color: ENTITY_COLORS[entity.role_type],
-                }}
               >
                 {entity.name}
                 <span className="ml-1 text-[10px] opacity-75">
