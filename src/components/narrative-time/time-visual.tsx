@@ -4,7 +4,7 @@ import { NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { TIME_CONFIG } from "./time-config";
-import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
+import { useTooltip } from "@/lib/tooltip-context";
 import {
   LabelDatum,
   processEvents,
@@ -19,24 +19,25 @@ import {
 
 interface TimeVisualProps {
   events: NarrativeEvent[];
-  selectedEventId?: string;
+  selectedEventId?: number | null;
   metadata: {
     publishDate: string;
   };
+  onEventSelect?: (id: number | null) => void;
 }
 
 export function NarrativeTimeVisual({
   events,
   selectedEventId,
   metadata,
+  onEventSelect,
 }: TimeVisualProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const isDraggingRef = useRef(false);
-  const { tooltipState, showTooltip, hideTooltip, updatePosition } =
-    useNarrativeTooltip();
+  const { showTooltip, hideTooltip, updatePosition } = useTooltip();
 
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
@@ -405,52 +406,42 @@ export function NarrativeTimeVisual({
       .attr("class", (d) => `point point-${d.index}`)
       .attr("cx", (d) => (d.hasRealTime ? xScale(d.realTime!) : publishX))
       .attr("cy", (d) => yScale(d.narrativeTime))
-      .attr("r", TIME_CONFIG.point.radius)
+      .attr("r", (d) =>
+        d.event.index === selectedEventId
+          ? TIME_CONFIG.point.hoverRadius
+          : TIME_CONFIG.point.radius
+      )
       .attr("fill", "white")
-      .attr("stroke", "black")
+      .attr("stroke", (d) =>
+        d.event.index === selectedEventId
+          ? "#3b82f6" // Blue highlight for selected event
+          : "black"
+      )
       .attr("stroke-width", (d) =>
-        d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
+        d.event.index === selectedEventId
+          ? TIME_CONFIG.point.hoverStrokeWidth
+          : d.hasRealTime
+          ? TIME_CONFIG.point.strokeWidth
+          : 1
       )
       .attr("stroke-dasharray", (d) => (d.hasRealTime ? "none" : "2,2"))
       .style("cursor", "pointer")
       .on("mouseover", function (event, d) {
-        const point = d3.select(this);
-        point
+        // Skip if this is already the selected event
+        if (d.event.index === selectedEventId) return;
+
+        d3.select(this)
           .transition()
           .duration(150)
           .attr("r", TIME_CONFIG.point.hoverRadius)
-          .attr(
-            "stroke-width",
-            d.hasRealTime ? TIME_CONFIG.point.hoverStrokeWidth : 1.5
-          );
+          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
 
-        // Only highlight label if point has real time
-        if (d.hasRealTime) {
-          // Find and highlight corresponding label
-          const label = labelsGroup.select(`.label-container-${d.index}`);
-          label.raise();
-
-          label
-            .select(".label-background")
-            .transition()
-            .duration(150)
-            .attr("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.15))")
-            .attr("stroke", "#64748b");
-
-          label
-            .select(".connector")
-            .transition()
-            .duration(150)
-            .attr("stroke", "#64748b")
-            .attr("stroke-width", 1.5);
-        }
-
-        showTooltip(d.event, event.pageX, event.pageY);
-      })
-      .on("mousemove", function (event) {
-        updatePosition(event.pageX, event.pageY);
+        showTooltip(d.event, event.pageX, event.pageY, "time");
       })
       .on("mouseout", function (event, d) {
+        // Skip if this is the selected event
+        if (d.event.index === selectedEventId) return;
+
         const point = d3.select(this);
         point
           .transition()
@@ -459,11 +450,12 @@ export function NarrativeTimeVisual({
           .attr(
             "stroke-width",
             d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
-          );
+          )
+          .attr("stroke", "black");
 
-        // Only reset label if point has real time
+        // Only update label if point has real time
         if (d.hasRealTime) {
-          // Reset corresponding label
+          // Find and reset corresponding label
           const label = labelsGroup.select(`.label-container-${d.index}`);
 
           label
@@ -481,7 +473,14 @@ export function NarrativeTimeVisual({
             .attr("stroke-width", 1);
         }
 
+        // Hide tooltip
         hideTooltip();
+      })
+      .on("click", function (event, d) {
+        // Toggle selection
+        onEventSelect?.(
+          d.event.index === selectedEventId ? null : d.event.index
+        );
       });
 
     // Create force simulation
@@ -538,7 +537,8 @@ export function NarrativeTimeVisual({
         showTooltip(
           dataPoints[d.index].event,
           mouseEvent.pageX,
-          mouseEvent.pageY
+          mouseEvent.pageY,
+          "time"
         );
       })
       .on("mousemove", function (event) {
@@ -579,7 +579,14 @@ export function NarrativeTimeVisual({
         // Hide tooltip
         hideTooltip();
       });
-  }, [events, selectedEventId, showTooltip, hideTooltip, updatePosition]);
+  }, [
+    events,
+    selectedEventId,
+    showTooltip,
+    hideTooltip,
+    updatePosition,
+    onEventSelect,
+  ]);
 
   // Initial setup and cleanup
   useEffect(() => {
@@ -610,18 +617,11 @@ export function NarrativeTimeVisual({
     <div className="w-full h-full flex flex-col overflow-auto">
       <div
         ref={headerRef}
-        className="flex-none bg-white sticky top-0 z-10 flex items-end border-b border-gray-200"
+        className="flex-none bg-white sticky top-0 z-10 shadow-sm"
         style={{ height: `${TIME_CONFIG.header.height}px` }}
       />
       <div ref={containerRef} className="flex-1 relative">
         <svg ref={svgRef} className="w-full h-full" />
-        <NarrativeTooltip
-          event={tooltipState.event}
-          position={tooltipState.position}
-          visible={tooltipState.visible}
-          containerRef={containerRef}
-          type="time"
-        />
       </div>
     </div>
   );

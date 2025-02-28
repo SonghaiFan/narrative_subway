@@ -7,6 +7,9 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Define the output path for data.json in the public directory
+const outputPath = path.resolve(__dirname, "..", "..", "public", "data.json");
+
 // Extract level 1 topics from IPTC-Subject-NewsCodes.json
 const iptcFilePath = path.resolve(__dirname, "IPTC-Subject-NewsCodes.json");
 // Read file and fix NaN values which are invalid in JSON
@@ -127,7 +130,7 @@ const events = Array.from({ length: 50 }, (_, index) => {
     source_name: faker.internet.domainName(),
     narrative_phase: faker.lorem.word(),
     temporal_anchoring: {
-      real_time: faker.date.past().toISOString(),
+      real_time: Math.random() < 0.4 ? null : faker.date.past().toISOString(),
       narrative_time: index + 1,
       temporal_type: faker.helpers.arrayElement(["relative", "absolute"]),
       anchor: faker.lorem.word(),
@@ -167,12 +170,5 @@ const timelineData = {
 // console.log(JSON.stringify(timelineData, null, 2));
 
 // Save the generated data to a JSON file in the public directory
-const outputPath = path.resolve(
-  process.cwd(),
-  "..",
-  "..",
-  "public",
-  "data.json"
-);
 fs.writeFileSync(outputPath, JSON.stringify(timelineData, null, 2));
 console.log(`Mock data saved to ${outputPath}`);

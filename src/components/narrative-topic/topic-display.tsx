@@ -5,16 +5,32 @@ import { useState } from "react";
 import { VisualizationDisplay } from "../shared/visualization-display";
 import { NarrativeTopicVisual } from "./topic-visual";
 import { NarrativeTopicText } from "./topic-text";
+import { useCenterControl } from "@/lib/center-control-context";
 
 interface TopicDisplayProps {
   events: NarrativeEvent[];
-  selectedEventId?: string;
+  selectedEventId?: number | null;
 }
 
 type ViewMode = "visual" | "text";
 
-export function TopicDisplay({ events, selectedEventId }: TopicDisplayProps) {
+export function TopicDisplay({
+  events,
+  selectedEventId: propSelectedEventId,
+}: TopicDisplayProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("visual");
+  const {
+    selectedEventId: contextSelectedEventId,
+    setSelectedEventId,
+    selectedTopic,
+    setSelectedTopic,
+  } = useCenterControl();
+
+  // Use the prop if provided, otherwise use the context value
+  const selectedEventId =
+    propSelectedEventId !== undefined
+      ? propSelectedEventId
+      : contextSelectedEventId;
 
   return (
     <VisualizationDisplay
@@ -27,9 +43,18 @@ export function TopicDisplay({ events, selectedEventId }: TopicDisplayProps) {
         <NarrativeTopicVisual
           events={events}
           selectedEventId={selectedEventId}
+          onEventSelect={setSelectedEventId}
+          selectedTopic={selectedTopic}
+          onTopicSelect={setSelectedTopic}
         />
       ) : (
-        <NarrativeTopicText events={events} selectedEventId={selectedEventId} />
+        <NarrativeTopicText
+          events={events}
+          selectedEventId={selectedEventId}
+          onEventSelect={setSelectedEventId}
+          selectedTopic={selectedTopic}
+          onTopicSelect={setSelectedTopic}
+        />
       )}
     </VisualizationDisplay>
   );

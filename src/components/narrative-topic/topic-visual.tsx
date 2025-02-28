@@ -4,7 +4,7 @@ import { NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { TOPIC_CONFIG } from "./topic-config";
-import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
+import { useTooltip } from "@/lib/tooltip-context";
 import {
   processEvents,
   getTopicCounts,
@@ -21,7 +21,10 @@ import {
 
 interface TopicVisualProps {
   events: NarrativeEvent[];
-  selectedEventId?: string;
+  selectedEventId?: number | null;
+  onEventSelect?: (id: number | null) => void;
+  selectedTopic?: string | null;
+  onTopicSelect?: (topic: string | null) => void;
 }
 
 interface PointState {
@@ -39,14 +42,16 @@ interface ChildPoint extends DataPoint {
 export function NarrativeTopicVisual({
   events,
   selectedEventId,
+  onEventSelect,
+  selectedTopic,
+  onTopicSelect,
 }: TopicVisualProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const pointStatesRef = useRef<Map<string, PointState>>(new Map());
-  const { tooltipState, showTooltip, hideTooltip, updatePosition } =
-    useNarrativeTooltip();
+  const { showTooltip, hideTooltip, updatePosition } = useTooltip();
 
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
@@ -116,6 +121,58 @@ export function NarrativeTopicVisual({
       .attr("height", "100%")
       .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
       .style("overflow", "visible");
+
+    // Add background rect to handle clicks outside nodes
+    svg
+      .append("rect")
+      .attr("width", containerWidth)
+      .attr("height", containerHeight)
+      .attr("fill", "transparent")
+      .on("click", () => {
+        // Close all expanded groups when clicking on the background
+        groupedPoints.forEach((point) => {
+          if (point.isExpanded) {
+            point.isExpanded = false;
+            pointStatesRef.current.set(point.key, {
+              x: point.x,
+              y: point.y,
+              isExpanded: false,
+            });
+
+            // Find the parent node and collapse it
+            const parentNode = parentNodes.filter(
+              (d: GroupedPoint) => d.key === point.key
+            );
+            if (!parentNode.empty()) {
+              const parent = parentNode.node();
+              const children = d3.select(parent).selectAll(".child-point");
+              const parentCircle = d3.select(parent).select("circle");
+              const countText = d3.select(parent).select("text");
+
+              // Collapse animation
+              parentCircle
+                .transition()
+                .duration(200)
+                .attr(
+                  "r",
+                  point.points.length > 1
+                    ? TOPIC_CONFIG.point.radius * 1.2
+                    : TOPIC_CONFIG.point.radius
+                )
+                .style("opacity", 1)
+                .style("cursor", "pointer");
+
+              countText.style("opacity", 1);
+
+              children
+                .transition()
+                .duration(200)
+                .style("opacity", 0)
+                .style("pointer-events", "none");
+            }
+          }
+        });
+      });
 
     // Create main group with proper margins
     const g = svg
@@ -286,59 +343,66 @@ export function NarrativeTopicVisual({
 
     // Handle click events for parent nodes
     parentNodes.on("click", function (event: MouseEvent, d: GroupedPoint) {
-      if (d.points.length <= 1) return;
+      // If it's a group with multiple points, prioritize expand/collapse
+      if (d.points.length > 1) {
+        const isExpanded = !d.isExpanded;
+        d.isExpanded = isExpanded;
+        pointStatesRef.current.set(d.key, { x: d.x, y: d.y, isExpanded });
 
-      const isExpanded = !d.isExpanded;
-      d.isExpanded = isExpanded;
-      pointStatesRef.current.set(d.key, { x: d.x, y: d.y, isExpanded });
+        const parent = d3.select(this);
+        const children = parent.selectAll(".child-point");
+        const parentCircle = parent.select("circle");
+        const countText = parent.select("text");
 
-      const parent = d3.select(this);
-      const children = parent.selectAll(".child-point");
-      const parentCircle = parent.select("circle");
-      const countText = parent.select("text");
+        if (isExpanded) {
+          // Expand animation
+          parentCircle
+            .transition()
+            .duration(200)
+            .attr("r", TOPIC_CONFIG.point.radius * 0.8)
+            .style("opacity", 0.5)
+            .style("cursor", "pointer");
 
-      if (isExpanded) {
-        // Expand animation
-        parentCircle
-          .transition()
-          .duration(200)
-          .attr("r", TOPIC_CONFIG.point.radius * 0.8)
-          .style("opacity", 0.5)
-          .style("cursor", "pointer");
+          countText.style("opacity", 0);
 
-        countText.style("opacity", 0);
+          children
+            .transition()
+            .duration(200)
+            .style("opacity", 1)
+            .style("pointer-events", "all");
+        } else {
+          // Collapse animation
+          parentCircle
+            .transition()
+            .duration(200)
+            .attr(
+              "r",
+              d.points.length > 1
+                ? TOPIC_CONFIG.point.radius * 1.2
+                : TOPIC_CONFIG.point.radius
+            )
+            .style("opacity", 1)
+            .style("cursor", "pointer");
 
-        children
-          .transition()
-          .duration(200)
-          .style("opacity", 1)
-          .style("pointer-events", "all");
+          countText.style("opacity", 1);
+
+          children
+            .transition()
+            .duration(200)
+            .style("opacity", 0)
+            .style("pointer-events", "none");
+        }
       } else {
-        // Collapse animation
-        parentCircle
-          .transition()
-          .duration(200)
-          .attr(
-            "r",
-            d.points.length > 1
-              ? TOPIC_CONFIG.point.radius * 1.2
-              : TOPIC_CONFIG.point.radius
-          )
-          .style("opacity", 1)
-          .style("cursor", "pointer");
-
-        countText.style("opacity", 1);
-
-        children
-          .transition()
-          .duration(200)
-          .style("opacity", 0)
-          .style("pointer-events", "none");
+        // If it's a single point (not a group), handle selection
+        const eventData = d.points[0].event;
+        onEventSelect?.(
+          eventData.index === selectedEventId ? null : eventData.index
+        );
       }
     });
 
     // Handle hover events
-    const handleMouseOver = (event: MouseEvent, d: any) => {
+    const handleMouseOver = function (this: Element, event: any, d: unknown) {
       if (!event.currentTarget) return;
 
       const target = d3.select(event.currentTarget as Element);
@@ -348,11 +412,14 @@ export function NarrativeTopicVisual({
         .attr("r", TOPIC_CONFIG.point.hoverRadius)
         .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
 
-      const eventData = "points" in d ? d.points[0].event : d.event;
-      showTooltip(eventData, event.pageX, event.pageY);
+      const eventData =
+        "points" in d
+          ? (d as GroupedPoint).points[0].event
+          : (d as ChildPoint).event;
+      showTooltip(eventData, event.pageX, event.pageY, "topic");
     };
 
-    const handleMouseOut = (event: MouseEvent, d: any) => {
+    const handleMouseOut = function (this: Element, event: any, d: unknown) {
       if (!event.currentTarget) return;
 
       const target = d3.select(event.currentTarget as Element);
@@ -363,16 +430,25 @@ export function NarrativeTopicVisual({
 
       if (!parentData) return;
 
-      target
-        .transition()
-        .duration(150)
-        .attr(
-          "r",
-          isParent && parentData.points.length > 1
-            ? TOPIC_CONFIG.point.radius * 1.2
-            : TOPIC_CONFIG.point.radius
-        )
-        .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
+      // Don't reset the style if this is the selected event
+      const eventData =
+        "points" in d
+          ? (d as GroupedPoint).points[0].event
+          : (d as ChildPoint).event;
+      const isSelected = selectedEventId === eventData.index;
+
+      if (!isSelected) {
+        target
+          .transition()
+          .duration(150)
+          .attr(
+            "r",
+            isParent && parentData.points.length > 1
+              ? TOPIC_CONFIG.point.radius * 1.2
+              : TOPIC_CONFIG.point.radius
+          )
+          .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
+      }
 
       hideTooltip();
     };
@@ -382,7 +458,7 @@ export function NarrativeTopicVisual({
       .selectAll("circle")
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut)
-      .on("mousemove", (event) => {
+      .on("mousemove", function (event) {
         updatePosition(event.pageX, event.pageY);
       });
 
@@ -390,10 +466,57 @@ export function NarrativeTopicVisual({
       .selectAll("circle")
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut)
-      .on("mousemove", (event) => {
+      .on("mousemove", function (event) {
         updatePosition(event.pageX, event.pageY);
+      })
+      .on("click", function (this: Element, event: any, d: unknown) {
+        // For child nodes, we always handle selection
+        const childPoint = d as ChildPoint;
+        const eventData = childPoint.event;
+        onEventSelect?.(
+          eventData.index === selectedEventId ? null : eventData.index
+        );
+        event.stopPropagation(); // Prevent the click from bubbling up to the parent
       });
-  }, [events, selectedEventId, showTooltip, hideTooltip, updatePosition]);
+
+    // Highlight the selected event if any
+    if (selectedEventId !== null && selectedEventId !== undefined) {
+      // Find all circles (both parent and child) that represent the selected event
+      parentNodes
+        .selectAll("circle")
+        .each(function (this: Element, d: unknown) {
+          const eventData =
+            "points" in d
+              ? (d as GroupedPoint).points[0].event
+              : (d as ChildPoint).event;
+          if (eventData.index === selectedEventId) {
+            d3.select(this)
+              .attr("r", TOPIC_CONFIG.point.hoverRadius)
+              .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
+              .attr("stroke", "#3b82f6"); // Use a highlight color (blue)
+          }
+        });
+
+      childNodes.selectAll("circle").each(function (this: Element, d: unknown) {
+        const childPoint = d as ChildPoint;
+        if (childPoint.event.index === selectedEventId) {
+          d3.select(this)
+            .attr("r", TOPIC_CONFIG.point.hoverRadius)
+            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
+            .attr("stroke", "#3b82f6"); // Use a highlight color (blue)
+        }
+      });
+    }
+  }, [
+    events,
+    selectedEventId,
+    selectedTopic,
+    showTooltip,
+    hideTooltip,
+    updatePosition,
+    onEventSelect,
+    onTopicSelect,
+  ]);
 
   // Initial setup and cleanup
   useEffect(() => {
@@ -421,21 +544,14 @@ export function NarrativeTopicVisual({
   }, [updateVisualization]);
 
   return (
-    <div className="w-full h-full flex flex-col overflow-hidden">
+    <div className="w-full h-full flex flex-col overflow-auto">
       <div
         ref={headerRef}
         className="flex-none bg-white sticky top-0 z-10 shadow-sm"
         style={{ height: `${TOPIC_CONFIG.header.height}px` }}
       />
-      <div ref={containerRef} className="flex-1 relative overflow-y-auto">
+      <div ref={containerRef} className="flex-1 relative">
         <svg ref={svgRef} className="w-full h-full" />
-        <NarrativeTooltip
-          event={tooltipState.event}
-          position={tooltipState.position}
-          visible={tooltipState.visible}
-          containerRef={containerRef}
-          type="topic"
-        />
       </div>
     </div>
   );

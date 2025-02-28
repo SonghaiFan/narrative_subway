@@ -8,6 +8,7 @@ interface VisualizationDisplayProps {
   setViewMode: (mode: "visual" | "text") => void;
   children: ReactNode;
   isEmpty?: boolean;
+  headerContent?: ReactNode;
 }
 
 export function VisualizationDisplay({
@@ -16,6 +17,7 @@ export function VisualizationDisplay({
   setViewMode,
   children,
   isEmpty = false,
+  headerContent,
 }: VisualizationDisplayProps) {
   if (isEmpty) {
     return (
@@ -28,7 +30,10 @@ export function VisualizationDisplay({
   return (
     <div className="h-full flex flex-col">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
-        <h2 className="text-sm font-medium text-gray-600">{title}</h2>
+        <div className="flex items-center gap-4">
+          <h2 className="text-sm font-medium text-gray-600">{title}</h2>
+          {headerContent}
+        </div>
         <div className="flex gap-1">
           <button
             onClick={() => setViewMode("visual")}

@@ -16,8 +16,12 @@ interface EntityContext {
   }[];
 }
 
-interface EntityTextProps {
+export interface EntityTextProps {
   events: NarrativeEvent[];
+  selectedEntityId?: string | null;
+  onEntitySelect?: (id: string | null) => void;
+  selectedEventId?: number | null;
+  onEventSelect?: (id: number | null) => void;
 }
 
 export function EntityText({ events }: EntityTextProps) {

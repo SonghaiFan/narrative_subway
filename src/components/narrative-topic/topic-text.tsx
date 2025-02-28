@@ -5,7 +5,10 @@ import { useMemo } from "react";
 
 interface NarrativeTopicTextProps {
   events: NarrativeEvent[];
-  selectedEventId?: string;
+  selectedEventId?: number | null;
+  onEventSelect?: (id: number | null) => void;
+  selectedTopic?: string | null;
+  onTopicSelect?: (topic: string | null) => void;
 }
 
 interface TopicContext {
@@ -25,6 +28,9 @@ interface TopicContext {
 export function NarrativeTopicText({
   events,
   selectedEventId,
+  onEventSelect,
+  selectedTopic,
+  onTopicSelect,
 }: NarrativeTopicTextProps) {
   const topicFlow = useMemo(() => {
     // Build topic analysis

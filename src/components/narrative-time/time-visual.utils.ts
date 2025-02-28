@@ -1,5 +1,5 @@
 import { NarrativeEvent } from "@/types/article";
-import { TIME_CONFIG, EVENT_COLORS } from "./time-config";
+import { TIME_CONFIG } from "./time-config";
 import * as d3 from "d3";
 
 export interface DataPoint {

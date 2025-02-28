@@ -1,7 +1,16 @@
+"use client";
+
 import { NarrativeEvent, TimelineData } from "@/types/article";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { FileSelect } from "@/components/ui/file-select";
+import { useCenterControl } from "@/lib/center-control-context";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ProfileSectionProps {
   title: string;
@@ -26,7 +35,7 @@ export function ProfileSection({
 }: ProfileSectionProps) {
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState("data.json");
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading, clearSelections } = useCenterControl();
 
   const stats = {
     entities: new Set(
@@ -55,6 +64,9 @@ export function ProfileSection({
     async (fileName: string) => {
       setIsLoading(true);
       setSelectedFile(fileName);
+      // Clear all selections when changing files
+      clearSelections();
+
       try {
         const response = await fetch(`/${fileName}`);
         const data: TimelineData = await response.json();
@@ -65,7 +77,7 @@ export function ProfileSection({
         setIsLoading(false);
       }
     },
-    [onDataChange]
+    [onDataChange, setIsLoading, clearSelections]
   );
 
   return (
@@ -87,12 +99,18 @@ export function ProfileSection({
             {isLoading && (
               <span className="text-sm text-neutral-500">Loading...</span>
             )}
-            <FileSelect
-              value={selectedFile}
-              onChange={handleFileChange}
-              options={availableFiles}
-              placeholder="Select data file"
-            />
+            <Select value={selectedFile} onValueChange={handleFileChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select data file" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableFiles.map((file) => (
+                  <SelectItem key={file} value={file}>
+                    {file}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 

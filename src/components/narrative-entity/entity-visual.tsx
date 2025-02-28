@@ -4,19 +4,48 @@ import { Entity, NarrativeEvent } from "@/types/article";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { ENTITY_CONFIG } from "./entity-config";
-import { NarrativeTooltip, useNarrativeTooltip } from "../ui/narrative-tooltip";
+import { useTooltip } from "@/lib/tooltip-context";
 
-interface EntityVisualProps {
-  events: NarrativeEvent[];
+type EntityAttribute = string;
+
+interface EntityAttributeConfig {
+  id: EntityAttribute;
+  label: string;
 }
 
-export function EntityVisual({ events }: EntityVisualProps) {
+export interface EntityVisualProps {
+  events: NarrativeEvent[];
+  selectedAttribute: string;
+  entityAttributes: readonly { id: string; label: string }[];
+  selectedEntityId?: string | null;
+  onEntitySelect?: (id: string | null) => void;
+  selectedEventId?: number | null;
+  onEventSelect?: (id: number | null) => void;
+}
+
+export function EntityVisual({
+  events,
+  selectedAttribute,
+  entityAttributes,
+  selectedEntityId,
+  onEntitySelect,
+  selectedEventId,
+  onEventSelect,
+}: EntityVisualProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
-  const { tooltipState, showTooltip, hideTooltip, updatePosition } =
-    useNarrativeTooltip();
+  const { showTooltip, hideTooltip, updatePosition } = useTooltip();
+
+  // Function to get entity attribute value
+  const getEntityAttributeValue = useCallback(
+    (entity: Entity, attribute: EntityAttribute) => {
+      const value = entity[attribute];
+      return value?.toString() || "Unknown";
+    },
+    []
+  );
 
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
@@ -59,11 +88,12 @@ export function EntityVisual({ events }: EntityVisualProps) {
     const entityMentions = new Map<string, { entity: Entity; count: number }>();
     events.forEach((event) => {
       event.entities.forEach((entity) => {
-        if (!entityMentions.has(entity.name)) {
-          entityMentions.set(entity.name, { entity, count: 1 });
+        const key = getEntityAttributeValue(entity, selectedAttribute);
+        if (!entityMentions.has(key)) {
+          entityMentions.set(key, { entity, count: 1 });
         } else {
-          const current = entityMentions.get(entity.name)!;
-          entityMentions.set(entity.name, { entity, count: current.count + 1 });
+          const current = entityMentions.get(key)!;
+          entityMentions.set(key, { entity, count: current.count + 1 });
         }
       });
     });
@@ -103,7 +133,11 @@ export function EntityVisual({ events }: EntityVisualProps) {
     // Create scale with responsive width
     const xScale = d3
       .scaleBand()
-      .domain(visibleEntities.map((e) => e.name))
+      .domain(
+        visibleEntities.map((e) =>
+          getEntityAttributeValue(e, selectedAttribute)
+        )
+      )
       .range([0, totalColumnsWidth])
       .padding(ENTITY_CONFIG.entity.columnPadding);
 
@@ -123,7 +157,8 @@ export function EntityVisual({ events }: EntityVisualProps) {
 
     // Create entity labels in the fixed header
     visibleEntities.forEach((entity) => {
-      const x = xScale(entity.name)!;
+      const attrValue = getEntityAttributeValue(entity, selectedAttribute);
+      const x = xScale(attrValue)!;
       const labelContainer = headerContent
         .append("div")
         .style("position", "absolute")
@@ -132,12 +167,12 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .style("cursor", "pointer")
         .style("max-width", `${xScale.bandwidth()}px`)
         .on("mouseenter", function () {
-          g.select(`.guide-line-${entity.name.replace(/\s+/g, "-")}`)
+          g.select(`.guide-line-${attrValue.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.8)
             .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
         })
         .on("mouseleave", function () {
-          g.select(`.guide-line-${entity.name.replace(/\s+/g, "-")}`)
+          g.select(`.guide-line-${attrValue.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.3)
             .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
         });
@@ -150,18 +185,20 @@ export function EntityVisual({ events }: EntityVisualProps) {
         .style("white-space", "nowrap")
         .style("overflow", "hidden")
         .style("text-overflow", "ellipsis")
-        .attr("title", entity.name)
-        .text(entity.name);
+        .attr("title", attrValue)
+        .text(attrValue);
 
-      labelContainer
-        .append("div")
-        .style("font-size", "12px")
-        .style("color", "#6B7280")
-        .style("margin-top", "2px")
-        .style("white-space", "nowrap")
-        .style("overflow", "hidden")
-        .style("text-overflow", "ellipsis")
-        .text(entity.social_role);
+      if (selectedAttribute === "name") {
+        labelContainer
+          .append("div")
+          .style("font-size", "12px")
+          .style("color", "#6B7280")
+          .style("margin-top", "2px")
+          .style("white-space", "nowrap")
+          .style("overflow", "hidden")
+          .style("text-overflow", "ellipsis")
+          .text(entity.social_role || "");
+      }
     });
 
     // Create SVG
@@ -181,11 +218,17 @@ export function EntityVisual({ events }: EntityVisualProps) {
 
     // Draw entity columns
     visibleEntities.forEach((entity) => {
-      const x = xScale(entity.name)!;
+      const x = xScale(getEntityAttributeValue(entity, selectedAttribute))!;
       const entityColor = "#94a3b8";
 
       g.append("line")
-        .attr("class", `guide-line-${entity.name.replace(/\s+/g, "-")}`)
+        .attr(
+          "class",
+          `guide-line-${getEntityAttributeValue(
+            entity,
+            selectedAttribute
+          ).replace(/\s+/g, "-")}`
+        )
         .attr("x1", x + xScale.bandwidth() / 2)
         .attr("y1", 0)
         .attr("x2", x + xScale.bandwidth() / 2)
@@ -236,7 +279,11 @@ export function EntityVisual({ events }: EntityVisualProps) {
     events.forEach((event) => {
       // First collect all relevant entities for this event
       const relevantEntities = event.entities.filter((entity) =>
-        visibleEntities.find((e) => e.name === entity.name)
+        visibleEntities.find(
+          (e) =>
+            getEntityAttributeValue(e, selectedAttribute) ===
+            getEntityAttributeValue(entity, selectedAttribute)
+        )
       );
 
       if (relevantEntities.length > 0) {
@@ -245,7 +292,9 @@ export function EntityVisual({ events }: EntityVisualProps) {
         // Draw connector line if multiple entities
         if (relevantEntities.length > 1) {
           const xPoints = relevantEntities.map(
-            (entity) => xScale(entity.name)! + xScale.bandwidth() / 2
+            (entity) =>
+              xScale(getEntityAttributeValue(entity, selectedAttribute))! +
+              xScale.bandwidth() / 2
           );
           const minX = Math.min(...xPoints);
           const maxX = Math.max(...xPoints);
@@ -268,18 +317,35 @@ export function EntityVisual({ events }: EntityVisualProps) {
 
         // 2. Draw nodes in the middle
         relevantEntities.forEach((entity) => {
-          const x = xScale(entity.name)! + xScale.bandwidth() / 2;
+          const x =
+            xScale(getEntityAttributeValue(entity, selectedAttribute))! +
+            xScale.bandwidth() / 2;
+
+          const isSelected = event.index === selectedEventId;
 
           // Add event node
           g.append("circle")
             .attr("cx", x)
             .attr("cy", y)
-            .attr("r", ENTITY_CONFIG.event.nodeRadius)
+            .attr(
+              "r",
+              isSelected
+                ? ENTITY_CONFIG.event.nodeRadius * 1.5
+                : ENTITY_CONFIG.event.nodeRadius
+            )
             .attr("fill", "white")
-            .attr("stroke", "black")
-            .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth)
+            .attr("stroke", isSelected ? "#3b82f6" : "black")
+            .attr(
+              "stroke-width",
+              isSelected
+                ? ENTITY_CONFIG.event.nodeStrokeWidth * 1.5
+                : ENTITY_CONFIG.event.nodeStrokeWidth
+            )
             .style("cursor", "pointer")
             .on("mouseover", function (e) {
+              // Skip if this is already the selected event
+              if (isSelected) return;
+
               d3.select(this)
                 .transition()
                 .duration(150)
@@ -289,26 +355,38 @@ export function EntityVisual({ events }: EntityVisualProps) {
                   ENTITY_CONFIG.event.nodeStrokeWidth * 1.5
                 );
 
-              showTooltip(event, e.pageX, e.pageY);
+              showTooltip(event, e.pageX, e.pageY, "entity");
             })
             .on("mousemove", function (e) {
               updatePosition(e.pageX, e.pageY);
             })
             .on("mouseout", function () {
+              // Skip if this is the selected event
+              if (isSelected) return;
+
               d3.select(this)
                 .transition()
                 .duration(150)
                 .attr("r", ENTITY_CONFIG.event.nodeRadius)
-                .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth);
+                .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth)
+                .attr("stroke", "black");
 
               hideTooltip();
+            })
+            .on("click", function () {
+              // Toggle selection
+              onEventSelect?.(
+                event.index === selectedEventId ? null : event.index
+              );
             });
         });
 
         // 3. Finally draw the inner white connector on top
         if (relevantEntities.length > 1) {
           const xPoints = relevantEntities.map(
-            (entity) => xScale(entity.name)! + xScale.bandwidth() / 2
+            (entity) =>
+              xScale(getEntityAttributeValue(entity, selectedAttribute))! +
+              xScale.bandwidth() / 2
           );
           const minX = Math.min(...xPoints);
           const maxX = Math.max(...xPoints);
@@ -328,7 +406,16 @@ export function EntityVisual({ events }: EntityVisualProps) {
         }
       }
     });
-  }, [events, showTooltip, hideTooltip, updatePosition]);
+  }, [
+    events,
+    selectedAttribute,
+    getEntityAttributeValue,
+    showTooltip,
+    hideTooltip,
+    updatePosition,
+    selectedEventId,
+    onEventSelect,
+  ]);
 
   // Initial setup and cleanup
   useEffect(() => {
@@ -357,20 +444,14 @@ export function EntityVisual({ events }: EntityVisualProps) {
 
   return (
     <div className="w-full h-full flex flex-col overflow-auto">
-      <div
-        ref={headerRef}
-        className="flex-none bg-white sticky top-0 z-10 shadow-sm"
-        style={{ height: `${ENTITY_CONFIG.header.height}px` }}
-      />
+      <div className="flex-none bg-white sticky top-0 z-10 shadow-sm p-2">
+        <div
+          ref={headerRef}
+          style={{ height: `${ENTITY_CONFIG.header.height}px` }}
+        />
+      </div>
       <div ref={containerRef} className="flex-1 relative">
         <svg ref={svgRef} className="w-full h-full" />
-        <NarrativeTooltip
-          event={tooltipState.event}
-          position={tooltipState.position}
-          visible={tooltipState.visible}
-          containerRef={containerRef}
-          type="entity"
-        />
       </div>
     </div>
   );

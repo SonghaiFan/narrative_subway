@@ -3,7 +3,8 @@ import { useState } from "react";
 
 interface TimeTextProps {
   events: NarrativeEvent[];
-  selectedEventId?: string;
+  selectedEventId?: number | null;
+  onEventSelect?: (id: number | null) => void;
 }
 
 export function NarrativeTimeText({ events, selectedEventId }: TimeTextProps) {
@@ -41,7 +42,7 @@ export function NarrativeTimeText({ events, selectedEventId }: TimeTextProps) {
                 <div
                   key={event.index}
                   className={`bg-gray-50 p-3 rounded-lg ${
-                    selectedEventId === String(event.index)
+                    selectedEventId === event.index
                       ? "ring-2 ring-blue-500"
                       : ""
                   }`}

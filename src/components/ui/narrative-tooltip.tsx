@@ -1,221 +1,122 @@
+"use client";
+
 import { Entity, NarrativeEvent } from "@/types/article";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { formatDate } from "@/lib/utils";
+import { TooltipPosition, VisualizationType } from "@/lib/tooltip-context";
 
-interface TooltipPosition {
-  x: number;
-  y: number;
-}
-
-type VisualizationType = "entity" | "time" | "topic";
-
-interface TooltipProps {
+interface NarrativeTooltipProps {
   event: NarrativeEvent | null;
-  position: TooltipPosition;
+  position: TooltipPosition | null;
   visible: boolean;
-  containerRef: React.RefObject<HTMLElement | null>;
-  type?: VisualizationType;
-}
-
-function EntityTooltipContent({ event }: { event: NarrativeEvent }) {
-  return (
-    <>
-      <div className="font-semibold text-gray-900 mb-2">{event.short_text}</div>
-      <div className="space-y-2">
-        <div className="text-sm text-gray-700 mb-2 border-b border-gray-100 pb-2">
-          {event.text}
-        </div>
-        <div className="text-sm text-gray-700">
-          <span className="text-gray-500">Phase:</span> {event.narrative_phase}
-        </div>
-        <div className="text-sm">
-          <span className="text-gray-500">Entities:</span>
-          <div className="mt-1 flex flex-wrap gap-1">
-            {event.entities.map((entity: Entity) => (
-              <span
-                key={entity.id}
-                className="inline-flex items-center px-2 py-0.5 rounded text-xs"
-              >
-                {entity.name}
-                <span className="ml-1 text-[10px] opacity-75">
-                  ({entity.social_role})
-                </span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function TimeTooltipContent({ event }: { event: NarrativeEvent }) {
-  return (
-    <>
-      <div className="font-semibold text-gray-900 mb-2">{event.short_text}</div>
-      <div className="space-y-2">
-        <div className="text-sm text-gray-700 mb-2 border-b border-gray-100 pb-2">
-          {event.text}
-        </div>
-        <div className="text-sm text-gray-700">
-          <span className="text-gray-500">Time:</span>{" "}
-          {event.temporal_anchoring.real_time ||
-            event.temporal_anchoring.anchor}
-        </div>
-        {event.lead_title && (
-          <div className="text-sm text-gray-700">
-            <span className="text-gray-500">Section:</span> {event.lead_title}
-          </div>
-        )}
-        <div className="text-sm text-gray-700">
-          <span className="text-gray-500">Source:</span>{" "}
-          {event.source_name || "Not specified"}
-        </div>
-      </div>
-    </>
-  );
-}
-
-function TopicTooltipContent({ event }: { event: NarrativeEvent }) {
-  return (
-    <>
-      <div className="font-semibold text-gray-900 mb-2">{event.short_text}</div>
-      <div className="space-y-2">
-        <div className="text-sm text-gray-700 mb-2 border-b border-gray-100 pb-2">
-          {event.text}
-        </div>
-        <div className="text-sm text-gray-700">
-          <span className="text-gray-500">Main Topic:</span>{" "}
-          {event.topic.main_topic}
-        </div>
-        {event.topic.sub_topic.length > 0 && (
-          <div className="text-sm">
-            <span className="text-gray-500">Sub-topics:</span>
-            <div className="mt-1 flex flex-wrap gap-1">
-              {event.topic.sub_topic.map((topic) => (
-                <span
-                  key={topic}
-                  className="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-700"
-                >
-                  {topic}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-        <div className="text-sm text-gray-700">
-          <span className="text-gray-500">Sentiment:</span>{" "}
-          <span
-            className={`${
-              event.topic.sentiment.polarity === "positive"
-                ? "text-green-600"
-                : event.topic.sentiment.polarity === "negative"
-                ? "text-red-600"
-                : "text-gray-600"
-            }`}
-          >
-            {event.topic.sentiment.polarity} (
-            {Math.round(event.topic.sentiment.intensity * 100)}%)
-          </span>
-        </div>
-      </div>
-    </>
-  );
+  type: VisualizationType;
 }
 
 export function NarrativeTooltip({
   event,
   position,
   visible,
-  containerRef,
-  type = "topic",
-}: TooltipProps) {
+  type,
+}: NarrativeTooltipProps) {
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipStyle, setTooltipStyle] = useState({
+    left: "0px",
+    top: "0px",
+    opacity: 0,
+    pointerEvents: "none" as const,
+  });
 
-  const updatePosition = useCallback(() => {
-    if (!tooltipRef.current || !containerRef.current) return;
+  useEffect(() => {
+    if (!tooltipRef.current || !position || !visible) {
+      setTooltipStyle((prev) => ({ ...prev, opacity: 0 }));
+      return;
+    }
 
-    const tooltipEl = tooltipRef.current;
-    const containerBounds = containerRef.current.getBoundingClientRect();
-    const tooltipBounds = tooltipEl.getBoundingClientRect();
+    const tooltipWidth = tooltipRef.current.offsetWidth;
+    const tooltipHeight = tooltipRef.current.offsetHeight;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
+    // Calculate position to ensure tooltip stays within viewport
     let left = position.x + 10;
     let top = position.y + 10;
 
     // Adjust horizontal position if needed
-    if (left + tooltipBounds.width > viewportWidth - 10) {
-      left = position.x - tooltipBounds.width - 10;
+    if (left + tooltipWidth > viewportWidth - 20) {
+      left = position.x - tooltipWidth - 10;
     }
 
     // Adjust vertical position if needed
-    if (top + tooltipBounds.height > viewportHeight - 10) {
-      top = position.y - tooltipBounds.height - 10;
+    if (top + tooltipHeight > viewportHeight - 20) {
+      top = position.y - tooltipHeight - 10;
     }
 
-    tooltipEl.style.left = `${left}px`;
-    tooltipEl.style.top = `${top}px`;
-  }, [position, containerRef]);
+    setTooltipStyle({
+      left: `${left}px`,
+      top: `${top}px`,
+      opacity: 1,
+      pointerEvents: "none",
+    });
+  }, [position, visible]);
 
-  useEffect(() => {
-    if (visible) {
-      updatePosition();
-    }
-  }, [visible, updatePosition]);
-
-  if (!visible || !event) return null;
+  if (!event || !visible) {
+    return null;
+  }
 
   return (
     <div
       ref={tooltipRef}
-      className="fixed bg-white p-4 rounded-lg shadow-lg text-sm z-50 pointer-events-none border border-gray-200"
-      style={{ maxWidth: "320px" }}
+      className="fixed z-50 bg-white rounded-md shadow-lg p-3 max-w-xs border border-gray-200 text-sm"
+      style={tooltipStyle}
     >
-      {type === "entity" && <EntityTooltipContent event={event} />}
-      {type === "time" && <TimeTooltipContent event={event} />}
-      {type === "topic" && <TopicTooltipContent event={event} />}
+      <div className="font-medium text-gray-900">
+        {event.short_text || event.text.substring(0, 50) + "..."}
+      </div>
+
+      {event.temporal_anchoring?.real_time && (
+        <div className="text-gray-500 text-xs mt-1">
+          {formatDate(event.temporal_anchoring.real_time)}
+        </div>
+      )}
+
+      <div className="text-gray-700 mt-2 text-xs line-clamp-3">
+        {event.text}
+      </div>
+
+      {type === "topic" && event.topic && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+            {event.topic.main_topic}
+          </span>
+          {event.topic.sub_topic &&
+            event.topic.sub_topic.map((subTopic, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700"
+              >
+                {subTopic}
+              </span>
+            ))}
+        </div>
+      )}
+
+      {type === "entity" && event.entities && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          {event.entities.map((entity, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800"
+            >
+              {entity.name}
+              {entity.social_role && (
+                <span className="ml-1 text-xs text-green-600">
+                  ({entity.social_role})
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
-}
-
-// Helper hook for managing tooltip state
-export function useNarrativeTooltip() {
-  const [tooltipState, setTooltipState] = useState<{
-    event: NarrativeEvent | null;
-    position: TooltipPosition;
-    visible: boolean;
-  }>({
-    event: null,
-    position: { x: 0, y: 0 },
-    visible: false,
-  });
-
-  const showTooltip = useCallback(
-    (event: NarrativeEvent, x: number, y: number) => {
-      setTooltipState({
-        event,
-        position: { x, y },
-        visible: true,
-      });
-    },
-    []
-  );
-
-  const hideTooltip = useCallback(() => {
-    setTooltipState((prev) => ({ ...prev, visible: false }));
-  }, []);
-
-  const updatePosition = useCallback((x: number, y: number) => {
-    setTooltipState((prev) => ({
-      ...prev,
-      position: { x, y },
-    }));
-  }, []);
-
-  return {
-    tooltipState,
-    showTooltip,
-    hideTooltip,
-    updatePosition,
-  };
 }
