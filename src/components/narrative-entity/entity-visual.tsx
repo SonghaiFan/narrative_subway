@@ -32,7 +32,30 @@ export function EntityVisual({ events }: EntityVisualProps) {
     d3.select(svgRef.current).selectAll("*").remove();
     d3.select(headerRef.current).selectAll("*").remove();
 
-    // Get entity mentions count and select top 5 by name
+    // Setup dimensions first
+    const containerWidth = containerRef.current.clientWidth;
+    const width =
+      containerWidth - ENTITY_CONFIG.margin.left - ENTITY_CONFIG.margin.right;
+    const minHeight =
+      events.length * 20 +
+      ENTITY_CONFIG.margin.top +
+      ENTITY_CONFIG.margin.bottom;
+    const containerHeight = Math.max(minHeight, ENTITY_CONFIG.minHeight);
+    const height =
+      containerHeight - ENTITY_CONFIG.margin.top - ENTITY_CONFIG.margin.bottom;
+
+    // Calculate how many entities can fit based on available width
+    const calculateMaxEntities = (
+      availableWidth: number,
+      minColumnWidth: number,
+      columnGap: number
+    ) => {
+      return Math.floor(
+        (availableWidth + columnGap) / (minColumnWidth + columnGap)
+      );
+    };
+
+    // Get entity mentions count and select entities that can fit
     const entityMentions = new Map<string, { entity: Entity; count: number }>();
     events.forEach((event) => {
       event.entities.forEach((entity) => {
@@ -45,37 +68,33 @@ export function EntityVisual({ events }: EntityVisualProps) {
       });
     });
 
-    const top5Entities = Array.from(entityMentions.values())
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5)
-      .map((item) => item.entity);
+    // Calculate max entities that can fit
+    const maxEntities = calculateMaxEntities(
+      width,
+      ENTITY_CONFIG.entity.minColumnWidth,
+      ENTITY_CONFIG.entity.columnGap
+    );
 
-    // Setup dimensions
-    const containerWidth = containerRef.current.clientWidth;
-    const minHeight =
-      events.length * 20 +
-      ENTITY_CONFIG.margin.top +
-      ENTITY_CONFIG.margin.bottom;
-    const containerHeight = Math.max(minHeight, ENTITY_CONFIG.minHeight);
-    const width =
-      containerWidth - ENTITY_CONFIG.margin.left - ENTITY_CONFIG.margin.right;
-    const height =
-      containerHeight - ENTITY_CONFIG.margin.top - ENTITY_CONFIG.margin.bottom;
+    const visibleEntities = Array.from(entityMentions.values())
+      .sort((a, b) => b.count - a.count)
+      .slice(0, maxEntities)
+      .map((item) => item.entity);
 
     // Calculate responsive column width
     const totalGapWidth =
-      (top5Entities.length - 1) * ENTITY_CONFIG.entity.columnGap;
+      (visibleEntities.length - 1) * ENTITY_CONFIG.entity.columnGap;
     const availableWidth = width - totalGapWidth;
     const columnWidth = Math.min(
       ENTITY_CONFIG.entity.maxColumnWidth,
       Math.max(
         ENTITY_CONFIG.entity.minColumnWidth,
-        availableWidth / top5Entities.length
+        availableWidth / visibleEntities.length
       )
     );
 
     // Calculate total width including gaps
-    const totalColumnsWidth = columnWidth * top5Entities.length + totalGapWidth;
+    const totalColumnsWidth =
+      columnWidth * visibleEntities.length + totalGapWidth;
 
     // Center the visualization if total width is less than available width
     const leftOffset =
@@ -84,7 +103,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
     // Create scale with responsive width
     const xScale = d3
       .scaleBand()
-      .domain(top5Entities.map((e) => e.name))
+      .domain(visibleEntities.map((e) => e.name))
       .range([0, totalColumnsWidth])
       .padding(ENTITY_CONFIG.entity.columnPadding);
 
@@ -103,7 +122,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
       .style("width", `${totalColumnsWidth}px`);
 
     // Create entity labels in the fixed header
-    top5Entities.forEach((entity) => {
+    visibleEntities.forEach((entity) => {
       const x = xScale(entity.name)!;
       const labelContainer = headerContent
         .append("div")
@@ -161,7 +180,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
       );
 
     // Draw entity columns
-    top5Entities.forEach((entity) => {
+    visibleEntities.forEach((entity) => {
       const x = xScale(entity.name)!;
       const entityColor = "#94a3b8";
 
@@ -217,7 +236,7 @@ export function EntityVisual({ events }: EntityVisualProps) {
     events.forEach((event) => {
       // First collect all relevant entities for this event
       const relevantEntities = event.entities.filter((entity) =>
-        top5Entities.find((e) => e.name === entity.name)
+        visibleEntities.find((e) => e.name === entity.name)
       );
 
       if (relevantEntities.length > 0) {

@@ -3,7 +3,8 @@ import { SHARED_CONFIG } from "../shared/visualization-config";
 
 export const ENTITY_CONFIG = merge({}, SHARED_CONFIG, {
   margin: {
-    left: 120,
+    left: 60,
+    right: 20,
   },
   entity: {
     labelFontSize: 14,
