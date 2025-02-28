@@ -257,7 +257,7 @@ export function ResizableGrid({
         </Panel>
       </PanelGroup>
 
-      {/* Cross-section handle - kept simple */}
+      {/* Cross-section handle*/}
       <div
         className={`absolute w-6 h-6 bg-gray-100 hover:bg-gray-200 rounded-full cursor-move transform -translate-x-1/2 -translate-y-1/2 transition-colors z-50 flex items-center justify-center shadow-md border border-gray-300 ${
           isDragging ? "bg-gray-200 scale-110" : ""

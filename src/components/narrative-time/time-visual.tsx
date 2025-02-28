@@ -614,13 +614,13 @@ export function NarrativeTimeVisual({
   }, [updateVisualization]);
 
   return (
-    <div className="w-full h-full flex flex-col overflow-auto">
+    <div className="w-full h-full flex flex-col overflow-hidden">
       <div
         ref={headerRef}
         className="flex-none bg-white sticky top-0 z-10 shadow-sm"
         style={{ height: `${TIME_CONFIG.header.height}px` }}
       />
-      <div ref={containerRef} className="flex-1 relative">
+      <div ref={containerRef} className="flex-1 relative overflow-y-auto">
         <svg ref={svgRef} className="w-full h-full" />
       </div>
     </div>
