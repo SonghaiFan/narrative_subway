@@ -39,6 +39,46 @@ export function NarrativeTimeVisual({
   const isDraggingRef = useRef(false);
   const { showTooltip, hideTooltip, updatePosition } = useTooltip();
 
+  // Function to update node styles based on selectedEventId
+  const updateSelectedEventStyles = useCallback(
+    (newSelectedId: number | null) => {
+      if (!svgRef.current) return;
+
+      // Reset all points to default style
+      d3.select(svgRef.current)
+        .selectAll(".point")
+        .each(function () {
+          const point = d3.select(this);
+          const eventIndex = parseInt(point.attr("data-event-index"), 10);
+          const hasRealTime = point.attr("data-has-real-time") === "true";
+
+          point
+            .attr("r", TIME_CONFIG.point.radius)
+            .attr("stroke", "black")
+            .attr(
+              "stroke-width",
+              hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
+            );
+        });
+
+      // If we have a selected event, highlight it
+      if (newSelectedId !== null && newSelectedId !== undefined) {
+        // Use attribute selector to find all points with matching event index
+        const selectedPoints = d3
+          .select(svgRef.current)
+          .selectAll(`.point[data-event-index="${newSelectedId}"]`);
+
+        if (!selectedPoints.empty()) {
+          selectedPoints
+            .attr("r", TIME_CONFIG.point.hoverRadius)
+            .attr("stroke", "#3b82f6") // Blue highlight for selected event
+            .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+        }
+      }
+    },
+    []
+  );
+
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
     if (
@@ -406,26 +446,17 @@ export function NarrativeTimeVisual({
       .attr("class", (d) => `point point-${d.index}`)
       .attr("cx", (d) => (d.hasRealTime ? xScale(d.realTime!) : publishX))
       .attr("cy", (d) => yScale(d.narrativeTime))
-      .attr("r", (d) =>
-        d.event.index === selectedEventId
-          ? TIME_CONFIG.point.hoverRadius
-          : TIME_CONFIG.point.radius
-      )
+      .attr("r", TIME_CONFIG.point.radius)
       .attr("fill", "white")
-      .attr("stroke", (d) =>
-        d.event.index === selectedEventId
-          ? "#3b82f6" // Blue highlight for selected event
-          : "black"
-      )
+      .attr("stroke", "black")
       .attr("stroke-width", (d) =>
-        d.event.index === selectedEventId
-          ? TIME_CONFIG.point.hoverStrokeWidth
-          : d.hasRealTime
-          ? TIME_CONFIG.point.strokeWidth
-          : 1
+        d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
       )
       .attr("stroke-dasharray", (d) => (d.hasRealTime ? "none" : "2,2"))
       .style("cursor", "pointer")
+      // Add data attributes for easy selection later - use the original event index
+      .attr("data-event-index", (d) => d.event.index)
+      .attr("data-has-real-time", (d) => d.hasRealTime)
       .on("mouseover", function (event, d) {
         // Skip if this is already the selected event
         if (d.event.index === selectedEventId) return;
@@ -579,14 +610,26 @@ export function NarrativeTimeVisual({
         // Hide tooltip
         hideTooltip();
       });
+
+    // Apply initial highlighting for selected event
+    if (selectedEventId !== null && selectedEventId !== undefined) {
+      updateSelectedEventStyles(selectedEventId);
+    }
   }, [
     events,
-    selectedEventId,
     showTooltip,
     hideTooltip,
     updatePosition,
     onEventSelect,
+    updateSelectedEventStyles,
   ]);
+
+  // Effect to handle selectedEventId changes without full re-render
+  useEffect(() => {
+    if (svgRef.current) {
+      updateSelectedEventStyles(selectedEventId || null);
+    }
+  }, [selectedEventId, updateSelectedEventStyles]);
 
   // Initial setup and cleanup
   useEffect(() => {
@@ -614,13 +657,13 @@ export function NarrativeTimeVisual({
   }, [updateVisualization]);
 
   return (
-    <div className="w-full h-full flex flex-col overflow-hidden">
+    <div className="w-full h-full flex flex-col overflow-auto">
       <div
         ref={headerRef}
         className="flex-none bg-white sticky top-0 z-10 shadow-sm"
         style={{ height: `${TIME_CONFIG.header.height}px` }}
       />
-      <div ref={containerRef} className="flex-1 relative overflow-y-auto">
+      <div ref={containerRef} className="flex-1 relative">
         <svg ref={svgRef} className="w-full h-full" />
       </div>
     </div>

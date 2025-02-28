@@ -47,6 +47,40 @@ export function EntityVisual({
     []
   );
 
+  // Function to update node styles based on selectedEventId
+  const updateSelectedEventStyles = useCallback(
+    (newSelectedId: number | null) => {
+      if (!svgRef.current) return;
+
+      // Reset all nodes to default style
+      d3.select(svgRef.current)
+        .selectAll(".event-node")
+        .each(function () {
+          const node = d3.select(this);
+
+          node
+            .attr("r", ENTITY_CONFIG.event.nodeRadius)
+            .attr("stroke", "black")
+            .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth);
+        });
+
+      // If we have a selected event, highlight it
+      if (newSelectedId !== null && newSelectedId !== undefined) {
+        const selectedNodes = d3
+          .select(svgRef.current)
+          .selectAll(`.event-node[data-event-index="${newSelectedId}"]`);
+
+        if (!selectedNodes.empty()) {
+          selectedNodes
+            .attr("r", ENTITY_CONFIG.event.nodeRadius * 1.5)
+            .attr("stroke", "#3b82f6") // Blue highlight for selected event
+            .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth * 1.5);
+        }
+      }
+    },
+    []
+  );
+
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
     if (
@@ -321,30 +355,20 @@ export function EntityVisual({
             xScale(getEntityAttributeValue(entity, selectedAttribute))! +
             xScale.bandwidth() / 2;
 
-          const isSelected = event.index === selectedEventId;
-
           // Add event node
           g.append("circle")
+            .attr("class", "event-node")
             .attr("cx", x)
             .attr("cy", y)
-            .attr(
-              "r",
-              isSelected
-                ? ENTITY_CONFIG.event.nodeRadius * 1.5
-                : ENTITY_CONFIG.event.nodeRadius
-            )
+            .attr("r", ENTITY_CONFIG.event.nodeRadius)
             .attr("fill", "white")
-            .attr("stroke", isSelected ? "#3b82f6" : "black")
-            .attr(
-              "stroke-width",
-              isSelected
-                ? ENTITY_CONFIG.event.nodeStrokeWidth * 1.5
-                : ENTITY_CONFIG.event.nodeStrokeWidth
-            )
+            .attr("stroke", "black")
+            .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth)
+            .attr("data-event-index", event.index)
             .style("cursor", "pointer")
             .on("mouseover", function (e) {
               // Skip if this is already the selected event
-              if (isSelected) return;
+              if (event.index === selectedEventId) return;
 
               d3.select(this)
                 .transition()
@@ -362,7 +386,7 @@ export function EntityVisual({
             })
             .on("mouseout", function () {
               // Skip if this is the selected event
-              if (isSelected) return;
+              if (event.index === selectedEventId) return;
 
               d3.select(this)
                 .transition()
@@ -406,6 +430,11 @@ export function EntityVisual({
         }
       }
     });
+
+    // Apply initial highlighting for selected event
+    if (selectedEventId !== null && selectedEventId !== undefined) {
+      updateSelectedEventStyles(selectedEventId);
+    }
   }, [
     events,
     selectedAttribute,
@@ -413,9 +442,16 @@ export function EntityVisual({
     showTooltip,
     hideTooltip,
     updatePosition,
-    selectedEventId,
     onEventSelect,
+    updateSelectedEventStyles,
   ]);
+
+  // Effect to handle selectedEventId changes without full re-render
+  useEffect(() => {
+    if (svgRef.current) {
+      updateSelectedEventStyles(selectedEventId || null);
+    }
+  }, [selectedEventId, updateSelectedEventStyles]);
 
   // Initial setup and cleanup
   useEffect(() => {

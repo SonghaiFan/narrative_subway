@@ -43,21 +43,21 @@ export function processEvents(events: NarrativeEvent[]): {
   // Separate events into those with and without real_time
   const timePoints = events
     .filter((e) => e.temporal_anchoring.real_time)
-    .map((event, index) => ({
+    .map((event, i) => ({
       event,
       realTime: new Date(event.temporal_anchoring.real_time!),
       narrativeTime: event.temporal_anchoring.narrative_time,
-      index,
+      index: i,
       hasRealTime: true,
     }));
 
   const noTimePoints = events
     .filter((e) => !e.temporal_anchoring.real_time)
-    .map((event, index) => ({
+    .map((event, i) => ({
       event,
       realTime: null,
       narrativeTime: event.temporal_anchoring.narrative_time,
-      index: timePoints.length + index,
+      index: timePoints.length + i,
       hasRealTime: false,
     }));
 

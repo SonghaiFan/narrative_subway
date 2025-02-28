@@ -53,6 +53,81 @@ export function NarrativeTopicVisual({
   const pointStatesRef = useRef<Map<string, PointState>>(new Map());
   const { showTooltip, hideTooltip, updatePosition } = useTooltip();
 
+  // Function to generate unique IDs for nodes
+  const getParentNodeId = useCallback((groupKey: string) => {
+    return `parent-node-${groupKey}`;
+  }, []);
+
+  const getChildNodeId = useCallback((eventIndex: number) => {
+    return `child-node-${eventIndex}`;
+  }, []);
+
+  // Function to update node styles based on selectedEventId
+  const updateSelectedEventStyles = useCallback(
+    (newSelectedId: number | null) => {
+      if (!svgRef.current) return;
+
+      // Reset all nodes to default style
+      d3.select(svgRef.current)
+        .selectAll(".parent-point")
+        .each(function () {
+          const node = d3.select(this);
+          const groupKey = node.attr("data-group-key");
+          const eventIndex = parseInt(node.attr("data-event-index"), 10);
+          const pointCount = parseInt(node.attr("data-point-count"), 10);
+
+          node
+            .attr(
+              "r",
+              pointCount > 1
+                ? TOPIC_CONFIG.point.radius * 1.2
+                : TOPIC_CONFIG.point.radius
+            )
+            .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
+            .attr("stroke", "black");
+        });
+
+      d3.select(svgRef.current)
+        .selectAll(".child-point-circle")
+        .each(function () {
+          const node = d3.select(this);
+
+          node
+            .attr("r", TOPIC_CONFIG.point.radius)
+            .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
+            .attr("stroke", "black");
+        });
+
+      // If we have a selected event, highlight it
+      if (newSelectedId !== null && newSelectedId !== undefined) {
+        // Try to find and highlight the parent node first
+        const parentNode = d3
+          .select(svgRef.current)
+          .select(`.parent-point[data-event-index="${newSelectedId}"]`);
+
+        if (!parentNode.empty()) {
+          parentNode
+            .attr("r", TOPIC_CONFIG.point.hoverRadius)
+            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
+            .attr("stroke", "#3b82f6"); // Use a highlight color (blue)
+        }
+
+        // Try to find and highlight the child node
+        const childNode = d3
+          .select(svgRef.current)
+          .select(`#${getChildNodeId(newSelectedId)}`);
+
+        if (!childNode.empty()) {
+          childNode
+            .attr("r", TOPIC_CONFIG.point.hoverRadius)
+            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
+            .attr("stroke", "#3b82f6"); // Use a highlight color (blue)
+        }
+      }
+    },
+    [getChildNodeId]
+  );
+
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
     if (
@@ -130,6 +205,12 @@ export function NarrativeTopicVisual({
       .attr("fill", "transparent")
       .on("click", () => {
         // Close all expanded groups when clicking on the background
+        const groupedPoints = groupOverlappingPoints(
+          dataPoints,
+          xScale,
+          yScale
+        );
+
         groupedPoints.forEach((point) => {
           if (point.isExpanded) {
             point.isExpanded = false;
@@ -140,14 +221,13 @@ export function NarrativeTopicVisual({
             });
 
             // Find the parent node and collapse it
-            const parentNode = parentNodes.filter(
-              (d: GroupedPoint) => d.key === point.key
-            );
-            if (!parentNode.empty()) {
-              const parent = parentNode.node();
-              const children = d3.select(parent).selectAll(".child-point");
-              const parentCircle = d3.select(parent).select("circle");
-              const countText = d3.select(parent).select("text");
+            const parentId = getParentNodeId(point.key);
+            const parentGroup = d3.select(`#${parentId}`);
+
+            if (!parentGroup.empty()) {
+              const parentCircle = parentGroup.select("circle");
+              const countText = parentGroup.select("text");
+              const children = parentGroup.selectAll(".child-point");
 
               // Collapse animation
               parentCircle
@@ -253,11 +333,12 @@ export function NarrativeTopicVisual({
 
     // Create parent nodes
     const parentNodes = pointsGroup
-      .selectAll<SVGGElement, GroupedPoint>(".point-group")
+      .selectAll(".point-group")
       .data(groupedPoints)
       .enter()
       .append("g")
       .attr("class", "point-group")
+      .attr("id", (d) => getParentNodeId(d.key))
       .each(function (d: GroupedPoint) {
         const state = pointStatesRef.current.get(d.key);
         if (state) {
@@ -282,6 +363,10 @@ export function NarrativeTopicVisual({
       .style("cursor", (d: GroupedPoint) =>
         d.points.length > 1 ? "pointer" : "default"
       )
+      // Add data attributes for easy selection later
+      .attr("data-group-key", (d: GroupedPoint) => d.key)
+      .attr("data-event-index", (d: GroupedPoint) => d.points[0].event.index)
+      .attr("data-point-count", (d: GroupedPoint) => d.points.length)
       .each(function (d: GroupedPoint) {
         if (d.points.length > 1) {
           const parentNode = d3.select(this.parentElement);
@@ -302,8 +387,8 @@ export function NarrativeTopicVisual({
 
     // Add child nodes (initially hidden)
     const childNodes = parentNodes
-      .selectAll<SVGGElement, ChildPoint>(".child-point")
-      .data<ChildPoint>((d: GroupedPoint) =>
+      .selectAll(".child-point")
+      .data((d: GroupedPoint) =>
         d.points.map((p: DataPoint, i: number) => ({
           ...p,
           parentKey: d.key,
@@ -319,6 +404,8 @@ export function NarrativeTopicVisual({
 
     childNodes
       .append("circle")
+      .attr("class", "child-point-circle")
+      .attr("id", (d: ChildPoint) => getChildNodeId(d.event.index))
       .attr("cx", (d: ChildPoint) => {
         const parent = groupedPoints.find((g) => g.key === d.parentKey)!;
         const positions = calculateExpandedPositions(
@@ -339,7 +426,10 @@ export function NarrativeTopicVisual({
       .attr("fill", "white")
       .attr("stroke", "black")
       .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
-      .style("cursor", "pointer");
+      .style("cursor", "pointer")
+      // Add data attributes for easy selection later
+      .attr("data-parent-key", (d: ChildPoint) => d.parentKey)
+      .attr("data-event-index", (d: ChildPoint) => d.event.index);
 
     // Handle click events for parent nodes
     parentNodes.on("click", function (event: MouseEvent, d: GroupedPoint) {
@@ -401,122 +491,106 @@ export function NarrativeTopicVisual({
       }
     });
 
-    // Handle hover events
-    const handleMouseOver = function (this: Element, event: any, d: unknown) {
-      if (!event.currentTarget) return;
+    // Define event handlers
+    function handleMouseOver(
+      this: SVGCircleElement,
+      event: MouseEvent,
+      d: any
+    ) {
+      // Skip if this is already the selected event
+      const eventIndex = d.event?.index || d.points?.[0]?.event?.index;
+      if (eventIndex === selectedEventId) return;
 
-      const target = d3.select(event.currentTarget as Element);
-      target
+      d3.select(this)
         .transition()
         .duration(150)
         .attr("r", TOPIC_CONFIG.point.hoverRadius)
         .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
 
-      const eventData =
-        "points" in d
-          ? (d as GroupedPoint).points[0].event
-          : (d as ChildPoint).event;
+      // Determine the event data based on whether this is a parent or child node
+      const eventData = d.event || d.points[0].event;
       showTooltip(eventData, event.pageX, event.pageY, "topic");
-    };
+    }
 
-    const handleMouseOut = function (this: Element, event: any, d: unknown) {
-      if (!event.currentTarget) return;
-
-      const target = d3.select(event.currentTarget as Element);
-      const isParent = target.classed("parent-point");
-      const parentData = isParent
-        ? (d as GroupedPoint)
-        : groupedPoints.find((g) => g.key === (d as ChildPoint).parentKey);
-
-      if (!parentData) return;
+    function handleMouseOut(this: SVGCircleElement, event: MouseEvent, d: any) {
+      // Get the event index
+      const eventIndex = d.event?.index || d.points?.[0]?.event?.index;
 
       // Don't reset the style if this is the selected event
-      const eventData =
-        "points" in d
-          ? (d as GroupedPoint).points[0].event
-          : (d as ChildPoint).event;
-      const isSelected = selectedEventId === eventData.index;
+      if (eventIndex === selectedEventId) return;
 
-      if (!isSelected) {
-        target
-          .transition()
-          .duration(150)
-          .attr(
-            "r",
-            isParent && parentData.points.length > 1
-              ? TOPIC_CONFIG.point.radius * 1.2
-              : TOPIC_CONFIG.point.radius
-          )
-          .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
-      }
+      // Determine if this is a parent node with multiple points
+      const isParent = d3.select(this).classed("parent-point");
+      const pointCount = isParent && d.points ? d.points.length : 1;
+
+      d3.select(this)
+        .transition()
+        .duration(150)
+        .attr(
+          "r",
+          isParent && pointCount > 1
+            ? TOPIC_CONFIG.point.radius * 1.2
+            : TOPIC_CONFIG.point.radius
+        )
+        .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
 
       hideTooltip();
-    };
+    }
 
-    // Add hover events to both parent and child nodes
+    function handleMouseMove(event: MouseEvent) {
+      updatePosition(event.pageX, event.pageY);
+    }
+
+    function handleChildClick(
+      this: SVGCircleElement,
+      event: MouseEvent,
+      d: ChildPoint
+    ) {
+      // For child nodes, we always handle selection
+      const eventData = d.event;
+      onEventSelect?.(
+        eventData.index === selectedEventId ? null : eventData.index
+      );
+      event.stopPropagation(); // Prevent the click from bubbling up to the parent
+    }
+
+    // Add event listeners to parent circles
     parentNodes
-      .selectAll("circle")
+      .selectAll("circle.parent-point")
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut)
-      .on("mousemove", function (event) {
-        updatePosition(event.pageX, event.pageY);
-      });
+      .on("mousemove", handleMouseMove);
 
+    // Add event listeners to child circles
     childNodes
-      .selectAll("circle")
+      .selectAll("circle.child-point-circle")
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut)
-      .on("mousemove", function (event) {
-        updatePosition(event.pageX, event.pageY);
-      })
-      .on("click", function (this: Element, event: any, d: unknown) {
-        // For child nodes, we always handle selection
-        const childPoint = d as ChildPoint;
-        const eventData = childPoint.event;
-        onEventSelect?.(
-          eventData.index === selectedEventId ? null : eventData.index
-        );
-        event.stopPropagation(); // Prevent the click from bubbling up to the parent
-      });
+      .on("mousemove", handleMouseMove)
+      .on("click", handleChildClick);
 
-    // Highlight the selected event if any
+    // Apply initial highlighting for selected event
     if (selectedEventId !== null && selectedEventId !== undefined) {
-      // Find all circles (both parent and child) that represent the selected event
-      parentNodes
-        .selectAll("circle")
-        .each(function (this: Element, d: unknown) {
-          const eventData =
-            "points" in d
-              ? (d as GroupedPoint).points[0].event
-              : (d as ChildPoint).event;
-          if (eventData.index === selectedEventId) {
-            d3.select(this)
-              .attr("r", TOPIC_CONFIG.point.hoverRadius)
-              .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
-              .attr("stroke", "#3b82f6"); // Use a highlight color (blue)
-          }
-        });
-
-      childNodes.selectAll("circle").each(function (this: Element, d: unknown) {
-        const childPoint = d as ChildPoint;
-        if (childPoint.event.index === selectedEventId) {
-          d3.select(this)
-            .attr("r", TOPIC_CONFIG.point.hoverRadius)
-            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
-            .attr("stroke", "#3b82f6"); // Use a highlight color (blue)
-        }
-      });
+      updateSelectedEventStyles(selectedEventId);
     }
   }, [
     events,
-    selectedEventId,
-    selectedTopic,
     showTooltip,
     hideTooltip,
     updatePosition,
     onEventSelect,
     onTopicSelect,
+    updateSelectedEventStyles,
+    getParentNodeId,
+    getChildNodeId,
   ]);
+
+  // Effect to handle selectedEventId changes without full re-render
+  useEffect(() => {
+    if (svgRef.current) {
+      updateSelectedEventStyles(selectedEventId || null);
+    }
+  }, [selectedEventId, updateSelectedEventStyles]);
 
   // Initial setup and cleanup
   useEffect(() => {
@@ -544,7 +618,7 @@ export function NarrativeTopicVisual({
   }, [updateVisualization]);
 
   return (
-    <div className="w-full h-full flex flex-col overflow-auto">
+    <div className="w-full h-full flex flex-col">
       <div
         ref={headerRef}
         className="flex-none bg-white sticky top-0 z-10 shadow-sm"
