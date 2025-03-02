@@ -153,8 +153,11 @@ export function groupOverlappingPoints(
 ): GroupedPoint[] {
   const groups = new Map<string, DataPoint[]>();
   const nodeSize = TOPIC_CONFIG.point.radius * 2;
+
+  // Calculate time threshold based on current scale
+  // This makes the grouping responsive to the container width
   const timeThreshold = Math.abs(
-    xScale.invert(nodeSize / 4).getTime() - xScale.invert(0).getTime()
+    xScale.invert(nodeSize).getTime() - xScale.invert(0).getTime()
   );
 
   // Sort points by time and topic
@@ -229,7 +232,14 @@ export function calculateExpandedPositions(
   }
 
   // Calculate radius for the circle of nodes
-  const circleRadius = radius * 2;
+  // Scale the circle radius based on the number of points
+  // to ensure they don't overlap or go too far from the center
+  const circleRadius = Math.max(
+    radius * 2,
+    Math.min(radius * 3, radius * (1 + n * 0.2))
+  );
+
+  // Distribute points evenly in a circle
   const angleStep = (2 * Math.PI) / n;
 
   for (let i = 0; i < n; i++) {

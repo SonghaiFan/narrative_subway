@@ -9,28 +9,18 @@ import { useCenterControl } from "@/lib/center-control-context";
 
 interface TopicDisplayProps {
   events: NarrativeEvent[];
-  selectedEventId?: number | null;
 }
 
 type ViewMode = "visual" | "text";
 
-export function TopicDisplay({
-  events,
-  selectedEventId: propSelectedEventId,
-}: TopicDisplayProps) {
+export function TopicDisplay({ events }: TopicDisplayProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("visual");
   const {
-    selectedEventId: contextSelectedEventId,
+    selectedEventId,
     setSelectedEventId,
     selectedTopic,
     setSelectedTopic,
   } = useCenterControl();
-
-  // Use the prop if provided, otherwise use the context value
-  const selectedEventId =
-    propSelectedEventId !== undefined
-      ? propSelectedEventId
-      : contextSelectedEventId;
 
   return (
     <VisualizationDisplay

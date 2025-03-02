@@ -98,7 +98,6 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
         <EntityVisual
           events={events}
           selectedAttribute={selectedAttribute}
-          entityAttributes={ENTITY_ATTRIBUTES}
           selectedEntityId={selectedEntityId}
           onEntitySelect={setSelectedEntityId}
           selectedEventId={selectedEventId}

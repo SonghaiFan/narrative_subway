@@ -71,8 +71,7 @@ export function NarrativeTimeVisual({
         if (!selectedPoints.empty()) {
           selectedPoints
             .attr("r", TIME_CONFIG.point.hoverRadius)
-            .attr("stroke", "#3b82f6") // Blue highlight for selected event
-            .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+            .attr("stroke", "#3b82f6"); // Blue highlight for selected event
         }
       }
     },
@@ -175,16 +174,6 @@ export function NarrativeTimeVisual({
       .attr("font-size", "10px")
       .text("Current");
 
-    // Define clipping path for the plot area
-    // g.append("defs")
-    //   .append("clipPath")
-    //   .attr("id", "plot-area")
-    //   .append("rect")
-    //   .attr("x", 0)
-    //   .attr("y", 0)
-    //   .attr("width", width)
-    //   .attr("height", height);
-
     // Add y-axis
     g.append("g")
       .attr("class", "y-axis")
@@ -272,22 +261,7 @@ export function NarrativeTimeVisual({
     // Create line generator
     const smoothLine = createLineGenerator(xScale, yScale);
 
-    // Add main line with gradient stroke inside clipping path
     const lineGroup = g.append("g").attr("class", "line-group");
-    // .attr("clip-path", "url(#plot-area)");
-
-    // // Add shadow effect for depth
-    // lineGroup
-    //   .append("path")
-    //   .datum(sortedPoints)
-    //   .attr("class", "line-shadow")
-    //   .attr("fill", "none")
-    //   .attr("stroke", "black")
-    //   .attr("stroke-width", TIME_CONFIG.curve.strokeWidth + 2)
-    //   .attr("stroke-opacity", 0.1)
-    //   .attr("stroke-linecap", "round")
-    //   .attr("filter", "blur(4px)")
-    //   .attr("d", smoothLine);
 
     // Add main line
     lineGroup
@@ -432,10 +406,7 @@ export function NarrativeTimeVisual({
       .attr("height", (d) => d.height);
 
     // Create points group last (so it's on top)
-    const pointsGroup = g
-      .append("g")
-      .attr("class", "points-group")
-      .attr("clip-path", "url(#plot-area)");
+    const pointsGroup = g.append("g").attr("class", "points-group");
 
     // Add points
     pointsGroup
@@ -458,9 +429,6 @@ export function NarrativeTimeVisual({
       .attr("data-event-index", (d) => d.event.index)
       .attr("data-has-real-time", (d) => d.hasRealTime)
       .on("mouseover", function (event, d) {
-        // Skip if this is already the selected event
-        if (d.event.index === selectedEventId) return;
-
         d3.select(this)
           .transition()
           .duration(150)
@@ -470,9 +438,6 @@ export function NarrativeTimeVisual({
         showTooltip(d.event, event.pageX, event.pageY, "time");
       })
       .on("mouseout", function (event, d) {
-        // Skip if this is the selected event
-        if (d.event.index === selectedEventId) return;
-
         const point = d3.select(this);
         point
           .transition()
@@ -481,8 +446,7 @@ export function NarrativeTimeVisual({
           .attr(
             "stroke-width",
             d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
-          )
-          .attr("stroke", "black");
+          );
 
         // Only update label if point has real time
         if (d.hasRealTime) {

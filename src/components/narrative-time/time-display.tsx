@@ -9,7 +9,6 @@ import { useCenterControl } from "@/lib/center-control-context";
 
 interface TimeDisplayProps {
   events: NarrativeEvent[];
-  selectedEventId?: number | null;
   metadata: {
     publishDate: string;
   };
@@ -17,20 +16,9 @@ interface TimeDisplayProps {
 
 type ViewMode = "visual" | "text";
 
-export function TimeDisplay({
-  events,
-  selectedEventId: propSelectedEventId,
-  metadata,
-}: TimeDisplayProps) {
+export function TimeDisplay({ events, metadata }: TimeDisplayProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("visual");
-  const { selectedEventId: contextSelectedEventId, setSelectedEventId } =
-    useCenterControl();
-
-  // Use the prop if provided, otherwise use the context value
-  const selectedEventId =
-    propSelectedEventId !== undefined
-      ? propSelectedEventId
-      : contextSelectedEventId;
+  const { selectedEventId, setSelectedEventId } = useCenterControl();
 
   return (
     <VisualizationDisplay

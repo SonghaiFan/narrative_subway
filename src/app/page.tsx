@@ -14,15 +14,8 @@ import { TooltipProvider } from "@/lib/tooltip-context";
 
 // Main content component that uses the context
 function MainContent() {
-  const {
-    data,
-    setData,
-    isLoading,
-    setIsLoading,
-    error,
-    setError,
-    selectedEventId,
-  } = useCenterControl();
+  const { data, setData, isLoading, setIsLoading, error, setError } =
+    useCenterControl();
 
   const fetchData = useCallback(
     async (fileName: string = "data.json") => {
@@ -88,16 +81,10 @@ function MainContent() {
             onDataChange={setData}
           />
         )}
-        topRight={renderPanel(
-          <TopicDisplay events={events} selectedEventId={selectedEventId} />
-        )}
+        topRight={renderPanel(<TopicDisplay events={events} />)}
         bottomLeft={renderPanel(<EntityDisplay events={events} />)}
         bottomRight={renderPanel(
-          <TimeDisplay
-            events={events}
-            selectedEventId={selectedEventId}
-            metadata={metadata}
-          />
+          <TimeDisplay events={events} metadata={metadata} />
         )}
       />
     </div>
