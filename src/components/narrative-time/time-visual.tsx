@@ -49,7 +49,6 @@ export function NarrativeTimeVisual({
         .selectAll(".point")
         .each(function () {
           const point = d3.select(this);
-          const eventIndex = parseInt(point.attr("data-event-index"), 10);
           const hasRealTime = point.attr("data-has-real-time") === "true";
 
           point
@@ -69,9 +68,7 @@ export function NarrativeTimeVisual({
           .selectAll(`.point[data-event-index="${newSelectedId}"]`);
 
         if (!selectedPoints.empty()) {
-          selectedPoints
-            .attr("r", TIME_CONFIG.point.hoverRadius)
-            .attr("stroke", "#3b82f6"); // Blue highlight for selected event
+          selectedPoints.attr("stroke", "#3b82f6"); // Only change stroke color for selection
         }
       }
     },
@@ -408,6 +405,30 @@ export function NarrativeTimeVisual({
     // Create points group last (so it's on top)
     const pointsGroup = g.append("g").attr("class", "points-group");
 
+    // Define reusable event handlers
+    const handleNodeInteraction = {
+      // Hover highlight function
+      highlight(node: d3.Selection<any, any, any, any>) {
+        node
+          .transition()
+          .duration(150)
+          .attr("r", TIME_CONFIG.point.hoverRadius)
+          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+      },
+
+      // Reset hover effects
+      reset(node: d3.Selection<any, any, any, any>, d: any) {
+        node
+          .transition()
+          .duration(150)
+          .attr("r", TIME_CONFIG.point.radius)
+          .attr(
+            "stroke-width",
+            d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
+          );
+      },
+    };
+
     // Add points
     pointsGroup
       .selectAll(".point")
@@ -429,24 +450,18 @@ export function NarrativeTimeVisual({
       .attr("data-event-index", (d) => d.event.index)
       .attr("data-has-real-time", (d) => d.hasRealTime)
       .on("mouseover", function (event, d) {
-        d3.select(this)
-          .transition()
-          .duration(150)
-          .attr("r", TIME_CONFIG.point.hoverRadius)
-          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+        // Skip if this is already the selected event
+        if (d.event.index === selectedEventId) return;
 
+        handleNodeInteraction.highlight(d3.select(this));
         showTooltip(d.event, event.pageX, event.pageY, "time");
       })
       .on("mouseout", function (event, d) {
+        // Skip if this is the selected event
+        if (d.event.index === selectedEventId) return;
+
         const point = d3.select(this);
-        point
-          .transition()
-          .duration(150)
-          .attr("r", TIME_CONFIG.point.radius)
-          .attr(
-            "stroke-width",
-            d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
-          );
+        handleNodeInteraction.reset(point, d);
 
         // Only update label if point has real time
         if (d.hasRealTime) {
@@ -496,7 +511,7 @@ export function NarrativeTimeVisual({
         .attr("y2", (d) => d.point.y - d.y + d.height / 2);
     });
 
-    // Add hover interactions
+    // Add hover interactions for labels
     labelContainers
       .on("mouseover", function (event, d) {
         // Skip hover effects if dragging
@@ -506,12 +521,13 @@ export function NarrativeTimeVisual({
         container.raise();
 
         // Find and highlight corresponding point
-        pointsGroup
-          .select(`.point-${d.index}`)
-          .transition()
-          .duration(150)
-          .attr("r", TIME_CONFIG.point.hoverRadius)
-          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+        const point = pointsGroup.select(`.point-${d.index}`);
+
+        // Skip if this is the selected event
+        if (point.attr("data-event-index") === selectedEventId?.toString())
+          return;
+
+        handleNodeInteraction.highlight(point);
 
         container
           .select(".label-background")
@@ -550,12 +566,13 @@ export function NarrativeTimeVisual({
         const container = d3.select(this);
 
         // Reset corresponding point
-        pointsGroup
-          .select(`.point-${d.index}`)
-          .transition()
-          .duration(150)
-          .attr("r", TIME_CONFIG.point.radius)
-          .attr("stroke-width", TIME_CONFIG.point.strokeWidth);
+        const point = pointsGroup.select(`.point-${d.index}`);
+
+        // Skip if this is the selected event
+        if (point.attr("data-event-index") === selectedEventId?.toString())
+          return;
+
+        handleNodeInteraction.reset(point, dataPoints[d.index]);
 
         container
           .select(".label-background")
@@ -591,7 +608,7 @@ export function NarrativeTimeVisual({
   // Effect to handle selectedEventId changes without full re-render
   useEffect(() => {
     if (svgRef.current) {
-      updateSelectedEventStyles(selectedEventId || null);
+      updateSelectedEventStyles(selectedEventId ?? null);
     }
   }, [selectedEventId, updateSelectedEventStyles]);
 

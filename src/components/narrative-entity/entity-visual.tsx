@@ -51,11 +51,9 @@ export function EntityVisual({
       // Reset all nodes to default style
       d3.select(svgRef.current)
         .selectAll(".event-node")
-        .each(function () {
-          const node = d3.select(this);
-
-          node.attr("stroke", "black");
-        });
+        .attr("r", ENTITY_CONFIG.event.nodeRadius)
+        .attr("stroke", "black")
+        .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth);
 
       // If we have a selected event, highlight it
       if (newSelectedId !== null) {
@@ -64,7 +62,7 @@ export function EntityVisual({
           .selectAll(`.event-node[data-event-index="${newSelectedId}"]`);
 
         if (!selectedNodes.empty()) {
-          selectedNodes.attr("stroke", "#3b82f6"); // Blue highlight for selected event;
+          selectedNodes.attr("stroke", "#3b82f6"); // Only change stroke color for selection
         }
       }
     },
@@ -74,9 +72,30 @@ export function EntityVisual({
   // Effect to handle selectedEventId changes without full re-render
   useEffect(() => {
     if (svgRef.current) {
-      updateSelectedEventStyles(selectedEventId || null);
+      updateSelectedEventStyles(selectedEventId ?? null);
     }
-  }, [selectedEventId]);
+  }, [selectedEventId, updateSelectedEventStyles]);
+
+  // Define reusable event handlers
+  const handleNodeInteraction = {
+    // Hover highlight function
+    highlight(node: d3.Selection<any, any, any, any>) {
+      node
+        .transition()
+        .duration(150)
+        .attr("r", ENTITY_CONFIG.event.nodeRadius * 1.5)
+        .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth * 1.5);
+    },
+
+    // Reset hover effects
+    reset(node: d3.Selection<any, any, any, any>) {
+      node
+        .transition()
+        .duration(150)
+        .attr("r", ENTITY_CONFIG.event.nodeRadius)
+        .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth);
+    },
+  };
 
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
@@ -287,27 +306,20 @@ export function EntityVisual({
             .attr("data-event-index", event.index)
             .style("cursor", "pointer")
             .on("mouseover", function (e) {
-              d3.select(this)
-                .transition()
-                .duration(150)
-                .attr("r", ENTITY_CONFIG.event.nodeRadius * 1.5)
-                .attr(
-                  "stroke-width",
-                  ENTITY_CONFIG.event.nodeStrokeWidth * 1.5
-                );
+              // Skip if this is already the selected event
+              if (event.index === selectedEventId) return;
 
+              handleNodeInteraction.highlight(d3.select(this));
               showTooltip(event, e.pageX, e.pageY, "entity");
             })
             .on("mousemove", function (e) {
               updatePosition(e.pageX, e.pageY);
             })
             .on("mouseout", function () {
-              d3.select(this)
-                .transition()
-                .duration(150)
-                .attr("r", ENTITY_CONFIG.event.nodeRadius)
-                .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth);
+              // Skip if this is the selected event
+              if (event.index === selectedEventId) return;
 
+              handleNodeInteraction.reset(d3.select(this));
               hideTooltip();
             })
             .on("click", function () {
@@ -353,6 +365,7 @@ export function EntityVisual({
     hideTooltip,
     updatePosition,
     onEventSelect,
+    updateSelectedEventStyles,
   ]);
 
   // Initial setup and cleanup
