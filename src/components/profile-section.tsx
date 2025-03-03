@@ -34,8 +34,8 @@ export function ProfileSection({
   onDataChange,
 }: ProfileSectionProps) {
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
-  const [selectedFile, setSelectedFile] = useState("data.json");
-  const { isLoading, setIsLoading, clearSelections } = useCenterControl();
+  const [selectedFile, setSelectedFile] = useState<string>("");
+  const { isLoading, setIsLoading, clearSelections, data } = useCenterControl();
 
   const stats = {
     entities: new Set(
@@ -52,23 +52,42 @@ export function ProfileSection({
         const response = await fetch("/api/data-files");
         const files = await response.json();
         setAvailableFiles(files);
+
+        // If we don't have a selected file yet and files are available, select the first one
+        if (!selectedFile && files.length > 0) {
+          // Try to find the first non-archived file
+          const nonArchivedFile = files.find(
+            (file) => !file.startsWith("archived/")
+          );
+          setSelectedFile(nonArchivedFile || files[0]);
+        }
       } catch (error) {
         console.error("Failed to fetch available data files:", error);
       }
     };
     fetchAvailableFiles();
-  }, []);
+  }, [selectedFile]);
 
   // Handle file selection
   const handleFileChange = useCallback(
     async (fileName: string) => {
+      if (fileName === selectedFile) return;
+
       setIsLoading(true);
       setSelectedFile(fileName);
       // Clear all selections when changing files
       clearSelections();
 
       try {
-        const response = await fetch(`/${fileName}`);
+        // Handle paths correctly - if the file is in the archived directory
+        const filePath = fileName.startsWith("archived/")
+          ? fileName // Keep the path as is
+          : fileName; // No path prefix needed
+
+        const response = await fetch(`/${filePath}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch ${fileName}`);
+        }
         const data: TimelineData = await response.json();
         onDataChange?.(data);
       } catch (error) {
@@ -77,8 +96,77 @@ export function ProfileSection({
         setIsLoading(false);
       }
     },
-    [onDataChange, setIsLoading, clearSelections]
+    [onDataChange, setIsLoading, clearSelections, selectedFile]
   );
+
+  // Update selectedFile when data changes from outside this component
+  useEffect(() => {
+    // This is a simple heuristic to detect which file is currently loaded
+    // We compare the title and first event to guess which file it is
+    if (data && availableFiles.length > 0 && !isLoading) {
+      const checkCurrentFile = async () => {
+        // Skip if we're already loading
+        if (isLoading) return;
+
+        // First check if the current selectedFile matches the data
+        // This avoids unnecessary API calls
+        if (selectedFile) {
+          try {
+            const response = await fetch(
+              `/${
+                selectedFile.startsWith("archived/")
+                  ? selectedFile
+                  : selectedFile
+              }`
+            );
+            const fileData = await response.json();
+
+            // If this file matches the current data, we're done
+            if (
+              fileData.metadata.title === data.metadata.title &&
+              fileData.events.length > 0 &&
+              data.events.length > 0 &&
+              fileData.events[0].index === data.events[0].index
+            ) {
+              return; // Current selection is correct
+            }
+          } catch (error) {
+            console.error(
+              `Error checking current file ${selectedFile}:`,
+              error
+            );
+          }
+        }
+
+        // If we get here, we need to check all files
+        for (const file of availableFiles) {
+          // Skip the current file as we already checked it
+          if (file === selectedFile) continue;
+
+          try {
+            const filePath = file.startsWith("archived/") ? file : file;
+            const response = await fetch(`/${filePath}`);
+            const fileData = await response.json();
+
+            // Check if this file matches the current data
+            if (
+              fileData.metadata.title === data.metadata.title &&
+              fileData.events.length > 0 &&
+              data.events.length > 0 &&
+              fileData.events[0].index === data.events[0].index
+            ) {
+              setSelectedFile(file);
+              break;
+            }
+          } catch (error) {
+            console.error(`Error checking file ${file}:`, error);
+          }
+        }
+      };
+
+      checkCurrentFile();
+    }
+  }, [data, availableFiles, selectedFile, isLoading]);
 
   return (
     <article className="flex flex-col h-full p-4 space-y-4 overflow-hidden">
@@ -97,18 +185,87 @@ export function ProfileSection({
           </div>
           <div className="flex items-center gap-2">
             {isLoading && (
-              <span className="text-sm text-neutral-500">Loading...</span>
+              <div className="flex items-center gap-1.5 text-xs text-neutral-500">
+                <div className="w-3 h-3 border-2 border-neutral-300 border-t-neutral-500 rounded-full animate-spin"></div>
+                <span>Loading...</span>
+              </div>
             )}
             <Select value={selectedFile} onValueChange={handleFileChange}>
-              <SelectTrigger className="w-[150px] h-7 px-2 py-1 text-xs">
-                <SelectValue placeholder="Select data file" />
+              <SelectTrigger className="w-[180px] h-7 px-2 py-1 text-xs">
+                <SelectValue
+                  placeholder="Select data file"
+                  className="truncate"
+                />
               </SelectTrigger>
               <SelectContent>
-                {availableFiles.map((file) => (
-                  <SelectItem key={file} value={file} className="text-xs py-1">
-                    {file}
-                  </SelectItem>
-                ))}
+                {(() => {
+                  // Separate archived and non-archived files
+                  const nonArchivedFiles = availableFiles.filter(
+                    (file) => !file.startsWith("archived/")
+                  );
+                  const archivedFiles = availableFiles.filter((file) =>
+                    file.startsWith("archived/")
+                  );
+
+                  return (
+                    <>
+                      {/* Non-archived files */}
+                      {nonArchivedFiles.map((file) => {
+                        const displayName = file;
+                        const truncatedName =
+                          displayName.length > 25
+                            ? displayName.substring(0, 22) + "..."
+                            : displayName;
+
+                        return (
+                          <SelectItem
+                            key={file}
+                            value={file}
+                            className="text-xs py-1"
+                            title={file}
+                          >
+                            <span className="truncate block max-w-[160px]">
+                              {truncatedName}
+                            </span>
+                          </SelectItem>
+                        );
+                      })}
+
+                      {/* Add separator if both archived and non-archived files exist */}
+                      {nonArchivedFiles.length > 0 &&
+                        archivedFiles.length > 0 && (
+                          <div className="px-2 py-1.5 text-xs text-neutral-400 border-t border-neutral-200 mt-1 pt-1">
+                            Archived Files
+                          </div>
+                        )}
+
+                      {/* Archived files */}
+                      {archivedFiles.map((file) => {
+                        const displayName = file.split("/").pop() || file;
+                        const truncatedName =
+                          displayName.length > 25
+                            ? displayName.substring(0, 22) + "..."
+                            : displayName;
+
+                        return (
+                          <SelectItem
+                            key={file}
+                            value={file}
+                            className="text-xs py-1"
+                            title={file}
+                          >
+                            <span className="truncate block max-w-[160px]">
+                              <span className="text-neutral-500 mr-1">
+                                [Archived]{" "}
+                              </span>
+                              {truncatedName}
+                            </span>
+                          </SelectItem>
+                        );
+                      })}
+                    </>
+                  );
+                })()}
               </SelectContent>
             </Select>
           </div>

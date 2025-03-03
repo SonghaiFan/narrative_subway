@@ -39,7 +39,7 @@
         },
         {
           "id": "E3",
-          "name": "Gaza Strip",
+          "name": "Gaza",
           "discourse_role": "location",
           "social_role": "geographical"
         }
@@ -123,7 +123,7 @@
         },
         {
           "id": "E3",
-          "name": "Gaza Strip",
+          "name": "Gaza",
           "discourse_role": "location",
           "social_role": "geographical"
         }
@@ -456,7 +456,7 @@
         },
         {
           "id": "E3",
-          "name": "Gaza City",
+          "name": "Gaza",
           "discourse_role": "location",
           "social_role": "geographical"
         }
