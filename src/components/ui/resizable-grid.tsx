@@ -224,7 +224,7 @@ export function ResizableGrid({
         direction="horizontal"
         onLayout={setHorizontalSizes}
       >
-        {/* Left Column - simplified props */}
+        {/* Left Column  */}
         <Panel defaultSize={DEFAULT_LEFT_WIDTH} minSize={20}>
           <PanelGroup
             direction="vertical"
@@ -240,7 +240,7 @@ export function ResizableGrid({
           </PanelGroup>
         </Panel>
 
-        {/* Right Column - simplified props */}
+        {/* Right Column  */}
         <Panel defaultSize={DEFAULT_RIGHT_WIDTH} minSize={50}>
           <PanelGroup
             direction="vertical"

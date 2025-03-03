@@ -77,19 +77,7 @@ export function NarrativeTopicVisual({
       d3.select(svgRef.current)
         .selectAll(".parent-point, .child-point-circle")
         .attr("stroke", "black")
-        .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
-        .attr("r", function () {
-          // Preserve the appropriate radius based on node type and point count
-          const node = d3.select(this);
-          const isParent = node.classed("parent-point");
-          const pointCount = isParent
-            ? parseInt(node.attr("data-point-count") || "1", 10)
-            : 1;
-
-          return isParent && pointCount > 1
-            ? TOPIC_CONFIG.point.radius * 1.2
-            : TOPIC_CONFIG.point.radius;
-        });
+        .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
 
       // If we have a selected event, highlight it
       if (newSelectedId !== null) {
@@ -99,7 +87,9 @@ export function NarrativeTopicVisual({
           .select(`.parent-point[data-event-index="${newSelectedId}"]`);
 
         if (!parentNode.empty()) {
-          parentNode.attr("stroke", "#3b82f6"); // Only change stroke color for selection
+          parentNode
+            .attr("stroke", "#3b82f6")
+            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
         }
 
         // Try to find and highlight the child node
@@ -109,7 +99,9 @@ export function NarrativeTopicVisual({
 
         if (!childNode.empty()) {
           // Highlight the child node
-          childNode.attr("stroke", "#3b82f6"); // Only change stroke color for selection
+          childNode
+            .attr("stroke", "#3b82f6")
+            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
 
           // Also highlight its parent node
           const parentKey = childNode.attr("data-parent-key");
@@ -117,7 +109,8 @@ export function NarrativeTopicVisual({
             const parentNodeId = getParentNodeId(parentKey);
             d3.select(`#${parentNodeId}`)
               .select("circle")
-              .attr("stroke", "#3b82f6"); // Only change stroke color for selection
+              .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
+              .attr("stroke", "#3b82f6");
           }
         }
       }
@@ -514,14 +507,14 @@ export function NarrativeTopicVisual({
 
     // Define event handlers
     const handleNodeInteraction = {
-      // Hover highlight function
+      // Common highlight function for both hover and selection
       highlight(node: d3.Selection<any, any, any, any>, isParent: boolean) {
-        // Only change radius and stroke width on hover, not color
         node
           .transition()
           .duration(150)
           .attr("r", TOPIC_CONFIG.point.hoverRadius)
-          .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
+          .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
+          .attr("stroke", "#3b82f6");
 
         // If this is a child node, also highlight its parent
         if (!isParent) {
@@ -532,12 +525,13 @@ export function NarrativeTopicVisual({
               .select("circle")
               .transition()
               .duration(150)
-              .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
+              .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
+              .attr("stroke", "#3b82f6");
           }
         }
       },
 
-      // Reset hover effects
+      // Common reset function
       reset(node: d3.Selection<any, any, any, any>, d: any, isParent: boolean) {
         const pointCount = isParent && d.points ? d.points.length : 1;
 
@@ -550,7 +544,8 @@ export function NarrativeTopicVisual({
               ? TOPIC_CONFIG.point.radius * 1.2
               : TOPIC_CONFIG.point.radius
           )
-          .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
+          .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
+          .attr("stroke", "black");
 
         // Reset parent for child nodes
         if (!isParent) {
@@ -572,12 +567,15 @@ export function NarrativeTopicVisual({
                   })
                   .size() > 0;
 
-              // Only reset parent stroke width, preserve color if it's selected
-              parentGroup
-                .select("circle")
-                .transition()
-                .duration(150)
-                .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
+              // Only reset parent style if it doesn't contain the selected event
+              if (!parentHasSelectedEvent) {
+                parentGroup
+                  .select("circle")
+                  .transition()
+                  .duration(150)
+                  .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
+                  .attr("stroke", "black");
+              }
             }
           }
         }

@@ -75,7 +75,7 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
                 setSelectedAttribute(value)
               }
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[150px] h-7 px-2 py-1 text-xs">
                 <SelectValue placeholder="Select attribute" />
               </SelectTrigger>
               <SelectContent>
@@ -83,7 +83,11 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
                   const attr = ENTITY_ATTRIBUTES.find((a) => a.id === attrId);
                   if (!attr) return null;
                   return (
-                    <SelectItem key={attr.id} value={attr.id}>
+                    <SelectItem
+                      key={attr.id}
+                      value={attr.id}
+                      className="text-xs py-1"
+                    >
                       {attr.label}
                     </SelectItem>
                   );

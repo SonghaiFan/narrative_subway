@@ -100,12 +100,12 @@ export function ProfileSection({
               <span className="text-sm text-neutral-500">Loading...</span>
             )}
             <Select value={selectedFile} onValueChange={handleFileChange}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[150px] h-7 px-2 py-1 text-xs">
                 <SelectValue placeholder="Select data file" />
               </SelectTrigger>
               <SelectContent>
                 {availableFiles.map((file) => (
-                  <SelectItem key={file} value={file}>
+                  <SelectItem key={file} value={file} className="text-xs py-1">
                     {file}
                   </SelectItem>
                 ))}
