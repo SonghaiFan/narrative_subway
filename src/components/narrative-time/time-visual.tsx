@@ -49,16 +49,11 @@ export function NarrativeTimeVisual({
         .selectAll(".point")
         .each(function () {
           const point = d3.select(this);
-          const eventIndex = parseInt(point.attr("data-event-index"), 10);
-          const hasRealTime = point.attr("data-has-real-time") === "true";
 
+          // Only reset the stroke color, not the radius
           point
-            .attr("r", TIME_CONFIG.point.radius)
             .attr("stroke", "black")
-            .attr(
-              "stroke-width",
-              hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
-            );
+            .attr("stroke-width", TIME_CONFIG.point.strokeWidth);
         });
 
       // If we have a selected event, highlight it
@@ -69,9 +64,8 @@ export function NarrativeTimeVisual({
           .selectAll(`.point[data-event-index="${newSelectedId}"]`);
 
         if (!selectedPoints.empty()) {
-          selectedPoints
-            .attr("r", TIME_CONFIG.point.hoverRadius)
-            .attr("stroke", "#3b82f6"); // Blue highlight for selected event
+          // Only change the stroke color for selection, not the radius
+          selectedPoints.attr("stroke", "#3b82f6"); // Blue highlight for selected event
         }
       }
     },
@@ -420,33 +414,25 @@ export function NarrativeTimeVisual({
       .attr("r", TIME_CONFIG.point.radius)
       .attr("fill", "white")
       .attr("stroke", "black")
-      .attr("stroke-width", (d) =>
-        d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
-      )
+      .attr("stroke-width", TIME_CONFIG.point.strokeWidth)
       .attr("stroke-dasharray", (d) => (d.hasRealTime ? "none" : "2,2"))
       .style("cursor", "pointer")
       // Add data attributes for easy selection later - use the original event index
       .attr("data-event-index", (d) => d.event.index)
       .attr("data-has-real-time", (d) => d.hasRealTime)
       .on("mouseover", function (event, d) {
+        // Only change size on hover, not color
         d3.select(this)
           .transition()
           .duration(150)
-          .attr("r", TIME_CONFIG.point.hoverRadius)
-          .attr("stroke-width", TIME_CONFIG.point.hoverStrokeWidth);
+          .attr("r", TIME_CONFIG.point.hoverRadius);
 
         showTooltip(d.event, event.pageX, event.pageY, "time");
       })
       .on("mouseout", function (event, d) {
         const point = d3.select(this);
-        point
-          .transition()
-          .duration(150)
-          .attr("r", TIME_CONFIG.point.radius)
-          .attr(
-            "stroke-width",
-            d.hasRealTime ? TIME_CONFIG.point.strokeWidth : 1
-          );
+        // Only reset size on mouseout, not color
+        point.transition().duration(150).attr("r", TIME_CONFIG.point.radius);
 
         // Only update label if point has real time
         if (d.hasRealTime) {

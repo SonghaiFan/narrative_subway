@@ -53,7 +53,7 @@ export function EntityVisual({
         .selectAll(".event-node")
         .each(function () {
           const node = d3.select(this);
-
+          // Only reset the stroke color, not the radius
           node.attr("stroke", "black");
         });
 
@@ -64,7 +64,8 @@ export function EntityVisual({
           .selectAll(`.event-node[data-event-index="${newSelectedId}"]`);
 
         if (!selectedNodes.empty()) {
-          selectedNodes.attr("stroke", "#3b82f6"); // Blue highlight for selected event;
+          // Only change the stroke color for selection, not the radius
+          selectedNodes.attr("stroke", "#3b82f6"); // Blue highlight for selected event
         }
       }
     },
@@ -287,14 +288,11 @@ export function EntityVisual({
             .attr("data-event-index", event.index)
             .style("cursor", "pointer")
             .on("mouseover", function (e) {
+              // Only change size on hover, not color
               d3.select(this)
                 .transition()
                 .duration(150)
-                .attr("r", ENTITY_CONFIG.event.nodeRadius * 1.5)
-                .attr(
-                  "stroke-width",
-                  ENTITY_CONFIG.event.nodeStrokeWidth * 1.5
-                );
+                .attr("r", ENTITY_CONFIG.event.nodeRadius * 1.5);
 
               showTooltip(event, e.pageX, e.pageY, "entity");
             })
@@ -302,11 +300,11 @@ export function EntityVisual({
               updatePosition(e.pageX, e.pageY);
             })
             .on("mouseout", function () {
+              // Only reset size on mouseout, not color
               d3.select(this)
                 .transition()
                 .duration(150)
-                .attr("r", ENTITY_CONFIG.event.nodeRadius)
-                .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth);
+                .attr("r", ENTITY_CONFIG.event.nodeRadius);
 
               hideTooltip();
             })

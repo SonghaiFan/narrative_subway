@@ -76,8 +76,7 @@ export function NarrativeTopicVisual({
       // Reset all nodes to default style
       d3.select(svgRef.current)
         .selectAll(".parent-point, .child-point-circle")
-        .attr("stroke", "black")
-        .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth);
+        .attr("stroke", "black");
 
       // If we have a selected event, highlight it
       if (newSelectedId !== null) {
@@ -87,9 +86,8 @@ export function NarrativeTopicVisual({
           .select(`.parent-point[data-event-index="${newSelectedId}"]`);
 
         if (!parentNode.empty()) {
-          parentNode
-            .attr("stroke", "#3b82f6")
-            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
+          // Only change color for selection
+          parentNode.attr("stroke", "#3b82f6");
         }
 
         // Try to find and highlight the child node
@@ -98,18 +96,15 @@ export function NarrativeTopicVisual({
           .select(`#${getChildNodeId(newSelectedId)}`);
 
         if (!childNode.empty()) {
-          // Highlight the child node
-          childNode
-            .attr("stroke", "#3b82f6")
-            .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth);
+          // Highlight the child node - only change color
+          childNode.attr("stroke", "#3b82f6");
 
-          // Also highlight its parent node
+          // Also highlight its parent node - only change color
           const parentKey = childNode.attr("data-parent-key");
           if (parentKey) {
             const parentNodeId = getParentNodeId(parentKey);
             d3.select(`#${parentNodeId}`)
               .select("circle")
-              .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
               .attr("stroke", "#3b82f6");
           }
         }
@@ -507,26 +502,25 @@ export function NarrativeTopicVisual({
 
     // Define event handlers
     const handleNodeInteraction = {
-      // Common highlight function for both hover and selection
+      // Common highlight function for hover
       highlight(node: d3.Selection<any, any, any, any>, isParent: boolean) {
+        // Only change size on hover, not color
         node
           .transition()
           .duration(150)
-          .attr("r", TOPIC_CONFIG.point.hoverRadius)
-          .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
-          .attr("stroke", "#3b82f6");
+          .attr("r", TOPIC_CONFIG.point.hoverRadius);
 
         // If this is a child node, also highlight its parent
         if (!isParent) {
           const parentKey = node.attr("data-parent-key");
           if (parentKey) {
             const parentNodeId = getParentNodeId(parentKey);
+            // Only change size on hover, not color
             d3.select(`#${parentNodeId}`)
               .select("circle")
               .transition()
               .duration(150)
-              .attr("stroke-width", TOPIC_CONFIG.point.hoverStrokeWidth)
-              .attr("stroke", "#3b82f6");
+              .attr("r", TOPIC_CONFIG.point.hoverRadius);
           }
         }
       },
@@ -535,6 +529,7 @@ export function NarrativeTopicVisual({
       reset(node: d3.Selection<any, any, any, any>, d: any, isParent: boolean) {
         const pointCount = isParent && d.points ? d.points.length : 1;
 
+        // Only reset size, not color
         node
           .transition()
           .duration(150)
@@ -543,9 +538,7 @@ export function NarrativeTopicVisual({
             isParent && pointCount > 1
               ? TOPIC_CONFIG.point.radius * 1.2
               : TOPIC_CONFIG.point.radius
-          )
-          .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
-          .attr("stroke", "black");
+          );
 
         // Reset parent for child nodes
         if (!isParent) {
@@ -555,27 +548,17 @@ export function NarrativeTopicVisual({
             const parentGroup = d3.select(`#${parentNodeId}`);
 
             if (!parentGroup.empty()) {
-              // Check if the parent contains the selected event
-              const parentHasSelectedEvent =
-                parentGroup
-                  .selectAll(".child-point-circle")
-                  .filter(function () {
-                    return (
-                      d3.select(this).attr("data-event-index") ==
-                      selectedEventIdRef.current?.toString()
-                    );
-                  })
-                  .size() > 0;
-
-              // Only reset parent style if it doesn't contain the selected event
-              if (!parentHasSelectedEvent) {
-                parentGroup
-                  .select("circle")
-                  .transition()
-                  .duration(150)
-                  .attr("stroke-width", TOPIC_CONFIG.point.strokeWidth)
-                  .attr("stroke", "black");
-              }
+              // Only reset size, not color
+              parentGroup
+                .select("circle")
+                .transition()
+                .duration(150)
+                .attr(
+                  "r",
+                  d.points && d.points.length > 1
+                    ? TOPIC_CONFIG.point.radius * 1.2
+                    : TOPIC_CONFIG.point.radius
+                );
             }
           }
         }
@@ -583,9 +566,6 @@ export function NarrativeTopicVisual({
 
       // Mouse over handler
       mouseOver(this: any, event: MouseEvent, d: any) {
-        const eventIndex = d.event?.index || d.points?.[0]?.event?.index;
-        if (eventIndex === selectedEventIdRef.current) return;
-
         const node = d3.select(this);
         const isParent = node.classed("parent-point");
 
@@ -598,13 +578,47 @@ export function NarrativeTopicVisual({
 
       // Mouse out handler
       mouseOut(this: any, event: MouseEvent, d: any) {
-        const eventIndex = d.event?.index || d.points?.[0]?.event?.index;
-        if (eventIndex === selectedEventIdRef.current) return;
-
         const node = d3.select(this);
         const isParent = node.classed("parent-point");
 
-        handleNodeInteraction.reset(node, d, isParent);
+        // Always reset size on mouseout, regardless of selection state
+        const pointCount = isParent && d.points ? d.points.length : 1;
+
+        // Only reset the size, not the color
+        node
+          .transition()
+          .duration(150)
+          .attr(
+            "r",
+            isParent && pointCount > 1
+              ? TOPIC_CONFIG.point.radius * 1.2
+              : TOPIC_CONFIG.point.radius
+          );
+
+        // If this is a child node, also reset its parent size
+        if (!isParent) {
+          const parentKey = node.attr("data-parent-key");
+          if (parentKey) {
+            const parentNodeId = getParentNodeId(parentKey);
+            const parentGroup = d3.select(`#${parentNodeId}`);
+
+            if (!parentGroup.empty()) {
+              // Only reset size, not color
+              parentGroup
+                .select("circle")
+                .transition()
+                .duration(150)
+                .attr(
+                  "r",
+                  d.points && d.points.length > 1
+                    ? TOPIC_CONFIG.point.radius * 1.2
+                    : TOPIC_CONFIG.point.radius
+                );
+            }
+          }
+        }
+
+        // Always hide tooltip
         hideTooltip();
       },
 
@@ -617,6 +631,9 @@ export function NarrativeTopicVisual({
       childClick(this: any, event: MouseEvent, d: any) {
         const eventData = d.event;
         const isDeselecting = eventData.index === selectedEventIdRef.current;
+
+        // Hide tooltip when clicking
+        hideTooltip();
 
         onEventSelect?.(isDeselecting ? null : eventData.index);
         event.stopPropagation();
