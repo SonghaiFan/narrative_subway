@@ -1,7 +1,7 @@
 "use client";
 
-import { NarrativeEvent } from "@/types/article";
-import { useState, useCallback } from "react";
+import { Entity, NarrativeEvent } from "@/types/article";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { VisualizationDisplay } from "../shared/visualization-display";
 import { EntityVisual } from "./entity-visual";
 import { EntityText } from "./entity-text";
@@ -14,17 +14,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Define the possible entity attributes we can display
-const ENTITY_ATTRIBUTES = [
-  { id: "name", label: "Name" },
-  { id: "narrative_role", label: "Narrative Role" },
-  { id: "archetypal_role", label: "Archetypal Role" },
-  { id: "social_role", label: "Social Role" },
-  { id: "discourse_role", label: "Discourse Role" },
-  { id: "importance_level", label: "Importance Level" },
-] as const;
+// Helper function to format attribute labels
+const formatAttributeLabel = (attr: string): string => {
+  return attr
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
-type EntityAttribute = (typeof ENTITY_ATTRIBUTES)[number]["id"];
+type EntityAttribute = string;
 
 interface EntityDisplayProps {
   events: NarrativeEvent[];
@@ -35,7 +33,7 @@ type ViewMode = "visual" | "text";
 export function EntityDisplay({ events }: EntityDisplayProps) {
   const [viewMode, setViewMode] = useState<ViewMode>("visual");
   const [selectedAttribute, setSelectedAttribute] =
-    useState<EntityAttribute>("name");
+    useState<EntityAttribute>("");
   const {
     selectedEntityId,
     setSelectedEntityId,
@@ -45,20 +43,62 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
 
   // Function to get available attributes in current entities
   const getAvailableAttributes = useCallback(() => {
-    const availableAttrs = new Set<EntityAttribute>(["name"]);
+    const availableAttrs = new Set<EntityAttribute>();
+    const allAttributes = new Set<string>();
 
+    // First pass: collect all possible attributes from entities
     events.forEach((event) => {
       event.entities.forEach((entity) => {
-        ENTITY_ATTRIBUTES.forEach((attr) => {
-          if (entity[attr.id] !== undefined) {
-            availableAttrs.add(attr.id);
+        // Get all keys from the entity object
+        Object.keys(entity).forEach((key) => {
+          // Skip 'id' and 'name' as they're not visualization attributes
+          if (key !== "id" && key !== "name") {
+            allAttributes.add(key);
           }
         });
       });
     });
 
-    return Array.from(availableAttrs);
+    // Second pass: check which attributes have values
+    events.forEach((event) => {
+      event.entities.forEach((entity) => {
+        allAttributes.forEach((attr) => {
+          if (
+            entity[attr] !== undefined &&
+            entity[attr] !== null &&
+            entity[attr] !== ""
+          ) {
+            availableAttrs.add(attr);
+          }
+        });
+      });
+    });
+
+    // If no attributes are found, return an empty array
+    if (availableAttrs.size === 0) {
+      return [];
+    }
+
+    // Convert to array and sort alphabetically
+    return Array.from(availableAttrs).sort();
   }, [events]);
+
+  // Memoize the available attributes to avoid recalculation
+  const availableAttributes = useMemo(
+    () => getAvailableAttributes(),
+    [getAvailableAttributes]
+  );
+
+  // Set initial attribute when events change
+  useEffect(() => {
+    if (
+      availableAttributes.length > 0 &&
+      (!availableAttributes.includes(selectedAttribute) ||
+        selectedAttribute === "")
+    ) {
+      setSelectedAttribute(availableAttributes[0]);
+    }
+  }, [availableAttributes, selectedAttribute]);
 
   return (
     <VisualizationDisplay
@@ -79,19 +119,15 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
                 <SelectValue placeholder="Select attribute" />
               </SelectTrigger>
               <SelectContent>
-                {getAvailableAttributes().map((attrId) => {
-                  const attr = ENTITY_ATTRIBUTES.find((a) => a.id === attrId);
-                  if (!attr) return null;
-                  return (
-                    <SelectItem
-                      key={attr.id}
-                      value={attr.id}
-                      className="text-xs py-1"
-                    >
-                      {attr.label}
-                    </SelectItem>
-                  );
-                })}
+                {availableAttributes.map((attrId) => (
+                  <SelectItem
+                    key={attrId}
+                    value={attrId}
+                    className="text-xs py-1"
+                  >
+                    {formatAttributeLabel(attrId)}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

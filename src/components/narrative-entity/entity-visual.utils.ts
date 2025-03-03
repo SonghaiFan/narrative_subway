@@ -14,6 +14,21 @@ export function getEntityAttributeValue(
   entity: Entity,
   attribute: EntityAttribute
 ): string {
+  // If entity is undefined or null, return "Unknown"
+  if (!entity) {
+    return "Unknown";
+  }
+
+  // If the attribute doesn't exist on this entity or is empty, return "Unknown"
+  if (
+    attribute === "" ||
+    entity[attribute] === undefined ||
+    entity[attribute] === null ||
+    entity[attribute] === ""
+  ) {
+    return "Unknown";
+  }
+
   const value = entity[attribute];
   return value?.toString() || "Unknown";
 }
@@ -52,8 +67,22 @@ export function getEntityMentions(
 ): Map<string, EntityMention> {
   const entityMentions = new Map<string, EntityMention>();
 
+  // If no attribute is selected, return empty map
+  if (!selectedAttribute) {
+    return entityMentions;
+  }
+
   events.forEach((event) => {
     event.entities.forEach((entity) => {
+      // Skip entities that don't have the selected attribute
+      if (
+        entity[selectedAttribute] === undefined ||
+        entity[selectedAttribute] === null ||
+        entity[selectedAttribute] === ""
+      ) {
+        return;
+      }
+
       const key = getEntityAttributeValue(entity, selectedAttribute);
       if (!entityMentions.has(key)) {
         entityMentions.set(key, { entity, count: 1 });
@@ -72,6 +101,11 @@ export function getVisibleEntities(
   entityMentions: Map<string, EntityMention>,
   maxEntities: number
 ): Entity[] {
+  // If no entity mentions, return empty array
+  if (entityMentions.size === 0) {
+    return [];
+  }
+
   return Array.from(entityMentions.values())
     .sort((a, b) => b.count - a.count)
     .slice(0, maxEntities)
@@ -118,13 +152,22 @@ export function createXScale(
   selectedAttribute: string,
   totalColumnsWidth: number
 ) {
+  // If no visible entities or no selected attribute, return a default scale
+  if (visibleEntities.length === 0 || !selectedAttribute) {
+    return d3
+      .scaleBand()
+      .domain(["Unknown"])
+      .range([0, totalColumnsWidth])
+      .padding(0.1);
+  }
+
   return d3
     .scaleBand()
     .domain(
       visibleEntities.map((e) => getEntityAttributeValue(e, selectedAttribute))
     )
     .range([0, totalColumnsWidth])
-    .padding(ENTITY_CONFIG.entity.columnPadding);
+    .padding(0.1);
 }
 
 // Create scale for y-axis
@@ -156,12 +199,36 @@ export function getRelevantEntities(
   visibleEntities: Entity[],
   selectedAttribute: string
 ) {
+  // If the event has no entities, return an empty array
+  if (!event.entities || event.entities.length === 0) {
+    return [];
+  }
+
+  // Check if any entities have the selected attribute
+  const hasSelectedAttribute = event.entities.some(
+    (entity) =>
+      entity[selectedAttribute] !== undefined &&
+      entity[selectedAttribute] !== null &&
+      entity[selectedAttribute] !== ""
+  );
+
+  // If no entities have the selected attribute, return all entities
+  if (!hasSelectedAttribute) {
+    return event.entities;
+  }
+
   return event.entities.filter((entity) =>
-    visibleEntities.find(
-      (e) =>
+    visibleEntities.find((e) => {
+      // If both entities have names, match by name
+      if (e.name && entity.name) {
+        return e.name === entity.name;
+      }
+      // If names are not available, fall back to matching by the selected attribute
+      return (
         getEntityAttributeValue(e, selectedAttribute) ===
         getEntityAttributeValue(entity, selectedAttribute)
-    )
+      );
+    })
   );
 }
 
@@ -171,7 +238,26 @@ export function calculateConnectorPoints(
   xScale: d3.ScaleBand<string>,
   selectedAttribute: string
 ) {
-  const xPoints = relevantEntities.map(
+  // If no entities, return default values
+  if (!relevantEntities || relevantEntities.length === 0) {
+    return { xPoints: [], minX: 0, maxX: 0 };
+  }
+
+  // Filter entities that have the selected attribute
+  const entitiesWithAttribute = relevantEntities.filter(
+    (entity) =>
+      entity[selectedAttribute] !== undefined &&
+      entity[selectedAttribute] !== null &&
+      entity[selectedAttribute] !== ""
+  );
+
+  // If no entities have the attribute, use a default position
+  if (entitiesWithAttribute.length === 0) {
+    const defaultX = xScale.range()[0] + xScale.bandwidth() / 2;
+    return { xPoints: [defaultX], minX: defaultX, maxX: defaultX };
+  }
+
+  const xPoints = entitiesWithAttribute.map(
     (entity) =>
       xScale(getEntityAttributeValue(entity, selectedAttribute))! +
       xScale.bandwidth() / 2

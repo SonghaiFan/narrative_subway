@@ -157,6 +157,9 @@ export function EntityVisual({
             .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
         });
 
+      // Always show the entity name as the main label if available
+      // If name is not available, use the selected attribute value
+      const primaryLabel = entity.name || attrValue;
       labelContainer
         .append("div")
         .style("font-weight", "600")
@@ -165,10 +168,11 @@ export function EntityVisual({
         .style("white-space", "nowrap")
         .style("overflow", "hidden")
         .style("text-overflow", "ellipsis")
-        .attr("title", attrValue)
-        .text(attrValue);
+        .attr("title", primaryLabel)
+        .text(primaryLabel);
 
-      if (selectedAttribute === "name") {
+      // If the selected attribute is not "name" and entity has a name, show attribute as secondary label
+      if (selectedAttribute !== "name" && entity.name) {
         labelContainer
           .append("div")
           .style("font-size", "12px")
@@ -177,7 +181,19 @@ export function EntityVisual({
           .style("white-space", "nowrap")
           .style("overflow", "hidden")
           .style("text-overflow", "ellipsis")
-          .text(entity.social_role || "");
+          .attr("title", attrValue)
+          .text(attrValue);
+      } else if (entity.social_role) {
+        // If selected attribute is "name" or entity doesn't have a name but has social_role, show it
+        labelContainer
+          .append("div")
+          .style("font-size", "12px")
+          .style("color", "#6B7280")
+          .style("margin-top", "2px")
+          .style("white-space", "nowrap")
+          .style("overflow", "hidden")
+          .style("text-overflow", "ellipsis")
+          .text(entity.social_role);
       }
     });
 
