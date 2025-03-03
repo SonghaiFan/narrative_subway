@@ -380,7 +380,7 @@ export function EntityVisual({
 
   return (
     <div className="w-full h-full flex flex-col overflow-auto">
-      <div className="flex-none bg-white sticky top-0 z-10 shadow-sm p-2">
+      <div className="flex-none bg-white sticky top-0 z-10 shadow-sm">
         <div
           ref={headerRef}
           style={{ height: `${ENTITY_CONFIG.header.height}px` }}
