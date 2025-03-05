@@ -28,49 +28,73 @@ export function EntityText({ events }: EntityTextProps) {
   const [expandedEntities, setExpandedEntities] = useState<Set<string>>(
     new Set()
   );
-  const [showAllEntities, setShowAllEntities] = useState(false);
+  // Show all entities by default
+  const [showAllEntities, setShowAllEntities] = useState(true);
 
   // Build rich entity context
   const entityContextMap = new Map<string, EntityContext>();
-  const entityNameToId = new Map<string, string>();
 
-  // First pass: map entity names to their first occurrence ID
+  // First pass: collect all unique entities by ID
+  const uniqueEntitiesById = new Map<string, Entity>();
+
   events.forEach((event) => {
     if (!event?.entities) return;
     event.entities.forEach((entity) => {
-      if (!entity?.name || !entity?.id) return;
-      if (!entityNameToId.has(entity.name)) {
-        entityNameToId.set(entity.name, entity.id);
+      if (!entity?.id) return;
+      if (!uniqueEntitiesById.has(entity.id)) {
+        uniqueEntitiesById.set(entity.id, entity);
       }
     });
   });
 
-  // Second pass: count mentions and build context
+  // Initialize count map for each unique entity
+  const entityCounts = new Map<string, number>();
+  uniqueEntitiesById.forEach((_, id) => {
+    entityCounts.set(id, 0);
+  });
+
+  // Second pass: count occurrences of each entity across all events
+  // Count each entity only once per event
   events.forEach((event) => {
     if (!event?.entities) return;
+
+    // Track which entities we've already counted in this event
+    const countedInThisEvent = new Set<string>();
+
     event.entities.forEach((entity) => {
-      if (!entity?.name || !entity?.id) return;
+      if (!entity?.id) return;
 
-      const canonicalId = entityNameToId.get(entity.name)!;
-      const existingContext = entityContextMap.get(canonicalId) || {
-        id: canonicalId,
-        entity,
-        frequency: 0,
-        mentions: [],
-      };
+      // Only count each unique entity once per event
+      if (!countedInThisEvent.has(entity.id)) {
+        const currentCount = entityCounts.get(entity.id) || 0;
+        entityCounts.set(entity.id, currentCount + 1);
+        countedInThisEvent.add(entity.id);
 
-      existingContext.frequency += 1;
-      existingContext.mentions.push({
-        text: event.text,
-        date:
-          event.temporal_anchoring?.real_time ||
-          event.temporal_anchoring?.anchor ||
-          "Unknown date",
-        topic: event.topic.main_topic,
-        sentiment: event.topic.sentiment,
-      });
+        // Add to context map
+        const existingContext = entityContextMap.get(entity.id) || {
+          id: entity.id,
+          entity,
+          frequency: 0,
+          mentions: [],
+        };
 
-      entityContextMap.set(canonicalId, existingContext);
+        existingContext.frequency = entityCounts.get(entity.id) || 0;
+
+        // Only add the mention if we haven't already added it
+        if (!existingContext.mentions.some((m) => m.text === event.text)) {
+          existingContext.mentions.push({
+            text: event.text,
+            date:
+              event.temporal_anchoring?.real_time ||
+              event.temporal_anchoring?.anchor ||
+              "Unknown date",
+            topic: event.topic.main_topic,
+            sentiment: event.topic.sentiment,
+          });
+        }
+
+        entityContextMap.set(entity.id, existingContext);
+      }
     });
   });
 
@@ -114,7 +138,7 @@ export function EntityText({ events }: EntityTextProps) {
   };
 
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full">
       <div className="p-4 space-y-6">
         <div>
           <h3 className="font-medium mb-2">
@@ -160,7 +184,7 @@ export function EntityText({ events }: EntityTextProps) {
           <div className="space-y-4">
             {(showAllEntities
               ? sortedEntities
-              : sortedEntities.slice(0, 5)
+              : sortedEntities.slice(0, 10)
             ).map(({ entity, frequency, mentions }) => (
               <div key={entity.id} className="bg-gray-50 p-3 rounded-lg">
                 <div
@@ -218,7 +242,7 @@ export function EntityText({ events }: EntityTextProps) {
               </div>
             ))}
           </div>
-          {sortedEntities.length > 5 && (
+          {sortedEntities.length > 10 && (
             <div className="mt-4 flex justify-center">
               <button
                 onClick={() => setShowAllEntities(!showAllEntities)}
@@ -243,7 +267,7 @@ export function EntityText({ events }: EntityTextProps) {
                   </>
                 ) : (
                   <>
-                    Show {sortedEntities.length - 5} More Entities
+                    Show {sortedEntities.length - 10} More Entities
                     <svg
                       className="w-4 h-4 transition-transform group-hover:translate-y-0.5"
                       fill="none"

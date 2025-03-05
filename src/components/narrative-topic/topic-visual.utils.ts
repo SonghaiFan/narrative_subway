@@ -69,20 +69,16 @@ export function getScales(
   width: number,
   height: number
 ) {
-  // Swap the axes: topics on x-axis, narrative index on y-axis
-  const xScale = d3
+  const yScale = d3
     .scaleBand()
     .domain(topTopics)
-    .range([0, width])
+    .range([0, height])
     .padding(0.3);
 
-  // Use narrative time for y-axis, matching the entity-visual approach
-  const maxTime = Math.max(...dataPoints.map((d) => d.narrativeTime));
-
-  const yScale = d3
-    .scaleLinear()
-    .domain([0, Math.ceil(maxTime) + 1])
-    .range([0, height])
+  const xScale = d3
+    .scaleTime()
+    .domain(d3.extent(dataPoints, (d) => d.realTime) as [Date, Date])
+    .range([0, width])
     .nice();
 
   return { xScale, yScale };
@@ -113,19 +109,12 @@ export function calculateDimensions(
 
 // Create axes for the visualization
 export function createAxes(
-  xScale: d3.ScaleBand<string>,
-  yScale: d3.ScaleLinear<number, number>
+  xScale: d3.ScaleTime<number, number>,
+  yScale: d3.ScaleBand<string>
 ) {
-  // Update axis creation for the new orientation
   const xAxis = d3.axisTop(xScale).tickSize(5).tickPadding(10);
 
-  // Create y-axis with integer ticks, matching the entity-visual approach
-  const yAxis = d3
-    .axisLeft(yScale)
-    .tickSize(5)
-    .tickPadding(5)
-    .ticks(Math.ceil(yScale.domain()[1]))
-    .tickFormat(d3.format("d"));
+  const yAxis = d3.axisLeft(yScale).tickSize(5).tickPadding(5);
 
   return { xAxis, yAxis };
 }
@@ -134,9 +123,9 @@ export function createAxes(
 export function createEdges(dataPoints: DataPoint[]): Edge[] {
   const edges: Edge[] = [];
 
-  // Sort data points by narrative index
+  // Sort data points by real time
   const sortedPoints = [...dataPoints].sort(
-    (a, b) => a.narrativeTime - b.narrativeTime
+    (a, b) => a.realTime.getTime() - b.realTime.getTime()
   );
 
   // Create edges between consecutive events with the same main topic
@@ -159,37 +148,41 @@ export function createEdges(dataPoints: DataPoint[]): Edge[] {
 // Group overlapping points
 export function groupOverlappingPoints(
   dataPoints: DataPoint[],
-  xScale: d3.ScaleBand<string>,
-  yScale: d3.ScaleLinear<number, number>
+  xScale: d3.ScaleTime<number, number>,
+  yScale: d3.ScaleBand<string>
 ): GroupedPoint[] {
   const groups = new Map<string, DataPoint[]>();
   const nodeSize = TOPIC_CONFIG.point.radius * 2;
 
-  // Calculate narrative index threshold based on current scale
-  // This makes the grouping responsive to the container height
-  const indexThreshold = Math.abs(yScale.invert(nodeSize) - yScale.invert(0));
+  // Calculate time threshold based on current scale
+  // This makes the grouping responsive to the container width
+  const timeThreshold = Math.abs(
+    xScale.invert(nodeSize).getTime() - xScale.invert(0).getTime()
+  );
 
-  // Sort points by topic and narrative index
+  // Sort points by time and topic
   const sortedPoints = [...dataPoints].sort((a, b) => {
-    const topicCompare = a.mainTopic.localeCompare(b.mainTopic);
-    if (topicCompare === 0) {
-      return a.narrativeTime - b.narrativeTime;
+    const timeCompare = a.realTime.getTime() - b.realTime.getTime();
+    if (timeCompare === 0) {
+      return a.mainTopic.localeCompare(b.mainTopic);
     }
-    return topicCompare;
+    return timeCompare;
   });
 
-  // Group points that are close in narrative index and in same topic
+  // Group points that are close in time and in same topic
   sortedPoints.forEach((point) => {
     let foundGroup = false;
 
     // Check existing groups for a match
     for (const [key, points] of groups.entries()) {
       const lastPoint = points[points.length - 1];
-      const indexDiff = Math.abs(point.narrativeTime - lastPoint.narrativeTime);
+      const timeDiff = Math.abs(
+        point.realTime.getTime() - lastPoint.realTime.getTime()
+      );
 
       if (
         point.mainTopic === lastPoint.mainTopic &&
-        indexDiff <= indexThreshold
+        timeDiff <= timeThreshold
       ) {
         points.push(point);
         foundGroup = true;
@@ -199,8 +192,8 @@ export function groupOverlappingPoints(
 
     // Create new group if no match found
     if (!foundGroup) {
-      const x = xScale(point.mainTopic)! + xScale.bandwidth() / 2;
-      const y = yScale(point.narrativeTime);
+      const x = xScale(point.realTime);
+      const y = yScale(point.mainTopic)! + yScale.bandwidth() / 2;
       const key = `${Math.round(x)},${Math.round(y)}`;
       groups.set(key, [point]);
     }
@@ -210,16 +203,17 @@ export function groupOverlappingPoints(
   return Array.from(groups.entries())
     .filter(([_, points]) => points.length > 0)
     .map(([key, points]) => {
-      // Calculate average narrative index for the group
-      const avgNarrativeTime =
-        points.reduce((sum, p) => sum + p.narrativeTime, 0) / points.length;
+      // Calculate average time for the group
+      const avgTime = new Date(
+        points.reduce((sum, p) => sum + p.realTime.getTime(), 0) / points.length
+      );
 
       return {
         key,
         points,
         mainTopic: points[0].mainTopic,
-        x: xScale(points[0].mainTopic)! + xScale.bandwidth() / 2,
-        y: yScale(avgNarrativeTime),
+        x: xScale(avgTime),
+        y: yScale(points[0].mainTopic)! + yScale.bandwidth() / 2,
         isExpanded: false,
       };
     });
