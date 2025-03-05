@@ -174,7 +174,7 @@ export function NarrativeTopicVisual({
       .style("margin-left", `${TOPIC_CONFIG.margin.left}px`)
       .style("width", `${width}px`);
 
-    // Add x-axis to header
+    // Add x-axis to header (now showing topics)
     const headerSvg = headerContent
       .append("svg")
       .attr("width", width + TOPIC_CONFIG.margin.right)
@@ -188,7 +188,25 @@ export function NarrativeTopicVisual({
       .call(xAxis)
       .style("font-size", `${TOPIC_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
-      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"));
+      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
+      .call((g) =>
+        g
+          .selectAll(".tick text")
+          .style("text-anchor", "start")
+          .attr("transform", "rotate(-45)")
+          .attr("dy", "-0.5em")
+          .attr("dx", "0.5em")
+      );
+
+    // Add x-axis label
+    headerSvg
+      .append("text")
+      .attr("class", "x-axis-label")
+      .attr("x", width / 2)
+      .attr("y", 10)
+      .style("text-anchor", "middle")
+      .style("font-size", `${TOPIC_CONFIG.axis.fontSize}px`)
+      .text("Topics");
 
     // Create SVG with responsive dimensions
     const svg = d3
@@ -206,57 +224,47 @@ export function NarrativeTopicVisual({
       .attr("height", containerHeight)
       .attr("fill", "transparent")
       .on("click", () => {
-        // Close all expanded groups when clicking on the background
-        const groupedPoints = groupOverlappingPoints(
-          dataPoints,
-          xScale,
-          yScale
-        );
-
-        groupedPoints.forEach((point) => {
-          if (point.isExpanded) {
-            point.isExpanded = false;
-            pointStatesRef.current.set(point.key, {
-              x: point.x,
-              y: point.y,
+        // Collapse all expanded groups
+        d3.selectAll(".point-group").each(function (d: any) {
+          if (d.isExpanded) {
+            d.isExpanded = false;
+            pointStatesRef.current.set(d.key, {
+              x: d.x,
+              y: d.y,
               isExpanded: false,
             });
 
-            // Find the parent node and collapse it
-            const parentId = getParentNodeId(point.key);
-            const parentGroup = d3.select(`#${parentId}`);
+            const parent = d3.select(this);
+            const children = parent.selectAll(".child-point");
+            const parentCircle = parent.select("circle");
+            const countText = parent.select("text");
 
-            if (!parentGroup.empty()) {
-              const parentCircle = parentGroup.select("circle");
-              const countText = parentGroup.select("text");
-              const children = parentGroup.selectAll(".child-point");
+            // Collapse animation
+            parentCircle
+              .transition()
+              .duration(200)
+              .attr(
+                "r",
+                d.points.length > 1
+                  ? TOPIC_CONFIG.point.radius * 1.2
+                  : TOPIC_CONFIG.point.radius
+              )
+              .style("opacity", 1);
 
-              // Collapse animation
-              parentCircle
-                .transition()
-                .duration(200)
-                .attr(
-                  "r",
-                  point.points.length > 1
-                    ? TOPIC_CONFIG.point.radius * 1.2
-                    : TOPIC_CONFIG.point.radius
-                )
-                .style("opacity", 1)
-                .style("cursor", "pointer");
-
+            if (countText.node()) {
               countText.style("opacity", 1);
-
-              children
-                .transition()
-                .duration(200)
-                .style("opacity", 0)
-                .style("pointer-events", "none");
             }
+
+            children
+              .transition()
+              .duration(200)
+              .style("opacity", 0)
+              .style("pointer-events", "none");
           }
         });
       });
 
-    // Create main group with proper margins
+    // Create main group with margins
     const g = svg
       .append("g")
       .attr(
@@ -271,13 +279,14 @@ export function NarrativeTopicVisual({
       .style("font-size", `${TOPIC_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
       .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
-      .call((g) =>
-        g
-          .selectAll(".tick text")
-          .style("font-weight", "500")
-          .style("text-anchor", "end")
-          .attr("dy", "0.32em")
-      );
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("transform", "rotate(-90)")
+      .attr("x", -height / 2)
+      .attr("y", -40)
+      .attr("fill", "#64748b")
+      .attr("text-anchor", "middle")
+      .text("Narrative Time");
 
     // Create edges
     const edges = createEdges(dataPoints);
@@ -300,16 +309,16 @@ export function NarrativeTopicVisual({
       .append("path")
       .attr("class", "edge")
       .attr("d", (d) => {
-        const sourceX = xScale(d.source.realTime);
-        const sourceY = yScale(d.source.mainTopic)! + yScale.bandwidth() / 2;
-        const targetX = xScale(d.target.realTime);
-        const targetY = yScale(d.target.mainTopic)! + yScale.bandwidth() / 2;
+        const sourceX = xScale(d.source.mainTopic)! + xScale.bandwidth() / 2;
+        const sourceY = yScale(d.source.narrativeTime);
+        const targetX = xScale(d.target.mainTopic)! + xScale.bandwidth() / 2;
+        const targetY = yScale(d.target.narrativeTime);
 
-        const midX = (sourceX + targetX) / 2;
+        const midY = (sourceY + targetY) / 2;
         const points: [number, number][] = [
           [sourceX, sourceY],
-          [midX, sourceY],
-          [midX, targetY],
+          [sourceX, midY],
+          [targetX, midY],
           [targetX, targetY],
         ];
 

@@ -114,7 +114,7 @@ export function EntityText({ events }: EntityTextProps) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full overflow-auto">
       <div className="p-4 space-y-6">
         <div>
           <h3 className="font-medium mb-2">

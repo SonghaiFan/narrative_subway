@@ -26,12 +26,18 @@ type EntityAttribute = string;
 
 interface EntityDisplayProps {
   events: NarrativeEvent[];
+  metadata?: any;
+  activeTab?: "visual" | "text";
 }
 
 type ViewMode = "visual" | "text";
 
-export function EntityDisplay({ events }: EntityDisplayProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>("visual");
+export function EntityDisplay({
+  events,
+  metadata,
+  activeTab,
+}: EntityDisplayProps) {
+  const [viewMode, setViewMode] = useState<ViewMode>(activeTab || "visual");
   const [selectedAttribute, setSelectedAttribute] =
     useState<EntityAttribute>("");
   const {
@@ -40,6 +46,13 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
     selectedEventId,
     setSelectedEventId,
   } = useCenterControl();
+
+  // Update viewMode when activeTab changes
+  useEffect(() => {
+    if (activeTab) {
+      setViewMode(activeTab);
+    }
+  }, [activeTab]);
 
   // Function to get available attributes in current entities
   const getAvailableAttributes = useCallback(() => {
@@ -100,6 +113,29 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
     }
   }, [availableAttributes, selectedAttribute]);
 
+  // If we're in the visualization page with activeTab prop, render just the content
+  if (activeTab) {
+    return activeTab === "visual" ? (
+      <EntityVisual
+        events={events}
+        selectedAttribute={selectedAttribute}
+        selectedEntityId={selectedEntityId}
+        onEntitySelect={setSelectedEntityId}
+        selectedEventId={selectedEventId}
+        onEventSelect={setSelectedEventId}
+      />
+    ) : (
+      <EntityText
+        events={events}
+        selectedEntityId={selectedEntityId}
+        onEntitySelect={setSelectedEntityId}
+        selectedEventId={selectedEventId}
+        onEventSelect={setSelectedEventId}
+      />
+    );
+  }
+
+  // Otherwise, render the full visualization display with controls
   return (
     <VisualizationDisplay
       title="Entity"
