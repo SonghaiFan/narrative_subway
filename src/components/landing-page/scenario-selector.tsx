@@ -110,7 +110,7 @@ export function ScenarioSelector() {
           <div className="md:w-3/5 flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
             <div className="p-4 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900 mb-1">
-                Choose a Visualization Mode
+                Choose a exploration scenario
               </h2>
               <p className="text-xs text-gray-500">
                 Select how you'd like to explore the narrative data
@@ -118,9 +118,9 @@ export function ScenarioSelector() {
             </div>
 
             <div className="flex-1 overflow-auto p-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {/* Standard Views */}
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <div className="text-xs font-medium text-gray-500 pl-1 flex items-center">
                     <span className="border-l-2 border-gray-300 pl-1.5">
                       Standard Views
@@ -134,7 +134,7 @@ export function ScenarioSelector() {
                     isSelected={selectedScenario === "pure-text"}
                   />
                   <ScenarioCard
-                    title="Pure Text + Visualization"
+                    title="Visualization View"
                     description="Interactive visualization with topic flow, entity relationships, and timeline views."
                     imageSrc="/images/visualization-preview.svg"
                     onClick={() => handleScenarioSelect("visualization")}
@@ -143,10 +143,13 @@ export function ScenarioSelector() {
                 </div>
 
                 {/* AI-Powered Views */}
-                <div className="space-y-4">
+                <div className="space-y-5">
                   <div className="text-xs font-medium text-gray-500 pl-1 flex items-center">
                     <span className="border-l-2 border-gray-300 pl-1.5">
                       AI-Powered Views
+                    </span>
+                    <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-800">
+                      AI Assistant
                     </span>
                   </div>
                   <ScenarioCard
