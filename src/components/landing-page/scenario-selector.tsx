@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCenterControl } from "@/lib/center-control-context";
+import { AuthHeader } from "@/components/auth/auth-header";
+import { ProfileSection } from "@/components/landing-page/profile-section";
+import { ScenarioCard } from "./ScenarioCard";
 
 export type ScenarioType =
   | "pure-text"
@@ -11,47 +13,12 @@ export type ScenarioType =
   | "pure-text-chat"
   | "visualization-chat";
 
-interface ScenarioCardProps {
+export interface ScenarioCardProps {
   title: string;
   description: string;
   imageSrc: string;
   onClick: () => void;
   isSelected: boolean;
-}
-
-function ScenarioCard({
-  title,
-  description,
-  imageSrc,
-  onClick,
-  isSelected,
-}: ScenarioCardProps) {
-  return (
-    <div
-      className={`relative flex flex-col overflow-hidden rounded-lg border transition-all cursor-pointer bg-white ${
-        isSelected
-          ? "border-blue-500 ring-2 ring-blue-500 shadow-md"
-          : "border-gray-200 hover:border-gray-300 hover:shadow"
-      }`}
-      onClick={onClick}
-    >
-      <div className="p-3">
-        <div className="bg-gray-100 rounded-lg overflow-hidden mb-2 h-28">
-          <Image
-            src={imageSrc}
-            alt={title}
-            width={400}
-            height={200}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
-        <p className="mt-0.5 text-xs text-gray-500 line-clamp-2">
-          {description}
-        </p>
-      </div>
-    </div>
-  );
 }
 
 export function ScenarioSelector() {
@@ -114,131 +81,109 @@ export function ScenarioSelector() {
     );
   }
 
-  const { metadata } = data;
+  const { metadata, events } = data;
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 py-2 px-4">
-        <div className="max-w-5xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <h1 className="text-base font-semibold">Scenario Selection</h1>
-            <a href="#" className="text-blue-600 text-xs">
-              Back to Scenario Selection
-            </a>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm">Domain Expert</span>
-            <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-800 text-sm">
-              D
-            </div>
-          </div>
-        </div>
-      </header>
+      <AuthHeader title="Scenario Selection" />
 
-      {/* Article Info */}
-      <div className="border-b border-gray-200 bg-white py-2">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-gray-600">War</span>
-                <span className="text-xs text-gray-500">Nov 20</span>
-              </div>
-              <h2 className="text-lg font-bold">{metadata.title}</h2>
-              <p className="text-xs text-gray-600">By {metadata.author}</p>
+      <div className="flex-1 overflow-auto p-3 sm:p-4 md:p-5">
+        <div className="h-full mx-auto max-w-6xl flex flex-col md:flex-row gap-4 lg:gap-5">
+          {/* Left column - Profile Section */}
+          <div className="md:w-2/5 bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="h-full overflow-auto">
+              <ProfileSection
+                title={metadata.title}
+                description={metadata.description}
+                topic={metadata.topic}
+                author={metadata.author}
+                publishDate={metadata.publishDate}
+                imageUrl={metadata.imageUrl}
+                events={events}
+                onDataChange={setData}
+              />
             </div>
-            <div className="flex items-center">
-              <select className="border border-gray-300 rounded-md text-xs py-1 px-2">
-                <option>data_Israel.json</option>
-              </select>
+          </div>
+
+          {/* Right column - Scenario Selection */}
+          <div className="md:w-3/5 flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-gray-100">
+              <h2 className="text-lg font-bold text-gray-900 mb-1">
+                Choose a Visualization Mode
+              </h2>
+              <p className="text-xs text-gray-500">
+                Select how you'd like to explore the narrative data
+              </p>
+            </div>
+
+            <div className="flex-1 overflow-auto p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Standard Views */}
+                <div className="space-y-4">
+                  <div className="text-xs font-medium text-gray-500 pl-1 flex items-center">
+                    <span className="border-l-2 border-gray-300 pl-1.5">
+                      Standard Views
+                    </span>
+                  </div>
+                  <ScenarioCard
+                    title="Pure Text View"
+                    description="Display events in narrative order like a normal news article."
+                    imageSrc="/images/pure-text-preview.svg"
+                    onClick={() => handleScenarioSelect("pure-text")}
+                    isSelected={selectedScenario === "pure-text"}
+                  />
+                  <ScenarioCard
+                    title="Pure Text + Visualization"
+                    description="Interactive visualization with topic flow, entity relationships, and timeline views."
+                    imageSrc="/images/visualization-preview.svg"
+                    onClick={() => handleScenarioSelect("visualization")}
+                    isSelected={selectedScenario === "visualization"}
+                  />
+                </div>
+
+                {/* AI-Powered Views */}
+                <div className="space-y-4">
+                  <div className="text-xs font-medium text-gray-500 pl-1 flex items-center">
+                    <span className="border-l-2 border-gray-300 pl-1.5">
+                      AI-Powered Views
+                    </span>
+                  </div>
+                  <ScenarioCard
+                    title="Pure Text + AI Chat"
+                    description="Text view with an AI assistant that can answer questions about the narrative."
+                    imageSrc="/images/pure-text-preview.svg"
+                    onClick={() => handleScenarioSelect("pure-text-chat")}
+                    isSelected={selectedScenario === "pure-text-chat"}
+                  />
+                  <ScenarioCard
+                    title="Visualization + AI Chat"
+                    description="Interactive visualizations with an AI assistant to help interpret the data."
+                    imageSrc="/images/visualization-preview.svg"
+                    onClick={() => handleScenarioSelect("visualization-chat")}
+                    isSelected={selectedScenario === "visualization-chat"}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-end">
+              <button
+                type="button"
+                className={`rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm transition-all ${
+                  selectedScenario
+                    ? "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    : "bg-gray-300 cursor-not-allowed"
+                }`}
+                disabled={!selectedScenario}
+                onClick={handleContinue}
+              >
+                Continue
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Main Content */}
-      <main className="flex-1 max-w-5xl mx-auto px-4 py-4">
-        <div className="mb-3">
-          <h2 className="text-lg font-bold text-gray-900">
-            Choose a Visualization Mode
-          </h2>
-          <p className="text-xs text-gray-500">
-            Select how you'd like to explore the narrative data
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Standard Views */}
-          <div>
-            <h3 className="text-xs font-medium text-gray-500 mb-2">
-              Standard Views
-            </h3>
-            <div className="grid grid-cols-1 gap-3">
-              <ScenarioCard
-                title="Pure Text View"
-                description="Display events in narrative order like a normal news article."
-                imageSrc="/images/pure-text-preview.svg"
-                onClick={() => handleScenarioSelect("pure-text")}
-                isSelected={selectedScenario === "pure-text"}
-              />
-              <ScenarioCard
-                title="Visualization View"
-                description="Interactive visualization with topic flow, entity relationships, and timeline views."
-                imageSrc="/images/visualization-preview.svg"
-                onClick={() => handleScenarioSelect("visualization")}
-                isSelected={selectedScenario === "visualization"}
-              />
-            </div>
-          </div>
-
-          {/* AI-Powered Views */}
-          <div>
-            <div className="flex items-center mb-2">
-              <h3 className="text-xs font-medium text-gray-500">
-                AI-Powered Views
-              </h3>
-              <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-800">
-                AI Assistant
-              </span>
-            </div>
-            <div className="grid grid-cols-1 gap-3">
-              <ScenarioCard
-                title="Pure Text + AI Chat"
-                description="Text view with an AI assistant that can answer questions about the narrative."
-                imageSrc="/images/pure-text-preview.svg"
-                onClick={() => handleScenarioSelect("pure-text-chat")}
-                isSelected={selectedScenario === "pure-text-chat"}
-              />
-              <ScenarioCard
-                title="Visualization + AI Chat"
-                description="Interactive visualizations with an AI assistant to help interpret the data."
-                imageSrc="/images/visualization-preview.svg"
-                onClick={() => handleScenarioSelect("visualization-chat")}
-                isSelected={selectedScenario === "visualization-chat"}
-              />
-            </div>
-          </div>
-        </div>
-      </main>
-
-      {/* Footer with Continue Button */}
-      <footer className="bg-white border-t border-gray-200 py-2 px-4 mt-auto">
-        <div className="max-w-5xl mx-auto flex justify-end">
-          <button
-            type="button"
-            className={`rounded-md px-3 py-1.5 text-sm font-medium text-white shadow-sm transition-all ${
-              selectedScenario
-                ? "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                : "bg-gray-300 cursor-not-allowed"
-            }`}
-            disabled={!selectedScenario}
-            onClick={handleContinue}
-          >
-            Continue
-          </button>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -5,13 +5,9 @@ import { EntityDisplay } from "@/components/narrative-entity/entity-display";
 import { TopicDisplay } from "@/components/narrative-topic/topic-display";
 import { PureTextDisplay } from "@/components/narrative-pure-text/pure-text-display";
 import { ResizableGrid } from "@/components/ui/resizable-grid";
-import { useCallback, useEffect, useState } from "react";
-import {
-  CenterControlProvider,
-  useCenterControl,
-} from "@/lib/center-control-context";
-import { TooltipProvider } from "@/lib/tooltip-context";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import { useCenterControl } from "@/lib/center-control-context";
+import { ScenarioLayout } from "@/components/layout/scenario-layout";
 
 function VisualizationScenario() {
   const {
@@ -25,7 +21,6 @@ function VisualizationScenario() {
     setSelectedEventId,
   } = useCenterControl();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   // Fetch available data files
   useEffect(() => {
@@ -46,88 +41,71 @@ function VisualizationScenario() {
         );
       }
     };
+
     fetchAvailableFiles();
   }, [setError]);
 
-  const fetchData = useCallback(
-    async (fileName?: string) => {
-      try {
-        setIsLoading(true);
+  // Fetch data function
+  const fetchData = async (fileName?: string) => {
+    setIsLoading(true);
+    setError(null);
 
-        // If no fileName is provided and we have available files, use the first one
-        if (!fileName && availableFiles.length > 0) {
-          // Try to find the first non-archived file
-          const nonArchivedFile = availableFiles.find(
-            (file) => !file.startsWith("archived/")
-          );
-          fileName = nonArchivedFile || availableFiles[0];
-        }
+    try {
+      // Default to the first file if none specified
+      const fileToFetch =
+        fileName ||
+        (availableFiles.length > 0 ? availableFiles[0] : "data_Israel.json");
 
-        // Fallback to data.json if still no fileName
-        fileName = fileName || "data.json";
-
-        // Handle paths correctly - if the file is in the archived directory
-        const filePath = fileName.startsWith("archived/")
-          ? fileName // Keep the path as is
-          : fileName; // No path prefix needed
-
-        const response = await fetch(`/${filePath}`);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch ${fileName}`);
-        }
-        const timelineData = await response.json();
-        setData(timelineData);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-      } finally {
-        setIsLoading(false);
-        setIsInitialLoading(false);
+      const response = await fetch(`/${fileToFetch}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${fileToFetch}`);
       }
-    },
-    [setData, setError, setIsLoading, availableFiles]
-  );
 
-  // Load data when available files are fetched
-  useEffect(() => {
-    if (availableFiles.length > 0) {
-      fetchData();
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error("Failed to load data:", error);
+      setError(error instanceof Error ? error.message : "Failed to load data");
+    } finally {
+      setIsLoading(false);
     }
-  }, [availableFiles, fetchData]);
+  };
 
-  if (isInitialLoading) {
-    return (
-      <div className="h-screen w-screen bg-gray-50 flex flex-col items-center justify-center">
-        <div className="w-16 h-16 border-4 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-4"></div>
-        <div className="text-neutral-600 font-medium">
-          Loading data files...
-        </div>
-      </div>
-    );
-  }
+  // Load initial data
+  useEffect(() => {
+    if (!data && availableFiles.length > 0) {
+      fetchData(availableFiles[0]);
+    }
+  }, [data, availableFiles]);
 
+  // Show error state
   if (error) {
     return (
-      <div className="h-screen w-screen bg-gray-50 flex flex-col items-center justify-center">
-        <div className="text-red-500 mb-2 text-xl">⚠️ Error</div>
-        <div className="text-red-500 max-w-md text-center p-4 bg-red-50 rounded-md border border-red-200">
-          {error || "Failed to load data"}
+      <ScenarioLayout title="Visualization View" isLoading={false}>
+        <div className="h-full flex flex-col items-center justify-center p-4">
+          <div className="text-red-500 mb-2">Error:</div>
+          <div className="text-gray-700 mb-4 text-center max-w-md">
+            {error || "Failed to load data"}
+          </div>
+          <button
+            onClick={() => fetchData()}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Try Again
+          </button>
         </div>
-        <button
-          onClick={() => fetchData()}
-          className="mt-4 px-4 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-md text-sm font-medium"
-        >
-          Try Again
-        </button>
-      </div>
+      </ScenarioLayout>
     );
   }
 
-  if (!data) {
+  // If no data yet, show a placeholder
+  if (!data || !data.events) {
     return (
-      <div className="h-screen w-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-neutral-500">No data available</div>
-      </div>
+      <ScenarioLayout title="Visualization View" isLoading={true}>
+        <div className="h-full flex items-center justify-center">
+          <div className="text-gray-500">Loading content...</div>
+        </div>
+      </ScenarioLayout>
     );
   }
 
@@ -140,35 +118,9 @@ function VisualizationScenario() {
   );
 
   return (
-    <div className="h-screen w-screen bg-gray-50 relative">
-      {/* Header with back button */}
-      <div className="absolute top-0 left-0 right-0 bg-white shadow-sm z-10 px-4 py-2 flex justify-between items-center">
-        <h1 className="text-lg font-semibold text-gray-900">
-          Narrative Matrix - Visualization View
-        </h1>
-        <Link
-          href="/"
-          className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-        >
-          Back to Scenario Selection
-        </Link>
-      </div>
-
-      {/* Loading overlay for file switching */}
-      {isLoading && !isInitialLoading && (
-        <div className="absolute inset-0 bg-white/70 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
-            <div className="w-10 h-10 border-4 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-4"></div>
-            <div className="text-neutral-700 font-medium">Loading data...</div>
-          </div>
-        </div>
-      )}
-
-      <div className="pt-12 h-full">
-        {" "}
-        {/* Add padding top to account for the header */}
+    <ScenarioLayout title="Visualization View" isLoading={isLoading}>
+      <div className="h-full">
         <ResizableGrid
-          className="h-full"
           topLeft={renderPanel(
             <PureTextDisplay
               events={events}
@@ -183,16 +135,10 @@ function VisualizationScenario() {
           )}
         />
       </div>
-    </div>
+    </ScenarioLayout>
   );
 }
 
 export default function VisualizationPage() {
-  return (
-    <CenterControlProvider>
-      <TooltipProvider>
-        <VisualizationScenario />
-      </TooltipProvider>
-    </CenterControlProvider>
-  );
+  return <VisualizationScenario />;
 }

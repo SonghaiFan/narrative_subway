@@ -2,12 +2,8 @@
 
 import { PureTextDisplay } from "@/components/narrative-pure-text/pure-text-display";
 import { useState, useEffect } from "react";
-import {
-  CenterControlProvider,
-  useCenterControl,
-} from "@/lib/center-control-context";
-import { TooltipProvider } from "@/lib/tooltip-context";
-import Link from "next/link";
+import { useCenterControl } from "@/lib/center-control-context";
+import { ScenarioLayout } from "@/components/layout/scenario-layout";
 
 function PureTextScenario() {
   const {
@@ -21,7 +17,6 @@ function PureTextScenario() {
     setSelectedEventId,
   } = useCenterControl();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   // Fetch available data files
   useEffect(() => {
@@ -42,126 +37,83 @@ function PureTextScenario() {
         );
       }
     };
+
     fetchAvailableFiles();
   }, [setError]);
 
   // Fetch data function
   const fetchData = async (fileName?: string) => {
+    setIsLoading(true);
+    setError(null);
+
     try {
-      setIsLoading(true);
+      // Default to the first file if none specified
+      const fileToFetch =
+        fileName ||
+        (availableFiles.length > 0 ? availableFiles[0] : "data_Israel.json");
 
-      // If no fileName is provided and we have available files, use the first one
-      if (!fileName && availableFiles.length > 0) {
-        // Try to find the first non-archived file
-        const nonArchivedFile = availableFiles.find(
-          (file) => !file.startsWith("archived/")
-        );
-        fileName = nonArchivedFile || availableFiles[0];
-      }
-
-      // Fallback to data.json if still no fileName
-      fileName = fileName || "data.json";
-
-      // Handle paths correctly - if the file is in the archived directory
-      const filePath = fileName.startsWith("archived/")
-        ? fileName // Keep the path as is
-        : fileName; // No path prefix needed
-
-      const response = await fetch(`/${filePath}`);
+      const response = await fetch(`/${fileToFetch}`);
       if (!response.ok) {
-        throw new Error(`Failed to fetch ${fileName}`);
+        throw new Error(`Failed to fetch ${fileToFetch}`);
       }
-      const timelineData = await response.json();
-      setData(timelineData);
-      setError(null);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error("Failed to load data:", error);
+      setError(error instanceof Error ? error.message : "Failed to load data");
     } finally {
       setIsLoading(false);
-      setIsInitialLoading(false);
     }
   };
 
-  // Load data when available files are fetched
+  // Load initial data
   useEffect(() => {
-    if (availableFiles.length > 0) {
-      fetchData();
+    if (!data && availableFiles.length > 0) {
+      fetchData(availableFiles[0]);
     }
-  }, [availableFiles]);
+  }, [data, availableFiles]);
 
-  if (isInitialLoading) {
-    return (
-      <div className="h-screen w-screen bg-gray-50 flex flex-col items-center justify-center">
-        <div className="w-16 h-16 border-4 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-4"></div>
-        <div className="text-neutral-600 font-medium">
-          Loading data files...
-        </div>
-      </div>
-    );
-  }
-
+  // Show error state
   if (error) {
     return (
-      <div className="h-screen w-screen bg-gray-50 flex flex-col items-center justify-center">
-        <div className="text-red-500 mb-2 text-xl">⚠️ Error</div>
-        <div className="text-red-500 max-w-md text-center p-4 bg-red-50 rounded-md border border-red-200">
-          {error || "Failed to load data"}
+      <ScenarioLayout title="Pure Text View" isLoading={false}>
+        <div className="h-full flex flex-col items-center justify-center p-4">
+          <div className="text-red-500 mb-2">Error:</div>
+          <div className="text-gray-700 mb-4 text-center max-w-md">
+            {error || "Failed to load data"}
+          </div>
+          <button
+            onClick={() => fetchData()}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Try Again
+          </button>
         </div>
-        <button
-          onClick={() => fetchData()}
-          className="mt-4 px-4 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-md text-sm font-medium"
-        >
-          Try Again
-        </button>
-      </div>
+      </ScenarioLayout>
     );
   }
 
-  if (!data) {
+  // If no data yet, show a placeholder
+  if (!data || !data.events) {
     return (
-      <div className="h-screen w-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-neutral-500">No data available</div>
-      </div>
+      <ScenarioLayout title="Pure Text View" isLoading={true}>
+        <div className="h-full flex items-center justify-center">
+          <div className="text-gray-500">Loading content...</div>
+        </div>
+      </ScenarioLayout>
     );
   }
-
-  const { events } = data;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-gray-900">
-            Narrative Matrix - Pure Text View
-          </h1>
-          <Link
-            href="/"
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-          >
-            Back to Scenario Selection
-          </Link>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white shadow rounded-lg overflow-hidden">
-          <PureTextDisplay
-            events={events}
-            selectedEventId={selectedEventId}
-            onEventSelect={setSelectedEventId}
-          />
-        </div>
-      </main>
-    </div>
+    <ScenarioLayout title="Pure Text View" isLoading={isLoading}>
+      <div className="h-full p-4 overflow-auto">
+        <PureTextDisplay events={data.events} />
+      </div>
+    </ScenarioLayout>
   );
 }
 
 export default function PureTextPage() {
-  return (
-    <CenterControlProvider>
-      <TooltipProvider>
-        <PureTextScenario />
-      </TooltipProvider>
-    </CenterControlProvider>
-  );
+  return <PureTextScenario />;
 }

@@ -35,14 +35,6 @@ export function AuthHeader({ title }: AuthHeaderProps) {
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
-          {user?.role === "domain" && (
-            <Link
-              href="/"
-              className="ml-4 text-blue-600 hover:text-blue-800 text-sm font-medium"
-            >
-              Back to Scenario Selection
-            </Link>
-          )}
         </div>
 
         <div className="relative" ref={dropdownRef}>
@@ -53,7 +45,7 @@ export function AuthHeader({ title }: AuthHeaderProps) {
             <span className="mr-2">{user?.name}</span>
             <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
               <span className="text-blue-800 font-medium">
-                {user?.name.charAt(0).toUpperCase()}
+                {user?.name?.charAt(0).toUpperCase() || "U"}
               </span>
             </div>
           </button>
@@ -69,6 +61,18 @@ export function AuthHeader({ title }: AuthHeaderProps) {
                 Role:{" "}
                 <span className="font-semibold capitalize">{user?.role}</span>
               </div>
+
+              {/* Navigation Links */}
+              <div className="border-t border-gray-100"></div>
+              <Link
+                href="/"
+                className="block w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100"
+                onClick={() => setDropdownOpen(false)}
+              >
+                Back to Scenario Selection
+              </Link>
+
+              {/* Logout Button */}
               <div className="border-t border-gray-100"></div>
               <button
                 onClick={() => {
