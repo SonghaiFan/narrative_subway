@@ -53,12 +53,12 @@ export function ScenarioLayout({
   return (
     <CenterControlProvider>
       <TooltipProvider>
-        <div className="h-screen w-screen bg-gray-50 flex flex-col overflow-hidden">
+        <div className="h-screen w-screen bg-gray-50 flex flex-col">
           {/* Header */}
           <AuthHeader title={title} />
 
-          {/* Main content */}
-          <div className="flex-1 overflow-hidden">{children}</div>
+          {/* Main content - removed overflow-hidden to allow proper rendering of nested components */}
+          <div className="flex-1 flex">{children}</div>
         </div>
       </TooltipProvider>
     </CenterControlProvider>

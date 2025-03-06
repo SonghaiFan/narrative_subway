@@ -81,7 +81,7 @@ function VisualizationScenario() {
   // Show error state
   if (error) {
     return (
-      <ScenarioLayout title="Visualization View" isLoading={false}>
+      <ScenarioLayout title="Text + Visualization " isLoading={false}>
         <div className="h-full flex flex-col items-center justify-center p-4">
           <div className="text-red-500 mb-2">Error:</div>
           <div className="text-gray-700 mb-4 text-center max-w-md">
@@ -101,7 +101,7 @@ function VisualizationScenario() {
   // If no data yet, show a placeholder
   if (!data || !data.events) {
     return (
-      <ScenarioLayout title="Visualization View" isLoading={true}>
+      <ScenarioLayout title="Text + Visualization " isLoading={true}>
         <div className="h-full flex items-center justify-center">
           <div className="text-gray-500">Loading content...</div>
         </div>
@@ -118,8 +118,8 @@ function VisualizationScenario() {
   );
 
   return (
-    <ScenarioLayout title="Visualization View" isLoading={isLoading}>
-      <div className="h-full">
+    <ScenarioLayout title="Text + Visualization " isLoading={isLoading}>
+      <div className="w-full h-full overflow-hidden relative">
         <ResizableGrid
           topLeft={renderPanel(
             <PureTextDisplay

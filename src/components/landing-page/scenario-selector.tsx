@@ -88,7 +88,7 @@ export function ScenarioSelector() {
       {/* Header */}
       <AuthHeader title="Scenario Selection" />
 
-      <div className="flex-1 overflow-auto p-3 sm:p-4 md:p-5">
+      <div className="flex flex-1 items-center overflow-auto p-3 sm:p-4 md:p-5">
         <div className="h-full mx-auto max-w-6xl flex flex-col md:flex-row gap-4 lg:gap-5">
           {/* Left column - Profile Section */}
           <div className="md:w-2/5 bg-white rounded-lg shadow-sm overflow-hidden">
@@ -127,14 +127,14 @@ export function ScenarioSelector() {
                     </span>
                   </div>
                   <ScenarioCard
-                    title="Pure Text View"
+                    title="Text"
                     description="Display events in narrative order like a normal news article."
                     imageSrc="/images/pure-text-preview.svg"
                     onClick={() => handleScenarioSelect("pure-text")}
                     isSelected={selectedScenario === "pure-text"}
                   />
                   <ScenarioCard
-                    title="Visualization View"
+                    title="Text + Visualization "
                     description="Interactive visualization with topic flow, entity relationships, and timeline views."
                     imageSrc="/images/visualization-preview.svg"
                     onClick={() => handleScenarioSelect("visualization")}

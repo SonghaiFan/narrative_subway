@@ -120,25 +120,27 @@ function VisualizationChatScenario() {
 
   return (
     <ScenarioLayout title="Visualization + AI Chat" isLoading={isLoading}>
-      <div className="h-full grid grid-rows-[2fr_1fr] gap-4 p-4">
-        <div className="h-full">
-          <ResizableGrid
-            topLeft={renderPanel(
-              <PureTextDisplay
-                events={events}
-                selectedEventId={selectedEventId}
-                onEventSelect={setSelectedEventId}
-              />
-            )}
-            topRight={renderPanel(<TopicDisplay events={events} />)}
-            bottomLeft={renderPanel(<EntityDisplay events={events} />)}
-            bottomRight={renderPanel(
-              <TimeDisplay events={events} metadata={metadata} />
-            )}
-          />
-        </div>
-        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <ChatInterface events={events} />
+      <div className="w-full h-full overflow-hidden p-4">
+        <div className="h-full grid grid-cols-[3fr_1fr] gap-4">
+          <div className="h-full w-full overflow-hidden relative">
+            <ResizableGrid
+              topLeft={renderPanel(
+                <PureTextDisplay
+                  events={events}
+                  selectedEventId={selectedEventId}
+                  onEventSelect={setSelectedEventId}
+                />
+              )}
+              topRight={renderPanel(<TopicDisplay events={events} />)}
+              bottomLeft={renderPanel(<EntityDisplay events={events} />)}
+              bottomRight={renderPanel(
+                <TimeDisplay events={events} metadata={metadata} />
+              )}
+            />
+          </div>
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <ChatInterface events={events} />
+          </div>
         </div>
       </div>
     </ScenarioLayout>

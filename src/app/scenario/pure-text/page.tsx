@@ -77,7 +77,7 @@ function PureTextScenario() {
   // Show error state
   if (error) {
     return (
-      <ScenarioLayout title="Pure Text View" isLoading={false}>
+      <ScenarioLayout title="Text" isLoading={false}>
         <div className="h-full flex flex-col items-center justify-center p-4">
           <div className="text-red-500 mb-2">Error:</div>
           <div className="text-gray-700 mb-4 text-center max-w-md">
@@ -97,7 +97,7 @@ function PureTextScenario() {
   // If no data yet, show a placeholder
   if (!data || !data.events) {
     return (
-      <ScenarioLayout title="Pure Text View" isLoading={true}>
+      <ScenarioLayout title="Text" isLoading={true}>
         <div className="h-full flex items-center justify-center">
           <div className="text-gray-500">Loading content...</div>
         </div>
@@ -106,7 +106,7 @@ function PureTextScenario() {
   }
 
   return (
-    <ScenarioLayout title="Pure Text View" isLoading={isLoading}>
+    <ScenarioLayout title="Text" isLoading={isLoading}>
       <div className="h-full p-4 overflow-auto">
         <PureTextDisplay events={data.events} />
       </div>

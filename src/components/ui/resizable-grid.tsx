@@ -266,8 +266,7 @@ export function ResizableGrid({
   };
 
   return (
-    <div className={`relative ${className}`}>
-      {/* Display warning modal */}
+    <div className={`h-full w-full ${className} relative`}>
       {showWarningModal && displayWarning && (
         <DisplayWarningModal
           message={displayWarning}
@@ -275,61 +274,81 @@ export function ResizableGrid({
         />
       )}
 
+      {/* Main grid layout */}
       <PanelGroup
         ref={horizontalPanelGroupRef}
         direction="horizontal"
         onLayout={handleHorizontalLayoutChange}
+        className="h-full w-full"
       >
-        {/* Left Column  */}
+        {/* Left column */}
         <Panel
+          id="left-column"
           defaultSize={DEFAULT_LEFT_WIDTH}
           minSize={MIN_SIZE}
           maxSize={MAX_SIZE}
+          className="h-full"
         >
           <PanelGroup
-            direction="vertical"
             ref={leftPanelGroupRef}
+            direction="vertical"
             onLayout={handleLeftVerticalLayoutChange}
+            className="h-full"
           >
+            {/* Top left panel */}
             <Panel
+              id="top-left"
               defaultSize={DEFAULT_TOP_HEIGHT}
               minSize={MIN_SIZE}
               maxSize={MAX_SIZE}
+              className="h-full"
             >
               {topLeft}
             </Panel>
+            {/* Bottom left panel */}
             <Panel
+              id="bottom-left"
               defaultSize={DEFAULT_BOTTOM_HEIGHT}
               minSize={MIN_SIZE}
               maxSize={MAX_SIZE}
+              className="h-full"
             >
               {bottomLeft}
             </Panel>
           </PanelGroup>
         </Panel>
 
-        {/* Right Column  */}
+        {/* Right column */}
         <Panel
+          id="right-column"
           defaultSize={DEFAULT_RIGHT_WIDTH}
           minSize={MIN_SIZE}
           maxSize={MAX_SIZE}
+          className="h-full"
         >
           <PanelGroup
-            direction="vertical"
             ref={rightPanelGroupRef}
+            direction="vertical"
             onLayout={handleRightVerticalLayoutChange}
+            className="h-full"
           >
+            {/* Top right panel */}
             <Panel
+              id="top-right"
               defaultSize={DEFAULT_TOP_HEIGHT}
               minSize={MIN_SIZE}
               maxSize={MAX_SIZE}
+              className="h-full"
             >
               {topRight}
             </Panel>
+            {/* Bottom right panel */}
             <Panel
+              id="bottom-right"
               defaultSize={DEFAULT_BOTTOM_HEIGHT}
               minSize={MIN_SIZE}
               maxSize={MAX_SIZE}
+              className="h-full"
             >
               {bottomRight}
             </Panel>
