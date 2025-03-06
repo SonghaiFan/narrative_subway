@@ -1,11 +1,10 @@
 "use client";
 
 import { ReactNode } from "react";
+import { SHARED_CONFIG } from "./visualization-config";
 
 interface VisualizationDisplayProps {
   title: string;
-  viewMode: "visual" | "text";
-  setViewMode: (mode: "visual" | "text") => void;
   children: ReactNode;
   isEmpty?: boolean;
   headerContent?: ReactNode;
@@ -13,8 +12,6 @@ interface VisualizationDisplayProps {
 
 export function VisualizationDisplay({
   title,
-  viewMode,
-  setViewMode,
   children,
   isEmpty = false,
   headerContent,
@@ -29,32 +26,13 @@ export function VisualizationDisplay({
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
-        <div className="flex items-center gap-4">
+      <div
+        className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-10"
+        style={{ height: `${SHARED_CONFIG.header.height}px` }}
+      >
+        <div className="flex items-center gap-4 overflow-hidden">
           <h2 className="text-sm font-medium text-gray-600">{title}</h2>
-          {headerContent}
-        </div>
-        <div className="flex gap-1">
-          <button
-            onClick={() => setViewMode("visual")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-              viewMode === "visual"
-                ? "bg-gray-900 text-white"
-                : "text-gray-600 hover:text-gray-900"
-            }`}
-          >
-            Visual
-          </button>
-          <button
-            onClick={() => setViewMode("text")}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-              viewMode === "text"
-                ? "bg-gray-900 text-white"
-                : "text-gray-600 hover:text-gray-900"
-            }`}
-          >
-            Text
-          </button>
+          <div className="flex-shrink-0">{headerContent}</div>
         </div>
       </div>
       <div className="flex-1 overflow-auto">{children}</div>

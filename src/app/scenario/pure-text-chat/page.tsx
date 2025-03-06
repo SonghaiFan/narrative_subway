@@ -78,7 +78,7 @@ function PureTextChatScenario() {
   // Show error state
   if (error) {
     return (
-      <ScenarioLayout title="Pure Text + AI Chat" isLoading={false}>
+      <ScenarioLayout title="Text + AI Chat" isLoading={false}>
         <div className="h-full flex flex-col items-center justify-center p-4">
           <div className="text-red-500 mb-2">Error:</div>
           <div className="text-gray-700 mb-4 text-center max-w-md">
@@ -98,7 +98,7 @@ function PureTextChatScenario() {
   // If no data yet, show a placeholder
   if (!data || !data.events) {
     return (
-      <ScenarioLayout title="Pure Text + AI Chat" isLoading={true}>
+      <ScenarioLayout title="Text + AI Chat" isLoading={true}>
         <div className="h-full flex items-center justify-center">
           <div className="text-gray-500">Loading content...</div>
         </div>
@@ -107,14 +107,10 @@ function PureTextChatScenario() {
   }
 
   return (
-    <ScenarioLayout title="Pure Text + AI Chat" isLoading={isLoading}>
+    <ScenarioLayout title="Text + AI Chat" isLoading={isLoading}>
       <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <PureTextDisplay
-            events={data.events}
-            selectedEventId={selectedEventId}
-            onEventSelect={setSelectedEventId}
-          />
+          <PureTextDisplay events={data.events} />
         </div>
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <ChatInterface events={data.events} />

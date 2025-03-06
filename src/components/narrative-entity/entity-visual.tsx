@@ -5,6 +5,7 @@ import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { ENTITY_CONFIG } from "./entity-config";
 import { useTooltip } from "@/lib/tooltip-context";
+import { useCenterControl } from "@/lib/center-control-context";
 import {
   getEntityAttributeValue,
   calculateDimensions,
@@ -22,18 +23,15 @@ import {
 export interface EntityVisualProps {
   events: NarrativeEvent[];
   selectedAttribute: string;
-  selectedEntityId?: string | null;
-  onEntitySelect?: (id: string | null) => void;
-  selectedEventId?: number | null;
-  onEventSelect?: (id: number | null) => void;
 }
 
-export function EntityVisual({
-  events,
-  selectedAttribute,
-  selectedEventId,
-  onEventSelect,
-}: EntityVisualProps) {
+export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
+  const {
+    selectedEventId,
+    setSelectedEventId,
+    selectedEntityId,
+    setSelectedEntityId,
+  } = useCenterControl();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -324,7 +322,7 @@ export function EntityVisual({
             })
             .on("click", function () {
               // Toggle selection
-              onEventSelect?.(
+              setSelectedEventId(
                 event.index === selectedEventId ? null : event.index
               );
             });
@@ -364,7 +362,7 @@ export function EntityVisual({
     showTooltip,
     hideTooltip,
     updatePosition,
-    onEventSelect,
+    setSelectedEventId,
   ]);
 
   // Initial setup and cleanup

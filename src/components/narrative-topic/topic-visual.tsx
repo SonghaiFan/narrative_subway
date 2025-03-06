@@ -5,6 +5,7 @@ import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { TOPIC_CONFIG } from "./topic-config";
 import { useTooltip } from "@/lib/tooltip-context";
+import { useCenterControl } from "@/lib/center-control-context";
 import {
   processEvents,
   getTopicCounts,
@@ -19,10 +20,6 @@ import {
 
 interface TopicVisualProps {
   events: NarrativeEvent[];
-  selectedEventId?: number | null;
-  onEventSelect?: (id: number | null) => void;
-  selectedTopic?: string | null;
-  onTopicSelect?: (topic: string | null) => void;
 }
 
 interface PointState {
@@ -37,24 +34,19 @@ interface ChildPoint extends DataPoint {
   total: number;
 }
 
-export function NarrativeTopicVisual({
-  events,
-  selectedEventId,
-  onEventSelect,
-  onTopicSelect,
-}: TopicVisualProps) {
+export function NarrativeTopicVisual({ events }: TopicVisualProps) {
+  const {
+    selectedEventId,
+    setSelectedEventId,
+    selectedTopic,
+    setSelectedTopic,
+  } = useCenterControl();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const pointStatesRef = useRef<Map<string, PointState>>(new Map());
-  const selectedEventIdRef = useRef<number | null>(null);
   const { showTooltip, hideTooltip, updatePosition } = useTooltip();
-
-  // Keep the ref in sync with the prop
-  useEffect(() => {
-    selectedEventIdRef.current = selectedEventId ?? null;
-  }, [selectedEventId]);
 
   // Function to generate unique IDs for nodes
   const getParentNodeId = useCallback((groupKey: string) => {
@@ -464,10 +456,8 @@ export function NarrativeTopicVisual({
       } else {
         // If it's a single point (not a group), handle selection
         const eventData = d.points[0].event;
-        onEventSelect?.(
-          eventData.index === selectedEventIdRef.current
-            ? null
-            : eventData.index
+        setSelectedEventId(
+          eventData.index === selectedEventId ? null : eventData.index
         );
       }
     });
@@ -615,12 +605,12 @@ export function NarrativeTopicVisual({
       // Child node click handler
       childClick(this: any, event: MouseEvent, d: any) {
         const eventData = d.event;
-        const isDeselecting = eventData.index === selectedEventIdRef.current;
+        const isDeselecting = eventData.index === selectedEventId;
 
         // Hide tooltip when clicking
         hideTooltip();
 
-        onEventSelect?.(isDeselecting ? null : eventData.index);
+        setSelectedEventId(isDeselecting ? null : eventData.index);
         event.stopPropagation();
       },
     };
@@ -641,20 +631,16 @@ export function NarrativeTopicVisual({
       .on("click", handleNodeInteraction.childClick);
 
     // Apply initial highlighting for selected event
-    if (
-      selectedEventIdRef.current !== null &&
-      selectedEventIdRef.current !== undefined
-    ) {
-      updateSelectedEventStyles(selectedEventIdRef.current);
+    if (selectedEventId !== null && selectedEventId !== undefined) {
+      updateSelectedEventStyles(selectedEventId);
     }
   }, [
     events,
     showTooltip,
     hideTooltip,
     updatePosition,
-    onEventSelect,
-    onTopicSelect,
-    updateSelectedEventStyles,
+    setSelectedEventId,
+    selectedEventId,
     getParentNodeId,
     getChildNodeId,
   ]);

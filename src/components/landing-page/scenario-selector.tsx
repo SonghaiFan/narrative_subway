@@ -153,7 +153,7 @@ export function ScenarioSelector() {
                     </span>
                   </div>
                   <ScenarioCard
-                    title="Pure Text + AI Chat"
+                    title="Text + AI Chat"
                     description="Text view with an AI assistant that can answer questions about the narrative."
                     imageSrc="/images/pure-text-preview.svg"
                     onClick={() => handleScenarioSelect("pure-text-chat")}

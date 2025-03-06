@@ -124,13 +124,7 @@ function VisualizationChatScenario() {
         <div className="h-full grid grid-cols-[3fr_1fr] gap-4">
           <div className="h-full w-full overflow-hidden relative">
             <ResizableGrid
-              topLeft={renderPanel(
-                <PureTextDisplay
-                  events={events}
-                  selectedEventId={selectedEventId}
-                  onEventSelect={setSelectedEventId}
-                />
-              )}
+              topLeft={renderPanel(<PureTextDisplay events={events} />)}
               topRight={renderPanel(<TopicDisplay events={events} />)}
               bottomLeft={renderPanel(<EntityDisplay events={events} />)}
               bottomRight={renderPanel(

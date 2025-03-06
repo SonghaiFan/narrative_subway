@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { NarrativeEvent } from "@/types/article";
+import { useCenterControl } from "@/lib/center-control-context";
 
 interface Message {
   role: "user" | "assistant" | "system";
@@ -11,10 +12,10 @@ interface Message {
 
 interface ChatInterfaceProps {
   events: NarrativeEvent[];
-  selectedEventId?: number | null;
 }
 
-export function ChatInterface({ events, selectedEventId }: ChatInterfaceProps) {
+export function ChatInterface({ events }: ChatInterfaceProps) {
+  const { selectedEventId, getSelectedEvent } = useCenterControl();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -27,8 +28,44 @@ export function ChatInterface({ events, selectedEventId }: ChatInterfaceProps) {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [previousSelectedEventId, setPreviousSelectedEventId] = useState<
+    number | null
+  >(null);
 
-  // Scroll to bottom of messages when new messages are added
+  // Effect to handle selected event changes
+  useEffect(() => {
+    // Only proceed if the selectedEventId has changed and is not null
+    if (
+      selectedEventId !== previousSelectedEventId &&
+      selectedEventId !== null
+    ) {
+      const selectedEvent = getSelectedEvent();
+
+      if (selectedEvent) {
+        // Create a suggestion message about the selected event
+        const newMessage: Message = {
+          role: "assistant",
+          content: `I notice you've selected event #${selectedEventId}: "${selectedEvent.text.substring(
+            0,
+            100
+          )}${
+            selectedEvent.text.length > 100 ? "..." : ""
+          }" Would you like to know more about this event?`,
+          timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, newMessage]);
+
+        // Pre-fill the input with a question about the event
+        setInput(`Tell me more about event #${selectedEventId}`);
+      }
+    }
+
+    // Update the previous selected event ID
+    setPreviousSelectedEventId(selectedEventId);
+  }, [selectedEventId, getSelectedEvent]);
+
+  // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);

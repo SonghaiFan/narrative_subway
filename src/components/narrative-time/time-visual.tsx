@@ -5,6 +5,7 @@ import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { TIME_CONFIG } from "./time-config";
 import { useTooltip } from "@/lib/tooltip-context";
+import { useCenterControl } from "@/lib/center-control-context";
 import {
   LabelDatum,
   processEvents,
@@ -19,19 +20,13 @@ import {
 
 interface TimeVisualProps {
   events: NarrativeEvent[];
-  selectedEventId?: number | null;
   metadata: {
     publishDate: string;
   };
-  onEventSelect?: (id: number | null) => void;
 }
 
-export function NarrativeTimeVisual({
-  events,
-  selectedEventId,
-  metadata,
-  onEventSelect,
-}: TimeVisualProps) {
+export function NarrativeTimeVisual({ events, metadata }: TimeVisualProps) {
+  const { selectedEventId, setSelectedEventId } = useCenterControl();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -459,7 +454,7 @@ export function NarrativeTimeVisual({
       })
       .on("click", function (event, d) {
         // Toggle selection
-        onEventSelect?.(
+        setSelectedEventId(
           d.event.index === selectedEventId ? null : d.event.index
         );
       });
@@ -570,7 +565,7 @@ export function NarrativeTimeVisual({
     showTooltip,
     hideTooltip,
     updatePosition,
-    onEventSelect,
+    setSelectedEventId,
     updateSelectedEventStyles,
   ]);
 

@@ -1,10 +1,9 @@
 "use client";
 
-import { Entity, NarrativeEvent } from "@/types/article";
+import { NarrativeEvent } from "@/types/article";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { VisualizationDisplay } from "../shared/visualization-display";
 import { EntityVisual } from "./entity-visual";
-import { EntityText } from "./entity-text";
 import { useCenterControl } from "@/lib/center-control-context";
 import {
   Select,
@@ -13,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SHARED_CONFIG } from "../shared/visualization-config";
 
 // Helper function to format attribute labels
 const formatAttributeLabel = (attr: string): string => {
@@ -31,15 +31,8 @@ interface EntityDisplayProps {
 type ViewMode = "visual" | "text";
 
 export function EntityDisplay({ events }: EntityDisplayProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>("visual");
   const [selectedAttribute, setSelectedAttribute] =
     useState<EntityAttribute>("");
-  const {
-    selectedEntityId,
-    setSelectedEntityId,
-    selectedEventId,
-    setSelectedEventId,
-  } = useCenterControl();
 
   // Function to get available attributes in current entities
   const getAvailableAttributes = useCallback(() => {
@@ -102,56 +95,35 @@ export function EntityDisplay({ events }: EntityDisplayProps) {
 
   return (
     <VisualizationDisplay
-      title="Entity"
-      viewMode={viewMode}
-      setViewMode={setViewMode}
+      title="Entities"
       isEmpty={!events.length}
       headerContent={
-        viewMode === "visual" && (
-          <div className="flex items-center gap-2">
-            <Select
-              value={selectedAttribute}
-              onValueChange={(value: EntityAttribute) =>
-                setSelectedAttribute(value)
-              }
+        <div
+          className="flex items-center gap-2"
+          style={{ height: `${SHARED_CONFIG.header.height * 0.8}px` }}
+        >
+          <Select
+            value={selectedAttribute}
+            onValueChange={setSelectedAttribute}
+          >
+            <SelectTrigger
+              className="text-xs w-[140px] min-h-0"
+              style={{ height: `${SHARED_CONFIG.header.height * 0.7}px` }}
             >
-              <SelectTrigger className="w-[150px] h-7 px-2 py-1 text-xs">
-                <SelectValue placeholder="Select attribute" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableAttributes.map((attrId) => (
-                  <SelectItem
-                    key={attrId}
-                    value={attrId}
-                    className="text-xs py-1"
-                  >
-                    {formatAttributeLabel(attrId)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        )
+              <SelectValue placeholder="Select attribute" />
+            </SelectTrigger>
+            <SelectContent>
+              {availableAttributes.map((attr) => (
+                <SelectItem key={attr} value={attr} className="text-xs py-1">
+                  {formatAttributeLabel(attr)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       }
     >
-      {viewMode === "visual" ? (
-        <EntityVisual
-          events={events}
-          selectedAttribute={selectedAttribute}
-          selectedEntityId={selectedEntityId}
-          onEntitySelect={setSelectedEntityId}
-          selectedEventId={selectedEventId}
-          onEventSelect={setSelectedEventId}
-        />
-      ) : (
-        <EntityText
-          events={events}
-          selectedEntityId={selectedEntityId}
-          onEntitySelect={setSelectedEntityId}
-          selectedEventId={selectedEventId}
-          onEventSelect={setSelectedEventId}
-        />
-      )}
+      <EntityVisual events={events} selectedAttribute={selectedAttribute} />
     </VisualizationDisplay>
   );
 }
