@@ -66,11 +66,16 @@ export function ResizableGrid({
   bottomRight,
   className = "",
 }: ResizableGridProps) {
-  // Simple panel configuration - optimized for common displays
-  const DEFAULT_LEFT_WIDTH = 30;
-  const DEFAULT_RIGHT_WIDTH = 70;
-  const DEFAULT_TOP_HEIGHT = 30;
-  const DEFAULT_BOTTOM_HEIGHT = 70;
+  // Panel configuration with proportions matching the screenshot
+  // These values must add up to exactly 100
+  const DEFAULT_LEFT_WIDTH = 45;
+  const DEFAULT_RIGHT_WIDTH = 55;
+  const DEFAULT_TOP_HEIGHT = 45;
+  const DEFAULT_BOTTOM_HEIGHT = 55;
+
+  // Min/max constraints
+  const MIN_SIZE = 30;
+  const MAX_SIZE = 70;
 
   // Track panel sizes
   const [horizontalSizes, setHorizontalSizes] = useState([
@@ -93,6 +98,19 @@ export function ResizableGrid({
   const leftPanelGroupRef = useRef<ImperativePanelGroupHandle>(null);
   const rightPanelGroupRef = useRef<ImperativePanelGroupHandle>(null);
   const horizontalPanelGroupRef = useRef<ImperativePanelGroupHandle>(null);
+
+  // Log panel size changes
+  useEffect(() => {
+    console.log("Horizontal ratio changed:", horizontalSizes);
+  }, [horizontalSizes]);
+
+  useEffect(() => {
+    console.log("Left vertical ratio changed:", leftVerticalSizes);
+  }, [leftVerticalSizes]);
+
+  useEffect(() => {
+    console.log("Right vertical ratio changed:", rightVerticalSizes);
+  }, [rightVerticalSizes]);
 
   // Check display compatibility and show modal if needed
   useEffect(() => {
@@ -128,6 +146,34 @@ export function ResizableGrid({
       window.removeEventListener("resize", checkDisplay);
     };
   }, [displayWarning]);
+
+  // Handle panel layout changes with detailed logging
+  const handleHorizontalLayoutChange = (sizes: number[]) => {
+    console.log(
+      `Horizontal layout changed to: ${sizes[0].toFixed(
+        2
+      )}% / ${sizes[1].toFixed(2)}%`
+    );
+    setHorizontalSizes(sizes);
+  };
+
+  const handleLeftVerticalLayoutChange = (sizes: number[]) => {
+    console.log(
+      `Left vertical layout changed to: ${sizes[0].toFixed(
+        2
+      )}% / ${sizes[1].toFixed(2)}%`
+    );
+    setLeftVerticalSizes(sizes);
+  };
+
+  const handleRightVerticalLayoutChange = (sizes: number[]) => {
+    console.log(
+      `Right vertical layout changed to: ${sizes[0].toFixed(
+        2
+      )}% / ${sizes[1].toFixed(2)}%`
+    );
+    setRightVerticalSizes(sizes);
+  };
 
   // Synchronize scroll positions
   useEffect(() => {
@@ -169,20 +215,25 @@ export function ResizableGrid({
       const deltaX = ((moveEvent.clientX - startX) / window.innerWidth) * 100;
       const deltaY = ((moveEvent.clientY - startY) / window.innerHeight) * 100;
 
-      // Update horizontal sizes (width) with simplified constraints
+      // Update horizontal sizes (width) with 30/70 constraints
       const newHorizontalSize = Math.max(
-        20,
-        Math.min(50, startHorizontal + deltaX)
+        MIN_SIZE,
+        Math.min(MAX_SIZE, startHorizontal + deltaX)
       );
       horizontalPanelGroupRef.current?.setLayout([
         newHorizontalSize,
         100 - newHorizontalSize,
       ]);
+      console.log(
+        `Cross-drag horizontal: ${newHorizontalSize.toFixed(2)}% / ${(
+          100 - newHorizontalSize
+        ).toFixed(2)}%`
+      );
 
-      // Update vertical sizes (height) for both columns with simplified constraints
+      // Update vertical sizes (height) for both columns with 30/70 constraints
       const newVerticalSize = Math.max(
-        20,
-        Math.min(40, startLeftVertical + deltaY)
+        MIN_SIZE,
+        Math.min(MAX_SIZE, startLeftVertical + deltaY)
       );
       leftPanelGroupRef.current?.setLayout([
         newVerticalSize,
@@ -192,6 +243,11 @@ export function ResizableGrid({
         newVerticalSize,
         100 - newVerticalSize,
       ]);
+      console.log(
+        `Cross-drag vertical: ${newVerticalSize.toFixed(2)}% / ${(
+          100 - newVerticalSize
+        ).toFixed(2)}%`
+      );
     };
 
     const handleMouseUp = () => {
@@ -222,35 +278,59 @@ export function ResizableGrid({
       <PanelGroup
         ref={horizontalPanelGroupRef}
         direction="horizontal"
-        onLayout={setHorizontalSizes}
+        onLayout={handleHorizontalLayoutChange}
       >
         {/* Left Column  */}
-        <Panel defaultSize={DEFAULT_LEFT_WIDTH} minSize={20}>
+        <Panel
+          defaultSize={DEFAULT_LEFT_WIDTH}
+          minSize={MIN_SIZE}
+          maxSize={MAX_SIZE}
+        >
           <PanelGroup
             direction="vertical"
             ref={leftPanelGroupRef}
-            onLayout={setLeftVerticalSizes}
+            onLayout={handleLeftVerticalLayoutChange}
           >
-            <Panel defaultSize={DEFAULT_TOP_HEIGHT} minSize={20}>
+            <Panel
+              defaultSize={DEFAULT_TOP_HEIGHT}
+              minSize={MIN_SIZE}
+              maxSize={MAX_SIZE}
+            >
               {topLeft}
             </Panel>
-            <Panel defaultSize={DEFAULT_BOTTOM_HEIGHT} minSize={20}>
+            <Panel
+              defaultSize={DEFAULT_BOTTOM_HEIGHT}
+              minSize={MIN_SIZE}
+              maxSize={MAX_SIZE}
+            >
               {bottomLeft}
             </Panel>
           </PanelGroup>
         </Panel>
 
         {/* Right Column  */}
-        <Panel defaultSize={DEFAULT_RIGHT_WIDTH} minSize={50}>
+        <Panel
+          defaultSize={DEFAULT_RIGHT_WIDTH}
+          minSize={MIN_SIZE}
+          maxSize={MAX_SIZE}
+        >
           <PanelGroup
             direction="vertical"
             ref={rightPanelGroupRef}
-            onLayout={setRightVerticalSizes}
+            onLayout={handleRightVerticalLayoutChange}
           >
-            <Panel defaultSize={DEFAULT_TOP_HEIGHT} minSize={20}>
+            <Panel
+              defaultSize={DEFAULT_TOP_HEIGHT}
+              minSize={MIN_SIZE}
+              maxSize={MAX_SIZE}
+            >
               {topRight}
             </Panel>
-            <Panel defaultSize={DEFAULT_BOTTOM_HEIGHT} minSize={20}>
+            <Panel
+              defaultSize={DEFAULT_BOTTOM_HEIGHT}
+              minSize={MIN_SIZE}
+              maxSize={MAX_SIZE}
+            >
               {bottomRight}
             </Panel>
           </PanelGroup>

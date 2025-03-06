@@ -31,8 +31,6 @@ export interface EntityVisualProps {
 export function EntityVisual({
   events,
   selectedAttribute,
-  // selectedEntityId,
-  // onEntitySelect,
   selectedEventId,
   onEventSelect,
 }: EntityVisualProps) {

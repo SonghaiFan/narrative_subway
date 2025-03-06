@@ -1,0 +1,46 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#f3f4f6" />
+  
+  <!-- Grid layout -->
+  <rect x="10" y="10" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
+  <rect x="205" y="10" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
+  <rect x="10" y="155" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
+  <rect x="205" y="155" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
+  
+  <!-- Text content in top left -->
+  <rect x="25" y="30" width="155" height="10" rx="2" fill="#e5e7eb" />
+  <rect x="25" y="50" width="135" height="10" rx="2" fill="#e5e7eb" />
+  <rect x="25" y="70" width="145" height="10" rx="2" fill="#e5e7eb" />
+  <rect x="25" y="90" width="125" height="10" rx="2" fill="#e5e7eb" />
+  
+  <!-- Topic visualization in top right -->
+  <line x1="220" y1="40" x2="375" y2="40" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+  <line x1="220" y1="70" x2="375" y2="70" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+  <line x1="220" y1="100" x2="375" y2="100" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+  
+  <circle cx="250" cy="40" r="6" fill="white" stroke="black" />
+  <circle cx="300" cy="40" r="6" fill="white" stroke="black" />
+  <circle cx="350" cy="40" r="6" fill="white" stroke="black" />
+  
+  <circle cx="270" cy="70" r="6" fill="white" stroke="black" />
+  <circle cx="320" cy="70" r="6" fill="white" stroke="black" />
+  
+  <circle cx="240" cy="100" r="6" fill="white" stroke="black" />
+  <circle cx="290" cy="100" r="6" fill="white" stroke="black" />
+  <circle cx="340" cy="100" r="6" fill="white" stroke="black" />
+  
+  <!-- Entity visualization in bottom left -->
+  <line x1="30" y1="175" x2="30" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
+  <line x1="70" y1="175" x2="70" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
+  <line x1="110" y1="175" x2="110" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
+  <line x1="150" y1="175" x2="150" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
+  
+  <circle cx="30" cy="200" r="6" fill="white" stroke="black" />
+  <circle cx="70" cy="220" r="6" fill="white" stroke="black" />
+  <circle cx="110" cy="240" r="6" fill="white" stroke="black" />
+  <circle cx="150" cy="210" r="6" fill="white" stroke="black" />
+  
+  <!-- Timeline visualization in bottom right -->
+  <rect x="220" y="175" width="155" height="20" rx="4" fill="#e5e7eb" />
+  <rect x="220" y="205" width="155" height="65" rx="4" fill="#e5e7eb" />
+</svg> 

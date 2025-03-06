@@ -11,7 +11,6 @@ import {
   getTopTopics,
   getScales,
   createAxes,
-  createEdges,
   groupOverlappingPoints,
   calculateExpandedPositions,
   type DataPoint,
@@ -270,7 +269,7 @@ export function NarrativeTopicVisual({
       .call(yAxis)
       .style("font-size", `${TOPIC_CONFIG.axis.fontSize}px`)
       .call((g) => g.select(".domain").remove())
-      .call((g) => g.selectAll(".tick line").attr("stroke", "#94a3b8"))
+      .call((g) => g.selectAll(".tick line").remove())
       .call((g) =>
         g
           .selectAll(".tick text")
@@ -279,80 +278,26 @@ export function NarrativeTopicVisual({
           .attr("dy", "0.32em")
       );
 
-    // Create edges
-    const edges = createEdges(dataPoints);
+    // Add horizontal lines for each topic (similar to entity-visual)
+    topTopics.forEach((topic) => {
+      const y = yScale(topic)! + yScale.bandwidth() / 2;
 
-    // Add edges group first (so it's underneath points)
-    const edgesGroup = g.append("g").attr("class", "edges");
-
-    // Add points group
-    const pointsGroup = g.append("g").attr("class", "points");
+      g.append("line")
+        .attr("class", `topic-line-${topic.replace(/\s+/g, "-")}`)
+        .attr("x1", 0)
+        .attr("y1", y)
+        .attr("x2", width)
+        .attr("y2", y)
+        .attr("stroke", TOPIC_CONFIG.topic.lineColor)
+        .attr("stroke-width", TOPIC_CONFIG.topic.lineStrokeWidth)
+        .attr("opacity", TOPIC_CONFIG.topic.lineOpacity);
+    });
 
     // Group overlapping points
     const groupedPoints = groupOverlappingPoints(dataPoints, xScale, yScale);
 
-    // Create curved line generator for edges
-    const lineGenerator = d3
-      .line<[number, number]>()
-      .x((d) => d[0])
-      .y((d) => d[1])
-      .curve(d3.curveCatmullRom);
-
-    // Add edges with opacity based on narrative time
-    edgesGroup
-      .selectAll(".edge")
-      .data(edges)
-      .enter()
-      .append("path")
-      .attr("class", "edge")
-      .attr("d", (d) => {
-        // Get the parent node positions for both source and target
-        // This ensures edges are drawn between parent nodes, not child nodes
-        const sourceGroup = groupedPoints.find((g) =>
-          g.points.some((p) => p.event.index === d.source.event.index)
-        );
-        const targetGroup = groupedPoints.find((g) =>
-          g.points.some((p) => p.event.index === d.target.event.index)
-        );
-
-        if (!sourceGroup || !targetGroup) return "";
-
-        const sourceX = sourceGroup.x;
-        const sourceY = sourceGroup.y;
-        const targetX = targetGroup.x;
-        const targetY = targetGroup.y;
-
-        const midX = (sourceX + targetX) / 2;
-        const points: [number, number][] = [
-          [sourceX, sourceY],
-          [midX, sourceY],
-          [midX, targetY],
-          [targetX, targetY],
-        ];
-
-        return lineGenerator(points);
-      })
-      .attr("fill", "none")
-      .attr("stroke", "#94a3b8")
-      .attr("stroke-width", TOPIC_CONFIG.edge.strokeWidth)
-      .attr("stroke-opacity", (d) => {
-        // Calculate opacity based on narrative time
-        // Earlier events have lower opacity
-        const minTime = Math.min(...dataPoints.map((p) => p.narrativeTime));
-        const maxTime = Math.max(...dataPoints.map((p) => p.narrativeTime));
-        const timeRange = maxTime - minTime;
-
-        // Normalize to a range between minOpacity and maxOpacity
-        const normalizedTime =
-          timeRange === 0
-            ? (TOPIC_CONFIG.edge.minOpacity + TOPIC_CONFIG.edge.maxOpacity) / 2
-            : TOPIC_CONFIG.edge.minOpacity +
-              (TOPIC_CONFIG.edge.maxOpacity - TOPIC_CONFIG.edge.minOpacity) *
-                ((d.source.narrativeTime - minTime) / timeRange);
-
-        return normalizedTime;
-      })
-      .attr("stroke-dasharray", TOPIC_CONFIG.edge.dashArray);
+    // Add points group
+    const pointsGroup = g.append("g").attr("class", "points");
 
     // Create parent nodes
     const parentNodes = pointsGroup
@@ -601,6 +546,13 @@ export function NarrativeTopicVisual({
         // Show tooltip
         const eventData = d.event || d.points[0].event;
         showTooltip(eventData, event.pageX, event.pageY, "topic");
+
+        // Highlight the topic line
+        const topic = d.mainTopic || d.points[0].mainTopic;
+        g.select(`.topic-line-${topic.replace(/\s+/g, "-")}`).attr(
+          "opacity",
+          TOPIC_CONFIG.topic.lineHighlightOpacity
+        );
       },
 
       // Mouse out handler
@@ -644,6 +596,12 @@ export function NarrativeTopicVisual({
             }
           }
         }
+
+        // Reset the topic line
+        const topic = d.mainTopic || d.points[0].mainTopic;
+        g.select(`.topic-line-${topic.replace(/\s+/g, "-")}`)
+          .attr("opacity", TOPIC_CONFIG.topic.lineOpacity)
+          .attr("stroke-width", TOPIC_CONFIG.topic.lineStrokeWidth);
 
         // Always hide tooltip
         hideTooltip();

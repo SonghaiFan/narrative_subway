@@ -9,4 +9,12 @@ export const TOPIC_CONFIG = merge({}, SHARED_CONFIG, {
     minOpacity: 0.2,
     maxOpacity: 0.8,
   },
+  topic: {
+    lineStrokeWidth: 6,
+    lineOpacity: 0.3,
+    lineHighlightOpacity: 0.8,
+    lineHighlightStrokeWidth: 2,
+    lineDashArray: "3,3",
+    lineColor: "#94a3b8",
+  },
 });
