@@ -151,35 +151,51 @@ export function ScenarioSelector() {
               </p>
             </div>
 
-            <div className="grid grid-rows-4 gap-4 overflow-auto">
-              <ScenarioCard
-                title="Pure Text View"
-                description="Display events in narrative order like a normal news article. Simple and straightforward reading experience."
-                imageSrc="/images/pure-text-preview.svg"
-                onClick={() => handleScenarioSelect("pure-text")}
-                isSelected={selectedScenario === "pure-text"}
-              />
-              <ScenarioCard
-                title="Visualization View"
-                description="Interactive visualization with topic flow, entity relationships, and timeline views. Ideal for data exploration."
-                imageSrc="/images/visualization-preview.svg"
-                onClick={() => handleScenarioSelect("visualization")}
-                isSelected={selectedScenario === "visualization"}
-              />
-              <ScenarioCard
-                title="Pure Text + AI Chat"
-                description="Text view with an AI assistant that can answer questions about the narrative and provide additional context."
-                imageSrc="/images/pure-text-preview.svg"
-                onClick={() => handleScenarioSelect("pure-text-chat")}
-                isSelected={selectedScenario === "pure-text-chat"}
-              />
-              <ScenarioCard
-                title="Visualization + AI Chat"
-                description="Interactive visualizations with an AI assistant to help interpret the data and answer questions about the narrative."
-                imageSrc="/images/visualization-preview.svg"
-                onClick={() => handleScenarioSelect("visualization-chat")}
-                isSelected={selectedScenario === "visualization-chat"}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-auto p-1">
+              {/* Standard Modes */}
+              <div className="space-y-4">
+                <div className="text-sm font-medium text-gray-500 pl-2">
+                  Standard Views
+                </div>
+                <ScenarioCard
+                  title="Pure Text View"
+                  description="Display events in narrative order like a normal news article. Simple and straightforward reading experience."
+                  imageSrc="/images/pure-text-preview.svg"
+                  onClick={() => handleScenarioSelect("pure-text")}
+                  isSelected={selectedScenario === "pure-text"}
+                />
+                <ScenarioCard
+                  title="Visualization View"
+                  description="Interactive visualization with topic flow, entity relationships, and timeline views. Ideal for data exploration."
+                  imageSrc="/images/visualization-preview.svg"
+                  onClick={() => handleScenarioSelect("visualization")}
+                  isSelected={selectedScenario === "visualization"}
+                />
+              </div>
+
+              {/* AI-Powered Modes */}
+              <div className="space-y-4">
+                <div className="text-sm font-medium text-gray-500 pl-2 flex items-center">
+                  <span>AI-Powered Views</span>
+                  <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
+                    AI Assistant
+                  </span>
+                </div>
+                <ScenarioCard
+                  title="Pure Text + AI Chat"
+                  description="Text view with an AI assistant that can answer questions about the narrative and provide additional context."
+                  imageSrc="/images/pure-text-preview.svg"
+                  onClick={() => handleScenarioSelect("pure-text-chat")}
+                  isSelected={selectedScenario === "pure-text-chat"}
+                />
+                <ScenarioCard
+                  title="Visualization + AI Chat"
+                  description="Interactive visualizations with an AI assistant to help interpret the data and answer questions about the narrative."
+                  imageSrc="/images/visualization-preview.svg"
+                  onClick={() => handleScenarioSelect("visualization-chat")}
+                  isSelected={selectedScenario === "visualization-chat"}
+                />
+              </div>
             </div>
 
             <div className="mt-4 flex justify-center">

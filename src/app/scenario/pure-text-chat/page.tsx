@@ -2,15 +2,20 @@
 
 import { PureTextDisplay } from "@/components/narrative-pure-text/pure-text-display";
 import { ChatInterface } from "@/components/chat/chat-interface";
+import { AuthHeader } from "@/components/shared/auth-header";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   CenterControlProvider,
   useCenterControl,
 } from "@/lib/center-control-context";
 import { TooltipProvider } from "@/lib/tooltip-context";
+import { useAuth } from "@/lib/auth-context";
 import Link from "next/link";
 
 function PureTextChatScenario() {
+  const router = useRouter();
+  const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const {
     data,
     setData,
@@ -23,6 +28,13 @@ function PureTextChatScenario() {
   } = useCenterControl();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  // Check authentication
+  useEffect(() => {
+    if (!authLoading && !isAuthenticated) {
+      router.push("/");
+    }
+  }, [authLoading, isAuthenticated, router]);
 
   // Fetch available data files
   useEffect(() => {
@@ -51,8 +63,12 @@ function PureTextChatScenario() {
     try {
       setIsLoading(true);
 
-      // If no fileName is provided and we have available files, use the first one
-      if (!fileName && availableFiles.length > 0) {
+      // If user has a default dataset, use that
+      if (user?.role === "normal" && user?.defaultDataset) {
+        fileName = user.defaultDataset;
+      }
+      // Otherwise, if no fileName is provided and we have available files, use the first one
+      else if (!fileName && availableFiles.length > 0) {
         // Try to find the first non-archived file
         const nonArchivedFile = availableFiles.find(
           (file) => !file.startsWith("archived/")
@@ -88,7 +104,24 @@ function PureTextChatScenario() {
     if (availableFiles.length > 0) {
       fetchData();
     }
-  }, [availableFiles]);
+  }, [availableFiles, user]);
+
+  // Show loading state while checking authentication
+  if (authLoading) {
+    return (
+      <div className="h-screen w-screen bg-gray-50 flex flex-col items-center justify-center">
+        <div className="w-16 h-16 border-4 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-4"></div>
+        <div className="text-neutral-600 font-medium">
+          Checking authentication...
+        </div>
+      </div>
+    );
+  }
+
+  // Redirect to login if not authenticated
+  if (!isAuthenticated) {
+    return null; // Will redirect in the useEffect
+  }
 
   if (isInitialLoading) {
     return (
@@ -130,25 +163,13 @@ function PureTextChatScenario() {
 
   return (
     <div className="h-screen w-screen bg-gray-50 overflow-hidden flex flex-col">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-semibold text-gray-900">
-            Narrative Matrix - Pure Text + AI Chat
-          </h1>
-          <Link
-            href="/"
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-          >
-            Back to Scenario Selection
-          </Link>
-        </div>
-      </header>
+      <AuthHeader title="Narrative Matrix - Pure Text + AI Chat" />
 
       <main className="flex-1 overflow-hidden">
         <div className="h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-full">
-            {/* Left side: Pure Text Display */}
-            <div className="h-full overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 h-full">
+            {/* Left side: Pure Text Display (3/5 width) */}
+            <div className="lg:col-span-3 h-full overflow-hidden bg-white rounded-lg shadow-sm">
               <PureTextDisplay
                 events={events}
                 selectedEventId={selectedEventId}
@@ -156,8 +177,8 @@ function PureTextChatScenario() {
               />
             </div>
 
-            {/* Right side: Chat Interface */}
-            <div className="h-full overflow-hidden">
+            {/* Right side: Chat Interface (2/5 width) */}
+            <div className="lg:col-span-2 h-full overflow-hidden">
               <ChatInterface
                 events={events}
                 selectedEventId={selectedEventId}

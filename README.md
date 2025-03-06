@@ -1,4 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Narrative Matrix
+
+A user study platform for exploring different narrative visualization approaches.
+
+## Login Credentials
+
+All accounts use the same password: `study`
+
+| User Type               | Username   | Role   | Description                                 |
+| ----------------------- | ---------- | ------ | ------------------------------------------- |
+| Domain Expert           | `domain`   | domain | Access to all scenarios and dashboards      |
+| Text User               | `text`     | normal | Access to pure text visualization           |
+| Visualization User      | `viz`      | normal | Access to visualization dashboard           |
+| Text Chat User          | `textchat` | normal | Access to text with chat interface          |
+| Visualization Chat User | `vizchat`  | normal | Access to visualization with chat interface |
+
+## Quick Start
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Log in using one of the credentials above
+
+## User Roles
+
+- **Domain Expert**: Has access to all scenarios and can switch between different visualization modes
+- **Normal User**: Automatically directed to their assigned visualization mode
+
+## Application Structure
+
+- Authentication system with role-based access
+- Multiple visualization scenarios
+- Chat interface for interactive exploration
+- Data visualization components
+
+## Development
+
+This is a [Next.js](https://nextjs.org/) project using:
+
+- React
+- TypeScript
+- Tailwind CSS
 
 ## Getting Started
 

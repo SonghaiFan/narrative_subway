@@ -281,6 +281,7 @@ export function ProfileSection({
         {imageUrl ? (
           <Image
             src={imageUrl}
+            priority={true}
             alt={title}
             fill
             className="object-cover"
