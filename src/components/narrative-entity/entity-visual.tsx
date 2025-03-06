@@ -26,12 +26,7 @@ export interface EntityVisualProps {
 }
 
 export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
-  const {
-    selectedEventId,
-    setSelectedEventId,
-    selectedEntityId,
-    setSelectedEntityId,
-  } = useCenterControl();
+  const { selectedEventId, setSelectedEventId } = useCenterControl();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);

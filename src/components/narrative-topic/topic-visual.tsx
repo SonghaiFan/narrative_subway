@@ -684,6 +684,7 @@ export function NarrativeTopicVisual({ events }: TopicVisualProps) {
         className="flex-none bg-white sticky top-0 z-10 shadow-sm"
         style={{ height: `${TOPIC_CONFIG.header.height}px` }}
       />
+
       <div ref={containerRef} className="flex-1 relative overflow-hidden">
         <svg ref={svgRef} className="w-full h-full" />
       </div>

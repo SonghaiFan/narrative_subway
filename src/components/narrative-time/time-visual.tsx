@@ -128,8 +128,7 @@ export function NarrativeTimeVisual({ events, metadata }: TimeVisualProps) {
     const svg = d3
       .select(svgRef.current)
       .attr("width", containerWidth)
-      .attr("height", containerHeight)
-      .style("overflow", "visible");
+      .attr("height", containerHeight);
 
     // Create main group with proper margins
     const g = svg
@@ -603,11 +602,12 @@ export function NarrativeTimeVisual({ events, metadata }: TimeVisualProps) {
 
   return (
     <div className="w-full h-full flex flex-col overflow-auto">
-      <div
-        ref={headerRef}
-        className="flex-none bg-white sticky top-0 z-10 shadow-sm"
-        style={{ height: `${TIME_CONFIG.header.height}px` }}
-      />
+      <div className="flex-none bg-white sticky top-0 z-10 shadow-sm">
+        <div
+          ref={headerRef}
+          style={{ height: `${TIME_CONFIG.header.height}px` }}
+        />
+      </div>
       <div ref={containerRef} className="flex-1 relative">
         <svg ref={svgRef} className="w-full h-full" />
       </div>

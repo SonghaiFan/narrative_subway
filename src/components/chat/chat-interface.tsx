@@ -189,24 +189,24 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
+    <div className="flex flex-col h-full bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
       {/* Header */}
-      <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+      <div className="p-3 bg-gray-50 border-b border-gray-100">
         <div className="flex items-center">
-          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="w-5 h-5"
+              className="w-5 h-5 text-gray-600"
             >
               <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
               <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
             </svg>
           </div>
           <div>
-            <h2 className="font-semibold text-lg">AI Assistant</h2>
-            <p className="text-xs text-white/80">
+            <h2 className="font-medium text-gray-800">AI Assistant</h2>
+            <p className="text-xs text-gray-500">
               Ask questions about the narrative
             </p>
           </div>
@@ -214,7 +214,7 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-auto p-4 space-y-4 bg-gray-50">
+      <div className="flex-1 overflow-auto p-4 space-y-3 bg-white">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -223,16 +223,16 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
             } ${
               index > 0 && messages[index - 1].role === message.role
                 ? "mt-1"
-                : "mt-4"
+                : "mt-3"
             }`}
           >
             {message.role === "assistant" && (
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
+              <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="w-5 h-5 text-blue-600"
+                  className="w-4 h-4 text-gray-600"
                 >
                   <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
                 </svg>
@@ -240,18 +240,20 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
             )}
 
             <div
-              className={`max-w-[80%] rounded-lg px-4 py-2 ${
+              className={`max-w-[80%] rounded-lg px-3 py-2 ${
                 message.role === "user"
-                  ? "bg-blue-500 text-white rounded-tr-none"
+                  ? "bg-gray-800 text-white rounded-tr-none"
                   : message.role === "system"
-                  ? "bg-gray-200 text-gray-700 italic text-sm"
-                  : "bg-white text-gray-800 border border-gray-200 rounded-tl-none shadow-sm"
+                  ? "bg-gray-100 text-gray-600 italic text-sm"
+                  : "bg-gray-100 text-gray-800 rounded-tl-none"
               }`}
             >
-              <div className="whitespace-pre-wrap">{message.content}</div>
+              <div className="whitespace-pre-wrap text-sm">
+                {message.content}
+              </div>
               <div
-                className={`text-xs mt-1 text-right ${
-                  message.role === "user" ? "text-blue-200" : "text-gray-400"
+                className={`text-[10px] mt-1 text-right ${
+                  message.role === "user" ? "text-gray-300" : "text-gray-400"
                 }`}
               >
                 {formatTime(message.timestamp)}
@@ -259,12 +261,12 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
             </div>
 
             {message.role === "user" && (
-              <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center ml-2 mt-1 flex-shrink-0">
+              <div className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center ml-2 mt-1 flex-shrink-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="w-5 h-5 text-white"
+                  className="w-4 h-4 text-white"
                 >
                   <path
                     fillRule="evenodd"
@@ -281,28 +283,28 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
         {/* Loading indicator */}
         {isLoading && (
           <div className="flex items-center">
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-2 flex-shrink-0">
+            <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center mr-2 flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                className="w-5 h-5 text-blue-600"
+                className="w-4 h-4 text-gray-600"
               >
                 <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
               </svg>
             </div>
-            <div className="bg-white text-gray-500 rounded-lg px-4 py-2 shadow-sm border border-gray-200 rounded-tl-none">
+            <div className="bg-gray-100 text-gray-500 rounded-lg px-3 py-2 rounded-tl-none">
               <div className="flex space-x-1">
                 <div
-                  className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"
+                  className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
                   style={{ animationDelay: "0ms" }}
                 ></div>
                 <div
-                  className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"
+                  className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
                   style={{ animationDelay: "150ms" }}
                 ></div>
                 <div
-                  className="w-2 h-2 bg-gray-300 rounded-full animate-bounce"
+                  className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
                   style={{ animationDelay: "300ms" }}
                 ></div>
               </div>
@@ -314,20 +316,20 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
       {/* Input area */}
       <form
         onSubmit={handleSubmit}
-        className="p-3 border-t bg-white flex items-end"
+        className="p-3 border-t border-gray-100 bg-white flex items-center gap-2"
       >
-        <div className="relative flex-1 mr-2">
+        <div className="relative flex-1">
           <textarea
             ref={inputRef}
             value={input}
             onChange={handleTextareaChange}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="w-full border rounded-lg px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none min-h-[40px] max-h-[150px]"
+            className="w-full border border-gray-200 rounded-lg px-4 py-2.5 pr-20 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none min-h-[84px] max-h-[150px] text-sm"
             disabled={isLoading}
-            rows={1}
+            rows={3}
           />
-          <div className="absolute right-2 bottom-2 text-xs text-gray-400">
+          <div className="absolute right-3 bottom-3 text-[10px] text-gray-400">
             {input.length > 0 && "Press Enter to send"}
           </div>
         </div>
@@ -335,8 +337,8 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
           type="submit"
           className={`p-2 rounded-lg ${
             isLoading || !input.trim()
-              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-              : "bg-blue-500 hover:bg-blue-600 text-white"
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+              : "bg-gray-800 hover:bg-gray-700 text-white"
           }`}
           disabled={isLoading || !input.trim()}
         >
