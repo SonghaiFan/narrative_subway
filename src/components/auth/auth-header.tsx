@@ -69,7 +69,7 @@ export function AuthHeader({ title }: AuthHeaderProps) {
                 className="block w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100"
                 onClick={() => setDropdownOpen(false)}
               >
-                Back to Scenario Selection
+                Back
               </Link>
 
               {/* Logout Button */}
