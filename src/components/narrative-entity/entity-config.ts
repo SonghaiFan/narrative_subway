@@ -18,6 +18,6 @@ export const ENTITY_CONFIG = merge({}, SHARED_CONFIG, {
     nodeRadius: 6,
     nodeStrokeWidth: 2,
     connectorStrokeWidth: 3,
-    labelFontSize: 12,
+    labelFontSize: 8,
   },
 });

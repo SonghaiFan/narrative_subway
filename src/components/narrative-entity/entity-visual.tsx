@@ -6,7 +6,6 @@ import * as d3 from "d3";
 import { ENTITY_CONFIG } from "./entity-config";
 import { useTooltip } from "@/lib/tooltip-context";
 import {
-  EntityAttribute,
   getEntityAttributeValue,
   calculateDimensions,
   calculateMaxEntities,
@@ -99,12 +98,16 @@ export function EntityVisual({
 
     // Get entity mentions and calculate visible entities
     const entityMentions = getEntityMentions(events, selectedAttribute);
+
+    console.log(entityMentions);
     const maxEntities = calculateMaxEntities(
       width,
       ENTITY_CONFIG.entity.minColumnWidth,
       ENTITY_CONFIG.entity.columnGap
     );
     const visibleEntities = getVisibleEntities(entityMentions, maxEntities);
+
+    console.log(visibleEntities);
 
     // Calculate layout dimensions
     const { totalColumnsWidth, leftOffset } = calculateColumnLayout(
@@ -138,7 +141,8 @@ export function EntityVisual({
     // Create entity labels in the fixed header
     visibleEntities.forEach((entity) => {
       const attrValue = getEntityAttributeValue(entity, selectedAttribute);
-      const x = xScale(attrValue)!;
+      // Use entity ID for positioning instead of attribute value
+      const x = xScale(entity.id)!;
       const labelContainer = headerContent
         .append("div")
         .style("position", "absolute")
@@ -147,12 +151,14 @@ export function EntityVisual({
         .style("cursor", "pointer")
         .style("max-width", `${xScale.bandwidth()}px`)
         .on("mouseenter", function () {
-          g.select(`.guide-line-${attrValue.replace(/\s+/g, "-")}`)
+          // Use entity ID for guide line selection
+          g.select(`.guide-line-${entity.id.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.8)
             .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
         })
         .on("mouseleave", function () {
-          g.select(`.guide-line-${attrValue.replace(/\s+/g, "-")}`)
+          // Use entity ID for guide line selection
+          g.select(`.guide-line-${entity.id.replace(/\s+/g, "-")}`)
             .attr("opacity", 0.3)
             .attr("stroke-width", ENTITY_CONFIG.entity.lineStrokeWidth);
         });
@@ -163,7 +169,7 @@ export function EntityVisual({
       labelContainer
         .append("div")
         .style("font-weight", "600")
-        .style("font-size", `${ENTITY_CONFIG.entity.labelFontSize}px`)
+        .style("font-size", "12px")
         .style("color", "#374151")
         .style("white-space", "nowrap")
         .style("overflow", "hidden")
@@ -214,17 +220,12 @@ export function EntityVisual({
 
     // Draw entity columns
     visibleEntities.forEach((entity) => {
-      const x = xScale(getEntityAttributeValue(entity, selectedAttribute))!;
+      // Use entity ID for positioning instead of attribute value
+      const x = xScale(entity.id)!;
       const entityColor = "#94a3b8";
 
       g.append("line")
-        .attr(
-          "class",
-          `guide-line-${getEntityAttributeValue(
-            entity,
-            selectedAttribute
-          ).replace(/\s+/g, "-")}`
-        )
+        .attr("class", `guide-line-${entity.id.replace(/\s+/g, "-")}`)
         .attr("x1", x + xScale.bandwidth() / 2)
         .attr("y1", 0)
         .attr("x2", x + xScale.bandwidth() / 2)
@@ -288,9 +289,8 @@ export function EntityVisual({
 
         // 2. Draw nodes in the middle
         relevantEntities.forEach((entity) => {
-          const x =
-            xScale(getEntityAttributeValue(entity, selectedAttribute))! +
-            xScale.bandwidth() / 2;
+          // Use entity ID for positioning instead of attribute value
+          const x = xScale(entity.id)! + xScale.bandwidth() / 2;
 
           // Add event node
           g.append("circle")

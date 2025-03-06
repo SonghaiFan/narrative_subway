@@ -119,27 +119,27 @@ export function createAxes(
   return { xAxis, yAxis };
 }
 
-// Create edges between events that share the same main topic and are adjacent in time
+// Create edges between events based on narrative time
 export function createEdges(dataPoints: DataPoint[]): Edge[] {
   const edges: Edge[] = [];
 
-  // Sort data points by real time
+  // Sort data points by narrative time
   const sortedPoints = [...dataPoints].sort(
-    (a, b) => a.realTime.getTime() - b.realTime.getTime()
+    (a, b) => a.narrativeTime - b.narrativeTime
   );
 
-  // Create edges between consecutive events with the same main topic
+  // Create edges between all events in narrative time sequence
+  // This will connect events 1->2->4->6->7 in sequence
   for (let i = 0; i < sortedPoints.length - 1; i++) {
     const current = sortedPoints[i];
     const next = sortedPoints[i + 1];
 
-    if (current.mainTopic === next.mainTopic) {
-      edges.push({
-        source: current,
-        target: next,
-        mainTopic: current.mainTopic,
-      });
-    }
+    // Create an edge regardless of topic
+    edges.push({
+      source: current,
+      target: next,
+      mainTopic: current.mainTopic, // Keep track of source topic for styling
+    });
   }
 
   return edges;

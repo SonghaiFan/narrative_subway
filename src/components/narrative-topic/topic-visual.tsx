@@ -285,6 +285,12 @@ export function NarrativeTopicVisual({
     // Add edges group first (so it's underneath points)
     const edgesGroup = g.append("g").attr("class", "edges");
 
+    // Add points group
+    const pointsGroup = g.append("g").attr("class", "points");
+
+    // Group overlapping points
+    const groupedPoints = groupOverlappingPoints(dataPoints, xScale, yScale);
+
     // Create curved line generator for edges
     const lineGenerator = d3
       .line<[number, number]>()
@@ -292,7 +298,7 @@ export function NarrativeTopicVisual({
       .y((d) => d[1])
       .curve(d3.curveCatmullRom);
 
-    // Add edges with neutral color
+    // Add edges with opacity based on narrative time
     edgesGroup
       .selectAll(".edge")
       .data(edges)
@@ -300,10 +306,21 @@ export function NarrativeTopicVisual({
       .append("path")
       .attr("class", "edge")
       .attr("d", (d) => {
-        const sourceX = xScale(d.source.realTime);
-        const sourceY = yScale(d.source.mainTopic)! + yScale.bandwidth() / 2;
-        const targetX = xScale(d.target.realTime);
-        const targetY = yScale(d.target.mainTopic)! + yScale.bandwidth() / 2;
+        // Get the parent node positions for both source and target
+        // This ensures edges are drawn between parent nodes, not child nodes
+        const sourceGroup = groupedPoints.find((g) =>
+          g.points.some((p) => p.event.index === d.source.event.index)
+        );
+        const targetGroup = groupedPoints.find((g) =>
+          g.points.some((p) => p.event.index === d.target.event.index)
+        );
+
+        if (!sourceGroup || !targetGroup) return "";
+
+        const sourceX = sourceGroup.x;
+        const sourceY = sourceGroup.y;
+        const targetX = targetGroup.x;
+        const targetY = targetGroup.y;
 
         const midX = (sourceX + targetX) / 2;
         const points: [number, number][] = [
@@ -318,14 +335,24 @@ export function NarrativeTopicVisual({
       .attr("fill", "none")
       .attr("stroke", "#94a3b8")
       .attr("stroke-width", TOPIC_CONFIG.edge.strokeWidth)
-      .attr("stroke-opacity", TOPIC_CONFIG.edge.opacity)
+      .attr("stroke-opacity", (d) => {
+        // Calculate opacity based on narrative time
+        // Earlier events have lower opacity
+        const minTime = Math.min(...dataPoints.map((p) => p.narrativeTime));
+        const maxTime = Math.max(...dataPoints.map((p) => p.narrativeTime));
+        const timeRange = maxTime - minTime;
+
+        // Normalize to a range between minOpacity and maxOpacity
+        const normalizedTime =
+          timeRange === 0
+            ? (TOPIC_CONFIG.edge.minOpacity + TOPIC_CONFIG.edge.maxOpacity) / 2
+            : TOPIC_CONFIG.edge.minOpacity +
+              (TOPIC_CONFIG.edge.maxOpacity - TOPIC_CONFIG.edge.minOpacity) *
+                ((d.source.narrativeTime - minTime) / timeRange);
+
+        return normalizedTime;
+      })
       .attr("stroke-dasharray", TOPIC_CONFIG.edge.dashArray);
-
-    // Add points group
-    const pointsGroup = g.append("g").attr("class", "points");
-
-    // Group overlapping points
-    const groupedPoints = groupOverlappingPoints(dataPoints, xScale, yScale);
 
     // Create parent nodes
     const parentNodes = pointsGroup

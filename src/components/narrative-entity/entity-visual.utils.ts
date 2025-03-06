@@ -55,9 +55,17 @@ export function calculateMaxEntities(
   minColumnWidth: number,
   columnGap: number
 ): number {
-  return Math.floor(
+  // Calculate how many entities would fit with the minimum column width
+  const entitiesFit = Math.floor(
     (availableWidth + columnGap) / (minColumnWidth + columnGap)
   );
+
+  // Always show at least 5 entities if there's enough width for at least 3
+  if (entitiesFit >= 3 && entitiesFit < 5) {
+    return 5;
+  }
+
+  return Math.max(entitiesFit, 1); // Always show at least 1 entity
 }
 
 // Get entity mentions count from events
@@ -72,6 +80,9 @@ export function getEntityMentions(
     return entityMentions;
   }
 
+  // First, collect all unique entities by ID
+  const uniqueEntitiesById = new Map<string, Entity>();
+
   events.forEach((event) => {
     event.entities.forEach((entity) => {
       // Skip entities that don't have the selected attribute
@@ -83,14 +94,47 @@ export function getEntityMentions(
         return;
       }
 
-      const key = getEntityAttributeValue(entity, selectedAttribute);
-      if (!entityMentions.has(key)) {
-        entityMentions.set(key, { entity, count: 1 });
-      } else {
-        const current = entityMentions.get(key)!;
-        entityMentions.set(key, { entity, count: current.count + 1 });
+      // Use ID as the primary key for uniqueness
+      if (!uniqueEntitiesById.has(entity.id)) {
+        uniqueEntitiesById.set(entity.id, entity);
       }
     });
+  });
+
+  // Initialize count map for each unique entity
+  const entityCounts = new Map<string, number>();
+  uniqueEntitiesById.forEach((_, id) => {
+    entityCounts.set(id, 0);
+  });
+
+  // Count occurrences of each entity across all events
+  events.forEach((event) => {
+    // Track which entities we've already counted in this event
+    const countedInThisEvent = new Set<string>();
+
+    event.entities.forEach((entity) => {
+      // Skip entities that don't have the selected attribute
+      if (
+        entity[selectedAttribute] === undefined ||
+        entity[selectedAttribute] === null ||
+        entity[selectedAttribute] === ""
+      ) {
+        return;
+      }
+
+      // Only count each unique entity once per event
+      if (!countedInThisEvent.has(entity.id)) {
+        const currentCount = entityCounts.get(entity.id) || 0;
+        entityCounts.set(entity.id, currentCount + 1);
+        countedInThisEvent.add(entity.id);
+      }
+    });
+  });
+
+  // Create the final EntityMention map using entity ID as the key
+  uniqueEntitiesById.forEach((entity, id) => {
+    const count = entityCounts.get(id) || 0;
+    entityMentions.set(id, { entity, count });
   });
 
   return entityMentions;
@@ -121,13 +165,25 @@ export function calculateColumnLayout(
   const totalGapWidth =
     (visibleEntities.length - 1) * ENTITY_CONFIG.entity.columnGap;
   const availableWidth = width - totalGapWidth;
-  const columnWidth = Math.min(
+
+  // Calculate column width based on number of entities
+  let columnWidth = Math.min(
     ENTITY_CONFIG.entity.maxColumnWidth,
     Math.max(
       ENTITY_CONFIG.entity.minColumnWidth,
       availableWidth / visibleEntities.length
     )
   );
+
+  // If we have more entities than would normally fit (forced by calculateMaxEntities),
+  // we need to reduce the column width below the minimum to make them fit
+  if (
+    availableWidth / visibleEntities.length <
+    ENTITY_CONFIG.entity.minColumnWidth
+  ) {
+    // Use a smaller column width, but ensure it's at least 30px
+    columnWidth = Math.max(30, availableWidth / visibleEntities.length);
+  }
 
   // Calculate total width including gaps
   const totalColumnsWidth =
@@ -161,11 +217,19 @@ export function createXScale(
       .padding(0.1);
   }
 
+  // Create a mapping from entity ID to display value
+  const entityIdToDisplayValue = new Map<string, string>();
+  visibleEntities.forEach((entity) => {
+    entityIdToDisplayValue.set(
+      entity.id,
+      getEntityAttributeValue(entity, selectedAttribute)
+    );
+  });
+
+  // Use entity IDs as the domain to ensure consistent positioning
   return d3
     .scaleBand()
-    .domain(
-      visibleEntities.map((e) => getEntityAttributeValue(e, selectedAttribute))
-    )
+    .domain(visibleEntities.map((e) => e.id))
     .range([0, totalColumnsWidth])
     .padding(0.1);
 }
@@ -217,18 +281,18 @@ export function getRelevantEntities(
     return event.entities;
   }
 
-  return event.entities.filter((entity) =>
-    visibleEntities.find((e) => {
-      // If both entities have names, match by name
-      if (e.name && entity.name) {
-        return e.name === entity.name;
-      }
-      // If names are not available, fall back to matching by the selected attribute
-      return (
-        getEntityAttributeValue(e, selectedAttribute) ===
-        getEntityAttributeValue(entity, selectedAttribute)
-      );
-    })
+  // Get the IDs of all visible entities
+  const visibleEntityIds = new Set(visibleEntities.map((entity) => entity.id));
+
+  // Filter event entities to only include those that match visible entities by ID
+  return event.entities.filter(
+    (entity) =>
+      // Entity must have the selected attribute
+      entity[selectedAttribute] !== undefined &&
+      entity[selectedAttribute] !== null &&
+      entity[selectedAttribute] !== "" &&
+      // And its ID must be in the visible entities set
+      visibleEntityIds.has(entity.id)
   );
 }
 
@@ -257,10 +321,9 @@ export function calculateConnectorPoints(
     return { xPoints: [defaultX], minX: defaultX, maxX: defaultX };
   }
 
+  // Use entity IDs for positioning
   const xPoints = entitiesWithAttribute.map(
-    (entity) =>
-      xScale(getEntityAttributeValue(entity, selectedAttribute))! +
-      xScale.bandwidth() / 2
+    (entity) => xScale(entity.id)! + xScale.bandwidth() / 2
   );
 
   const minX = Math.min(...xPoints);
