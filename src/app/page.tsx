@@ -26,8 +26,8 @@ export default function Home() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-        <div className="w-10 h-10 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-2"></div>
-        <div className="text-neutral-600 text-sm">Loading...</div>
+        <div className="w-16 h-16 border-4 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-4"></div>
+        <div className="text-neutral-600 font-medium">Loading...</div>
       </div>
     );
   }
@@ -35,13 +35,13 @@ export default function Home() {
   // Show login form if not authenticated
   if (!isAuthenticated) {
     return (
-      <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4 sm:p-6">
-        <div className="w-full max-w-sm">
-          <div className="text-center mb-4">
-            <h1 className="text-2xl font-bold text-gray-900">
+      <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-gray-50">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">
               Narrative Matrix
             </h1>
-            <p className="text-sm text-gray-600 mt-1">User Study Platform</p>
+            <p className="text-gray-600 mt-2">User Study Platform</p>
           </div>
 
           <LoginForm />
@@ -58,8 +58,8 @@ export default function Home() {
   // Fallback loading state while redirecting normal users
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-      <div className="w-10 h-10 border-2 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-2"></div>
-      <div className="text-neutral-600 text-sm">
+      <div className="w-16 h-16 border-4 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-4"></div>
+      <div className="text-neutral-600 font-medium">
         Preparing your dashboard...
       </div>
     </div>
