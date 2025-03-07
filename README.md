@@ -1,10 +1,10 @@
-# Narrative Subway
+# Narrative Matrix
 
 A user study platform for exploring different narrative visualization approaches, designed to compare various storytelling techniques in data visualization.
 
 ## Project Overview
 
-Narrative Subway is a Next.js application that provides different narrative visualization approaches for user studies. The platform allows researchers to compare how users interact with and understand data through different visualization techniques, including pure text narratives and interactive visualizations.
+Narrative Matrix is a Next.js application that provides different narrative visualization approaches for user studies. The platform allows researchers to compare how users interact with and understand data through different visualization techniques, including pure text narratives and interactive visualizations.
 
 ## Technologies Used
 
