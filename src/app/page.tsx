@@ -18,7 +18,15 @@ export default function Home() {
       user.role === "normal" &&
       user.defaultScenario
     ) {
-      router.push(`/scenario/${user.defaultScenario}`);
+      // Map scenario types to their correct routes
+      const routeMap = {
+        "pure-text": "/pure-text",
+        visualization: "/visualization",
+        "pure-text-chat": "/pure-text/chat",
+        "visualization-chat": "/visualization/chat",
+      };
+
+      router.push(routeMap[user.defaultScenario] || "/");
     }
   }, [isAuthenticated, user, router]);
 

@@ -60,7 +60,15 @@ export function ScenarioSelector() {
 
   const handleContinue = () => {
     if (selectedScenario) {
-      router.push(`/scenario/${selectedScenario}`);
+      // Map scenario types to their correct routes
+      const routeMap = {
+        "pure-text": "/pure-text",
+        visualization: "/visualization",
+        "pure-text-chat": "/pure-text/chat",
+        "visualization-chat": "/visualization/chat",
+      };
+
+      router.push(routeMap[selectedScenario]);
     }
   };
 

@@ -69,26 +69,32 @@ export function NarrativeTooltip({
       className="fixed z-50 bg-white rounded-md shadow-lg p-3 max-w-xs border border-gray-200 text-sm"
       style={tooltipStyle}
     >
+      {/* Event text - guaranteed to exist */}
       <div className="font-medium text-gray-900">
         {event.short_text || event.text.substring(0, 50) + "..."}
       </div>
 
+      {/* Temporal information - optional field */}
       {event.temporal_anchoring?.real_time && (
         <div className="text-gray-500 text-xs mt-1">
           {formatDate(event.temporal_anchoring.real_time)}
         </div>
       )}
 
+      {/* Event text - guaranteed to exist */}
       <div className="text-gray-700 mt-2 text-xs line-clamp-3">
         {event.text}
       </div>
 
-      {type === "topic" && event.topic && (
+      {/* Topic information - guaranteed to exist */}
+      {event.topic && (
         <div className="mt-2 flex flex-wrap gap-1">
           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
             {event.topic.main_topic}
           </span>
+          {/* Sub-topics - may be empty array */}
           {event.topic.sub_topic &&
+            event.topic.sub_topic.length > 0 &&
             event.topic.sub_topic.map((subTopic, i) => (
               <span
                 key={i}
@@ -100,7 +106,8 @@ export function NarrativeTooltip({
         </div>
       )}
 
-      {type === "entity" && event.entities && (
+      {/* Entity information - guaranteed to exist but may be empty array */}
+      {event.entities && event.entities.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1">
           {event.entities.map((entity, i) => (
             <span
@@ -108,6 +115,7 @@ export function NarrativeTooltip({
               className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800"
             >
               {entity.name}
+              {/* Social role - optional field */}
               {entity.social_role && (
                 <span className="ml-1 text-xs text-green-600">
                   ({entity.social_role})
@@ -115,6 +123,20 @@ export function NarrativeTooltip({
               )}
             </span>
           ))}
+        </div>
+      )}
+
+      {/* Narrative phase - optional field */}
+      {event.narrative_phase && (
+        <div className="mt-2 text-xs text-gray-600">
+          Phase: <span className="font-medium">{event.narrative_phase}</span>
+        </div>
+      )}
+
+      {/* Source name - optional field */}
+      {event.source_name && (
+        <div className="mt-1 text-xs text-gray-600">
+          Source: <span className="font-medium">{event.source_name}</span>
         </div>
       )}
     </div>
