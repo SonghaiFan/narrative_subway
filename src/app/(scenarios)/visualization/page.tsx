@@ -12,16 +12,8 @@ import { useAuth } from "@/contexts/auth-context";
 import { ScenarioLayout } from "@/components/layouts/scenario-layout";
 
 function VisualizationScenario() {
-  const {
-    data,
-    setData,
-    isLoading,
-    setIsLoading,
-    error,
-    setError,
-    selectedEventId,
-    setSelectedEventId,
-  } = useCenterControl();
+  const { data, setData, isLoading, setIsLoading, error, setError } =
+    useCenterControl();
   const { user } = useAuth();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
 

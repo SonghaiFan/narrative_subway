@@ -147,6 +147,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = () => {
     removeLocalStorage("user");
+    // Clear the introduction cookie
+    document.cookie =
+      "hasCompletedIntro=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
     setAuthState({
       user: null,
       isAuthenticated: false,
