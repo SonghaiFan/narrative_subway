@@ -13,17 +13,15 @@ const DEMO_ACCOUNTS = [
 ];
 
 export function LoginForm() {
-  const { login, error: authError, isLoading } = useAuth();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const { login, isLoading, error: authError } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    // Basic validation
     if (!username.trim()) {
       setError("Username is required");
       return;
@@ -36,38 +34,26 @@ export function LoginForm() {
 
     try {
       await login(username, password);
-      // If login is successful, the auth context will update and redirect
     } catch (err) {
-      // Error is handled by auth context
-      console.error("Login error:", err);
+      // Error is handled by the auth context
     }
   };
 
   const handleQuickLogin = async (username: string) => {
-    setUsername(username);
-    setPassword("study");
-
     try {
       await login(username, "study");
     } catch (err) {
-      console.error("Quick login error:", err);
+      // Error is handled by the auth context
     }
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Login</h1>
-        <p className="text-gray-600 mt-2">
-          Enter your username and password to access the study
-        </p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
+    <div className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div>
           <label
             htmlFor="username"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700 mb-1"
           >
             Username
           </label>
@@ -78,14 +64,14 @@ export function LoginForm() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             disabled={isLoading}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
-        <div className="space-y-2">
+        <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700 mb-1"
           >
             Password
           </label>
@@ -96,57 +82,63 @@ export function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={isLoading}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-1.5 text-sm border border-gray-300 rounded shadow-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
         {(error || authError) && (
-          <div className="p-3 bg-red-50 text-red-700 rounded-md text-sm">
+          <div className="p-2 bg-red-50 text-red-700 rounded text-xs">
             {error || authError}
           </div>
         )}
 
         <button
           type="submit"
-          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="w-full py-1.5 px-4 text-sm font-medium text-white bg-blue-600 rounded shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={isLoading}
         >
           {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
 
-      <div className="mt-6">
+      <div>
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
+            <div className="w-full border-t border-gray-200"></div>
           </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">Demo Accounts</span>
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <h3 className="text-sm font-medium mb-2">
-            All accounts use password: "study"
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {DEMO_ACCOUNTS.map((account) => (
-              <button
-                key={account.username}
-                type="button"
-                onClick={() => handleQuickLogin(account.username)}
-                disabled={isLoading}
-                className="text-sm py-1 px-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Login as {account.name}
-              </button>
-            ))}
+          <div className="relative flex justify-center">
+            <span className="px-2 bg-gray-50 text-xs text-gray-500">
+              Demo Accounts
+            </span>
           </div>
         </div>
 
-        <p className="text-xs text-gray-500 text-center w-full mt-4">
-          This is a demo application for a user study.
-        </p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          <button
+            onClick={() => handleQuickLogin("domain")}
+            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
+          >
+            Login as Domain Expert
+          </button>
+          <button
+            onClick={() => handleQuickLogin("text")}
+            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
+          >
+            Login as Text User
+          </button>
+          <button
+            onClick={() => handleQuickLogin("viz")}
+            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
+          >
+            Login as Visual+ User
+          </button>
+          <button
+            onClick={() => handleQuickLogin("textchat")}
+            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
+          >
+            Login as Chat+ User
+          </button>
+        </div>
       </div>
     </div>
   );
