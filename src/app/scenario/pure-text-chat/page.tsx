@@ -1,22 +1,14 @@
 "use client";
 
-import { PureTextDisplay } from "@/components/narrative-pure-text/pure-text-display";
-import { ChatInterface } from "@/components/chat/chat-interface";
+import { PureTextDisplay } from "@/components/features/narrative/pure-text/pure-text-display";
+import { ChatInterface } from "@/components/features/chat/chat-interface";
 import { useState, useEffect } from "react";
-import { useCenterControl } from "@/lib/center-control-context";
-import { ScenarioLayout } from "@/components/layout/scenario-layout";
+import { useCenterControl } from "@/contexts/center-control-context";
+import { ScenarioLayout } from "@/components/layouts/scenario-layout";
 
 function PureTextChatScenario() {
-  const {
-    data,
-    setData,
-    isLoading,
-    setIsLoading,
-    error,
-    setError,
-    selectedEventId,
-    setSelectedEventId,
-  } = useCenterControl();
+  const { data, setData, isLoading, setIsLoading, error, setError } =
+    useCenterControl();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
 
   // Fetch available data files

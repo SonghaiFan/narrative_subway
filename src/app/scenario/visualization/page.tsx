@@ -1,13 +1,13 @@
 "use client";
 
-import { TimeDisplay } from "@/components/narrative-time/time-display";
-import { EntityDisplay } from "@/components/narrative-entity/entity-display";
-import { TopicDisplay } from "@/components/narrative-topic/topic-display";
-import { PureTextDisplay } from "@/components/narrative-pure-text/pure-text-display";
-import { ResizableGrid } from "@/components/ui/resizable-grid";
+import { TimeDisplay } from "@/components/features/narrative/time/time-display";
+import { EntityDisplay } from "@/components/features/narrative/entity/entity-display";
+import { TopicDisplay } from "@/components/features/narrative/topic/topic-display";
+import { PureTextDisplay } from "@/components/features/narrative/pure-text/pure-text-display";
+import { ResizableGrid } from "@/components/ui/resizable-grid/resizable-grid";
 import { useState, useEffect } from "react";
-import { useCenterControl } from "@/lib/center-control-context";
-import { ScenarioLayout } from "@/components/layout/scenario-layout";
+import { useCenterControl } from "@/contexts/center-control-context";
+import { ScenarioLayout } from "@/components/layouts/scenario-layout";
 
 function VisualizationScenario() {
   const {

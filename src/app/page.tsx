@@ -2,9 +2,9 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { LoginForm } from "@/components/auth/login-form";
-import { ScenarioSelector } from "@/components/landing-page/scenario-selector";
-import { useAuth } from "@/lib/auth-context";
+import { LoginForm } from "@/components/features/auth/login-form";
+import { ScenarioSelector } from "@/components/features/landing-page/scenario-selector";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function Home() {
   const { user, isAuthenticated, isLoading } = useAuth();
