@@ -125,13 +125,7 @@ function VisualizationScenario() {
       <div className="w-full h-full overflow-hidden relative grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
         <div className="md:col-span-3 h-full">
           <ResizableGrid
-            topLeft={renderPanel(
-              <PureTextDisplay
-                events={events}
-                selectedEventId={selectedEventId}
-                onEventSelect={setSelectedEventId}
-              />
-            )}
+            topLeft={renderPanel(<PureTextDisplay events={events} />)}
             topRight={renderPanel(<TopicDisplay events={events} />)}
             bottomLeft={renderPanel(<EntityDisplay events={events} />)}
             bottomRight={renderPanel(
