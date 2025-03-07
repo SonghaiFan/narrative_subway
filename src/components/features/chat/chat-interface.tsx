@@ -16,13 +16,15 @@ interface ChatInterfaceProps {
   className?: string;
 }
 
+const MAX_MESSAGES = 20;
+
 export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
   const { selectedEventId, getSelectedEvent } = useCenterControl();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content:
-        "Hello! I'm your AI assistant. Ask me anything about this narrative.",
+        "Hello! I'm your AI assistant. Ask me anything about this narrative. You have 20 messages remaining.",
       timestamp: new Date(),
     },
   ]);
@@ -33,6 +35,11 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
   const [previousSelectedEventId, setPreviousSelectedEventId] = useState<
     number | null
   >(null);
+
+  // Calculate remaining messages
+  const userMessageCount = messages.filter((msg) => msg.role === "user").length;
+  const remainingMessages = MAX_MESSAGES - userMessageCount;
+  const hasReachedLimit = remainingMessages <= 0;
 
   // Effect to handle selected event changes
   useEffect(() => {
@@ -99,7 +106,7 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || hasReachedLimit) return;
 
     // Add user message to chat
     const userMessage: Message = {
@@ -117,8 +124,9 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
       setTimeout(() => {
         const placeholderResponse: Message = {
           role: "assistant",
-          content:
-            "This is a placeholder response. The actual OpenAI API integration will be implemented later.",
+          content: hasReachedLimit
+            ? "You have reached the maximum number of messages. The chat is now closed."
+            : "This is a placeholder response. The actual OpenAI API integration will be implemented later.",
           timestamp: new Date(),
         };
         setMessages((prev) => [...prev, placeholderResponse]);
@@ -196,11 +204,15 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
     >
       {/* Compact Header */}
       <div className="p-2 bg-gray-50 border-b border-gray-100 flex items-center">
-        <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
-          <Bot className="w-3 h-3 text-gray-600" />
-        </div>
-        <div>
-          <h2 className="text-sm font-semibold text-gray-800">AI Assistant</h2>
+        <div className="flex items-center">
+          <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+            <Bot className="w-3 h-3 text-gray-600" />
+          </div>
+          <div>
+            <h2 className="text-sm font-semibold text-gray-800">
+              AI Assistant
+            </h2>
+          </div>
         </div>
       </div>
 
@@ -282,57 +294,70 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
       {/* Input area */}
       <form
         onSubmit={handleSubmit}
-        className="p-2 border-t border-gray-100 bg-white flex items-center gap-1"
+        className="p-2 border-t border-gray-100 bg-white flex flex-col gap-1"
       >
-        <div className="relative flex-1">
-          <textarea
-            ref={inputRef}
-            value={input}
-            onChange={handleTextareaChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your message..."
-            className="w-full border border-gray-200 rounded-lg px-2 py-1.5 pr-16 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none min-h-[40px] max-h-[100px] text-xs"
-            disabled={isLoading}
-            rows={3}
-          />
-          <div className="absolute right-2 bottom-1 text-[9px] text-gray-400">
-            {input.length > 0 && "Press Enter"}
+        <div className="flex items-center justify-between mb-1 px-1">
+          <div className="text-xs text-gray-500">
+            {remainingMessages} messages remaining
+          </div>
+          <div className="text-[9px] text-gray-400">
+            {input.length > 0 && "Press Enter to send"}
           </div>
         </div>
-        <button
-          type="submit"
-          className={`p-1.5 rounded-lg ${
-            isLoading || !input.trim()
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : "bg-gray-800 hover:bg-gray-700 text-white"
-          }`}
-          disabled={isLoading || !input.trim()}
-        >
-          {isLoading ? (
-            <svg
-              className="animate-spin h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
-            </svg>
-          ) : (
-            <Send className="w-4 h-4" />
-          )}
-        </button>
+        <div className="flex items-center gap-1">
+          <div className="relative flex-1">
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={handleTextareaChange}
+              onKeyDown={handleKeyDown}
+              placeholder={
+                hasReachedLimit
+                  ? "Message limit reached"
+                  : "Type your message..."
+              }
+              className={`w-full border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none min-h-[40px] max-h-[100px] text-xs ${
+                hasReachedLimit ? "bg-gray-50 cursor-not-allowed" : ""
+              }`}
+              disabled={isLoading || hasReachedLimit}
+              rows={3}
+            />
+          </div>
+          <button
+            type="submit"
+            className={`p-1.5 rounded-lg ${
+              isLoading || !input.trim() || hasReachedLimit
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-gray-800 hover:bg-gray-700 text-white"
+            }`}
+            disabled={isLoading || !input.trim() || hasReachedLimit}
+          >
+            {isLoading ? (
+              <svg
+                className="animate-spin h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            ) : (
+              <Send className="w-4 h-4" />
+            )}
+          </button>
+        </div>
       </form>
     </div>
   );
