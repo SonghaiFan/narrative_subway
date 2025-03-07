@@ -57,7 +57,7 @@ export function ProfileSection({
         if (!selectedFile && files.length > 0) {
           // Try to find the first non-archived file
           const nonArchivedFile = files.find(
-            (file) => !file.startsWith("archived/")
+            (file: string) => !file.startsWith("archived/")
           );
           setSelectedFile(nonArchivedFile || files[0]);
         }
