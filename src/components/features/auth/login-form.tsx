@@ -7,9 +7,9 @@ import { useAuth } from "@/contexts/auth-context";
 const DEMO_ACCOUNTS = [
   { name: "Domain Expert", username: "domain", role: "domain" },
   { name: "Text User", username: "text", role: "normal" },
-  { name: "Visualization User", username: "viz", role: "normal" },
-  { name: "Text Chat User", username: "textchat", role: "normal" },
-  { name: "Visualization Chat User", username: "vizchat", role: "normal" },
+  { name: "Visual+ User", username: "viz", role: "normal" },
+  { name: "Chat+ User", username: "textchat", role: "normal" },
+  { name: "Mixed User", username: "vizchat", role: "normal" },
 ];
 
 export function LoginForm() {

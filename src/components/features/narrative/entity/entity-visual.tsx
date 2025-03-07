@@ -90,7 +90,7 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
     // Get entity mentions and calculate visible entities
     const entityMentions = getEntityMentions(events, selectedAttribute);
 
-    console.log(entityMentions);
+    // console.log(entityMentions);
     const maxEntities = calculateMaxEntities(
       width,
       ENTITY_CONFIG.entity.minColumnWidth,
@@ -98,7 +98,7 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
     );
     const visibleEntities = getVisibleEntities(entityMentions, maxEntities);
 
-    console.log(visibleEntities);
+    // console.log(visibleEntities);
 
     // Calculate layout dimensions
     const { totalColumnsWidth, leftOffset } = calculateColumnLayout(
@@ -107,11 +107,7 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
     );
 
     // Create scales
-    const xScale = createXScale(
-      visibleEntities,
-      selectedAttribute,
-      totalColumnsWidth
-    );
+    const xScale = createXScale(visibleEntities, totalColumnsWidth);
     const yScale = createYScale(events, height);
     const yAxis = createYAxis(yScale);
 
@@ -245,15 +241,52 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
     // Draw event nodes
     events.forEach((event) => {
       // First collect all relevant entities for this event
-      const relevantEntities = getRelevantEntities(
-        event,
-        visibleEntities,
-        selectedAttribute
-      );
+      const {
+        entities: relevantEntities,
+        hasNoEntities,
+        hasNoVisibleEntities,
+      } = getRelevantEntities(event, visibleEntities, selectedAttribute);
 
-      if (relevantEntities.length > 0) {
-        const y = yScale(event.temporal_anchoring.narrative_time);
+      const y = yScale(event.temporal_anchoring.narrative_time);
 
+      if (hasNoEntities || hasNoVisibleEntities) {
+        // Draw a single dashed node at x=0 for events with no entities or no visible entities
+        g.append("circle")
+          .attr("class", "event-node")
+          .attr("cx", 0)
+          .attr("cy", y)
+          .attr("r", ENTITY_CONFIG.event.nodeRadius)
+          .attr("fill", "white")
+          .attr("stroke", hasNoEntities ? "#94a3b8" : "#64748b") // lighter gray for no entities
+          .attr("stroke-width", ENTITY_CONFIG.event.nodeStrokeWidth)
+          .attr("stroke-dasharray", "3,3")
+          .attr("data-event-index", event.index)
+          .style("cursor", "pointer")
+          .on("mouseover", function (e) {
+            d3.select(this)
+              .transition()
+              .duration(150)
+              .attr("r", ENTITY_CONFIG.event.nodeRadius * 1.5);
+
+            showTooltip(event, e.pageX, e.pageY, "entity");
+          })
+          .on("mousemove", function (e) {
+            updatePosition(e.pageX, e.pageY);
+          })
+          .on("mouseout", function () {
+            d3.select(this)
+              .transition()
+              .duration(150)
+              .attr("r", ENTITY_CONFIG.event.nodeRadius);
+
+            hideTooltip();
+          })
+          .on("click", function () {
+            setSelectedEventId(
+              event.index === selectedEventId ? null : event.index
+            );
+          });
+      } else if (relevantEntities.length > 0) {
         // Draw connector line if multiple entities
         if (relevantEntities.length > 1) {
           const { minX, maxX } = calculateConnectorPoints(
@@ -278,9 +311,8 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
             .attr("stroke-linecap", "round");
         }
 
-        // 2. Draw nodes in the middle
+        // Draw nodes for each relevant entity
         relevantEntities.forEach((entity) => {
-          // Use entity ID for positioning instead of attribute value
           const x = xScale(entity.id)! + xScale.bandwidth() / 2;
 
           // Add event node
@@ -295,7 +327,6 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
             .attr("data-event-index", event.index)
             .style("cursor", "pointer")
             .on("mouseover", function (e) {
-              // Only change size on hover, not color
               d3.select(this)
                 .transition()
                 .duration(150)
@@ -307,7 +338,6 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
               updatePosition(e.pageX, e.pageY);
             })
             .on("mouseout", function () {
-              // Only reset size on mouseout, not color
               d3.select(this)
                 .transition()
                 .duration(150)
@@ -316,14 +346,13 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
               hideTooltip();
             })
             .on("click", function () {
-              // Toggle selection
               setSelectedEventId(
                 event.index === selectedEventId ? null : event.index
               );
             });
         });
 
-        // 3. Finally draw the inner white connector on top
+        // Draw inner white connector on top if multiple entities
         if (relevantEntities.length > 1) {
           const { minX, maxX } = calculateConnectorPoints(
             relevantEntities,

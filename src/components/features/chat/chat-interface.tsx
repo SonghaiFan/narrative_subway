@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { NarrativeEvent } from "@/types/narrative/article";
 import { useCenterControl } from "@/contexts/center-control-context";
+import { Send, User, Bot } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant" | "system";
@@ -12,9 +13,10 @@ interface Message {
 
 interface ChatInterfaceProps {
   events: NarrativeEvent[];
+  className?: string;
 }
 
-export function ChatInterface({ events }: ChatInterfaceProps) {
+export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
   const { selectedEventId, getSelectedEvent } = useCenterControl();
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -171,7 +173,7 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
     e.target.style.height = "auto";
 
     // Set the height to scrollHeight + 2px for border
-    const newHeight = Math.min(e.target.scrollHeight, 150);
+    const newHeight = Math.min(e.target.scrollHeight, 100);
     e.target.style.height = `${newHeight}px`;
   };
 
@@ -189,32 +191,21 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-      {/* Header */}
-      <div className="p-3 bg-gray-50 border-b border-gray-100">
-        <div className="flex items-center">
-          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 h-5 text-gray-600"
-            >
-              <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
-              <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 001.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0015.75 7.5z" />
-            </svg>
-          </div>
-          <div>
-            <h2 className="font-medium text-gray-800">AI Assistant</h2>
-            <p className="text-xs text-gray-500">
-              Ask questions about the narrative
-            </p>
-          </div>
+    <div
+      className={`flex flex-col h-full bg-white overflow-hidden ${className}`}
+    >
+      {/* Compact Header */}
+      <div className="p-2 bg-gray-50 border-b border-gray-100 flex items-center">
+        <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center mr-2">
+          <Bot className="w-3 h-3 text-gray-600" />
+        </div>
+        <div>
+          <h2 className="text-sm font-semibold text-gray-800">AI Assistant</h2>
         </div>
       </div>
 
       {/* Messages area */}
-      <div className="flex-1 overflow-auto p-4 space-y-3 bg-white">
+      <div className="flex-1 overflow-auto p-2 space-y-2 bg-white text-xs">
         {messages.map((message, index) => (
           <div
             key={index}
@@ -223,36 +214,29 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
             } ${
               index > 0 && messages[index - 1].role === message.role
                 ? "mt-1"
-                : "mt-3"
+                : "mt-2"
             }`}
           >
             {message.role === "assistant" && (
-              <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-4 h-4 text-gray-600"
-                >
-                  <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
-                </svg>
+              <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mr-1 mt-1 flex-shrink-0">
+                <Bot className="w-3 h-3 text-gray-600" />
               </div>
             )}
 
             <div
-              className={`max-w-[80%] rounded-lg px-3 py-2 ${
+              className={`max-w-[85%] rounded-lg px-2 py-1.5 ${
                 message.role === "user"
                   ? "bg-gray-800 text-white rounded-tr-none"
                   : message.role === "system"
-                  ? "bg-gray-100 text-gray-600 italic text-sm"
+                  ? "bg-gray-100 text-gray-600 italic text-xs"
                   : "bg-gray-100 text-gray-800 rounded-tl-none"
               }`}
             >
-              <div className="whitespace-pre-wrap text-sm">
+              <div className="whitespace-pre-wrap text-xs">
                 {message.content}
               </div>
               <div
-                className={`text-[10px] mt-1 text-right ${
+                className={`text-[9px] mt-0.5 text-right ${
                   message.role === "user" ? "text-gray-300" : "text-gray-400"
                 }`}
               >
@@ -261,19 +245,8 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
             </div>
 
             {message.role === "user" && (
-              <div className="w-7 h-7 rounded-full bg-gray-800 flex items-center justify-center ml-2 mt-1 flex-shrink-0">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="w-4 h-4 text-white"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+              <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center ml-1 mt-1 flex-shrink-0">
+                <User className="w-3 h-3 text-white" />
               </div>
             )}
           </div>
@@ -283,28 +256,21 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
         {/* Loading indicator */}
         {isLoading && (
           <div className="flex items-center">
-            <div className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center mr-2 flex-shrink-0">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-4 h-4 text-gray-600"
-              >
-                <path d="M4.913 2.658c2.075-.27 4.19-.408 6.337-.408 2.147 0 4.262.139 6.337.408 1.922.25 3.291 1.861 3.405 3.727a4.403 4.403 0 00-1.032-.211 50.89 50.89 0 00-8.42 0c-2.358.196-4.04 2.19-4.04 4.434v4.286a4.47 4.47 0 002.433 3.984L7.28 21.53A.75.75 0 016 21v-4.03a48.527 48.527 0 01-1.087-.128C2.905 16.58 1.5 14.833 1.5 12.862V6.638c0-1.97 1.405-3.718 3.413-3.979z" />
-              </svg>
+            <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mr-1 flex-shrink-0">
+              <Bot className="w-3 h-3 text-gray-600" />
             </div>
-            <div className="bg-gray-100 text-gray-500 rounded-lg px-3 py-2 rounded-tl-none">
+            <div className="bg-gray-100 text-gray-500 rounded-lg px-2 py-1.5 rounded-tl-none">
               <div className="flex space-x-1">
                 <div
-                  className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
+                  className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"
                   style={{ animationDelay: "0ms" }}
                 ></div>
                 <div
-                  className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
+                  className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"
                   style={{ animationDelay: "150ms" }}
                 ></div>
                 <div
-                  className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"
+                  className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"
                   style={{ animationDelay: "300ms" }}
                 ></div>
               </div>
@@ -316,7 +282,7 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
       {/* Input area */}
       <form
         onSubmit={handleSubmit}
-        className="p-3 border-t border-gray-100 bg-white flex items-center gap-2"
+        className="p-2 border-t border-gray-100 bg-white flex items-center gap-1"
       >
         <div className="relative flex-1">
           <textarea
@@ -325,17 +291,17 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
             onChange={handleTextareaChange}
             onKeyDown={handleKeyDown}
             placeholder="Type your message..."
-            className="w-full border border-gray-200 rounded-lg px-4 py-2.5 pr-20 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none min-h-[84px] max-h-[150px] text-sm"
+            className="w-full border border-gray-200 rounded-lg px-2 py-1.5 pr-16 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none min-h-[40px] max-h-[100px] text-xs"
             disabled={isLoading}
             rows={3}
           />
-          <div className="absolute right-3 bottom-3 text-[10px] text-gray-400">
-            {input.length > 0 && "Press Enter to send"}
+          <div className="absolute right-2 bottom-1 text-[9px] text-gray-400">
+            {input.length > 0 && "Press Enter"}
           </div>
         </div>
         <button
           type="submit"
-          className={`p-2 rounded-lg ${
+          className={`p-1.5 rounded-lg ${
             isLoading || !input.trim()
               ? "bg-gray-100 text-gray-400 cursor-not-allowed"
               : "bg-gray-800 hover:bg-gray-700 text-white"
@@ -344,7 +310,7 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
         >
           {isLoading ? (
             <svg
-              className="animate-spin h-5 w-5"
+              className="animate-spin h-4 w-4"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -364,14 +330,7 @@ export function ChatInterface({ events }: ChatInterfaceProps) {
               ></path>
             </svg>
           ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 h-5"
-            >
-              <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
-            </svg>
+            <Send className="w-4 h-4" />
           )}
         </button>
       </form>

@@ -2,13 +2,17 @@
 
 import { PureTextDisplay } from "@/components/features/narrative/pure-text/pure-text-display";
 import { ChatInterface } from "@/components/features/chat/chat-interface";
+import { TaskPanel } from "@/components/features/task/task-panel";
+import { ResizableTwoRowCol } from "@/components/ui/resizable-layout/resizable-two-row-col";
 import { useState, useEffect } from "react";
 import { useCenterControl } from "@/contexts/center-control-context";
+import { useAuth } from "@/contexts/auth-context";
 import { ScenarioLayout } from "@/components/layouts/scenario-layout";
 
 function PureTextChatScenario() {
   const { data, setData, isLoading, setIsLoading, error, setError } =
     useCenterControl();
+  const { user } = useAuth();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
 
   // Fetch available data files
@@ -105,7 +109,19 @@ function PureTextChatScenario() {
           <PureTextDisplay events={data.events} />
         </div>
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-          <ChatInterface events={data.events} />
+          <ResizableTwoRowCol
+            firstComponent={<ChatInterface events={data.events} />}
+            secondComponent={
+              <TaskPanel
+                events={data.events}
+                metadata={data.metadata}
+                userRole={user?.role as "domain" | "normal"}
+              />
+            }
+            defaultFirstSize={50}
+            defaultSecondSize={50}
+            direction="vertical"
+          />
         </div>
       </div>
     </ScenarioLayout>

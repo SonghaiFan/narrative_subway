@@ -1,13 +1,16 @@
 "use client";
 
 import { PureTextDisplay } from "@/components/features/narrative/pure-text/pure-text-display";
+import { TaskPanel } from "@/components/features/task/task-panel";
 import { useState, useEffect } from "react";
 import { useCenterControl } from "@/contexts/center-control-context";
+import { useAuth } from "@/contexts/auth-context";
 import { ScenarioLayout } from "@/components/layouts/scenario-layout";
 
 function PureTextScenario() {
   const { data, setData, isLoading, setIsLoading, error, setError } =
     useCenterControl();
+  const { user } = useAuth();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
 
   // Fetch available data files
@@ -99,8 +102,17 @@ function PureTextScenario() {
 
   return (
     <ScenarioLayout title="Text" isLoading={isLoading}>
-      <div className="h-full p-4 overflow-auto">
-        <PureTextDisplay events={data.events} />
+      <div className="h-full grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+        <div className="md:col-span-2 bg-white rounded-lg shadow-sm overflow-auto">
+          <PureTextDisplay events={data.events} />
+        </div>
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <TaskPanel
+            events={data.events}
+            metadata={data.metadata}
+            userRole={user?.role as "domain" | "normal"}
+          />
+        </div>
       </div>
     </ScenarioLayout>
   );

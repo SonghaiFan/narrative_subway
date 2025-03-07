@@ -156,9 +156,6 @@ export function ScenarioSelector() {
                     <span className="border-l-2 border-gray-300 pl-1.5">
                       AI-Powered Views
                     </span>
-                    <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-1.5 py-0.5 text-xs font-medium text-blue-800">
-                      AI Assistant
-                    </span>
                   </div>
                   <ScenarioCard
                     title="Text + AI Chat"

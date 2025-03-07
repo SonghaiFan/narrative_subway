@@ -205,26 +205,16 @@ export function calculateColumnLayout(
 // Create scale for x-axis
 export function createXScale(
   visibleEntities: Entity[],
-  selectedAttribute: string,
   totalColumnsWidth: number
 ) {
-  // If no visible entities or no selected attribute, return a default scale
-  if (visibleEntities.length === 0 || !selectedAttribute) {
+  // If no visible entities, return a default scale
+  if (visibleEntities.length === 0) {
     return d3
       .scaleBand()
       .domain(["Unknown"])
       .range([0, totalColumnsWidth])
       .padding(0.1);
   }
-
-  // Create a mapping from entity ID to display value
-  const entityIdToDisplayValue = new Map<string, string>();
-  visibleEntities.forEach((entity) => {
-    entityIdToDisplayValue.set(
-      entity.id,
-      getEntityAttributeValue(entity, selectedAttribute)
-    );
-  });
 
   // Use entity IDs as the domain to ensure consistent positioning
   return d3
@@ -258,34 +248,31 @@ export function createYAxis(yScale: d3.ScaleLinear<number, number>) {
 }
 
 // Filter relevant entities for an event
+export interface RelevantEntitiesResult {
+  entities: Entity[];
+  hasNoEntities: boolean; // true if event has no entities at all
+  hasNoVisibleEntities: boolean; // true if event has entities but none are visible
+}
+
 export function getRelevantEntities(
   event: NarrativeEvent,
   visibleEntities: Entity[],
   selectedAttribute: string
-) {
-  // If the event has no entities, return an empty array
+): RelevantEntitiesResult {
+  // If the event has no entities, return empty with hasNoEntities flag
   if (!event.entities || event.entities.length === 0) {
-    return [];
-  }
-
-  // Check if any entities have the selected attribute
-  const hasSelectedAttribute = event.entities.some(
-    (entity) =>
-      entity[selectedAttribute] !== undefined &&
-      entity[selectedAttribute] !== null &&
-      entity[selectedAttribute] !== ""
-  );
-
-  // If no entities have the selected attribute, return all entities
-  if (!hasSelectedAttribute) {
-    return event.entities;
+    return {
+      entities: [],
+      hasNoEntities: true,
+      hasNoVisibleEntities: false,
+    };
   }
 
   // Get the IDs of all visible entities
   const visibleEntityIds = new Set(visibleEntities.map((entity) => entity.id));
 
   // Filter event entities to only include those that match visible entities by ID
-  return event.entities.filter(
+  const filteredEntities = event.entities.filter(
     (entity) =>
       // Entity must have the selected attribute
       entity[selectedAttribute] !== undefined &&
@@ -294,6 +281,22 @@ export function getRelevantEntities(
       // And its ID must be in the visible entities set
       visibleEntityIds.has(entity.id)
   );
+
+  // If no entities match the criteria but the event had entities,
+  // return empty with hasNoVisibleEntities flag
+  if (filteredEntities.length === 0) {
+    return {
+      entities: [],
+      hasNoEntities: false,
+      hasNoVisibleEntities: true,
+    };
+  }
+
+  return {
+    entities: filteredEntities,
+    hasNoEntities: false,
+    hasNoVisibleEntities: false,
+  };
 }
 
 // Calculate connector line points for entities

@@ -4,9 +4,11 @@ import { TimeDisplay } from "@/components/features/narrative/time/time-display";
 import { EntityDisplay } from "@/components/features/narrative/entity/entity-display";
 import { TopicDisplay } from "@/components/features/narrative/topic/topic-display";
 import { PureTextDisplay } from "@/components/features/narrative/pure-text/pure-text-display";
-import { ResizableGrid } from "@/components/ui/resizable-grid/resizable-grid";
+import { TaskPanel } from "@/components/features/task/task-panel";
+import { ResizableGrid } from "@/components/ui/resizable-layout/resizable-grid";
 import { useState, useEffect } from "react";
 import { useCenterControl } from "@/contexts/center-control-context";
+import { useAuth } from "@/contexts/auth-context";
 import { ScenarioLayout } from "@/components/layouts/scenario-layout";
 
 function VisualizationScenario() {
@@ -20,6 +22,7 @@ function VisualizationScenario() {
     selectedEventId,
     setSelectedEventId,
   } = useCenterControl();
+  const { user } = useAuth();
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
 
   // Fetch available data files
@@ -119,21 +122,30 @@ function VisualizationScenario() {
 
   return (
     <ScenarioLayout title="Text + Visualization " isLoading={isLoading}>
-      <div className="w-full h-full overflow-hidden relative">
-        <ResizableGrid
-          topLeft={renderPanel(
-            <PureTextDisplay
-              events={events}
-              selectedEventId={selectedEventId}
-              onEventSelect={setSelectedEventId}
-            />
-          )}
-          topRight={renderPanel(<TopicDisplay events={events} />)}
-          bottomLeft={renderPanel(<EntityDisplay events={events} />)}
-          bottomRight={renderPanel(
-            <TimeDisplay events={events} metadata={metadata} />
-          )}
-        />
+      <div className="w-full h-full overflow-hidden relative grid grid-cols-1 md:grid-cols-4 gap-4 p-4">
+        <div className="md:col-span-3 h-full">
+          <ResizableGrid
+            topLeft={renderPanel(
+              <PureTextDisplay
+                events={events}
+                selectedEventId={selectedEventId}
+                onEventSelect={setSelectedEventId}
+              />
+            )}
+            topRight={renderPanel(<TopicDisplay events={events} />)}
+            bottomLeft={renderPanel(<EntityDisplay events={events} />)}
+            bottomRight={renderPanel(
+              <TimeDisplay events={events} metadata={metadata} />
+            )}
+          />
+        </div>
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+          <TaskPanel
+            events={events}
+            metadata={metadata}
+            userRole={user?.role as "domain" | "normal"}
+          />
+        </div>
       </div>
     </ScenarioLayout>
   );

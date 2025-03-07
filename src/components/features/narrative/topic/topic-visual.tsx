@@ -17,6 +17,7 @@ import {
   type DataPoint,
   type GroupedPoint,
 } from "./topic-visual.utils";
+import { debounce } from "lodash";
 
 interface TopicVisualProps {
   events: NarrativeEvent[];
@@ -35,12 +36,7 @@ interface ChildPoint extends DataPoint {
 }
 
 export function NarrativeTopicVisual({ events }: TopicVisualProps) {
-  const {
-    selectedEventId,
-    setSelectedEventId,
-    selectedTopic,
-    setSelectedTopic,
-  } = useCenterControl();
+  const { selectedEventId, setSelectedEventId } = useCenterControl();
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
@@ -104,13 +100,6 @@ export function NarrativeTopicVisual({ events }: TopicVisualProps) {
     [getChildNodeId, getParentNodeId]
   );
 
-  // Effect to handle selectedEventId changes without full re-render
-  useEffect(() => {
-    if (svgRef.current) {
-      updateSelectedEventStyles(selectedEventId ?? null);
-    }
-  }, [selectedEventId, updateSelectedEventStyles]);
-
   // Function to update the visualization
   const updateVisualization = useCallback(() => {
     if (
@@ -120,8 +109,6 @@ export function NarrativeTopicVisual({ events }: TopicVisualProps) {
       !headerRef.current
     )
       return;
-
-    console.log("update whole");
 
     // Clear previous content
     d3.select(svgRef.current).selectAll("*").remove();
@@ -630,17 +617,18 @@ export function NarrativeTopicVisual({ events }: TopicVisualProps) {
       .on("mousemove", handleNodeInteraction.mouseMove)
       .on("click", handleNodeInteraction.childClick);
 
-    // Apply initial highlighting for selected event
+    // After visualization is complete, apply any selected event styling
     if (selectedEventId !== null && selectedEventId !== undefined) {
-      updateSelectedEventStyles(selectedEventId);
+      // Use setTimeout to ensure this runs after the visualization is fully rendered
+      setTimeout(() => {
+        updateSelectedEventStyles(selectedEventId);
+      }, 0);
     }
   }, [
     events,
-    showTooltip,
-    hideTooltip,
-    updatePosition,
-    setSelectedEventId,
-    selectedEventId,
+    processEvents,
+    getTopicCounts,
+    getTopTopics,
     getParentNodeId,
     getChildNodeId,
   ]);
@@ -676,6 +664,13 @@ export function NarrativeTopicVisual({ events }: TopicVisualProps) {
       }
     };
   }, [updateVisualization]);
+
+  // Keep the separate effect for selectedEventId changes
+  useEffect(() => {
+    if (svgRef.current) {
+      updateSelectedEventStyles(selectedEventId ?? null);
+    }
+  }, [selectedEventId, updateSelectedEventStyles]);
 
   return (
     <div className="w-full h-full flex flex-col">

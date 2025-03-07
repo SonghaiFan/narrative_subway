@@ -5,7 +5,49 @@
     "topic": "War",
     "author": "Ephrat Livni and Gaya Gupta",
     "publishDate": "2023-11-20",
-    "imageUrl": "https://static01.nyt.com/images/2023/10/26/multimedia/26israel-gaza-what-we-know-01-jmpb/26israel-gaza-what-we-know-01-jmpb-superJumbo.jpg?quality=75&auto=webp"
+    "imageUrl": "https://static01.nyt.com/images/2023/10/26/multimedia/26israel-gaza-what-we-know-01-jmpb/26israel-gaza-what-we-know-01-jmpb-superJumbo.jpg?quality=75&auto=webp",
+    "quiz": [
+      {
+        "question": "When did Hamas launch its surprise attack on Israel?",
+        "answer": "October 7, 2023"
+      },
+      {
+        "question": "How many people were killed in the Hamas attack according to Israeli government?",
+        "answer": "1,200"
+      },
+      {
+        "question": "How many Palestinians have been killed according to Gaza's health ministry?",
+        "answer": "More than 11,000"
+      },
+      {
+        "question": "What is one of Israel's main goals in the war?",
+        "answer": "Destroying Hamas"
+      },
+      {
+        "question": "Which hospital did Israeli military raid on Nov. 15?",
+        "answer": "Al-Shifa"
+      },
+      {
+        "question": "What did the U.N. Security Council call for on Nov. 16?",
+        "answer": "Humanitarian pauses to the fighting"
+      },
+      {
+        "question": "What is the humanitarian concern for Gaza according to the United Nations?",
+        "answer": "Risk of starvation"
+      },
+      {
+        "question": "Which militant group allied with Hamas has engaged in clashes with Israel?",
+        "answer": "Hezbollah"
+      },
+      {
+        "question": "What percentage of Gaza's population consists of children?",
+        "answer": "Nearly half"
+      },
+      {
+        "question": "What did Israel agree to allow into Gaza on Nov. 17 after weeks of shortages?",
+        "answer": "Fuel"
+      }
+    ]
   },
   "events": [
     {

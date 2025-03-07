@@ -1,6 +1,43 @@
-# Narrative Matrix
+# Narrative Subway
 
-A user study platform for exploring different narrative visualization approaches.
+A user study platform for exploring different narrative visualization approaches, designed to compare various storytelling techniques in data visualization.
+
+## Project Overview
+
+Narrative Subway is a Next.js application that provides different narrative visualization approaches for user studies. The platform allows researchers to compare how users interact with and understand data through different visualization techniques, including pure text narratives and interactive visualizations.
+
+## Technologies Used
+
+### Frontend Framework
+
+- **Next.js 15** - React framework with App Router for server and client components
+- **React 19** - UI library for building component-based interfaces
+- **TypeScript** - Static type checking for JavaScript
+
+### State Management
+
+- **Zustand** - Lightweight state management solution
+- **React Context** - For component-specific state sharing
+
+### UI Components and Styling
+
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Unstyled, accessible UI components
+- **Lucide React** - Icon library
+- **clsx/tailwind-merge** - For conditional class name composition
+
+### Data Visualization
+
+- **D3.js** - Data visualization library
+- **Cytoscape** - Graph visualization library
+- **Cytoscape-dagre** - Layout extension for directed graphs
+- **Cytoscape-popper** - For tooltips in graph visualizations
+
+### Development Tools
+
+- **TypeScript** - For type safety and better developer experience
+- **ESLint** - For code linting
+- **Tailwind Typography** - For styling rich text content
 
 ## Login Credentials
 
@@ -22,57 +59,102 @@ All accounts use the same password: `study`
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 5. Log in using one of the credentials above
 
-## User Roles
+## Project Structure
+
+```
+narrative_subway/
+├── public/                  # Static assets
+├── src/
+│   ├── app/                 # Next.js App Router
+│   │   ├── (auth)/          # Authentication routes
+│   │   │   └── login/       # Login page
+│   │   ├── (scenarios)/     # Scenario routes
+│   │   │   ├── pure-text/   # Text-based narrative visualization
+│   │   │   └── visualization/ # Interactive visualization
+│   │   ├── api/             # API routes
+│   │   ├── layout.tsx       # Root layout
+│   │   └── page.tsx         # Home page
+│   ├── components/          # React components
+│   │   ├── features/        # Feature-specific components
+│   │   ├── layouts/         # Layout components
+│   │   ├── shared/          # Shared components
+│   │   └── ui/              # UI components
+│   ├── contexts/            # React contexts
+│   │   ├── auth-context.tsx # Authentication context
+│   │   ├── center-control-context.tsx # Control panel context
+│   │   └── tooltip-context.tsx # Tooltip management
+│   ├── hooks/               # Custom React hooks
+│   ├── lib/                 # Utility functions
+│   │   ├── api/             # API utilities
+│   │   └── utils/           # Helper functions
+│   ├── types/               # TypeScript type definitions
+│   └── back/                # Backend utilities
+├── tailwind.config.ts       # Tailwind CSS configuration
+├── next.config.ts           # Next.js configuration
+└── tsconfig.json            # TypeScript configuration
+```
+
+## Application Routes
+
+- `/` - Home page with redirection based on user role
+- `/login` - Authentication page
+- `/pure-text` - Text-based narrative visualization
+- `/visualization` - Interactive visualization dashboard
+
+## User Roles and Access Control
 
 - **Domain Expert**: Has access to all scenarios and can switch between different visualization modes
 - **Normal User**: Automatically directed to their assigned visualization mode
 
-## Application Structure
+## Key Features
 
-- Authentication system with role-based access
-- Multiple visualization scenarios
-- Chat interface for interactive exploration
-- Data visualization components
+1. **Authentication System**
+
+   - Role-based access control
+   - Persistent sessions
+
+2. **Multiple Visualization Approaches**
+
+   - Pure text narrative
+   - Interactive graph visualization
+   - Hybrid approaches
+
+3. **Interactive Components**
+
+   - Graph visualization with node exploration
+   - Tooltips for additional information
+   - Resizable panels
+
+4. **Responsive Design**
+   - Mobile-friendly layouts
+   - Adaptive visualization components
+
+## State Management
+
+The application uses a combination of:
+
+- **Zustand** for global state management
+- **React Context** for component-specific state
+- **Context Providers** for feature-specific state (auth, tooltips, control panel)
 
 ## Development
 
-This is a [Next.js](https://nextjs.org/) project using:
-
-- React
-- TypeScript
-- Tailwind CSS
-
-## Getting Started
-
-First, run the development server:
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # Start development server
+npm run build   # Build for production
+npm run start   # Start production server
+npm run lint    # Run ESLint
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used in this project:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [Zustand](https://github.com/pmndrs/zustand)
+- [D3.js](https://d3js.org/)
+- [Cytoscape.js](https://js.cytoscape.org/)
