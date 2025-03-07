@@ -129,6 +129,10 @@ export function TaskPanel({
       setCurrentTaskIndex(currentTaskIndex + 1);
       setShowAnswer(false);
       setUserAnswer("");
+    } else if (isDomainExpert) {
+      // For domain experts, when they reach the last task and click next,
+      // redirect to the completion page
+      navigateToCompletionPage();
     }
   };
 
@@ -164,16 +168,48 @@ export function TaskPanel({
       .toLowerCase()
       .includes(currentTask.answer.toLowerCase());
 
-    setTasks(
-      tasks.map((task, index) =>
-        index === currentTaskIndex
-          ? { ...task, completed: true, correct: isCorrect }
-          : task
-      )
+    // Update the current task as completed
+    const updatedTasks = tasks.map((task, index) =>
+      index === currentTaskIndex
+        ? { ...task, completed: true, correct: isCorrect }
+        : task
     );
 
+    setTasks(updatedTasks);
     setShowAnswer(true);
     setIsSubmitting(false);
+
+    // Check if this was the last task to complete
+    const allCompleted = updatedTasks.every((task) => task.completed);
+
+    if (allCompleted) {
+      // Wait a moment before redirecting to the completion page
+      setTimeout(() => {
+        const correctCount = updatedTasks.filter(
+          (t) => t.completed && t.correct
+        ).length;
+        const studyType =
+          metadata?.studyType ||
+          (window.location.pathname.includes("visualization")
+            ? "visualization"
+            : "pure-text");
+
+        console.log("All tasks completed, redirecting to completion page...");
+
+        // Use window.location.href for more reliable navigation
+        window.location.href = `/completion?total=${updatedTasks.length}&correct=${correctCount}&type=${studyType}`;
+      }, 1500);
+    }
+  };
+
+  const handleRestartTasks = () => {
+    // Reset all tasks
+    setTasks(
+      tasks.map((task) => ({ ...task, completed: false, correct: undefined }))
+    );
+    setCurrentTaskIndex(0);
+    setShowAnswer(false);
+    setUserAnswer("");
   };
 
   // Get the color for the cognitive level badge
@@ -194,6 +230,21 @@ export function TaskPanel({
     }
   };
 
+  // Function to navigate to completion page
+  const navigateToCompletionPage = () => {
+    const correctCount = tasks.filter((t) => t.completed && t.correct).length;
+    const studyType =
+      metadata?.studyType ||
+      (window.location.pathname.includes("visualization")
+        ? "visualization"
+        : "pure-text");
+
+    console.log("Redirecting to completion page...");
+
+    // Use window.location.href for more reliable navigation
+    window.location.href = `/completion?total=${tasks.length}&correct=${correctCount}&type=${studyType}`;
+  };
+
   if (!currentTask) {
     return (
       <div className={`flex flex-col h-full bg-white p-2 ${className}`}>
@@ -209,18 +260,30 @@ export function TaskPanel({
     (tasks.filter((t) => t.completed).length / tasks.length) * 100
   );
   const completedTasks = tasks.filter((t) => t.completed).length;
+  const correctTasks = tasks.filter((t) => t.completed && t.correct).length;
 
   return (
     <div className={`flex flex-col h-full bg-white ${className}`}>
       {/* Compact header with progress */}
-      <div className="border-b p-2 flex items-center justify-between">
-        <div>
+      <div className="border-b p-2 flex flex-wrap items-center gap-2">
+        <div className="flex-grow">
           <h2 className="text-sm font-semibold">Tasks</h2>
           <div className="text-xs text-gray-500">
             {completedTasks} of {tasks.length} completed
           </div>
         </div>
-        <div className="flex items-center space-x-1">
+
+        {/* Domain expert skip button */}
+        {isDomainExpert && (
+          <button
+            onClick={navigateToCompletionPage}
+            className="text-xs px-2 py-1 bg-purple-600 text-white rounded hover:bg-purple-700 flex-shrink-0"
+          >
+            Skip to Completion
+          </button>
+        )}
+
+        <div className="flex items-center space-x-1 flex-shrink-0 ml-auto">
           {tasks.map((task, idx) => (
             <div
               key={task.id}

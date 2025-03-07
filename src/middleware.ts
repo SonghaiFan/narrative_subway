@@ -4,6 +4,11 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  // Skip middleware for completion page
+  if (pathname.startsWith("/completion")) {
+    return NextResponse.next();
+  }
+
   // Check if the route requires introduction
   const requiresIntro =
     pathname.startsWith("/visualization") || pathname.startsWith("/pure-text");
@@ -36,6 +41,7 @@ export const config = {
   matcher: [
     "/visualization/:path*",
     "/pure-text/:path*",
+    "/completion",
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };
