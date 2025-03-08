@@ -56,7 +56,7 @@ export default function Home() {
               Consent Form
             </h2>
 
-            <div className="h-ful overflow-y-auto pr-4 mb-6 custom-scrollbar">
+            <div className="h-[450px] overflow-y-auto pr-4 mb-6 custom-scrollbar">
               <div className="space-y-4">
                 <section>
                   <h3 className="font-medium text-gray-800">
@@ -161,7 +161,7 @@ export default function Home() {
                 <LoginForm />
 
                 {!hasConsented && (
-                  <div className="mt-4 p-3 text-center">
+                  <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-md text-center">
                     <div className="flex items-center justify-center gap-2 text-amber-700">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -186,23 +186,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #d1d5db;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #9ca3af;
-        }
-      `}</style>
     </main>
   );
 }
