@@ -3,31 +3,52 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginForm } from "@/components/features/auth/login-form";
-import { ScenarioSelector } from "@/components/features/landing-page/scenario-selector";
 import { useAuth } from "@/contexts/auth-context";
+import { hasCompletedTasks, getTaskProgress } from "@/lib/task-progress";
 
 export default function Home() {
   const { user, isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   const [hasConsented, setHasConsented] = useState(false);
 
-  // Redirect normal users to their default scenario
+  // Redirect users based on role and task completion status
   useEffect(() => {
-    if (
-      isAuthenticated &&
-      user &&
-      user.role === "normal" &&
-      user.defaultScenario
-    ) {
-      // Map scenario types to their correct routes
-      const routeMap = {
-        "pure-text": "/pure-text",
-        visualization: "/visualization",
-        "pure-text-chat": "/pure-text/chat",
-        "visualization-chat": "/visualization/chat",
-      };
+    if (isAuthenticated && user) {
+      // Redirect domain users to dashboard
+      if (user.role === "domain") {
+        router.push("/dashboard");
+        return;
+      }
 
-      router.push(routeMap[user.defaultScenario] || "/");
+      // For normal users, check if they've completed tasks
+      if (user.role === "normal") {
+        const hasCompleted = hasCompletedTasks(user.id);
+
+        if (hasCompleted) {
+          // If tasks are completed, redirect to completion page
+          const progress = getTaskProgress(user.id);
+          if (progress) {
+            router.push(
+              `/completion?total=${progress.totalTasks}&correct=${progress.correctTasks}&type=${progress.studyType}`
+            );
+            return;
+          }
+        }
+
+        // If not completed, redirect to their default scenario
+        if (user.defaultScenario) {
+          // Map scenario types to their correct routes
+          const routeMap: Record<string, string> = {
+            "pure-text": "/pure-text",
+            visualization: "/visualization",
+            "pure-text-chat": "/pure-text/chat",
+            "visualization-chat": "/visualization/chat",
+          };
+
+          const defaultScenario = user.defaultScenario || "visualization";
+          router.push(routeMap[defaultScenario] || "/");
+        }
+      }
     }
   }, [isAuthenticated, user, router]);
 
@@ -38,11 +59,6 @@ export default function Home() {
         <div className="w-12 h-12 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
       </div>
     );
-  }
-
-  // Show scenario selector for authenticated users
-  if (isAuthenticated) {
-    return <ScenarioSelector />;
   }
 
   // Show login page with consent form

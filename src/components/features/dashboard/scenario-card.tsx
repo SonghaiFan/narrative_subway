@@ -1,6 +1,13 @@
 "use client";
 import Image from "next/image";
-import { ScenarioCardProps } from "./scenario-selector";
+
+export interface ScenarioCardProps {
+  title: string;
+  description: string;
+  imageSrc: string;
+  onClick: () => void;
+  isSelected: boolean;
+}
 
 export function ScenarioCard({
   title,

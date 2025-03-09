@@ -30,7 +30,7 @@ export function ProfileSection({
   author,
   publishDate,
   imageUrl,
-  events,
+  events = [],
   onDataChange,
 }: ProfileSectionProps) {
   const [availableFiles, setAvailableFiles] = useState<string[]>([]);
@@ -39,10 +39,10 @@ export function ProfileSection({
 
   const stats = {
     entities: new Set(
-      events.flatMap((event) => event.entities.map((e) => e.id))
+      events?.flatMap((event) => event.entities?.map((e) => e.id) || []) || []
     ).size,
-    topics: new Set(events.map((event) => event.topic.main_topic)).size,
-    events: events.length,
+    topics: new Set(events?.map((event) => event.topic?.main_topic) || []).size,
+    events: events?.length || 0,
   };
 
   // Fetch available data files from public directory

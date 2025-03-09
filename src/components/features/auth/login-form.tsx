@@ -114,30 +114,15 @@ export function LoginForm() {
         </div>
 
         <div className="mt-2 grid grid-cols-2 gap-2">
-          <button
-            onClick={() => handleQuickLogin("domain")}
-            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
-          >
-            Login as Domain Expert
-          </button>
-          <button
-            onClick={() => handleQuickLogin("text")}
-            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
-          >
-            Login as Text User
-          </button>
-          <button
-            onClick={() => handleQuickLogin("viz")}
-            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
-          >
-            Login as Visual+ User
-          </button>
-          <button
-            onClick={() => handleQuickLogin("textchat")}
-            className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
-          >
-            Login as Chat+ User
-          </button>
+          {DEMO_ACCOUNTS.map((account) => (
+            <button
+              key={account.username}
+              onClick={() => handleQuickLogin(account.username)}
+              className="py-1 px-2 text-xs text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50"
+            >
+              Login as {account.name}
+            </button>
+          ))}
         </div>
       </div>
     </div>

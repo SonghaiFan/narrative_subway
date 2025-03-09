@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CheckCircle, Copy, BarChart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { resetTaskProgress, resetAllTaskProgress } from "@/lib/task-progress";
 
 interface CompletionPageProps {
   totalTasks: number;
@@ -22,9 +23,23 @@ export function CompletionPage({
 }: CompletionPageProps) {
   const router = useRouter();
   const [codeCopied, setCodeCopied] = useState(false);
+  const [userId, setUserId] = useState<string>("");
 
   // Fixed completion code for Prolific
   const completionCode = `PROLIFIC-PUR-4529`;
+
+  // Get user ID from localStorage on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        setUserId(user.id);
+      } catch (error) {
+        console.error("Failed to parse stored user:", error);
+      }
+    }
+  }, []);
 
   // Calculate score
   const score = Math.round((correctTasks / totalTasks) * 100);
@@ -42,8 +57,10 @@ export function CompletionPage({
   };
 
   const handleReturnHome = () => {
+    // Clear the introduction cookie
     document.cookie =
       "hasCompletedIntro=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
     router.push("/");
   };
 
@@ -118,12 +135,17 @@ export function CompletionPage({
         </div>
       </div>
 
-      <button
-        onClick={handleReturnHome}
-        className="w-full py-2 px-4 bg-blue-600  text-white text-sm rounded hover:bg-blue-900"
-      >
-        Return Home
-      </button>
+      {/* Return Home button - only shown for domain users */}
+      {userRole === "domain" && (
+        <div className="space-y-2">
+          <button
+            onClick={handleReturnHome}
+            className="w-full py-2 px-4 bg-blue-600 text-white text-sm rounded hover:bg-blue-900"
+          >
+            Return Home
+          </button>
+        </div>
+      )}
     </div>
   );
 }

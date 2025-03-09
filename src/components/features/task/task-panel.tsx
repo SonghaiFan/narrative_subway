@@ -11,6 +11,13 @@ import {
   X,
   Brain,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import {
+  saveTaskProgress,
+  updateTaskProgress,
+  markTaskAsCompleted,
+  hasCompletedTasks,
+} from "@/lib/task-progress";
 
 interface Task {
   id: string;
@@ -34,14 +41,45 @@ export function TaskPanel({
   className = "",
   userRole = "normal",
 }: TaskPanelProps) {
+  const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [userId, setUserId] = useState<string>("");
 
   const isDomainExpert = userRole === "domain";
+
+  // Get user ID from localStorage on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const user = JSON.parse(storedUser);
+        setUserId(user.id);
+
+        // If normal user has already completed tasks, redirect to completion page
+        if (userRole === "normal" && hasCompletedTasks(user.id)) {
+          const correctCount = tasks.filter(
+            (t) => t.completed && t.correct
+          ).length;
+          const studyType =
+            metadata?.studyType ||
+            (window.location.pathname.includes("visualization")
+              ? "visualization"
+              : "pure-text");
+
+          router.push(
+            `/completion?total=${tasks.length}&correct=${correctCount}&type=${studyType}`
+          );
+        }
+      } catch (error) {
+        console.error("Failed to parse stored user:", error);
+      }
+    }
+  }, [userRole, router]);
 
   // Generate tasks based on events data or use quiz from metadata
   useEffect(() => {
@@ -161,44 +199,60 @@ export function TaskPanel({
   };
 
   const processSubmission = () => {
+    if (!currentTask) return;
+
     setIsSubmitting(true);
 
-    // Simple string comparison - in a real app, you might want more sophisticated answer checking
-    const isCorrect = userAnswer
-      .toLowerCase()
-      .includes(currentTask.answer.toLowerCase());
+    // Create a copy of the tasks array
+    const updatedTasks = [...tasks];
+    const taskIndex = updatedTasks.findIndex((t) => t.id === currentTask.id);
 
-    // Update the current task as completed
-    const updatedTasks = tasks.map((task, index) =>
-      index === currentTaskIndex
-        ? { ...task, completed: true, correct: isCorrect }
-        : task
-    );
+    if (taskIndex !== -1) {
+      // Mark the task as completed
+      updatedTasks[taskIndex] = {
+        ...updatedTasks[taskIndex],
+        completed: true,
+        correct: userAnswer.toLowerCase() === currentTask.answer.toLowerCase(),
+      };
 
-    setTasks(updatedTasks);
-    setShowAnswer(true);
-    setIsSubmitting(false);
+      setTasks(updatedTasks);
 
-    // Check if this was the last task to complete
-    const allCompleted = updatedTasks.every((task) => task.completed);
-
-    if (allCompleted) {
-      // Wait a moment before redirecting to the completion page
-      setTimeout(() => {
+      // Update progress in localStorage if we have a userId
+      if (userId) {
+        const completedCount = updatedTasks.filter((t) => t.completed).length;
         const correctCount = updatedTasks.filter(
           (t) => t.completed && t.correct
         ).length;
-        const studyType =
-          metadata?.studyType ||
-          (window.location.pathname.includes("visualization")
-            ? "visualization"
-            : "pure-text");
 
-        console.log("All tasks completed, redirecting to completion page...");
+        updateTaskProgress(userId, {
+          totalTasks: tasks.length,
+          completedTasks: completedCount,
+          correctTasks: correctCount,
+          studyType:
+            metadata?.studyType ||
+            (window.location.pathname.includes("visualization")
+              ? "visualization"
+              : "pure-text"),
+        });
+      }
 
-        // Use window.location.href for more reliable navigation
-        window.location.href = `/completion?total=${updatedTasks.length}&correct=${correctCount}&type=${studyType}`;
-      }, 1500);
+      // Check if all tasks are completed
+      const allCompleted = updatedTasks.every((task) => task.completed);
+
+      if (allCompleted) {
+        // If all tasks are completed, navigate to completion page
+        setTimeout(() => {
+          navigateToCompletionPage();
+        }, 1000);
+      } else {
+        // Otherwise, move to the next task after a short delay
+        setTimeout(() => {
+          handleNext();
+          setUserAnswer("");
+          setShowAnswer(false);
+          setIsSubmitting(false);
+        }, 1000);
+      }
     }
   };
 
@@ -232,6 +286,8 @@ export function TaskPanel({
 
   // Function to navigate to completion page
   const navigateToCompletionPage = () => {
+    if (!userId) return;
+
     const correctCount = tasks.filter((t) => t.completed && t.correct).length;
     const studyType =
       metadata?.studyType ||
@@ -239,10 +295,26 @@ export function TaskPanel({
         ? "visualization"
         : "pure-text");
 
+    // Save final progress to localStorage
+    saveTaskProgress(userId, {
+      totalTasks: tasks.length,
+      completedTasks: tasks.filter((t) => t.completed).length,
+      correctTasks: correctCount,
+      studyType,
+      isCompleted: true,
+    });
+
+    // For normal users, mark as completed
+    if (userRole === "normal") {
+      markTaskAsCompleted(userId);
+    }
+
     console.log("Redirecting to completion page...");
 
-    // Use window.location.href for more reliable navigation
-    window.location.href = `/completion?total=${tasks.length}&correct=${correctCount}&type=${studyType}`;
+    // Use router for navigation
+    router.push(
+      `/completion?total=${tasks.length}&correct=${correctCount}&type=${studyType}`
+    );
   };
 
   if (!currentTask) {

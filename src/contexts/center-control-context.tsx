@@ -9,6 +9,9 @@ import {
   ReactNode,
 } from "react";
 
+// Import ScenarioType
+import { ScenarioType } from "@/components/features/dashboard/scenario-selector";
+
 interface CenterControlContextType {
   // Data state
   data: TimelineData | null;
@@ -25,6 +28,10 @@ interface CenterControlContextType {
   // Selected topic state
   selectedTopic: string | null;
   setSelectedTopic: (topic: string | null) => void;
+
+  // Selected scenario state
+  selectedScenario: ScenarioType | null;
+  setSelectedScenario: (scenario: ScenarioType | null) => void;
 
   // Loading and error states
   isLoading: boolean;
@@ -55,6 +62,9 @@ export function CenterControlProvider({
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const [selectedEntityId, setSelectedEntityId] = useState<string | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [selectedScenario, setSelectedScenario] = useState<ScenarioType | null>(
+    null
+  );
 
   // Loading and error states
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -76,6 +86,7 @@ export function CenterControlProvider({
     setSelectedEventId(null);
     setSelectedEntityId(null);
     setSelectedTopic(null);
+    // Don't clear scenario selection as it's a higher-level selection
   }, []);
 
   const value = {
@@ -90,6 +101,8 @@ export function CenterControlProvider({
     setSelectedEntityId,
     selectedTopic,
     setSelectedTopic,
+    selectedScenario,
+    setSelectedScenario,
 
     // Loading and error states
     isLoading,

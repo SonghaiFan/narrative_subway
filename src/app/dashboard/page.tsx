@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCenterControl } from "@/contexts/center-control-context";
 import { AuthHeader } from "@/components/features/auth/auth-header";
-import { ProfileSection } from "@/components/features/landing-page/profile-section";
-import { ScenarioCard } from "@/components/features/landing-page/ScenarioCard";
+import { ProfileSection } from "@/components/features/dashboard/profile-section";
+import { ScenarioCard } from "@/components/features/dashboard/scenario-card";
+import { UserDataViewer } from "@/components/features/dashboard/local-storage-viewer";
+import { useAuth } from "@/contexts/auth-context";
 
 export type ScenarioType =
   | "pure-text"
@@ -22,12 +24,18 @@ export interface ScenarioCardProps {
 }
 
 export function ScenarioSelector() {
-  const [selectedScenario, setSelectedScenario] = useState<ScenarioType | null>(
-    null
-  );
   const router = useRouter();
-  const { data, setData } = useCenterControl();
+  const { user } = useAuth();
+  const {
+    data,
+    setData,
+    selectedScenario,
+    setSelectedScenario,
+    isLoading: contextIsLoading,
+    setIsLoading: setContextIsLoading,
+  } = useCenterControl();
   const [isLoading, setIsLoading] = useState(true);
+  const [showStorageViewer, setShowStorageViewer] = useState(false);
 
   // Fetch initial data if not already loaded
   useEffect(() => {
@@ -35,6 +43,7 @@ export function ScenarioSelector() {
       if (!data) {
         try {
           setIsLoading(true);
+          setContextIsLoading(true);
           const response = await fetch("/data_Israel.json");
           if (!response.ok) {
             throw new Error("Failed to fetch data");
@@ -45,6 +54,7 @@ export function ScenarioSelector() {
           console.error("Failed to load initial data:", error);
         } finally {
           setIsLoading(false);
+          setContextIsLoading(false);
         }
       } else {
         setIsLoading(false);
@@ -52,7 +62,7 @@ export function ScenarioSelector() {
     };
 
     fetchInitialData();
-  }, [data, setData]);
+  }, [data, setData, setContextIsLoading]);
 
   const handleScenarioSelect = (scenario: ScenarioType) => {
     setSelectedScenario(scenario);
@@ -70,6 +80,10 @@ export function ScenarioSelector() {
 
       router.push(routeMap[selectedScenario]);
     }
+  };
+
+  const handleBackToDashboard = () => {
+    router.push("/dashboard");
   };
 
   if (isLoading) {
@@ -92,30 +106,36 @@ export function ScenarioSelector() {
   const { metadata, events } = data;
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* Header */}
-      <AuthHeader title="Scenario Selection" />
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div className="p-4 border-b border-gray-100">
+        <h2 className="text-lg font-bold text-gray-900 mb-1">
+          Scenario Selection
+        </h2>
+        <p className="text-xs text-gray-500">
+          Choose how you'd like to explore the narrative data
+        </p>
+      </div>
 
       <div className="flex flex-1 items-center overflow-auto p-3 sm:p-4 md:p-5">
-        <div className="h-full mx-auto max-w-6xl flex flex-col md:flex-row gap-4 lg:gap-5">
+        <div className="h-full w-full flex flex-col md:flex-row gap-4 lg:gap-5">
           {/* Left column - Profile Section */}
-          <div className="md:w-2/5 bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="md:w-2/5 bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
             <div className="h-full overflow-auto">
               <ProfileSection
-                title={metadata.title}
-                description={metadata.description}
-                topic={metadata.topic}
-                author={metadata.author}
-                publishDate={metadata.publishDate}
+                title={metadata.title || ""}
+                description={metadata.description || ""}
+                topic={metadata.topic || ""}
+                author={metadata.author || ""}
+                publishDate={metadata.publishDate || ""}
                 imageUrl={metadata.imageUrl}
-                events={events}
+                events={events || []}
                 onDataChange={setData}
               />
             </div>
           </div>
 
           {/* Right column - Scenario Selection */}
-          <div className="md:w-3/5 flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden">
+          <div className="md:w-3/5 flex flex-col h-full bg-white rounded-lg shadow-sm overflow-hidden border border-gray-100">
             <div className="p-4 border-b border-gray-100">
               <h2 className="text-lg font-bold text-gray-900 mb-1">
                 Choose a exploration scenario
@@ -175,7 +195,7 @@ export function ScenarioSelector() {
               </div>
             </div>
 
-            <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-end">
+            <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-between">
               <button
                 type="button"
                 className={`rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm transition-all ${
@@ -191,6 +211,50 @@ export function ScenarioSelector() {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Dashboard() {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+  const [showStorageViewer, setShowStorageViewer] = useState(false);
+
+  // Protect the dashboard page
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== "domain")) {
+      router.push("/");
+    }
+  }, [user, isLoading, router]);
+
+  const handleToggleUserData = () => {
+    setShowStorageViewer(!showStorageViewer);
+  };
+
+  // Show loading state while checking authentication
+  if (isLoading || !user) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+        <div className="w-10 h-10 border-3 border-neutral-300 border-t-neutral-600 rounded-full animate-spin mb-2"></div>
+        <div className="text-neutral-600 text-sm">Loading...</div>
+      </div>
+    );
+  }
+
+  // Only domain users should reach this point
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <AuthHeader
+        title="Domain Expert Dashboard"
+        onToggleUserData={handleToggleUserData}
+        showUserData={showStorageViewer}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {showStorageViewer && <UserDataViewer />}
+
+        <ScenarioSelector />
       </div>
     </div>
   );
