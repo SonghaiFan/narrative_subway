@@ -3,12 +3,12 @@
 import { useState, useRef, useEffect } from "react";
 import { NarrativeEvent } from "@/types/narrative/article";
 import { useCenterControl } from "@/contexts/center-control-context";
-import { Send, User, Bot } from "lucide-react";
+import { Send, User, Bot, Loader2 } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant" | "system";
   content: string;
-  timestamp: Date;
+  timestamp: Date | string;
 }
 
 interface ChatInterfaceProps {
@@ -18,14 +18,18 @@ interface ChatInterfaceProps {
 
 const MAX_MESSAGES = 20;
 
+// Regex to match event references in the format [Event #X]
+const EVENT_REFERENCE_REGEX = /\[Event #(\d+)\]/g;
+
 export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
-  const { selectedEventId, getSelectedEvent } = useCenterControl();
+  const { selectedEventId, getSelectedEvent, setSelectedEventId } =
+    useCenterControl();
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content:
-        "Hello! I'm your AI assistant. Ask me anything about this narrative. You have 20 messages remaining.",
-      timestamp: new Date(),
+        "Hello! I'm your AI assistant for narrative analysis. I can help you understand the events, characters, and themes in this narrative. You can ask me questions about specific events or the narrative as a whole. You have 20 messages remaining.",
+      timestamp: new Date().toISOString(),
     },
   ]);
   const [input, setInput] = useState("");
@@ -41,6 +45,60 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
   const remainingMessages = MAX_MESSAGES - userMessageCount;
   const hasReachedLimit = remainingMessages <= 0;
 
+  // Function to handle event reference clicks
+  const handleEventReferenceClick = (eventId: number) => {
+    // Check if the event exists
+    const eventExists = events.some((event) => event.index === eventId);
+    if (eventExists) {
+      setSelectedEventId(eventId);
+    } else {
+      console.warn(`Event #${eventId} not found`);
+    }
+  };
+
+  // Function to parse message content and render event references as links
+  const renderMessageWithEventLinks = (content: string) => {
+    if (!content) return null;
+
+    // Split the content by event references
+    const parts = content.split(EVENT_REFERENCE_REGEX);
+
+    if (parts.length === 1) {
+      // No event references found
+      return <span>{content}</span>;
+    }
+
+    const result = [];
+    let i = 0;
+
+    // Reconstruct the content with clickable links for event references
+    while (i < parts.length) {
+      // Add the text before the reference
+      if (parts[i]) {
+        result.push(<span key={`text-${i}`}>{parts[i]}</span>);
+      }
+
+      // Add the event reference as a link if there is one
+      if (i + 1 < parts.length) {
+        const eventId = parseInt(parts[i + 1], 10);
+        result.push(
+          <button
+            key={`event-${i + 1}`}
+            className="text-blue-600 hover:underline font-medium px-1 py-0.5 rounded bg-blue-50 hover:bg-blue-100 transition-colors"
+            onClick={() => handleEventReferenceClick(eventId)}
+          >
+            [Event #{eventId}]
+          </button>
+        );
+        i += 2; // Skip the event ID part
+      } else {
+        i++;
+      }
+    }
+
+    return <>{result}</>;
+  };
+
   // Effect to handle selected event changes
   useEffect(() => {
     // Only proceed if the selectedEventId has changed and is not null
@@ -54,19 +112,19 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
         // Create a suggestion message about the selected event
         const newMessage: Message = {
           role: "assistant",
-          content: `I notice you've selected event #${selectedEventId}: "${selectedEvent.text.substring(
+          content: `I notice you've selected [Event #${selectedEventId}]: "${selectedEvent.text.substring(
             0,
             100
           )}${
             selectedEvent.text.length > 100 ? "..." : ""
           }" Would you like to know more about this event?`,
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         };
 
         setMessages((prev) => [...prev, newMessage]);
 
         // Pre-fill the input with a question about the event
-        setInput(`Tell me more about event #${selectedEventId}`);
+        setInput(`Tell me more about [Event #${selectedEventId}]`);
       }
     }
 
@@ -96,8 +154,8 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
           ...prev,
           {
             role: "system",
-            content: `Event selected: "${selectedEvent.text}"`,
-            timestamp: new Date(),
+            content: `Event selected: [Event #${selectedEventId}] "${selectedEvent.text}"`,
+            timestamp: new Date().toISOString(),
           },
         ]);
       }
@@ -112,48 +170,32 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
     const userMessage: Message = {
       role: "user",
       content: input,
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsLoading(true);
 
     try {
-      // TODO: Implement API call to OpenAI
-      // This is a placeholder for the actual API implementation
-      setTimeout(() => {
-        const placeholderResponse: Message = {
-          role: "assistant",
-          content: hasReachedLimit
-            ? "You have reached the maximum number of messages. The chat is now closed."
-            : "This is a placeholder response. The actual OpenAI API integration will be implemented later.",
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, placeholderResponse]);
-        setIsLoading(false);
-      }, 1000);
-
-      // Actual implementation would look something like:
-      /*
-      const response = await fetch('/api/chat', {
-        method: 'POST',
+      // Call the OpenAI API route
+      const response = await fetch("/api/chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: [...messages, userMessage],
+          messages: messages.concat(userMessage),
           events,
           selectedEventId,
         }),
       });
-      
+
       if (!response.ok) {
-        throw new Error('Failed to get response');
+        throw new Error("Failed to get response from API");
       }
-      
+
       const data = await response.json();
-      setMessages(prev => [...prev, data.message]);
-      */
+      setMessages((prev) => [...prev, data.message]);
     } catch (error) {
       console.error("Error sending message:", error);
       setMessages((prev) => [
@@ -161,7 +203,7 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
         {
           role: "assistant",
           content: "Sorry, I encountered an error. Please try again.",
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         },
       ]);
     } finally {
@@ -194,7 +236,15 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
   };
 
   // Format timestamp
-  const formatTime = (date: Date) => {
+  const formatTime = (date: Date | string) => {
+    if (typeof date === "string") {
+      // If it's a string, convert it to a Date object first
+      return new Date(date).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+    // If it's already a Date object
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
@@ -245,7 +295,9 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
               }`}
             >
               <div className="whitespace-pre-wrap text-xs">
-                {message.content}
+                {message.role === "user"
+                  ? message.content
+                  : renderMessageWithEventLinks(message.content)}
               </div>
               <div
                 className={`text-[9px] mt-0.5 text-right ${
@@ -292,20 +344,32 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
       </div>
 
       {/* Input area */}
-      <form
-        onSubmit={handleSubmit}
-        className="p-2 border-t border-gray-100 bg-white flex flex-col gap-1"
-      >
-        <div className="flex items-center justify-between mb-1 px-1">
-          <div className="text-xs text-gray-500">
-            {remainingMessages} messages remaining
+      <div className="p-2 border-t border-gray-100">
+        {isLoading && (
+          <div className="flex items-center justify-center mb-2">
+            <Loader2 className="w-4 h-4 text-gray-400 animate-spin mr-1" />
+            <span className="text-xs text-gray-400">AI is thinking...</span>
           </div>
-          <div className="text-[9px] text-gray-400">
-            {input.length > 0 && "Press Enter to send"}
+        )}
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-1">
+          <div className="flex items-center justify-between mb-1 px-1">
+            <div className="text-xs text-gray-500">
+              {remainingMessages <= 5 ? (
+                <span className="text-amber-600">
+                  {remainingMessages} message{remainingMessages !== 1 && "s"}{" "}
+                  remaining
+                </span>
+              ) : (
+                <span>
+                  {remainingMessages} message{remainingMessages !== 1 && "s"}{" "}
+                  remaining
+                </span>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-1">
-          <div className="relative flex-1">
+
+          <div className="flex items-end gap-1">
             <textarea
               ref={inputRef}
               value={input}
@@ -316,49 +380,20 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
                   ? "Message limit reached"
                   : "Type your message..."
               }
-              className={`w-full border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none min-h-[40px] max-h-[100px] text-xs ${
-                hasReachedLimit ? "bg-gray-50 cursor-not-allowed" : ""
-              }`}
               disabled={isLoading || hasReachedLimit}
-              rows={3}
+              className="flex-1 resize-none border rounded-md px-2 py-1.5 text-xs min-h-[36px] max-h-[100px] focus:outline-none focus:ring-1 focus:ring-gray-300 disabled:bg-gray-50 disabled:text-gray-400"
+              style={{ height: "36px" }}
             />
-          </div>
-          <button
-            type="submit"
-            className={`p-1.5 rounded-lg ${
-              isLoading || !input.trim() || hasReachedLimit
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-gray-800 hover:bg-gray-700 text-white"
-            }`}
-            disabled={isLoading || !input.trim() || hasReachedLimit}
-          >
-            {isLoading ? (
-              <svg
-                className="animate-spin h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-            ) : (
+            <button
+              type="submit"
+              disabled={!input.trim() || isLoading || hasReachedLimit}
+              className="bg-gray-800 text-white rounded-md p-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <Send className="w-4 h-4" />
-            )}
-          </button>
-        </div>
-      </form>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

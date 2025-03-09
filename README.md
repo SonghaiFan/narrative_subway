@@ -141,6 +141,34 @@ The application uses a combination of:
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## OpenAI Chat Integration
+
+This project includes an AI assistant powered by OpenAI's API to help analyze narratives.
+
+### Setup
+
+1. Create a `.env.local` file in the root directory of the project
+2. Add your OpenAI API key to the file:
+   ```
+   OPENAI_API_KEY=your_openai_api_key_here
+   ```
+3. Replace `your_openai_api_key_here` with your actual OpenAI API key
+
+### Usage
+
+The AI assistant is available in the chat interface and can help with:
+
+- Analyzing narrative events
+- Understanding character relationships
+- Identifying themes and patterns
+- Answering questions about the narrative
+
+The assistant has context about the narrative events and can provide insights based on the selected event.
+
+### Message Limit
+
+There is a limit of 20 messages per session to manage API usage. The remaining message count is displayed in the chat interface.
+
 ```bash
 npm run dev     # Start development server
 npm run build   # Build for production
