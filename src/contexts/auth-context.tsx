@@ -17,7 +17,7 @@ const MOCK_USERS = [
     username: "text",
     role: "normal" as const,
     defaultScenario: "pure-text" as const,
-    defaultDataset: "data_Israel.json",
+    defaultDataset: "default.json",
   },
   {
     id: "3",
@@ -25,7 +25,7 @@ const MOCK_USERS = [
     username: "viz",
     role: "normal" as const,
     defaultScenario: "visualization" as const,
-    defaultDataset: "data_Israel.json",
+    defaultDataset: "default.json",
   },
   {
     id: "4",
@@ -33,7 +33,7 @@ const MOCK_USERS = [
     username: "textchat",
     role: "normal" as const,
     defaultScenario: "pure-text-chat" as const,
-    defaultDataset: "data_Israel.json",
+    defaultDataset: "default.json",
   },
   {
     id: "5",
@@ -41,7 +41,7 @@ const MOCK_USERS = [
     username: "vizchat",
     role: "normal" as const,
     defaultScenario: "visualization-chat" as const,
-    defaultDataset: "data_Israel.json",
+    defaultDataset: "default.json",
   },
 ];
 

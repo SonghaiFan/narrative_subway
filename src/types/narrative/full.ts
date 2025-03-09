@@ -82,7 +82,7 @@ export interface NarrativeMetadata {
   imageUrl?: string | null;
 }
 
-export interface TimelineData {
+export interface NarrativeMatrixData {
   metadata: NarrativeMetadata;
   events: NarrativeEvent[];
 }

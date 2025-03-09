@@ -51,7 +51,7 @@ function VisualizationChatScenario() {
       // Default to the first file if none specified
       const fileToFetch =
         fileName ||
-        (availableFiles.length > 0 ? availableFiles[0] : "data_Israel.json");
+        (availableFiles.length > 0 ? availableFiles[0] : "default.json");
 
       const response = await fetch(`/${fileToFetch}`);
       if (!response.ok) {

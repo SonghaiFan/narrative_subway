@@ -1,6 +1,6 @@
 "use client";
 
-import { NarrativeEvent, TimelineData } from "@/types/narrative/article";
+import { NarrativeEvent, NarrativeMatrixData } from "@/types/narrative/lite";
 import {
   createContext,
   useCallback,
@@ -14,8 +14,8 @@ import { ScenarioType } from "@/components/features/dashboard/scenario-selector"
 
 interface CenterControlContextType {
   // Data state
-  data: TimelineData | null;
-  setData: (data: TimelineData) => void;
+  data: NarrativeMatrixData | null;
+  setData: (data: NarrativeMatrixData) => void;
 
   // Selected event state
   selectedEventId: number | null;
@@ -53,10 +53,12 @@ export function CenterControlProvider({
   initialData = null,
 }: {
   children: ReactNode;
-  initialData?: TimelineData | null;
+  initialData?: NarrativeMatrixData | null;
 }) {
   // Data state
-  const [data, setDataState] = useState<TimelineData | null>(initialData);
+  const [data, setDataState] = useState<NarrativeMatrixData | null>(
+    initialData
+  );
 
   // Selection states
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
@@ -71,7 +73,7 @@ export function CenterControlProvider({
   const [error, setError] = useState<string | null>(null);
 
   // Set data with validation
-  const setData = useCallback((newData: TimelineData) => {
+  const setData = useCallback((newData: NarrativeMatrixData) => {
     setDataState(newData);
   }, []);
 

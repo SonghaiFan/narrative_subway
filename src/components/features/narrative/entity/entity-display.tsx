@@ -1,6 +1,6 @@
 "use client";
 
-import { NarrativeEvent } from "@/types/narrative/article";
+import { NarrativeEvent } from "@/types/narrative/lite";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { VisualizationDisplay } from "../../../shared/visualization-display";
 import { EntityVisual } from "./entity-visual";

@@ -1,6 +1,6 @@
 "use client";
 
-import { NarrativeEvent, TimelineData } from "@/types/narrative/article";
+import { NarrativeEvent, NarrativeMatrixData } from "@/types/narrative/lite";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useCenterControl } from "@/contexts/center-control-context";
@@ -20,7 +20,7 @@ interface ProfileSectionProps {
   publishDate: string;
   imageUrl?: string | null;
   events: NarrativeEvent[];
-  onDataChange?: (data: TimelineData) => void;
+  onDataChange?: (data: NarrativeMatrixData) => void;
 }
 
 export function ProfileSection({
@@ -88,7 +88,7 @@ export function ProfileSection({
         if (!response.ok) {
           throw new Error(`Failed to fetch ${fileName}`);
         }
-        const data: TimelineData = await response.json();
+        const data: NarrativeMatrixData = await response.json();
         onDataChange?.(data);
       } catch (error) {
         console.error("Failed to load data file:", error);

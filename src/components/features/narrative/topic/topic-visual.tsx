@@ -1,6 +1,6 @@
 "use client";
 
-import { NarrativeEvent } from "@/types/narrative/article";
+import { NarrativeEvent } from "@/types/narrative/lite";
 import { useEffect, useRef, useCallback } from "react";
 import * as d3 from "d3";
 import { TOPIC_CONFIG } from "./topic-config";

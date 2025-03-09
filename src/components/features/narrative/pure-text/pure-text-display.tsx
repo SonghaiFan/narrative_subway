@@ -1,6 +1,6 @@
 "use client";
 
-import { NarrativeEvent } from "@/types/narrative/article";
+import { NarrativeEvent } from "@/types/narrative/lite";
 import { useMemo } from "react";
 import { PURE_TEXT_CONFIG } from "./pure-text-config";
 import { useCenterControl } from "@/contexts/center-control-context";

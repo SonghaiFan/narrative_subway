@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { NarrativeEvent } from "@/types/narrative/article";
+import { NarrativeEvent } from "@/types/narrative/lite";
 import { useCenterControl } from "@/contexts/center-control-context";
 import { Send, User, Bot, Loader2 } from "lucide-react";
 

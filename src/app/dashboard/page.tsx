@@ -44,12 +44,12 @@ export function ScenarioSelector() {
         try {
           setIsLoading(true);
           setContextIsLoading(true);
-          const response = await fetch("/data_Israel.json");
+          const response = await fetch("/default.json");
           if (!response.ok) {
             throw new Error("Failed to fetch data");
           }
-          const timelineData = await response.json();
-          setData(timelineData);
+          const NarrativeMatrixData = await response.json();
+          setData(NarrativeMatrixData);
         } catch (error) {
           console.error("Failed to load initial data:", error);
         } finally {
