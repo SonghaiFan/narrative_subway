@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CheckCircle,
-  XCircle,
   HelpCircle,
   AlertCircle,
   X,
@@ -25,7 +24,7 @@ interface Task {
   question: string;
   answer: string;
   completed: boolean;
-  correct?: boolean;
+  userAnswer?: string;
 }
 
 interface TaskPanelProps {
@@ -62,18 +61,13 @@ export function TaskPanel({
 
         // If normal user has already completed tasks, redirect to completion page
         if (userRole === "normal" && hasCompletedTasks(user.id)) {
-          const correctCount = tasks.filter(
-            (t) => t.completed && t.correct
-          ).length;
           const studyType =
             metadata?.studyType ||
             (window.location.pathname.includes("visualization")
               ? "visualization"
               : "pure-text");
 
-          router.push(
-            `/completion?total=${tasks.length}&correct=${correctCount}&type=${studyType}`
-          );
+          router.push(`/completion?total=${tasks.length}&type=${studyType}`);
         }
       } catch (error) {
         console.error("Failed to parse stored user:", error);
@@ -158,7 +152,7 @@ export function TaskPanel({
     if (currentTaskIndex > 0) {
       setCurrentTaskIndex(currentTaskIndex - 1);
       setShowAnswer(false);
-      setUserAnswer("");
+      setUserAnswer(tasks[currentTaskIndex - 1].userAnswer || "");
     }
   };
 
@@ -166,7 +160,7 @@ export function TaskPanel({
     if (currentTaskIndex < tasks.length - 1) {
       setCurrentTaskIndex(currentTaskIndex + 1);
       setShowAnswer(false);
-      setUserAnswer("");
+      setUserAnswer(tasks[currentTaskIndex + 1].userAnswer || "");
     } else if (isDomainExpert) {
       // For domain experts, when they reach the last task and click next,
       // redirect to the completion page
@@ -208,11 +202,11 @@ export function TaskPanel({
     const taskIndex = updatedTasks.findIndex((t) => t.id === currentTask.id);
 
     if (taskIndex !== -1) {
-      // Mark the task as completed
+      // Mark the task as completed and store the user's answer
       updatedTasks[taskIndex] = {
         ...updatedTasks[taskIndex],
         completed: true,
-        correct: userAnswer.toLowerCase() === currentTask.answer.toLowerCase(),
+        userAnswer: userAnswer,
       };
 
       setTasks(updatedTasks);
@@ -220,19 +214,22 @@ export function TaskPanel({
       // Update progress in localStorage if we have a userId
       if (userId) {
         const completedCount = updatedTasks.filter((t) => t.completed).length;
-        const correctCount = updatedTasks.filter(
-          (t) => t.completed && t.correct
-        ).length;
 
         updateTaskProgress(userId, {
           totalTasks: tasks.length,
           completedTasks: completedCount,
-          correctTasks: correctCount,
+          correctTasks: 0,
           studyType:
             metadata?.studyType ||
             (window.location.pathname.includes("visualization")
               ? "visualization"
               : "pure-text"),
+          answers: updatedTasks.map((task) => ({
+            questionId: task.id,
+            question: task.question,
+            userAnswer: task.userAnswer || "",
+            completed: task.completed,
+          })),
         });
       }
 
@@ -259,7 +256,11 @@ export function TaskPanel({
   const handleRestartTasks = () => {
     // Reset all tasks
     setTasks(
-      tasks.map((task) => ({ ...task, completed: false, correct: undefined }))
+      tasks.map((task) => ({
+        ...task,
+        completed: false,
+        userAnswer: undefined,
+      }))
     );
     setCurrentTaskIndex(0);
     setShowAnswer(false);
@@ -288,7 +289,6 @@ export function TaskPanel({
   const navigateToCompletionPage = () => {
     if (!userId) return;
 
-    const correctCount = tasks.filter((t) => t.completed && t.correct).length;
     const studyType =
       metadata?.studyType ||
       (window.location.pathname.includes("visualization")
@@ -299,9 +299,15 @@ export function TaskPanel({
     saveTaskProgress(userId, {
       totalTasks: tasks.length,
       completedTasks: tasks.filter((t) => t.completed).length,
-      correctTasks: correctCount,
+      correctTasks: 0,
       studyType,
       isCompleted: true,
+      answers: tasks.map((task) => ({
+        questionId: task.id,
+        question: task.question,
+        userAnswer: task.userAnswer || "",
+        completed: task.completed,
+      })),
     });
 
     // For normal users, mark as completed
@@ -312,9 +318,7 @@ export function TaskPanel({
     console.log("Redirecting to completion page...");
 
     // Use router for navigation
-    router.push(
-      `/completion?total=${tasks.length}&correct=${correctCount}&type=${studyType}`
-    );
+    router.push(`/completion?total=${tasks.length}&type=${studyType}`);
   };
 
   if (!currentTask) {
@@ -332,7 +336,6 @@ export function TaskPanel({
     (tasks.filter((t) => t.completed).length / tasks.length) * 100
   );
   const completedTasks = tasks.filter((t) => t.completed).length;
-  const correctTasks = tasks.filter((t) => t.completed && t.correct).length;
 
   return (
     <div className={`flex flex-col h-full bg-white ${className}`}>
@@ -372,17 +375,11 @@ export function TaskPanel({
                 idx === currentTaskIndex
                   ? "bg-blue-600"
                   : task.completed
-                  ? task.correct
-                    ? "bg-green-500"
-                    : "bg-red-500"
+                  ? "bg-green-500"
                   : "bg-gray-300"
               }`}
               title={`Question ${idx + 1}${
-                task.completed
-                  ? task.correct
-                    ? " (Correct)"
-                    : " (Incorrect)"
-                  : ""
+                task.completed ? " (Completed)" : ""
               }`}
             />
           ))}
@@ -430,23 +427,11 @@ export function TaskPanel({
             ></textarea>
           </div>
         ) : (
-          <div
-            className={`p-2 mb-2 rounded text-xs flex items-start ${
-              currentTask.correct
-                ? "bg-green-50 text-green-800"
-                : "bg-red-50 text-red-800"
-            }`}
-          >
-            {currentTask.correct ? (
-              <CheckCircle className="h-3 w-3 mr-1 flex-shrink-0 text-green-500" />
-            ) : (
-              <XCircle className="h-3 w-3 mr-1 flex-shrink-0 text-red-500" />
-            )}
+          <div className="p-2 mb-2 rounded text-xs flex items-start bg-blue-50 text-blue-800">
+            <CheckCircle className="h-3 w-3 mr-1 flex-shrink-0 text-blue-500" />
             <div>
-              <p className="font-medium">
-                {currentTask.correct ? "Correct!" : "Incorrect"}
-              </p>
-              <p className="mt-0.5">Your answer: {userAnswer}</p>
+              <p className="font-medium">Answer Submitted</p>
+              <p className="mt-0.5">Your answer: {currentTask.userAnswer}</p>
             </div>
           </div>
         )}
@@ -497,7 +482,7 @@ export function TaskPanel({
                 onClick={handleSubmit}
                 className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
               >
-                Mark
+                Submit
               </button>
             ) : null}
           </div>

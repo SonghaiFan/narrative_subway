@@ -1,5 +1,12 @@
 // Task progress utilities for local storage
 
+interface TaskAnswer {
+  questionId: string;
+  question: string;
+  userAnswer: string;
+  completed: boolean;
+}
+
 interface TaskProgress {
   userId: string;
   totalTasks: number;
@@ -8,6 +15,7 @@ interface TaskProgress {
   studyType: string;
   lastUpdated: string;
   isCompleted: boolean;
+  answers?: TaskAnswer[];
 }
 
 // Helper functions to handle localStorage safely (with SSR support)

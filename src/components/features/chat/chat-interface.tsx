@@ -47,13 +47,8 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
 
   // Function to handle event reference clicks
   const handleEventReferenceClick = (eventId: number) => {
-    // Check if the event exists
-    const eventExists = events.some((event) => event.index === eventId);
-    if (eventExists) {
-      setSelectedEventId(eventId);
-    } else {
-      console.warn(`Event #${eventId} not found`);
-    }
+    // Simply set the selected event ID without validation
+    setSelectedEventId(eventId);
   };
 
   // Function to parse message content and render event references as links

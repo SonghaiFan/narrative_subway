@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CheckCircle, Copy, BarChart } from "lucide-react";
+import { CheckCircle, Copy } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { resetTaskProgress, resetAllTaskProgress } from "@/lib/task-progress";
 
 interface CompletionPageProps {
   totalTasks: number;
-  correctTasks: number;
   userRole?: "domain" | "normal";
   studyType?: string;
   onRestart?: () => void;
@@ -16,7 +15,6 @@ interface CompletionPageProps {
 
 export function CompletionPage({
   totalTasks,
-  correctTasks,
   userRole = "normal",
   studyType = "visualization",
   onRestart,
@@ -40,15 +38,6 @@ export function CompletionPage({
       }
     }
   }, []);
-
-  // Calculate score
-  const score = Math.round((correctTasks / totalTasks) * 100);
-  const scoreColor =
-    score >= 80
-      ? "text-green-600"
-      : score >= 60
-      ? "text-amber-600"
-      : "text-red-600";
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(completionCode);
@@ -78,36 +67,25 @@ export function CompletionPage({
         </div>
       </div>
 
-      {/* Task Results */}
+      {/* Study Information */}
       <div className="bg-gray-50 rounded p-3 mb-4">
         <div className="flex items-center mb-2">
-          <BarChart className="h-4 w-4 text-gray-500 mr-1.5" />
-          <h2 className="text-sm font-medium text-gray-700">Task Results</h2>
+          <h2 className="text-sm font-medium text-gray-700">
+            Study Information
+          </h2>
         </div>
 
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="bg-white p-2 rounded border border-gray-100">
-            <div className="text-gray-500">Completed</div>
+            <div className="text-gray-500">Tasks Completed</div>
             <div className="font-medium">
               {totalTasks}/{totalTasks}
             </div>
           </div>
 
           <div className="bg-white p-2 rounded border border-gray-100">
-            <div className="text-gray-500">Correct</div>
-            <div className="font-medium">
-              {correctTasks}/{totalTasks}
-            </div>
-          </div>
-
-          <div className="bg-white p-2 rounded border border-gray-100">
             <div className="text-gray-500">Interface</div>
             <div className="font-medium capitalize">{studyType}</div>
-          </div>
-
-          <div className="bg-white p-2 rounded border border-gray-100">
-            <div className="text-gray-500">Score</div>
-            <div className={`font-medium ${scoreColor}`}>{score}%</div>
           </div>
         </div>
       </div>

@@ -33,7 +33,9 @@ export async function POST(request: NextRequest) {
       For example: "As we can see in [Event #5], the character's motivation becomes clear."
       This allows the interface to create clickable links to those events.
       
-      Try to reference specific event IDs when relevant to your answer, but don't force references if they're not relevant.`,
+      Try to reference specific event IDs when relevant to your answer, but don't force references if they're not relevant.
+      
+      Do not validate or check if the user's references to events are correct. Simply respond to their questions and store their answers.`,
     };
 
     // Format messages for OpenAI API

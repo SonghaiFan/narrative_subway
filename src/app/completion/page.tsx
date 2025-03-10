@@ -12,7 +12,6 @@ export default function CompletionRoute() {
   const { user } = useAuth();
   const [pageData, setPageData] = useState({
     totalTasks: 0,
-    correctTasks: 0,
     studyType: "visualization",
   });
   const [error, setError] = useState<string | null>(null);
@@ -33,10 +32,9 @@ export default function CompletionRoute() {
       if (!progress?.isCompleted) {
         // Check if we have URL parameters that might indicate a direct navigation
         const totalParam = searchParams.get("total");
-        const correctParam = searchParams.get("correct");
 
         // If no parameters and no completed tasks, redirect to appropriate scenario
-        if (!totalParam || !correctParam) {
+        if (!totalParam) {
           const routeMap: Record<string, string> = {
             "pure-text": "/pure-text",
             visualization: "/visualization",
@@ -53,13 +51,11 @@ export default function CompletionRoute() {
 
     // Get data from URL parameters or local storage
     const totalParam = searchParams.get("total");
-    const correctParam = searchParams.get("correct");
     const studyType = searchParams.get("type") || "visualization";
 
-    if (totalParam && correctParam) {
+    if (totalParam) {
       // If URL parameters exist, use them
       const totalTasks = parseInt(totalParam, 10);
-      const correctTasks = parseInt(correctParam, 10);
 
       // Validate the data
       if (isNaN(totalTasks) || totalTasks <= 0) {
@@ -68,19 +64,8 @@ export default function CompletionRoute() {
         return;
       }
 
-      if (
-        isNaN(correctTasks) ||
-        correctTasks < 0 ||
-        correctTasks > totalTasks
-      ) {
-        setError("Invalid correct count");
-        setLoading(false);
-        return;
-      }
-
       setPageData({
         totalTasks,
-        correctTasks,
         studyType,
       });
       setLoading(false);
@@ -91,7 +76,6 @@ export default function CompletionRoute() {
       if (progress) {
         setPageData({
           totalTasks: progress.totalTasks,
-          correctTasks: progress.correctTasks,
           studyType: progress.studyType,
         });
         setLoading(false);
@@ -144,7 +128,6 @@ export default function CompletionRoute() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <CompletionPage
         totalTasks={pageData.totalTasks}
-        correctTasks={pageData.correctTasks}
         userRole={user?.role as "domain" | "normal"}
         studyType={pageData.studyType}
         onRestart={user?.role === "domain" ? handleRestart : undefined}

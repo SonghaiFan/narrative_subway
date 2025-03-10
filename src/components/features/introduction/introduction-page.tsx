@@ -12,6 +12,7 @@ const introductionContent = {
       title: "Welcome to the Text-Based Study",
       content:
         "Thank you for participating in our user study. This study aims to understand how text-based approaches help users comprehend narrative data.",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example URL - replace with actual video
     },
     {
       title: "Text Interface Overview",
@@ -34,6 +35,7 @@ const introductionContent = {
       title: "Welcome to the Visualization Study",
       content:
         "Thank you for participating in our user study. This study aims to understand how visual approaches help users comprehend narrative data.",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example URL - replace with actual video
     },
     {
       title: "Visualization Interface Overview",
@@ -56,6 +58,7 @@ const introductionContent = {
       title: "Welcome to the Text-Chat Study",
       content:
         "Thank you for participating in our user study. This study aims to understand how text-based chat interfaces help users comprehend narrative data.",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example URL - replace with actual video
     },
     {
       title: "Text-Chat Interface Overview",
@@ -78,6 +81,7 @@ const introductionContent = {
       title: "Welcome to the Visual-Chat Study",
       content:
         "Thank you for participating in our user study. This study aims to understand how visual representations with chat capabilities help users comprehend narrative data.",
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example URL - replace with actual video
     },
     {
       title: "Visual-Chat Interface Overview",
@@ -103,6 +107,7 @@ const defaultSteps = [
     title: "Welcome to the Study",
     content:
       "Thank you for participating in our user study. This study aims to understand how different approaches help users comprehend narrative data.",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example URL - replace with actual video
   },
   {
     title: "Study Overview",
@@ -120,6 +125,23 @@ const defaultSteps = [
       "When you're ready, click the button below to begin. You cannot return to this introduction once you begin.",
   },
 ];
+
+// YouTube video component
+const YouTubeVideo = ({ url }: { url: string }) => {
+  if (!url) return null;
+
+  return (
+    <div className="relative w-full pt-[56.25%] mb-4 rounded overflow-hidden">
+      <iframe
+        className="absolute top-0 left-0 w-full h-full"
+        src={url}
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
+  );
+};
 
 interface IntroductionPageProps {
   onComplete: () => void;
@@ -146,6 +168,8 @@ export function IntroductionPage({
     }
   };
 
+  const currentStepData = steps[currentStep];
+
   return (
     <div className="absolute inset-0 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-sm p-6 max-w-md w-full mx-auto">
@@ -154,12 +178,15 @@ export function IntroductionPage({
         </div>
 
         <h2 className="text-xl font-semibold text-gray-900 mb-3">
-          {steps[currentStep].title}
+          {currentStepData.title}
         </h2>
 
-        <p className="text-gray-600 mb-6 text-sm">
-          {steps[currentStep].content}
-        </p>
+        <p className="text-gray-600 mb-4 text-sm">{currentStepData.content}</p>
+
+        {/* Render YouTube video if URL exists */}
+        {currentStepData.videoUrl && (
+          <YouTubeVideo url={currentStepData.videoUrl} />
+        )}
 
         <div className="flex justify-between items-center">
           <div className="flex space-x-1">
