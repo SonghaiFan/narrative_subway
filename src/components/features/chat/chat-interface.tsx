@@ -28,7 +28,10 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
     {
       role: "assistant",
       content:
-        "Hello! I'm your AI assistant for narrative analysis. I can help you understand the events, characters, and themes in this narrative. You can ask me questions about specific events or the narrative as a whole. You have 20 messages remaining.",
+        "Hello! I'm your AI assistant for narrative analysis. I can help you understand the events, characters, and themes in this narrative.\n\n" +
+        "💡 **Pro tip**: I can reference specific events using the format [Event #X]. These references are clickable and will highlight the relevant event. " +
+        "For example, ask me 'What happens in event #1?' or 'How are events #2 and #3 connected?'\n\n" +
+        "You can ask me questions about specific events, characters, themes, or the narrative structure. You have 20 messages remaining.",
       timestamp: new Date().toISOString(),
     },
   ]);

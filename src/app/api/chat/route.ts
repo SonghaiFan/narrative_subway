@@ -1,5 +1,6 @@
 import { OpenAI } from "openai";
 import { NextRequest, NextResponse } from "next/server";
+import { formatPrompt } from "@/lib/prompts/chat-prompt";
 
 // Check if OpenAI API key is available
 const apiKey = process.env.OPENAI_API_KEY;
@@ -31,41 +32,27 @@ export async function POST(request: NextRequest) {
 
     const { messages, events, selectedEventId } = await request.json();
 
-    // Prepare the system message with context about the narrative
+    // Get the user's latest message
+    const userLatestMessage = messages[messages.length - 1].content;
+
+    // Create the system message using the prompt template
     const systemMessage = {
       role: "system",
-      content: `You are an AI assistant helping users analyze a narrative. 
-      You have access to a list of narrative events. 
-      ${
-        selectedEventId
-          ? `The user has selected event #${selectedEventId}.`
-          : ""
-      }
-      ${
-        events && events.length > 0
-          ? `Here are the events in the narrative: ${JSON.stringify(
-              events.slice(0, 10)
-            )}...`
-          : "No events are currently available."
-      }
-      
-      IMPORTANT FORMATTING INSTRUCTION:
-      When referring to specific events in your responses, always use the format [Event #X] where X is the event ID.
-      For example: "As we can see in [Event #5], the character's motivation becomes clear."
-      This allows the interface to create clickable links to those events.
-      
-      Try to reference specific event IDs when relevant to your answer, but don't force references if they're not relevant.
-      
-      Do not validate or check if the user's references to events are correct. Simply respond to their questions and store their answers.`,
+      content: formatPrompt(events, selectedEventId, userLatestMessage),
     };
 
-    // Format messages for OpenAI API
+    // Format messages for OpenAI API - exclude the latest user message as it's included in the system prompt
     const formattedMessages = [
       systemMessage,
-      ...messages.map((msg: any) => ({
+      ...messages.slice(0, -1).map((msg: any) => ({
         role: msg.role,
         content: msg.content,
       })),
+      {
+        role: "user",
+        content:
+          "Please analyze based on the information provided. Remember to include specific event references in your answer using the [Event #X] format.",
+      },
     ];
 
     // Call OpenAI API
@@ -79,11 +66,25 @@ export async function POST(request: NextRequest) {
     // Extract the assistant's response
     const assistantResponse = response.choices[0].message;
 
+    // Extract content from <answer> tags if present
+    let content = assistantResponse.content || "";
+    const answerMatch = content.match(/<answer>([\s\S]*?)<\/answer>/);
+    if (answerMatch && answerMatch[1]) {
+      content = answerMatch[1].trim();
+    }
+
+    // Check if the response contains event references
+    const hasEventReferences = content.match(/\[Event #\d+\]/);
+    if (!hasEventReferences) {
+      // If no event references, add a reminder
+      content = `${content}\n\n(Remember to reference specific events using the [Event #X] format in your future questions for more detailed analysis.)`;
+    }
+
     // Return the response with timestamp as ISO string
     return NextResponse.json({
       message: {
         role: "assistant",
-        content: assistantResponse.content,
+        content: content,
         timestamp: new Date().toISOString(),
       },
     });
