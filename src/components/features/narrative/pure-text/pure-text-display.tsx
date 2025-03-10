@@ -1,7 +1,7 @@
 "use client";
 
 import { NarrativeEvent } from "@/types/narrative/lite";
-import { useMemo } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import { PURE_TEXT_CONFIG } from "./pure-text-config";
 import { useCenterControl } from "@/contexts/center-control-context";
 import { SHARED_CONFIG } from "@/components/shared/visualization-config";
@@ -12,6 +12,8 @@ interface PureTextDisplayProps {
 
 export function PureTextDisplay({ events }: PureTextDisplayProps) {
   const { selectedEventId, setSelectedEventId } = useCenterControl();
+  const eventRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Sort events by narrative time
   const sortedEvents = useMemo(() => {
@@ -21,6 +23,16 @@ export function PureTextDisplay({ events }: PureTextDisplayProps) {
         b.temporal_anchoring.narrative_time
     );
   }, [events]);
+
+  // Effect to scroll selected event into view
+  useEffect(() => {
+    if (selectedEventId !== null && eventRefs.current[selectedEventId]) {
+      eventRefs.current[selectedEventId]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [selectedEventId]);
 
   if (!events.length) {
     return (
@@ -50,13 +62,14 @@ export function PureTextDisplay({ events }: PureTextDisplayProps) {
       </div>
 
       {/* Content - scrollable area */}
-      <div className="flex-1 min-h-0 overflow-auto">
+      <div ref={scrollContainerRef} className="flex-1 min-h-0 overflow-auto">
         <div className="p-3 sm:p-4 md:p-6 lg:p-8 flex justify-center">
           <div className="w-full max-w-3xl">
             <div className="space-y-3 sm:space-y-4">
               {sortedEvents.map((event) => (
                 <div
                   key={event.index}
+                  ref={(el) => (eventRefs.current[event.index] = el)}
                   className={`group p-3 sm:p-4 rounded-md transition-colors cursor-pointer ${
                     selectedEventId === event.index
                       ? "bg-blue-50 border border-blue-200"

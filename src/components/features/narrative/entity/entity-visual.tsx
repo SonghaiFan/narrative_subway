@@ -31,6 +31,7 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
+  const selectedNodeRef = useRef<SVGCircleElement | null>(null);
   const { showTooltip, hideTooltip, updatePosition } = useTooltip();
 
   // Function to update node styles based on selectedEventId
@@ -56,6 +57,17 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
         if (!selectedNodes.empty()) {
           // Only change the stroke color for selection, not the radius
           selectedNodes.attr("stroke", "#3b82f6"); // Blue highlight for selected event
+
+          // Store the first selected node in the ref
+          selectedNodeRef.current = selectedNodes.node() as SVGCircleElement;
+
+          // Scroll the selected node into view
+          if (selectedNodeRef.current) {
+            selectedNodeRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
         }
       }
     },
@@ -67,7 +79,7 @@ export function EntityVisual({ events, selectedAttribute }: EntityVisualProps) {
     if (svgRef.current) {
       updateSelectedEventStyles(selectedEventId || null);
     }
-  }, [selectedEventId]);
+  }, [selectedEventId, updateSelectedEventStyles]);
 
   // Function to update the visualization
   const updateVisualization = useCallback(() => {

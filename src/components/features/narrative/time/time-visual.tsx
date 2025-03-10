@@ -32,6 +32,7 @@ export function NarrativeTimeVisual({ events, metadata }: TimeVisualProps) {
   const headerRef = useRef<HTMLDivElement>(null);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
   const isDraggingRef = useRef(false);
+  const selectedNodeRef = useRef<SVGCircleElement | null>(null);
   const { showTooltip, hideTooltip, updatePosition } = useTooltip();
 
   // Function to update node styles based on selectedEventId
@@ -61,6 +62,17 @@ export function NarrativeTimeVisual({ events, metadata }: TimeVisualProps) {
         if (!selectedPoints.empty()) {
           // Only change the stroke color for selection, not the radius
           selectedPoints.attr("stroke", "#3b82f6"); // Blue highlight for selected event
+
+          // Store the selected node in the ref
+          selectedNodeRef.current = selectedPoints.node() as SVGCircleElement;
+
+          // Scroll the selected node into view
+          if (selectedNodeRef.current) {
+            selectedNodeRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
+          }
         }
       }
     },

@@ -98,7 +98,7 @@ function VisualizationChatScenario() {
   // If no data yet, show a placeholder
   if (!data || !data.events) {
     return (
-      <ScenarioLayout title="Visualization + AI Chat" isLoading={true}>
+      <ScenarioLayout title="Mixed" isLoading={true}>
         <div className="h-full flex items-center justify-center">
           <div className="text-gray-500">Loading content...</div>
         </div>
@@ -115,7 +115,7 @@ function VisualizationChatScenario() {
   );
 
   return (
-    <ScenarioLayout title="Visualization + AI Chat" isLoading={isLoading}>
+    <ScenarioLayout title="Mixed" isLoading={isLoading}>
       <div className="w-full h-full overflow-hidden p-4">
         <div className="h-full grid grid-cols-[3fr_1fr] gap-4">
           <div className="h-full w-full overflow-hidden relative">

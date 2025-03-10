@@ -64,32 +64,6 @@ export function ResizableGrid({
     setRightVerticalSizes(sizes);
   };
 
-  // Synchronize scroll positions
-  useEffect(() => {
-    const divs = document.querySelectorAll(".overflow-auto");
-
-    const handleScroll = (e: Event) => {
-      const scrolledDiv = e.target as HTMLDivElement;
-      divs.forEach((div) => {
-        if (div !== scrolledDiv) {
-          const d = div as HTMLDivElement;
-          d.scrollTop = scrolledDiv.scrollTop;
-          d.scrollLeft = scrolledDiv.scrollLeft;
-        }
-      });
-    };
-
-    divs.forEach((div) => {
-      div.addEventListener("scroll", handleScroll);
-    });
-
-    return () => {
-      divs.forEach((div) => {
-        div.removeEventListener("scroll", handleScroll);
-      });
-    };
-  }, []);
-
   // Handle cross-section drag - simplified
   const handleCrossDragStart = (e: React.MouseEvent) => {
     e.preventDefault();
