@@ -22,26 +22,18 @@ export function middleware(request: NextRequest) {
       return NextResponse.next();
     }
 
-    // Check if user has completed introduction
-    const hasCompletedIntro =
-      request.cookies.get("hasCompletedIntro")?.value === "true";
+    // IMPORTANT: We can't check localStorage in middleware because it runs on the server
+    // Instead, we'll set a special cookie in the response that will be checked client-side
+    // This is a workaround since middleware can't access localStorage directly
 
-    // If not completed, redirect to appropriate introduction page
-    if (!hasCompletedIntro) {
-      let introPath = "/pure-text/introduction"; // Default fallback path
+    // Create a response that will continue to the destination
+    const response = NextResponse.next();
 
-      if (pathname.startsWith("/pure-text")) {
-        introPath = "/pure-text/introduction";
-      } else if (pathname.startsWith("/text-visual")) {
-        introPath = "/text-visual/introduction";
-      } else if (pathname.startsWith("/text-chat")) {
-        introPath = "/text-chat/introduction";
-      } else if (pathname.startsWith("/mixed")) {
-        introPath = "/mixed/introduction";
-      }
+    // Add a special header that our client-side code can check
+    // This header tells the client to check localStorage for introduction completion
+    response.headers.set("X-Check-Intro-Completion", "true");
 
-      return NextResponse.redirect(new URL(introPath, request.url));
-    }
+    return response;
   }
 
   return NextResponse.next();

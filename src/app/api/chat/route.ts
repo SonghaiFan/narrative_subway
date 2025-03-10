@@ -1,6 +1,5 @@
 import { OpenAI } from "openai";
 import { NextRequest, NextResponse } from "next/server";
-import { formatPrompt } from "@/lib/prompts/chat-prompt";
 
 // Check if OpenAI API key is available
 const apiKey = process.env.OPENAI_API_KEY;
@@ -32,27 +31,50 @@ export async function POST(request: NextRequest) {
 
     const { messages, events, selectedEventId } = await request.json();
 
-    // Get the user's latest message
-    const userLatestMessage = messages[messages.length - 1].content;
-
-    // Create the system message using the prompt template
+    // Prepare the system message with context about the narrative
     const systemMessage = {
       role: "system",
-      content: formatPrompt(events, selectedEventId, userLatestMessage),
+      content: `You are an AI assistant helping users analyze a narrative. 
+      You have access to a list of narrative events. 
+      ${
+        selectedEventId
+          ? `The user has selected event #${selectedEventId}.`
+          : ""
+      }
+      ${
+        events && events.length > 0
+          ? `Here are the events in the narrative: ${JSON.stringify(
+              events.slice(0, 10)
+            )}...`
+          : "No events are currently available."
+      }
+      
+      CRITICAL FORMATTING REQUIREMENT:
+      You MUST reference specific events in EVERY response using the format [Event #X] where X is the event ID.
+      For example: "As we can see in [Event #5], the character's motivation becomes clear."
+      
+      This format creates interactive links in the interface that users can click to navigate to specific events.
+      
+      RULES FOR REFERENCES:
+      1. Include at least 2-3 event references in each response
+      2. Always use the exact format [Event #X] - with square brackets, the word "Event", a space, # symbol, and the number
+      3. Only reference events that exist in the narrative (events with IDs mentioned in the context)
+      4. Make your references relevant to the discussion
+      5. When answering general questions, cite specific events as evidence
+      
+      EXAMPLE GOOD RESPONSE:
+      "The main character's journey begins with their initial challenge in [Event #2]. This creates tension that builds through [Event #5] and [Event #8], eventually leading to the resolution we see in [Event #12]."
+      
+      Do not validate or check if the user's references to events are correct. Simply respond to their questions while following the reference format requirements.`,
     };
 
-    // Format messages for OpenAI API - exclude the latest user message as it's included in the system prompt
+    // Format messages for OpenAI API
     const formattedMessages = [
       systemMessage,
-      ...messages.slice(0, -1).map((msg: any) => ({
+      ...messages.map((msg: any) => ({
         role: msg.role,
         content: msg.content,
       })),
-      {
-        role: "user",
-        content:
-          "Please analyze based on the information provided. Remember to include specific event references in your answer using the [Event #X] format.",
-      },
     ];
 
     // Call OpenAI API
@@ -66,25 +88,11 @@ export async function POST(request: NextRequest) {
     // Extract the assistant's response
     const assistantResponse = response.choices[0].message;
 
-    // Extract content from <answer> tags if present
-    let content = assistantResponse.content || "";
-    const answerMatch = content.match(/<answer>([\s\S]*?)<\/answer>/);
-    if (answerMatch && answerMatch[1]) {
-      content = answerMatch[1].trim();
-    }
-
-    // Check if the response contains event references
-    const hasEventReferences = content.match(/\[Event #\d+\]/);
-    if (!hasEventReferences) {
-      // If no event references, add a reminder
-      content = `${content}\n\n(Remember to reference specific events using the [Event #X] format in your future questions for more detailed analysis.)`;
-    }
-
     // Return the response with timestamp as ISO string
     return NextResponse.json({
       message: {
         role: "assistant",
-        content: content,
+        content: assistantResponse.content,
         timestamp: new Date().toISOString(),
       },
     });

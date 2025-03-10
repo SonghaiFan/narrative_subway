@@ -8,6 +8,7 @@ interface StorageItem {
   value: any;
   type: string;
   source: "localStorage" | "cookie";
+  expiration?: string;
 }
 
 // List of keys that are relevant to our project
@@ -16,6 +17,7 @@ const PROJECT_RELATED_KEYS = [
   "taskProgress_",
   "studyCompleted",
   "hasCompletedIntro",
+  "hasCompletedIntro_expiration",
 ];
 
 // List of cookies that are relevant to our project
@@ -62,50 +64,59 @@ export function UserDataViewer() {
       )
     );
 
-    // Filter task progress keys first, then other relevant keys
-    const progressKeys = relevantKeys.filter((key) =>
-      key.startsWith("taskProgress_")
-    );
-    const otherRelevantKeys = relevantKeys.filter(
-      (key) => !key.startsWith("taskProgress_")
-    );
+    // Group related localStorage items (main item and its expiration)
+    const groupedItems: Record<string, any> = {};
 
-    // Add task progress items first
-    progressKeys.forEach((key) => {
-      try {
-        const value = JSON.parse(localStorage.getItem(key) || "{}");
-        items.push({
-          key,
-          value,
-          type: "Task Progress",
-          source: "localStorage",
-        });
-      } catch (error) {
-        items.push({
-          key,
-          value: localStorage.getItem(key),
-          type: "Unknown (Parse Error)",
-          source: "localStorage",
-        });
+    relevantKeys.forEach((key) => {
+      // Check if this is an expiration key
+      if (key.endsWith("_expiration")) {
+        const baseKey = key.replace("_expiration", "");
+        if (!groupedItems[baseKey]) {
+          groupedItems[baseKey] = {};
+        }
+
+        // Store expiration timestamp
+        const expirationTimestamp = localStorage.getItem(key);
+        if (expirationTimestamp) {
+          const expirationDate = new Date(parseInt(expirationTimestamp, 10));
+          groupedItems[baseKey].expiration = expirationDate.toLocaleString();
+          groupedItems[baseKey].expirationKey = key;
+        }
+      } else {
+        // This is a regular key
+        if (!groupedItems[key]) {
+          groupedItems[key] = {};
+        }
+
+        try {
+          groupedItems[key].value = JSON.parse(
+            localStorage.getItem(key) || "{}"
+          );
+        } catch (error) {
+          groupedItems[key].value = localStorage.getItem(key);
+        }
+
+        // Determine the type
+        if (key.startsWith("taskProgress_")) {
+          groupedItems[key].type = "Task Progress";
+        } else if (key === "user") {
+          groupedItems[key].type = "User Data";
+        } else {
+          groupedItems[key].type = "Study Data";
+        }
       }
     });
 
-    // Add other relevant items
-    otherRelevantKeys.forEach((key) => {
-      try {
-        const value = JSON.parse(localStorage.getItem(key) || "{}");
+    // Convert grouped items to StorageItem array
+    Object.entries(groupedItems).forEach(([key, data]) => {
+      if (!key.endsWith("_expiration")) {
+        // Skip expiration keys as they're already processed
         items.push({
           key,
-          value,
-          type: key === "user" ? "User Data" : "Study Data",
+          value: data.value,
+          type: data.type || "Unknown",
           source: "localStorage",
-        });
-      } catch (error) {
-        items.push({
-          key,
-          value: localStorage.getItem(key),
-          type: "String",
-          source: "localStorage",
+          expiration: data.expiration,
         });
       }
     });
@@ -147,7 +158,9 @@ export function UserDataViewer() {
         const userId = key.replace("taskProgress_", "");
         resetTaskProgress(userId);
       } else {
+        // Remove both the item and its expiration
         localStorage.removeItem(key);
+        localStorage.removeItem(`${key}_expiration`);
       }
     } else if (source === "cookie") {
       // Delete the cookie by setting its expiration date to the past
@@ -166,6 +179,10 @@ export function UserDataViewer() {
     ) {
       // Reset all localStorage progress
       resetAllTaskProgress();
+
+      // Remove all introduction completion flags from localStorage
+      localStorage.removeItem("hasCompletedIntro");
+      localStorage.removeItem("hasCompletedIntro_expiration");
 
       // Reset all cookies
       PROJECT_RELATED_COOKIES.forEach((cookieName) => {
@@ -249,95 +266,122 @@ export function UserDataViewer() {
 
       {filteredItems.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
-          No{" "}
-          {activeTab === "all"
-            ? "project-related data"
-            : activeTab === "localStorage"
-            ? "local storage data"
-            : "cookie data"}{" "}
-          found
+          No data found. Try refreshing or check browser settings.
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-1 border rounded-lg overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="border rounded-lg overflow-hidden">
             <div className="bg-gray-50 px-4 py-2 border-b">
-              <h3 className="font-medium text-sm text-gray-700">
+              <h3 className="text-sm font-medium text-gray-700">
                 Storage Items
               </h3>
             </div>
-            <div className="overflow-y-auto max-h-96">
-              <ul className="divide-y">
-                {filteredItems.map((item) => (
-                  <li
-                    key={`${item.source}-${item.key}`}
-                    className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-50 ${
-                      selectedItem?.key === item.key &&
-                      selectedItem?.source === item.source
-                        ? "bg-blue-50"
-                        : ""
-                    }`}
-                    onClick={() => handleViewItem(item)}
-                  >
-                    <div className="font-medium truncate">{item.key}</div>
-                    <div className="flex justify-between">
-                      <span className="text-xs text-gray-500">{item.type}</span>
-                      <span
-                        className={`text-xs ${
-                          item.source === "localStorage"
-                            ? "text-blue-500"
-                            : "text-green-500"
-                        }`}
-                      >
-                        {item.source === "localStorage" ? "Storage" : "Cookie"}
-                      </span>
+            <div className="divide-y max-h-96 overflow-y-auto">
+              {filteredItems.map((item) => (
+                <div
+                  key={`${item.source}-${item.key}`}
+                  onClick={() => handleViewItem(item)}
+                  className={`px-4 py-3 cursor-pointer hover:bg-gray-50 ${
+                    selectedItem?.key === item.key &&
+                    selectedItem?.source === item.source
+                      ? "bg-blue-50"
+                      : ""
+                  }`}
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="font-medium text-sm text-gray-900 mb-1">
+                        {item.key}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {item.type} ({item.source})
+                        {item.expiration && (
+                          <span className="ml-2">
+                            Expires: {item.expiration}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                  </li>
-                ))}
-              </ul>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleResetItem(item.key, item.source);
+                      }}
+                      className="text-xs px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="md:col-span-2 border rounded-lg overflow-hidden">
-            <div className="bg-gray-50 px-4 py-2 border-b flex justify-between items-center">
-              <h3 className="font-medium text-sm text-gray-700">
+          <div className="border rounded-lg overflow-hidden">
+            <div className="bg-gray-50 px-4 py-2 border-b">
+              <h3 className="text-sm font-medium text-gray-700">
                 {selectedItem
-                  ? selectedItem.key
+                  ? "Item Details"
                   : "Select an item to view details"}
-                {selectedItem && (
-                  <span
-                    className={`ml-2 text-xs ${
-                      selectedItem.source === "localStorage"
-                        ? "text-blue-500"
-                        : "text-green-500"
-                    }`}
-                  >
-                    (
-                    {selectedItem.source === "localStorage"
-                      ? "Local Storage"
-                      : "Cookie"}
-                    )
-                  </span>
-                )}
               </h3>
-              {selectedItem && (
-                <button
-                  onClick={() =>
-                    handleResetItem(selectedItem.key, selectedItem.source)
-                  }
-                  className="px-2 py-1 bg-red-100 text-red-700 text-xs rounded hover:bg-red-200"
-                >
-                  Reset
-                </button>
-              )}
             </div>
-            <div className="p-4 overflow-y-auto max-h-96">
+            <div className="p-4 max-h-96 overflow-y-auto">
               {selectedItem ? (
-                <pre className="text-xs whitespace-pre-wrap bg-gray-50 p-3 rounded">
-                  {JSON.stringify(selectedItem.value, null, 2)}
-                </pre>
+                <div>
+                  <div className="mb-4">
+                    <div className="text-xs font-medium text-gray-500 mb-1">
+                      Key
+                    </div>
+                    <div className="text-sm text-gray-900 font-mono bg-gray-50 p-2 rounded">
+                      {selectedItem.key}
+                    </div>
+                  </div>
+
+                  {selectedItem.expiration && (
+                    <div className="mb-4">
+                      <div className="text-xs font-medium text-gray-500 mb-1">
+                        Expiration
+                      </div>
+                      <div className="text-sm text-gray-900 font-mono bg-gray-50 p-2 rounded">
+                        {selectedItem.expiration}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="mb-4">
+                    <div className="text-xs font-medium text-gray-500 mb-1">
+                      Type
+                    </div>
+                    <div className="text-sm text-gray-900">
+                      {selectedItem.type}
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="text-xs font-medium text-gray-500 mb-1">
+                      Source
+                    </div>
+                    <div className="text-sm text-gray-900">
+                      {selectedItem.source === "localStorage"
+                        ? "Local Storage"
+                        : "Cookie"}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="text-xs font-medium text-gray-500 mb-1">
+                      Value
+                    </div>
+                    <pre className="text-xs text-gray-900 font-mono bg-gray-50 p-2 rounded overflow-x-auto">
+                      {typeof selectedItem.value === "object"
+                        ? JSON.stringify(selectedItem.value, null, 2)
+                        : selectedItem.value}
+                    </pre>
+                  </div>
+                </div>
               ) : (
-                <div className="text-sm text-gray-500 text-center py-8">
-                  Select an item from the list to view its contents
+                <div className="text-center py-8 text-gray-500">
+                  Select an item from the list to view details
                 </div>
               )}
             </div>
