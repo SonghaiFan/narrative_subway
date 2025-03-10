@@ -176,14 +176,14 @@ export function ScenarioSelector() {
                   <ScenarioCard
                     title="Text + AI Chat"
                     description="Text view with an AI assistant that can answer questions about the narrative."
-                    imageSrc="/images/pure-text-preview.svg"
+                    imageSrc="/images/text-chat-preview.svg"
                     onClick={() => handleScenarioSelect("text-chat")}
                     isSelected={selectedScenario === "text-chat"}
                   />
                   <ScenarioCard
                     title="mixed + AI Chat"
                     description="Interactive visualizations with an AI assistant to help interpret the data."
-                    imageSrc="/images/visualization-preview.svg"
+                    imageSrc="/images/mixed-preview.svg"
                     onClick={() => handleScenarioSelect("mixed")}
                     isSelected={selectedScenario === "mixed"}
                   />

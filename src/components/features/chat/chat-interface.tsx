@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { NarrativeEvent } from "@/types/narrative/lite";
 import { useCenterControl } from "@/contexts/center-control-context";
-import { Send, User, Bot, Loader2 } from "lucide-react";
+import { Send, User, Bot, Loader2, Info } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant" | "system";
@@ -144,15 +144,36 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
         (event) => event.index === selectedEventId
       );
       if (selectedEvent) {
-        // Add a system message about the selected event
-        setMessages((prev) => [
-          ...prev,
-          {
+        // Update or add a system message about the selected event
+        setMessages((prev) => {
+          // Find the last system message index, if any
+          const lastSystemIndex = [...prev]
+            .reverse()
+            .findIndex((msg) => msg.role === "system");
+
+          // If no system message exists, add a new one
+          if (lastSystemIndex === -1) {
+            return [
+              ...prev,
+              {
+                role: "system",
+                content: `Event selected: [Event #${selectedEventId}] "${selectedEvent.text}"`,
+                timestamp: new Date().toISOString(),
+              },
+            ];
+          }
+
+          // Otherwise, update the existing system message
+          const actualIndex = prev.length - 1 - lastSystemIndex;
+          const newMessages = [...prev];
+          newMessages[actualIndex] = {
             role: "system",
             content: `Event selected: [Event #${selectedEventId}] "${selectedEvent.text}"`,
             timestamp: new Date().toISOString(),
-          },
-        ]);
+          };
+
+          return newMessages;
+        });
       }
     }
   }, [selectedEventId, events]);
@@ -263,53 +284,71 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
 
       {/* Messages area */}
       <div className="flex-1 overflow-auto p-2 space-y-2 bg-white text-xs">
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`flex ${
-              message.role === "user" ? "justify-end" : "justify-start"
-            } ${
-              index > 0 && messages[index - 1].role === message.role
-                ? "mt-1"
-                : "mt-2"
-            }`}
-          >
-            {message.role === "assistant" && (
-              <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mr-1 mt-1 flex-shrink-0">
-                <Bot className="w-3 h-3 text-gray-600" />
+        {/* System message container - only show if there are system messages */}
+        {messages.some((msg) => msg.role === "system") && (
+          <div className="sticky top-0 z-10 mb-2 bg-white pb-1">
+            <div className="bg-blue-50 border border-blue-100 rounded-md p-2 text-xs text-blue-700 shadow-sm">
+              <div className="flex items-center">
+                <Info className="w-3.5 h-3.5 mr-1.5 text-blue-500" />
+                <span className="font-medium">Current Selection:</span>
               </div>
-            )}
-
-            <div
-              className={`max-w-[85%] rounded-lg px-2 py-1.5 ${
-                message.role === "user"
-                  ? "bg-gray-800 text-white rounded-tr-none"
-                  : message.role === "system"
-                  ? "bg-gray-100 text-gray-600 italic text-xs"
-                  : "bg-gray-100 text-gray-800 rounded-tl-none"
-              }`}
-            >
-              <div className="whitespace-pre-wrap text-xs">
-                {message.role === "user"
-                  ? message.content
-                  : renderMessageWithEventLinks(message.content)}
-              </div>
-              <div
-                className={`text-[9px] mt-0.5 text-right ${
-                  message.role === "user" ? "text-gray-300" : "text-gray-400"
-                }`}
-              >
-                {formatTime(message.timestamp)}
+              <div className="pl-5 mt-1 text-blue-600">
+                {messages.filter((msg) => msg.role === "system").pop()?.content}
               </div>
             </div>
-
-            {message.role === "user" && (
-              <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center ml-1 mt-1 flex-shrink-0">
-                <User className="w-3 h-3 text-white" />
-              </div>
-            )}
           </div>
-        ))}
+        )}
+
+        {/* Regular chat messages - filter out system messages */}
+        {messages
+          .filter((msg) => msg.role !== "system")
+          .map((message, index, filteredArray) => (
+            <div
+              key={`msg-${message.timestamp}`}
+              className={`flex ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              } ${
+                index > 0 && filteredArray[index - 1].role === message.role
+                  ? "mt-1"
+                  : "mt-2"
+              }`}
+            >
+              {message.role === "assistant" && (
+                <div className="w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center mr-1 mt-1 flex-shrink-0">
+                  <Bot className="w-3 h-3 text-gray-600" />
+                </div>
+              )}
+
+              <div
+                className={`max-w-[85%] rounded-lg px-2 py-1.5 ${
+                  message.role === "user"
+                    ? "bg-gray-800 text-white rounded-tr-none"
+                    : message.role === "system"
+                    ? "bg-gray-100 text-gray-600 italic text-xs"
+                    : "bg-gray-100 text-gray-800 rounded-tl-none"
+                }`}
+              >
+                <div className="whitespace-pre-wrap text-xs">
+                  {message.role === "user"
+                    ? message.content
+                    : renderMessageWithEventLinks(message.content)}
+                </div>
+                <div
+                  className={`text-[9px] mt-0.5 text-right ${
+                    message.role === "user" ? "text-gray-300" : "text-gray-400"
+                  }`}
+                >
+                  {formatTime(message.timestamp)}
+                </div>
+              </div>
+
+              {message.role === "user" && (
+                <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center ml-1 mt-1 flex-shrink-0">
+                  <User className="w-3 h-3 text-white" />
+                </div>
+              )}
+            </div>
+          ))}
         <div ref={messagesEndRef} />
 
         {/* Loading indicator */}

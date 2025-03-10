@@ -1,46 +1,36 @@
 <svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="300" fill="#f3f4f6" />
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8fafc" rx="12" />
   
-  <!-- Grid layout -->
-  <rect x="10" y="10" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
-  <rect x="205" y="10" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
-  <rect x="10" y="155" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
-  <rect x="205" y="155" width="185" height="135" rx="4" fill="#ffffff" stroke="#e5e7eb" />
+  <!-- Split container -->
+  <rect x="100" y="60" width="200" height="180" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+  <line x1="200" y1="60" x2="200" y2="240" stroke="#94a3b8" stroke-width="2" />
   
-  <!-- Text content in top left -->
-  <rect x="25" y="30" width="155" height="10" rx="2" fill="#e5e7eb" />
-  <rect x="25" y="50" width="135" height="10" rx="2" fill="#e5e7eb" />
-  <rect x="25" y="70" width="145" height="10" rx="2" fill="#e5e7eb" />
-  <rect x="25" y="90" width="125" height="10" rx="2" fill="#e5e7eb" />
+  <!-- Text side (left) -->
+  <rect x="120" y="80" width="60" height="8" rx="4" fill="#0f172a" />
+  <rect x="120" y="100" width="60" height="5" rx="2.5" fill="#64748b" />
+  <rect x="120" y="115" width="60" height="5" rx="2.5" fill="#64748b" />
+  <rect x="120" y="130" width="60" height="5" rx="2.5" fill="#64748b" />
+  <rect x="120" y="145" width="60" height="5" rx="2.5" fill="#64748b" />
   
-  <!-- Topic visualization in top right -->
-  <line x1="220" y1="40" x2="375" y2="40" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
-  <line x1="220" y1="70" x2="375" y2="70" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
-  <line x1="220" y1="100" x2="375" y2="100" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" />
+  <!-- Visualization side (right) -->
+  <!-- Timeline visualization -->
+  <line x1="220" y1="100" x2="280" y2="100" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="220" y1="140" x2="280" y2="140" stroke="#cbd5e1" stroke-width="1.5" />
+  <line x1="220" y1="180" x2="280" y2="180" stroke="#cbd5e1" stroke-width="1.5" />
   
-  <circle cx="250" cy="40" r="6" fill="white" stroke="black" />
-  <circle cx="300" cy="40" r="6" fill="white" stroke="black" />
-  <circle cx="350" cy="40" r="6" fill="white" stroke="black" />
+  <!-- Timeline nodes -->
+  <circle cx="230" cy="100" r="6" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5" />
+  <circle cx="250" cy="140" r="6" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5" />
+  <circle cx="270" cy="100" r="6" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5" />
+  <circle cx="240" cy="180" r="6" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5" />
   
-  <circle cx="270" cy="70" r="6" fill="white" stroke="black" />
-  <circle cx="320" cy="70" r="6" fill="white" stroke="black" />
+  <!-- Connecting lines -->
+  <line x1="230" y1="100" x2="250" y2="140" stroke="#93c5fd" stroke-width="1.5" />
+  <line x1="250" y1="140" x2="270" y2="100" stroke="#93c5fd" stroke-width="1.5" />
+  <line x1="250" y1="140" x2="240" y2="180" stroke="#93c5fd" stroke-width="1.5" />
   
-  <circle cx="240" cy="100" r="6" fill="white" stroke="black" />
-  <circle cx="290" cy="100" r="6" fill="white" stroke="black" />
-  <circle cx="340" cy="100" r="6" fill="white" stroke="black" />
-  
-  <!-- Entity visualization in bottom left -->
-  <line x1="30" y1="175" x2="30" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
-  <line x1="70" y1="175" x2="70" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
-  <line x1="110" y1="175" x2="110" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
-  <line x1="150" y1="175" x2="150" y2="275" stroke="#94a3b8" stroke-width="6" opacity="0.3" />
-  
-  <circle cx="30" cy="200" r="6" fill="white" stroke="black" />
-  <circle cx="70" cy="220" r="6" fill="white" stroke="black" />
-  <circle cx="110" cy="240" r="6" fill="white" stroke="black" />
-  <circle cx="150" cy="210" r="6" fill="white" stroke="black" />
-  
-  <!-- Timeline visualization in bottom right -->
-  <rect x="220" y="175" width="155" height="20" rx="4" fill="#e5e7eb" />
-  <rect x="220" y="205" width="155" height="65" rx="4" fill="#e5e7eb" />
+  <!-- Visualization icon -->
+  <path d="M220 80 L225 85 L230 75 L235 90 L240 80 L245 85 L250 70 L255 80 L260 75 L265 85 L270 80 L275 85 L280 80" 
+        stroke="#3b82f6" stroke-width="2" fill="none" />
 </svg> 
