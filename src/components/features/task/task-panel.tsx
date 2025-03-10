@@ -63,8 +63,8 @@ export function TaskPanel({
         if (userRole === "normal" && hasCompletedTasks(user.id)) {
           const studyType =
             metadata?.studyType ||
-            (window.location.pathname.includes("visualization")
-              ? "visualization"
+            (window.location.pathname.includes("mixed")
+              ? "mixed"
               : "pure-text");
 
           router.push(`/completion?total=${tasks.length}&type=${studyType}`);
@@ -221,8 +221,8 @@ export function TaskPanel({
           correctTasks: 0,
           studyType:
             metadata?.studyType ||
-            (window.location.pathname.includes("visualization")
-              ? "visualization"
+            (window.location.pathname.includes("mixed")
+              ? "mixed"
               : "pure-text"),
           answers: updatedTasks.map((task) => ({
             questionId: task.id,
@@ -291,9 +291,7 @@ export function TaskPanel({
 
     const studyType =
       metadata?.studyType ||
-      (window.location.pathname.includes("visualization")
-        ? "visualization"
-        : "pure-text");
+      (window.location.pathname.includes("mixed") ? "mixed" : "pure-text");
 
     // Save final progress to localStorage
     saveTaskProgress(userId, {

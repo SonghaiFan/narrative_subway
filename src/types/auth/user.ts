@@ -8,7 +8,7 @@ export interface User {
   // For normal users, specify which scenario they should see
   defaultScenario?:
     | "pure-text"
-    | "visualization"
+    | "mixed"
     | "pure-text-chat"
     | "visualization-chat";
   // For normal users, specify which dataset they should use

@@ -11,10 +11,10 @@ export function middleware(request: NextRequest) {
 
   // Check if the route requires introduction
   const requiresIntro =
-    pathname.startsWith("/visualization") ||
     pathname.startsWith("/pure-text") ||
+    pathname.startsWith("/text-visual") ||
     pathname.startsWith("/text-chat") ||
-    pathname.startsWith("/visual-chat");
+    pathname.startsWith("/mixed");
 
   if (requiresIntro) {
     // Skip middleware for introduction pages
@@ -30,14 +30,14 @@ export function middleware(request: NextRequest) {
     if (!hasCompletedIntro) {
       let introPath = "/pure-text/introduction"; // Default fallback path
 
-      if (pathname.startsWith("/visualization")) {
-        introPath = "/visualization/introduction";
-      } else if (pathname.startsWith("/pure-text")) {
+      if (pathname.startsWith("/pure-text")) {
         introPath = "/pure-text/introduction";
+      } else if (pathname.startsWith("/text-visual")) {
+        introPath = "/text-visual/introduction";
       } else if (pathname.startsWith("/text-chat")) {
         introPath = "/text-chat/introduction";
-      } else if (pathname.startsWith("/visual-chat")) {
-        introPath = "/visual-chat/introduction";
+      } else if (pathname.startsWith("/mixed")) {
+        introPath = "/mixed/introduction";
       }
 
       return NextResponse.redirect(new URL(introPath, request.url));
@@ -50,10 +50,10 @@ export function middleware(request: NextRequest) {
 // Configure middleware to run on specific paths
 export const config = {
   matcher: [
-    "/visualization/:path*",
     "/pure-text/:path*",
+    "/text-visual/:path*",
     "/text-chat/:path*",
-    "/visual-chat/:path*",
+    "/mixed/:path*",
     "/completion",
     "/dashboard",
     "/((?!api|_next/static|_next/image|favicon.ico).*)",

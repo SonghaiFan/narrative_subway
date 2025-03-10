@@ -2,11 +2,11 @@
 
 import { IntroductionFactory } from "@/components/features/introduction/introduction-factory";
 
-export default function VisualChatIntroductionPage() {
+export default function VisualizationIntroductionPage() {
   return (
     <IntroductionFactory
-      scenarioType="visual-chat"
-      redirectPath="/visual-chat"
+      scenarioType="text-visual"
+      redirectPath="/text-visual"
     />
   );
 }

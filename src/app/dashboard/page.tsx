@@ -9,11 +9,7 @@ import { ScenarioCard } from "@/components/features/dashboard/scenario-card";
 import { UserDataViewer } from "@/components/features/dashboard/local-storage-viewer";
 import { useAuth } from "@/contexts/auth-context";
 
-export type ScenarioType =
-  | "pure-text"
-  | "visualization"
-  | "pure-text-chat"
-  | "visualization-chat";
+export type ScenarioType = "pure-text" | "text-visual" | "text-chat" | "mixed";
 
 export interface ScenarioCardProps {
   title: string;
@@ -71,11 +67,11 @@ export function ScenarioSelector() {
   const handleContinue = () => {
     if (selectedScenario) {
       // Map scenario types to their correct routes
-      const routeMap = {
+      const routeMap: Record<string, string> = {
         "pure-text": "/pure-text",
-        visualization: "/visualization",
-        "pure-text-chat": "/pure-text/chat",
-        "visualization-chat": "/visualization/chat",
+        "text-visual": "/text-visual",
+        "text-chat": "/text-chat",
+        mixed: "/mixed",
       };
 
       router.push(routeMap[selectedScenario]);
@@ -162,11 +158,11 @@ export function ScenarioSelector() {
                     isSelected={selectedScenario === "pure-text"}
                   />
                   <ScenarioCard
-                    title="Text + Visualization "
-                    description="Interactive visualization with topic flow, entity relationships, and timeline views."
+                    title="Text + visual"
+                    description="Interactive mixed with topic flow, entity relationships, and timeline views."
                     imageSrc="/images/visualization-preview.svg"
-                    onClick={() => handleScenarioSelect("visualization")}
-                    isSelected={selectedScenario === "visualization"}
+                    onClick={() => handleScenarioSelect("text-visual")}
+                    isSelected={selectedScenario === "text-visual"}
                   />
                 </div>
 
@@ -181,15 +177,15 @@ export function ScenarioSelector() {
                     title="Text + AI Chat"
                     description="Text view with an AI assistant that can answer questions about the narrative."
                     imageSrc="/images/pure-text-preview.svg"
-                    onClick={() => handleScenarioSelect("pure-text-chat")}
-                    isSelected={selectedScenario === "pure-text-chat"}
+                    onClick={() => handleScenarioSelect("text-chat")}
+                    isSelected={selectedScenario === "text-chat"}
                   />
                   <ScenarioCard
-                    title="Visualization + AI Chat"
+                    title="mixed + AI Chat"
                     description="Interactive visualizations with an AI assistant to help interpret the data."
                     imageSrc="/images/visualization-preview.svg"
-                    onClick={() => handleScenarioSelect("visualization-chat")}
-                    isSelected={selectedScenario === "visualization-chat"}
+                    onClick={() => handleScenarioSelect("mixed")}
+                    isSelected={selectedScenario === "mixed"}
                   />
                 </div>
               </div>

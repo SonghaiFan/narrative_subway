@@ -3,11 +3,11 @@
 import { useState } from "react";
 
 // Define scenario types
-export type ScenarioType = "text" | "visual" | "text-chat" | "visual-chat";
+export type ScenarioType = "pure-text" | "text-visual" | "text-chat" | "mixed";
 
 // Define introduction content for each scenario type
 const introductionContent = {
-  text: [
+  "pure-text": [
     {
       title: "Welcome to the Text-Based Study",
       content:
@@ -30,15 +30,15 @@ const introductionContent = {
         "When you're ready, click the button below to begin. You cannot return to this introduction once you begin.",
     },
   ],
-  visual: [
+  "text-visual": [
     {
-      title: "Welcome to the Visualization Study",
+      title: "Welcome to the mixed Study",
       content:
         "Thank you for participating in our user study. This study aims to understand how visual approaches help users comprehend narrative data.",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example URL - replace with actual video
     },
     {
-      title: "Visualization Interface Overview",
+      title: "mixed Interface Overview",
       content:
         "In this study, you will explore narrative content through visualizations, complete specific tasks, and interact with the interface at your own pace.",
     },
@@ -76,15 +76,15 @@ const introductionContent = {
         "When you're ready, click the button below to begin. You cannot return to this introduction once you begin.",
     },
   ],
-  "visual-chat": [
+  mixed: [
     {
-      title: "Welcome to the Visual-Chat Study",
+      title: "Welcome to the mixed Study",
       content:
         "Thank you for participating in our user study. This study aims to understand how visual representations with chat capabilities help users comprehend narrative data.",
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", // Example URL - replace with actual video
     },
     {
-      title: "Visual-Chat Interface Overview",
+      title: "mixed Interface Overview",
       content:
         "In this study, you will explore narrative content through visualizations and a chat interface, complete specific tasks, and interact at your own pace.",
     },
@@ -150,7 +150,7 @@ interface IntroductionPageProps {
 
 export function IntroductionPage({
   onComplete,
-  scenarioType = "text",
+  scenarioType = "pure-text",
 }: IntroductionPageProps) {
   const [currentStep, setCurrentStep] = useState(0);
 

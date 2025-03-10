@@ -78,7 +78,7 @@ function VisualizationChatScenario() {
   // Show error state
   if (error) {
     return (
-      <ScenarioLayout title="Visualization + AI Chat" isLoading={false}>
+      <ScenarioLayout title="Mixed" isLoading={false}>
         <div className="h-full flex flex-col items-center justify-center p-4">
           <div className="text-red-500 mb-2">Error:</div>
           <div className="text-gray-700 mb-4 text-center max-w-md">

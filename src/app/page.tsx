@@ -40,12 +40,12 @@ export default function Home() {
           // Map scenario types to their correct routes
           const routeMap: Record<string, string> = {
             "pure-text": "/pure-text",
-            visualization: "/visualization",
-            "pure-text-chat": "/pure-text/chat",
-            "visualization-chat": "/visualization/chat",
+            "text-visual": "/text-visual",
+            "text-chat": "/text-chat",
+            mixed: "/mixed",
           };
 
-          const defaultScenario = user.defaultScenario || "visualization";
+          const defaultScenario = user.defaultScenario || "mixed";
           router.push(routeMap[defaultScenario] || "/");
         }
       }

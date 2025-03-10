@@ -12,7 +12,7 @@ export default function CompletionRoute() {
   const { user } = useAuth();
   const [pageData, setPageData] = useState({
     totalTasks: 0,
-    studyType: "visualization",
+    studyType: "mixed",
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,12 +37,12 @@ export default function CompletionRoute() {
         if (!totalParam) {
           const routeMap: Record<string, string> = {
             "pure-text": "/pure-text",
-            visualization: "/visualization",
-            "pure-text-chat": "/pure-text/chat",
-            "visualization-chat": "/visualization/chat",
+            "text-visual": "/text-visual",
+            "text-chat": "/text-chat",
+            mixed: "/mixed",
           };
 
-          const defaultScenario = user.defaultScenario || "visualization";
+          const defaultScenario = user.defaultScenario || "mixed";
           router.push(routeMap[defaultScenario] || "/");
           return;
         }
@@ -51,7 +51,7 @@ export default function CompletionRoute() {
 
     // Get data from URL parameters or local storage
     const totalParam = searchParams.get("total");
-    const studyType = searchParams.get("type") || "visualization";
+    const studyType = searchParams.get("type") || "mixed";
 
     if (totalParam) {
       // If URL parameters exist, use them
@@ -91,8 +91,7 @@ export default function CompletionRoute() {
 
   const handleRestart = () => {
     // Determine which route to go back to based on study type
-    const route =
-      pageData.studyType === "visualization" ? "/visualization" : "/pure-text";
+    const route = pageData.studyType === "mixed" ? "/mixed" : "/pure-text";
 
     router.push(route);
   };

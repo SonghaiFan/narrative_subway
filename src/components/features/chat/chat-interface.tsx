@@ -364,7 +364,7 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
             </div>
           </div>
 
-          <div className="flex items-end gap-1">
+          <div className="flex items-end gap-1 mb-1">
             <textarea
               ref={inputRef}
               value={input}
@@ -382,9 +382,9 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
             <button
               type="submit"
               disabled={!input.trim() || isLoading || hasReachedLimit}
-              className="bg-gray-800 text-white rounded-md p-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-gray-800 text-white rounded-md p-1.5 disabled:opacity-50 disabled:cursor-not-allowed self-end"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-3 h-3" />
             </button>
           </div>
         </form>
