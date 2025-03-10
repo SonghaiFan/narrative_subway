@@ -2,15 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useCenterControl } from "@/contexts/center-control-context";
 import { AuthHeader } from "@/components/features/auth/auth-header";
-import { ProfileSection } from "@/components/features/dashboard/profile-section";
-import { ScenarioCard } from "@/components/features/dashboard/scenario-card";
+import { ScenarioSelector } from "@/components/features/dashboard/scenario-selector";
 import { UserDataViewer } from "@/components/features/dashboard/local-storage-viewer";
 import { useAuth } from "@/contexts/auth-context";
-import { ScenarioSelector } from "@/components/features/dashboard/scenario-selector";
-
-export type ScenarioType = "pure-text" | "text-visual" | "text-chat" | "mixed";
 
 export interface ScenarioCardProps {
   title: string;

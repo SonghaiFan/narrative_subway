@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { User, AuthState } from "@/types/auth/user";
+import { ScenarioType, scenarioTypeMap } from "@/types/shared/scenario";
 
 // Mock users for demonstration
 const MOCK_USERS = [
@@ -16,7 +17,7 @@ const MOCK_USERS = [
     name: "Text User",
     username: "text",
     role: "normal" as const,
-    defaultScenario: "pure-text" as const,
+    defaultScenario: "pure-text" as ScenarioType,
     defaultDataset: "default.json",
   },
   {
@@ -24,7 +25,7 @@ const MOCK_USERS = [
     name: "Visualization User",
     username: "viz",
     role: "normal" as const,
-    defaultScenario: "visualization" as const,
+    defaultScenario: "text-visual" as ScenarioType,
     defaultDataset: "default.json",
   },
   {
@@ -32,7 +33,7 @@ const MOCK_USERS = [
     name: "Text Chat User",
     username: "textchat",
     role: "normal" as const,
-    defaultScenario: "pure-text-chat" as const,
+    defaultScenario: "text-chat" as ScenarioType,
     defaultDataset: "default.json",
   },
   {
@@ -40,7 +41,7 @@ const MOCK_USERS = [
     name: "Visualization Chat User",
     username: "vizchat",
     role: "normal" as const,
-    defaultScenario: "visualization-chat" as const,
+    defaultScenario: "mixed" as ScenarioType,
     defaultDataset: "default.json",
   },
 ];

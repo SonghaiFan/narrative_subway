@@ -1,3 +1,5 @@
+import { ScenarioType } from "@/types/shared/scenario";
+
 export type UserRole = "domain" | "normal";
 
 export interface User {
@@ -6,11 +8,7 @@ export interface User {
   username: string;
   role: UserRole;
   // For normal users, specify which scenario they should see
-  defaultScenario?:
-    | "pure-text"
-    | "mixed"
-    | "pure-text-chat"
-    | "visualization-chat";
+  defaultScenario?: ScenarioType;
   // For normal users, specify which dataset they should use
   defaultDataset?: string;
 }

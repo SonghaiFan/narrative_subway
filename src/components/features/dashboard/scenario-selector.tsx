@@ -6,11 +6,10 @@ import { useCenterControl } from "@/contexts/center-control-context";
 import { ProfileSection } from "./profile-section";
 import { ScenarioCard } from "./scenario-card";
 import { useAuth } from "@/contexts/auth-context";
-import { ScenarioType } from "@/app/dashboard/page";
+import { ScenarioType } from "@/types/shared/scenario";
 
 export function ScenarioSelector() {
   const router = useRouter();
-  const { user } = useAuth();
   const {
     data,
     setData,
@@ -20,7 +19,6 @@ export function ScenarioSelector() {
     setIsLoading: setContextIsLoading,
   } = useCenterControl();
   const [isLoading, setIsLoading] = useState(true);
-  const [showStorageViewer, setShowStorageViewer] = useState(false);
 
   // Fetch initial data if not already loaded
   useEffect(() => {

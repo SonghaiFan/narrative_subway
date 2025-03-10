@@ -63,6 +63,11 @@ export function NarrativeTooltip({
     return null;
   }
 
+  // Check if narrative_phase exists on the event object
+  const hasNarrativePhase = event && "narrative_phase" in event;
+  // Check if source_name exists on the event object
+  const hasSourceName = event && "source_name" in event;
+
   return (
     <div
       ref={tooltipRef}
@@ -127,16 +132,18 @@ export function NarrativeTooltip({
       )}
 
       {/* Narrative phase - optional field */}
-      {event.narrative_phase && (
+      {hasNarrativePhase && (event as any).narrative_phase && (
         <div className="mt-2 text-xs text-gray-600">
-          Phase: <span className="font-medium">{event.narrative_phase}</span>
+          Phase:{" "}
+          <span className="font-medium">{(event as any).narrative_phase}</span>
         </div>
       )}
 
       {/* Source name - optional field */}
-      {event.source_name && (
+      {hasSourceName && (event as any).source_name && (
         <div className="mt-1 text-xs text-gray-600">
-          Source: <span className="font-medium">{event.source_name}</span>
+          Source:{" "}
+          <span className="font-medium">{(event as any).source_name}</span>
         </div>
       )}
     </div>

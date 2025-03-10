@@ -69,7 +69,9 @@ export function PureTextDisplay({ events }: PureTextDisplayProps) {
               {sortedEvents.map((event) => (
                 <div
                   key={event.index}
-                  ref={(el) => (eventRefs.current[event.index] = el)}
+                  ref={(el) => {
+                    eventRefs.current[event.index] = el;
+                  }}
                   className={`group p-3 sm:p-4 rounded-md transition-colors cursor-pointer ${
                     selectedEventId === event.index
                       ? "bg-blue-50 border border-blue-200"

@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { IntroductionPage, ScenarioType } from "./introduction-page";
+import { IntroductionPage } from "./introduction-page";
+import { ScenarioType } from "@/types/shared/scenario";
 
 interface IntroductionFactoryProps {
   scenarioType: ScenarioType;

@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-// Define scenario types
-export type ScenarioType = "pure-text" | "text-visual" | "text-chat" | "mixed";
+import { ScenarioType } from "@/types/shared/scenario";
 
 // Define introduction content for each scenario type
 const introductionContent = {

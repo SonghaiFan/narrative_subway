@@ -10,7 +10,7 @@ import {
 } from "react";
 
 // Import ScenarioType
-import { ScenarioType } from "@/components/features/dashboard/scenario-selector";
+import { ScenarioType } from "@/types/shared/scenario";
 
 interface CenterControlContextType {
   // Data state

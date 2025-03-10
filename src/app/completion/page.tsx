@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CompletionPage } from "@/components/features/task/completion-page";
 import { useAuth } from "@/contexts/auth-context";
 import { getTaskProgress } from "@/lib/task-progress";
 
-export default function CompletionRoute() {
+// Create a client component that uses useSearchParams
+function CompletionContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user } = useAuth();
@@ -132,5 +133,23 @@ export default function CompletionRoute() {
         onRestart={user?.role === "domain" ? handleRestart : undefined}
       />
     </div>
+  );
+}
+
+// Loading fallback component
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-12 h-12 border-3 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+    </div>
+  );
+}
+
+// Main page component that wraps the content in Suspense
+export default function CompletionRoute() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <CompletionContent />
+    </Suspense>
   );
 }
