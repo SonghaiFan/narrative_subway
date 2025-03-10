@@ -206,24 +206,33 @@ export function ChatInterface({ events, className = "" }: ChatInterfaceProps) {
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to get response from API");
-      }
-
       const data = await response.json();
-      setMessages((prev) => [...prev, data.message]);
+
+      if (!response.ok) {
+        // Use the error message from the API if available
+        if (data.message) {
+          setMessages((prev) => [...prev, data.message]);
+        } else {
+          throw new Error(data.error || "Failed to get response from API");
+        }
+      } else {
+        // Add the assistant's response to the messages
+        setMessages((prev) => [...prev, data.message]);
+      }
     } catch (error) {
-      console.error("Error sending message:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          content: "Sorry, I encountered an error. Please try again.",
-          timestamp: new Date().toISOString(),
-        },
-      ]);
+      console.error("Error in chat:", error);
+
+      // Add an error message to the chat
+      const errorMessage: Message = {
+        role: "assistant",
+        content:
+          "I'm sorry, but I encountered an error while processing your request. Please try again later.",
+        timestamp: new Date().toISOString(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
+
       // Focus the input after sending
       setTimeout(() => {
         inputRef.current?.focus();

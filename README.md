@@ -169,6 +169,31 @@ The assistant has context about the narrative events and can provide insights ba
 
 There is a limit of 20 messages per session to manage API usage. The remaining message count is displayed in the chat interface.
 
+## Environment Variables
+
+This application requires the following environment variables:
+
+### OpenAI API Key
+
+The application uses OpenAI's API for the AI chat functionality. You need to set up the `OPENAI_API_KEY` environment variable:
+
+1. For local development:
+
+   - Create a `.env.local` file in the root directory
+   - Add your OpenAI API key: `OPENAI_API_KEY=your_api_key_here`
+
+2. For Vercel deployment:
+   - Go to your Vercel project dashboard
+   - Navigate to "Settings" > "Environment Variables"
+   - Add a new environment variable with the name `OPENAI_API_KEY` and your API key as the value
+   - Redeploy your application
+
+Without this environment variable, the AI chat functionality will not work.
+
+## Deployment
+
+This application is designed to be deployed on Vercel. Make sure to set up the required environment variables in your Vercel project settings before deploying.
+
 ```bash
 npm run dev     # Start development server
 npm run build   # Build for production

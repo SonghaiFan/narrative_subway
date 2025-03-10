@@ -1,13 +1,34 @@
 import { OpenAI } from "openai";
 import { NextRequest, NextResponse } from "next/server";
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Check if OpenAI API key is available
+const apiKey = process.env.OPENAI_API_KEY;
+
+// Initialize OpenAI client if API key is available
+const openai = apiKey ? new OpenAI({ apiKey }) : null;
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if OpenAI client is initialized
+    if (!openai) {
+      console.error(
+        "OpenAI API key is missing. Please set the OPENAI_API_KEY environment variable."
+      );
+      return NextResponse.json(
+        {
+          error:
+            "OpenAI API key is not configured. Please contact the administrator.",
+          message: {
+            role: "assistant",
+            content:
+              "I'm sorry, but I'm not available at the moment due to a configuration issue. Please try again later or contact the administrator.",
+            timestamp: new Date().toISOString(),
+          },
+        },
+        { status: 500 }
+      );
+    }
+
     const { messages, events, selectedEventId } = await request.json();
 
     // Prepare the system message with context about the narrative
@@ -69,7 +90,15 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("OpenAI API error:", error);
     return NextResponse.json(
-      { error: "Failed to get response from OpenAI" },
+      {
+        error: "Failed to get response from OpenAI",
+        message: {
+          role: "assistant",
+          content:
+            "I'm sorry, but I encountered an error while processing your request. Please try again later.",
+          timestamp: new Date().toISOString(),
+        },
+      },
       { status: 500 }
     );
   }
